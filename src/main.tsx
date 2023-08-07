@@ -5,17 +5,13 @@ import { ToastContainer } from "react-toastify";
 import "./styles/index.scss";
 import "react-toastify/dist/ReactToastify.css";
 import "sweetalert2/src/sweetalert2.scss";
-import { QueryClientProvider, QueryClient } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
-
-const client = new QueryClient();
-
+import { Provider } from "react-redux";
+import { store } from "./store.ts";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <QueryClientProvider client={client}>
+    <Provider store={store}>
       <App />
       <ToastContainer />
-      <ReactQueryDevtools></ReactQueryDevtools>
-    </QueryClientProvider>
+    </Provider>
   </React.StrictMode>,
 );
