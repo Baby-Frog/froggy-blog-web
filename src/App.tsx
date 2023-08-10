@@ -1,5 +1,7 @@
+import PostPage from "./pages/PostPage/PostPage";
+
 function App() {
-  return <></>;
+  return <PostPage></PostPage>;
 }
 
 export default App;
