@@ -12,6 +12,5 @@ i18n: đa ngôn ngữ, dịch tiếng anh - tiếng việt (đương nhiên là 
 sweetalert2: hiện lên các loại modal để accept/deny/cancel (mức độ khó: cực dễ)
 react-helmet-async: cung cấp khả năng SEO cho React App (thay đổi title,description,author,... khi chuyển trang) (mức độ khó: cực dễ)
 react-use: cung cấp thêm rất nhiều hooks tiện ích (useMedia, useVanVanMayMay...) (mức độ khó: dễ)
-redux-toolkit: dùng để lưu giữ các giá trị state toàn cục (những state mà có thể sử dụng ở khắp mọi nơi trong ứng dụng), thực hiện khai báo các endpoints cho từng API (mức độ khó: cực khó)
 react-quill: tích hợp trình gõ văn bản thông minh vào trong website (mức độ khó: trung bình)
 html-react-parser: như tên gọi của nó, parse từ html thành JSX rồi hiển thị ra UI (mức độ khó: dễ)
