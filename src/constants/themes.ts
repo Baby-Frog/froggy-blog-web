@@ -1,5 +1,6 @@
 import { DefaultTheme } from "styled-components";
 
 export const theme: DefaultTheme = {
-  normalYellow: "#FFC017",
+  sage: "#C8E4B2",
+  primaryGreen: "#587f48",
 } as const;
