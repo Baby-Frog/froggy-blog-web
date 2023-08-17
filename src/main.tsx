@@ -9,6 +9,8 @@ import "./styles/index.scss";
 import "react-toastify/dist/ReactToastify.css";
 import "sweetalert2/src/sweetalert2.scss";
 import GlobalStyle from "./styles/globalStyles.ts";
+import { theme } from "./constants/themes.ts";
+import { ThemeProvider } from "styled-components";
 
 const queryClient = new QueryClient();
 
@@ -16,10 +18,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <GlobalStyle />
-        <App />
-        <ReactQueryDevtools />
-        <ToastContainer />
+        <ThemeProvider theme={theme}>
+          <App />
+          <GlobalStyle />
+          <ReactQueryDevtools />
+          <ToastContainer />
+        </ThemeProvider>
       </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>,
