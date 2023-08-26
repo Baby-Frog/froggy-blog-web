@@ -1,4 +1,5 @@
 import MainNavbar from "src/components/MainNavbar/MainNavbar";
+import HomepageBanner from "src/pages/Homepage/components/HomepageBanner";
 import { styled } from "styled-components";
 
 const MainLayoutWrapper = styled.div`
@@ -21,6 +22,7 @@ const MainLayout = ({ children }: TMainLayoutProps) => {
   return (
     <>
       <MainNavbar></MainNavbar>
+      <HomepageBanner></HomepageBanner>
       <MainLayoutWrapper>{children}</MainLayoutWrapper>
     </>
   );

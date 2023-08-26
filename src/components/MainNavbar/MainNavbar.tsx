@@ -1,10 +1,10 @@
 import { NavLink } from "react-router-dom";
-import Logo from "src/assets/logo-2.png";
+import Logo from "src/assets/logo-3.png";
 import { path } from "src/constants/path";
 import { styled } from "styled-components";
 import { useMedia } from "react-use";
 const MainNavbarWrapper = styled.div`
-  background-color: ${(props) => props.theme.primaryGreen};
+  background-color: #ffc017;
   border-bottom: 1px solid #000;
   .main-navbar {
     max-width: 1320px;
@@ -18,17 +18,16 @@ const MainNavbarWrapper = styled.div`
   .main-navbar-logo {
     display: flex;
     align-items: center;
-    gap: 8px;
     img {
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       object-fit: cover;
     }
     .main-navbar-title {
       font-weight: 700;
-      font-size: 24px;
-      font-family: "Noe Display";
-      color: #fff;
+      font-size: 32px;
+      /* font-family: "Noe Display"; */
+      color: #000;
     }
   }
   .main-navbar-content {
@@ -38,12 +37,12 @@ const MainNavbarWrapper = styled.div`
     gap: 36px;
     align-items: center;
     .main-navbar-item {
-      color: #fff;
+      color: #000;
       font-weight: 500;
       &--button {
-        background: #fff;
+        background: #000;
         border-radius: 24px;
-        color: #000;
+        color: #fff;
         padding: 6px 8px;
         width: 150px;
         display: flex;

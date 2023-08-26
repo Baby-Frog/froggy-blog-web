@@ -1,6 +1,7 @@
 import { useRoutes } from "react-router-dom";
 import MainLayout from "src/layouts/MainLayout/MainLayout";
 import Homepage from "src/pages/Homepage";
+import HomepageBanner from "src/pages/Homepage/components/HomepageBanner";
 
 // function ProtectedRoute() {
 //   const { isAuthenticated } = useContext(AuthContext);
@@ -18,9 +19,11 @@ export default function useRouteElement() {
       path: "/",
       index: true,
       element: (
-        <MainLayout>
-          <Homepage></Homepage>
-        </MainLayout>
+        <>
+          <MainLayout>
+            <Homepage></Homepage>
+          </MainLayout>
+        </>
       ),
     },
   ]);

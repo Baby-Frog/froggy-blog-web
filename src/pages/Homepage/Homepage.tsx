@@ -1,7 +1,8 @@
 import React from "react";
+import HomepageBanner from "./components/HomepageBanner";
 
 const Homepage = () => {
-  return <div></div>;
+  return <></>;
 };
 
 export default Homepage;
