@@ -1,5 +1,4 @@
 import React from "react";
-import { MediumAnimationSvg } from "src/components/Svg";
 import { styled } from "styled-components";
 
 type THomepageBannerProps = {
@@ -45,7 +44,8 @@ const HomepageBannerHeading = styled.h2`
 
 const HomepageBannerDescription = styled.p`
   font-size: 20px;
-  max-width: 400px;
+  max-width: 500px;
+  font-weight: 500;
   color: #000;
   margin-top: 32px;
 `;
@@ -67,7 +67,8 @@ const HomepageBanner = () => {
         <HomepageBannerLeft>
           <HomepageBannerHeading>Stay curious!</HomepageBannerHeading>
           <HomepageBannerDescription>
-            Discover stories, thinking, and expertise from writers on any topic.
+            Every time you post something online, you have a choice. You can either make it something that adds to the
+            happiness levels in the world—or you can make it something that takes away. ~ Zoe Sugg
           </HomepageBannerDescription>
           <HomepageBannerButton>Start reading</HomepageBannerButton>
         </HomepageBannerLeft>

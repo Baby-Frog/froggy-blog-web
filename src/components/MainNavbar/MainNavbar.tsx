@@ -1,10 +1,10 @@
 import { NavLink } from "react-router-dom";
-import Logo from "src/assets/logo-3.png";
-import { path } from "src/constants/path";
+import Logo from "src/assets/logo-4.png";
 import { styled } from "styled-components";
+import { path } from "src/constants/path";
 import { useMedia } from "react-use";
 const MainNavbarWrapper = styled.div`
-  background-color: #ffc017;
+  background-color: ${(props) => props.theme.colors.primary};
   border-bottom: 1px solid #000;
   .main-navbar {
     max-width: 1320px;
@@ -18,9 +18,10 @@ const MainNavbarWrapper = styled.div`
   .main-navbar-logo {
     display: flex;
     align-items: center;
+    gap: 12px;
     img {
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
       object-fit: cover;
     }
     .main-navbar-title {
@@ -48,7 +49,7 @@ const MainNavbarWrapper = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        font-family: "Pacifico";
+        /* font-family: "Pacifico"; */
       }
     }
   }
