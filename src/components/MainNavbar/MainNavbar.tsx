@@ -3,6 +3,8 @@ import Logo from "src/assets/logo-4.png";
 import { styled } from "styled-components";
 import { path } from "src/constants/path";
 import { useMedia } from "react-use";
+import { useState } from "react";
+import HomepageAuthenModal from "src/pages/Homepage/components/HomepageAuthenModal";
 const MainNavbarWrapper = styled.div`
   background-color: ${(props) => props.theme.colors.primary};
   border-bottom: 1px solid #000;
@@ -46,6 +48,7 @@ const MainNavbarWrapper = styled.div`
         color: #fff;
         padding: 6px 8px;
         width: 150px;
+        cursor: pointer;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -58,6 +61,7 @@ const MainNavbarWrapper = styled.div`
 const MainNavbar = () => {
   // Khi xuống mobile thì navbar sẽ là một component hoàn toàn khác => đỡ suy nghĩ CSS responsive đau đầu
   const isMobile = useMedia("(max-width:767px)");
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   return (
     <MainNavbarWrapper>
       <div className="main-navbar">
@@ -79,12 +83,20 @@ const MainNavbar = () => {
             <li className="main-navbar-item">
               <NavLink to={path.HOMEPAGE}>Sign in</NavLink>
             </li>
-            <li className="main-navbar-item--button">
-              <NavLink to={path.HOMEPAGE}>Start Writing</NavLink>
+            <li
+              className="main-navbar-item--button"
+              onClick={() => setModalIsOpen(true)}
+              aria-hidden
+            >
+              <button type="button">Start Writing</button>
             </li>
           </ul>
         </div>
       </div>
+      <HomepageAuthenModal
+        handleClose={() => setModalIsOpen(false)}
+        isOpen={modalIsOpen}
+      ></HomepageAuthenModal>
     </MainNavbarWrapper>
   );
 };
