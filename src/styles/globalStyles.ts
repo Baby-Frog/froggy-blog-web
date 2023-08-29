@@ -9,7 +9,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     font-size:14px;
-    font-family: "Lora", Helvetica, Sans-Serif;
+    font-family: "DM Sans", "Lora", Helvetica, Sans-Serif;
   }
 `;
 
