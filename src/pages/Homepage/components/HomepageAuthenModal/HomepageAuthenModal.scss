@@ -5,6 +5,7 @@
   font-weight: 700;
   text-align: center;
   font-size: 36px;
+  @apply text-softBlack;
 }
 
 .modal-login-methods {
@@ -25,7 +26,7 @@
   @apply bg-white text-black;
   border: 2px solid #000;
   display: flex;
-  font-weight: 700;
+  font-weight: 500;
   align-items: center;
   justify-content: center;
   width: 308px;
@@ -48,10 +49,10 @@
 .modal-text {
   text-align: center;
   color: #84878b;
-  margin-top: 12px;
+  // margin-top: 36px;
   background-color: #fff;
   width: fit-content;
-  margin: 0 auto;
+  margin: 12px auto 0 auto;
   padding: 10px;
   position: relative;
   z-index: 1;
@@ -63,7 +64,7 @@
     height: 1px;
     top: 50%;
     transform: translateY(-50%);
-    background-color: #a8a8a8;
+    background-color: rgba(168, 168, 168, 0.467);
   }
   &::after {
     content: "";
@@ -73,6 +74,6 @@
     height: 1px;
     top: 50%;
     transform: translateY(-50%);
-    background-color: #a8a8a8;
+    background-color: rgba(168, 168, 168, 0.467);
   }
 }

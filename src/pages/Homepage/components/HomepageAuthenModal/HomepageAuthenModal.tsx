@@ -1,14 +1,31 @@
 import React from "react";
 import Modal from "src/components/Modal";
-import "./HomepageAuthenModal.scss";
 import { FacebookIcon, GoogleIcon } from "src/components/Icon";
+import { SubmitHandler, useForm } from "react-hook-form";
+import "./HomepageAuthenModal.scss";
+
 type THomepageAuthenModalProps = {
   isOpen?: boolean;
-  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   handleClose?: () => void;
 };
 
-const HomepageAuthenModal = ({ handleClose, isOpen, setIsOpen }: THomepageAuthenModalProps) => {
+type TLoginForm = {
+  email: string;
+  password: string;
+  rePassword: string;
+};
+
+const HomepageAuthenModal = ({ handleClose, isOpen }: THomepageAuthenModalProps) => {
+  const {
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TLoginForm>({
+    mode: "onSubmit",
+    reValidateMode: "onSubmit",
+  });
+  const handleLogin: SubmitHandler<TLoginForm> = (data) => {
+    console.log(data);
+  };
   return (
     <Modal
       handleClose={handleClose}
@@ -20,13 +37,14 @@ const HomepageAuthenModal = ({ handleClose, isOpen, setIsOpen }: THomepageAuthen
         <div className="modal-login-methods">
           <button className="modal-login-method modal-login-method--google">
             <GoogleIcon colored></GoogleIcon>
-            <span>Sign in with google</span>
+            <span>Sign in with Google</span>
           </button>
           <button className="modal-login-method modal-login-method--facebook">
             <FacebookIcon></FacebookIcon>
           </button>
         </div>
         <div className="modal-text">or continue with</div>
+        <form onSubmit={handleSubmit(handleLogin)}></form>
       </div>
     </Modal>
   );

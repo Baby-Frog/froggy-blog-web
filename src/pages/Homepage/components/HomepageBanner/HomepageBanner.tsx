@@ -43,11 +43,17 @@ const HomepageBannerHeading = styled.h2`
 `;
 
 const HomepageBannerDescription = styled.p`
-  font-size: 20px;
+  font-size: 18px;
   max-width: 500px;
   font-weight: 500;
   color: #000;
   margin-top: 32px;
+`;
+
+const HomepageBannerAuthorName = styled.p`
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
 `;
 
 const HomepageBannerButton = styled.button`
@@ -68,8 +74,9 @@ const HomepageBanner = () => {
           <HomepageBannerHeading>Stay curious!</HomepageBannerHeading>
           <HomepageBannerDescription>
             Every time you post something online, you have a choice. You can either make it something that adds to the
-            happiness levels in the world—or you can make it something that takes away. ~ Zoe Sugg
+            happiness levels in the world—or you can make it something that takes away.
           </HomepageBannerDescription>
+          <HomepageBannerAuthorName>- Zoe Sugg</HomepageBannerAuthorName>
           <HomepageBannerButton>Start reading</HomepageBannerButton>
         </HomepageBannerLeft>
         <HomepageBannerRight></HomepageBannerRight>
