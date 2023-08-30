@@ -1,8 +1,10 @@
-import React from "react";
 import Modal from "src/components/Modal";
 import { FacebookIcon, GoogleIcon } from "src/components/Icon";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { loginSchema } from "src/schemas/authentication.schemas";
 import "./HomepageAuthenModal.scss";
+import Label from "src/components/Label";
 
 type THomepageAuthenModalProps = {
   isOpen?: boolean;
@@ -12,20 +14,23 @@ type THomepageAuthenModalProps = {
 type TLoginForm = {
   email: string;
   password: string;
-  rePassword: string;
+  // rePassword: string;
 };
 
 const HomepageAuthenModal = ({ handleClose, isOpen }: THomepageAuthenModalProps) => {
   const {
     handleSubmit,
+    register,
     formState: { errors },
   } = useForm<TLoginForm>({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
+    resolver: yupResolver(loginSchema),
   });
-  const handleLogin: SubmitHandler<TLoginForm> = (data) => {
+  const handleLogin = handleSubmit((data) => {
     console.log(data);
-  };
+  });
+  console.log(errors);
   return (
     <Modal
       handleClose={handleClose}
@@ -44,7 +49,27 @@ const HomepageAuthenModal = ({ handleClose, isOpen }: THomepageAuthenModalProps)
           </button>
         </div>
         <div className="modal-text">or continue with</div>
-        <form onSubmit={handleSubmit(handleLogin)}></form>
+        <form
+          onSubmit={handleLogin}
+          noValidate
+          autoComplete="on"
+        >
+          <Label htmlFor="email">E-mail address</Label>
+          <input
+            type="email"
+            id="email"
+            placeholder="Enter your e-mail address"
+            {...register("email")}
+          />
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+            {...register("password")}
+          />
+          <button type="submit">Sign in</button>
+        </form>
       </div>
     </Modal>
   );
