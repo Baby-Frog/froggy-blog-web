@@ -48,6 +48,16 @@ const HomepageBannerDescription = styled.p`
   font-weight: 500;
   color: #000;
   margin-top: 32px;
+  word-break: break-all;
+  .Typewriter {
+    font-size: 18px;
+    max-width: 402px;
+    font-weight: 500;
+    color: #000;
+    margin-top: 32px;
+    word-break: break-all;
+    height: 105px;
+  }
 `;
 
 const HomepageBannerAuthorName = styled.p`
@@ -74,16 +84,29 @@ const HomepageBanner = () => {
           <HomepageBannerHeading>
             <Typewriter
               onInit={(typewriter) => {
-                typewriter.typeString("Stay curious!").pauseFor(1000).deleteChars(8).typeString("creative!").start();
+                typewriter.start().typeString("Stay curious!").pauseFor(1500).deleteChars(8).typeString("creative!");
               }}
               options={{
-                deleteSpeed: 5,
+                deleteSpeed: 3,
+                loop: true,
               }}
             />
           </HomepageBannerHeading>
           <HomepageBannerDescription>
-            Every time you post something online, you have a choice. You can either make it something that adds to the
-            happiness levels in the world—or you can make it something that takes away.
+            <Typewriter
+              onInit={(typewriter) => {
+                typewriter
+                  .pauseFor(1000)
+
+                  .start()
+                  .typeString(
+                    "Every time you post something online, you have a choice. You can either make it something that adds to the happiness levels in the world—or you can make it something that takes away.",
+                  );
+              }}
+              options={{
+                delay: 1,
+              }}
+            />
           </HomepageBannerDescription>
           <HomepageBannerAuthorName>- Zoe Sugg</HomepageBannerAuthorName>
           <HomepageBannerButton>Start reading</HomepageBannerButton>
