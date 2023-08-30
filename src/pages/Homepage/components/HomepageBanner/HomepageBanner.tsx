@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
-
+import Typewriter from "typewriter-effect";
 type THomepageBannerProps = {
   something: string;
 };
@@ -71,7 +71,16 @@ const HomepageBanner = () => {
     <HomepageBannerContainer>
       <HomepageBannerMain>
         <HomepageBannerLeft>
-          <HomepageBannerHeading>Stay curious!</HomepageBannerHeading>
+          <HomepageBannerHeading>
+            <Typewriter
+              onInit={(typewriter) => {
+                typewriter.typeString("Stay curious!").pauseFor(1000).deleteChars(8).typeString("creative!").start();
+              }}
+              options={{
+                deleteSpeed: 5,
+              }}
+            />
+          </HomepageBannerHeading>
           <HomepageBannerDescription>
             Every time you post something online, you have a choice. You can either make it something that adds to the
             happiness levels in the world—or you can make it something that takes away.
