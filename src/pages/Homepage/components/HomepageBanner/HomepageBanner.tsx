@@ -38,7 +38,7 @@ const HomepageBannerRight = styled.div``;
 
 const HomepageBannerHeading = styled.h2`
   display: flex;
-  gap: 8px;
+  gap: 10px;
   font-size: 92px;
   font-weight: 500;
   color: #000;
@@ -104,10 +104,10 @@ const HomepageBanner = () => {
                 typewriter
                   .pauseFor(1000)
 
-                  .start()
                   .typeString(
                     "Every time you post something online, you have a choice. You can either make it something that adds to the happiness levels in the world—or you can make it something that takes away.",
-                  );
+                  )
+                  .start();
               }}
               options={{
                 delay: 1,
