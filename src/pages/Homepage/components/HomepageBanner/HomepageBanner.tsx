@@ -37,9 +37,14 @@ const HomepageBannerLeft = styled.div`
 const HomepageBannerRight = styled.div``;
 
 const HomepageBannerHeading = styled.h2`
+  display: flex;
+  gap: 8px;
   font-size: 92px;
   font-weight: 500;
   color: #000;
+  .Typewriter {
+    text-decoration: underline;
+  }
 `;
 
 const HomepageBannerDescription = styled.p`
@@ -82,6 +87,7 @@ const HomepageBanner = () => {
       <HomepageBannerMain>
         <HomepageBannerLeft>
           <HomepageBannerHeading>
+            <span>Stay</span>
             <Typewriter
               onInit={(typewriter) => {
                 typewriter.start().typeString("curious!").pauseFor(1500).deleteChars(8).typeString("creative!");
@@ -115,6 +121,7 @@ const HomepageBanner = () => {
               }}
               options={{
                 delay: 1,
+                cursor: "",
               }}
             />
           </HomepageBannerAuthorName>
