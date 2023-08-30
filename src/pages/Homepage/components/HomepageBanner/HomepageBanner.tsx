@@ -51,7 +51,7 @@ const HomepageBannerDescription = styled.p`
   word-break: break-all;
   .Typewriter {
     font-size: 18px;
-    max-width: 402px;
+    max-width: 410px;
     font-weight: 500;
     color: #000;
     margin-top: 32px;
@@ -84,7 +84,7 @@ const HomepageBanner = () => {
           <HomepageBannerHeading>
             <Typewriter
               onInit={(typewriter) => {
-                typewriter.start().typeString("Stay curious!").pauseFor(1500).deleteChars(8).typeString("creative!");
+                typewriter.start().typeString("curious!").pauseFor(1500).deleteChars(8).typeString("creative!");
               }}
               options={{
                 deleteSpeed: 3,
@@ -108,7 +108,16 @@ const HomepageBanner = () => {
               }}
             />
           </HomepageBannerDescription>
-          <HomepageBannerAuthorName>- Zoe Sugg</HomepageBannerAuthorName>
+          <HomepageBannerAuthorName>
+            <Typewriter
+              onInit={(typewriter) => {
+                typewriter.pauseFor(4500).start().typeString("- Zoe Sugg");
+              }}
+              options={{
+                delay: 1,
+              }}
+            />
+          </HomepageBannerAuthorName>
           <HomepageBannerButton>Start reading</HomepageBannerButton>
         </HomepageBannerLeft>
         <HomepageBannerRight></HomepageBannerRight>
