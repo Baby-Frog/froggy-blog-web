@@ -38,6 +38,7 @@
     "sweetalert2": "^11.7.20",
     "swiper": "^10.1.0",
     "tinymce": "^6.6.2",
+    "typewriter-effect": "^2.20.1",
     "yup": "^1.2.0"
   },
   "devDependencies": {
