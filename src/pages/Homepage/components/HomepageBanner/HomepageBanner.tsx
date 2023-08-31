@@ -90,10 +90,19 @@ const HomepageBanner = () => {
             <span>Stay</span>
             <Typewriter
               onInit={(typewriter) => {
-                typewriter.start().typeString("curious!").pauseFor(1500).deleteChars(8).typeString("creative!");
+                typewriter
+                  .start()
+                  .typeString("curious!")
+                  .pauseFor(1500)
+                  .deleteChars(8)
+                  .typeString("creative!")
+                  .pauseFor(1500)
+                  .deleteChars(9)
+                  .typeString("imaginative!")
+                  .pauseFor(1500);
               }}
               options={{
-                deleteSpeed: 3,
+                deleteSpeed: 5,
                 loop: true,
               }}
             />
