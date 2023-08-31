@@ -8,6 +8,7 @@ export default {
         secondary: "#FFC947",
         softBlack: "#0e1111",
         charcoal: "#36454F",
+        failure: "#EB5757",
       },
       boxShadow: {
         softShadowSpread: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
