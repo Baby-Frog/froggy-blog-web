@@ -55,18 +55,30 @@ const HomepageAuthenModal = ({ handleClose, isOpen }: THomepageAuthenModalProps)
           noValidate
           autoComplete="on"
         >
-          <Label htmlFor="email">E-mail address</Label>
+          <Label
+            htmlFor="email"
+            className="mb-1"
+          >
+            E-mail address
+          </Label>
           <Input
             name="email"
             register={register}
             errorMsg={errors.email?.message}
           ></Input>
-          <label htmlFor="password">Password</label>
-          <input
+          <Label
+            htmlFor="password"
+            className="mb-1"
+          >
+            Password
+          </Label>
+          <Input
             type="password"
             id="password"
+            name="password"
             placeholder="Enter your password"
-            {...register("password")}
+            register={register}
+            errorMsg={errors.password?.message}
           />
           <button type="submit">Sign in</button>
         </form>

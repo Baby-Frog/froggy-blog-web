@@ -15,12 +15,21 @@ type TInputProps = {
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const InputContainer = styled.div``;
-const InputEl = styled.input``;
+const InputEl = styled.input`
+  width: 100%;
+  border-radius: 6px;
+  height: 34px;
+  flex-shrink: 0;
+  outline: none;
+  padding: 10px;
+  background-color: #e7ecf3;
+`;
 const ErrorMessage = styled.div`
   margin-top: 4px;
-  min-height: 5px;
+  min-height: 18px;
   font-weight: 500;
-  font-size: 10px;
+  font-size: 12px;
+
   color: ${(props) => props.theme.colors.failure};
 `;
 
@@ -36,7 +45,19 @@ const Input = ({
   ...rest
 }: TInputProps) => {
   const registerResult = register(name, rules);
-
+  if (type === "password") {
+    return (
+      <InputContainer>
+        <InputEl
+          type="password"
+          placeholder={placeholder}
+          className={inputClassName}
+          {...registerResult}
+        />
+        <ErrorMessage>{errorMsg}</ErrorMessage>
+      </InputContainer>
+    );
+  }
   return (
     <InputContainer>
       <InputEl
