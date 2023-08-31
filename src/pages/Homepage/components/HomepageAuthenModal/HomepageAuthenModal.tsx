@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "src/schemas/authentication.schemas";
 import "./HomepageAuthenModal.scss";
 import Label from "src/components/Label";
+import Input from "src/components/Input";
 
 type THomepageAuthenModalProps = {
   isOpen?: boolean;
@@ -55,12 +56,11 @@ const HomepageAuthenModal = ({ handleClose, isOpen }: THomepageAuthenModalProps)
           autoComplete="on"
         >
           <Label htmlFor="email">E-mail address</Label>
-          <input
-            type="email"
-            id="email"
-            placeholder="Enter your e-mail address"
-            {...register("email")}
-          />
+          <Input
+            name="email"
+            register={register}
+            errorMsg={errors.email?.message}
+          ></Input>
           <label htmlFor="password">Password</label>
           <input
             type="password"
