@@ -51,8 +51,8 @@ const ModalCloseButton = styled.button`
   justify-content: center;
   align-items: center;
   svg {
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
   }
 `;
 
