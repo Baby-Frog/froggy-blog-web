@@ -6,6 +6,7 @@ import { loginSchema } from "src/schemas/authentication.schemas";
 import "./HomepageAuthenModal.scss";
 import Label from "src/components/Label";
 import Input from "src/components/Input";
+import Button from "src/components/Button";
 
 type THomepageAuthenModalProps = {
   isOpen?: boolean;
@@ -64,6 +65,7 @@ const HomepageAuthenModal = ({ handleClose, isOpen }: THomepageAuthenModalProps)
           <Input
             name="email"
             register={register}
+            placeholder="Enter your e-mail address"
             errorMsg={errors.email?.message}
           ></Input>
           <Label
@@ -80,7 +82,7 @@ const HomepageAuthenModal = ({ handleClose, isOpen }: THomepageAuthenModalProps)
             register={register}
             errorMsg={errors.password?.message}
           />
-          <button type="submit">Sign in</button>
+          <Button type="submit">Sign in</Button>
         </form>
       </div>
     </Modal>

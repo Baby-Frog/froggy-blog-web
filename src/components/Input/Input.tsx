@@ -1,6 +1,7 @@
 import React, { InputHTMLAttributes } from "react";
 import { RegisterOptions, UseFormRegister } from "react-hook-form";
 import { styled } from "styled-components";
+import { FailureIcon } from "../Icon";
 
 type TInputProps = {
   type?: React.HTMLInputTypeAttribute;
@@ -24,12 +25,18 @@ const InputEl = styled.input`
   padding: 10px;
   background-color: #e7ecf3;
 `;
-const ErrorMessage = styled.div`
+
+const ErrorWrapper = styled.div`
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  min-height: 10px;
   margin-top: 4px;
-  min-height: 18px;
+`;
+
+const ErrorMessage = styled.div`
   font-weight: 500;
   font-size: 12px;
-
   color: ${(props) => props.theme.colors.failure};
 `;
 
@@ -54,7 +61,12 @@ const Input = ({
           className={inputClassName}
           {...registerResult}
         />
-        <ErrorMessage>{errorMsg}</ErrorMessage>
+        {errorMsg && (
+          <ErrorWrapper>
+            <FailureIcon></FailureIcon>
+            <ErrorMessage>{errorMsg}</ErrorMessage>
+          </ErrorWrapper>
+        )}
       </InputContainer>
     );
   }
@@ -66,7 +78,12 @@ const Input = ({
         className={inputClassName}
         {...registerResult}
       />
-      <ErrorMessage>{errorMsg}</ErrorMessage>
+      {errorMsg && (
+        <ErrorWrapper>
+          <FailureIcon></FailureIcon>
+          <ErrorMessage>{errorMsg}</ErrorMessage>
+        </ErrorWrapper>
+      )}
     </InputContainer>
   );
 };

@@ -3,8 +3,8 @@ import React from "react";
 const FailureIcon = (props: JSX.IntrinsicElements["svg"]) => {
   return (
     <svg
-      width={10}
-      height={9}
+      width={12}
+      height={12}
       viewBox="0 0 10 9"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
