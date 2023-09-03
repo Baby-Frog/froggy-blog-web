@@ -42,7 +42,7 @@ const HomepageBannerHeading = styled.h2`
   font-size: 92px;
   font-weight: 500;
   color: #000;
-  .Typewriter {
+  .Typewriter:nth-of-type(2) {
     text-decoration: underline;
   }
 `;
@@ -87,11 +87,19 @@ const HomepageBanner = () => {
       <HomepageBannerMain>
         <HomepageBannerLeft>
           <HomepageBannerHeading>
-            <span>Stay</span>
+            <Typewriter
+              onInit={(typewriter) => {
+                typewriter.start().typeString("Stay");
+              }}
+              options={{
+                cursor: "",
+              }}
+            />
             <Typewriter
               onInit={(typewriter) => {
                 typewriter
                   .start()
+                  .pauseFor(500)
                   .typeString("curious!")
                   .pauseFor(1500)
                   .deleteChars(8)
@@ -111,7 +119,7 @@ const HomepageBanner = () => {
             <Typewriter
               onInit={(typewriter) => {
                 typewriter
-                  .pauseFor(1000)
+                  .pauseFor(500)
 
                   .typeString(
                     "Every time you post something online, you have a choice. You can either make it something that adds to the happiness levels in the world—or you can make it something that takes away.",
@@ -119,17 +127,17 @@ const HomepageBanner = () => {
                   .start();
               }}
               options={{
-                delay: 1,
+                delay: 10,
               }}
             />
           </HomepageBannerDescription>
           <HomepageBannerAuthorName>
             <Typewriter
               onInit={(typewriter) => {
-                typewriter.pauseFor(4500).start().typeString("- Zoe Sugg");
+                typewriter.pauseFor(3500).start().typeString("- Zoe Sugg");
               }}
               options={{
-                delay: 1,
+                delay: 15,
                 cursor: "",
               }}
             />
