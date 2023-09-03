@@ -34,6 +34,11 @@ const MainNavbarWrapper = styled.div`
       /* font-family: "Noe Display"; */
       color: #000;
     }
+    @media screen and (max-width: 600px) {
+      .main-navbar-title {
+        display: none;
+      }
+    }
   }
   .main-navbar-content {
   }
@@ -55,6 +60,12 @@ const MainNavbarWrapper = styled.div`
         justify-content: center;
         align-items: center;
         /* font-family: "Pacifico"; */
+      }
+      @media screen and (max-width: 767px) {
+        &:nth-of-type(1),
+        &:nth-of-type(2) {
+          display: none;
+        }
       }
     }
   }

@@ -26,12 +26,17 @@ const HomepageBannerMain = styled.div`
     padding-inline: 16px;
   }
   @media screen and (max-width: 767px) {
+    background-position: 50% 50%;
     padding-inline: 12px;
   }
 `;
 
 const HomepageBannerLeft = styled.div`
   display: block;
+  @media screen and (max-width: 767.98px) {
+    margin: 0 auto;
+    text-align: center;
+  }
 `;
 
 const HomepageBannerRight = styled.div``;
@@ -42,8 +47,19 @@ const HomepageBannerHeading = styled.h2`
   font-size: 92px;
   font-weight: 500;
   color: #000;
+
   .Typewriter:nth-of-type(2) {
     text-decoration: underline;
+  }
+  @media screen and (max-width: 767px) {
+    font-size: 72px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .Typewriter {
+      font-size: 72px;
+    }
   }
 `;
 

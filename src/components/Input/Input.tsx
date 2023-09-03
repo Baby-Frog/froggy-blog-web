@@ -20,7 +20,9 @@ const InputContainer = styled.div``;
 const InputEl = styled.input`
   width: 100%;
   border-radius: 6px;
-  height: 34px;
+  font-size: 14px;
+  font-weight: 500;
+  height: 48px;
   flex-shrink: 0;
   outline: none;
   padding: 10px;
