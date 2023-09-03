@@ -9,9 +9,10 @@ type TInputProps = {
   placeholder?: string;
   name: string;
   className?: string;
+  inputClassName?: string;
+  containerClassName?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register: UseFormRegister<any>;
-  inputClassName?: string;
   rules?: RegisterOptions;
 } & InputHTMLAttributes<HTMLInputElement>;
 
@@ -47,6 +48,7 @@ const Input = ({
   register,
   className,
   inputClassName,
+  containerClassName,
   rules,
   placeholder = "Some random placeholder...",
   ...rest
@@ -54,7 +56,7 @@ const Input = ({
   const registerResult = register(name, rules);
   if (type === "password") {
     return (
-      <InputContainer>
+      <InputContainer className={containerClassName}>
         <InputEl
           type="password"
           placeholder={placeholder}
@@ -71,7 +73,7 @@ const Input = ({
     );
   }
   return (
-    <InputContainer>
+    <InputContainer className={containerClassName}>
       <InputEl
         type={type}
         placeholder={placeholder}
