@@ -77,3 +77,20 @@
     background-color: rgba(168, 168, 168, 0.467);
   }
 }
+
+.modal-toggle {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: center;
+  text-align: center;
+}
+
+.modal-toggle-button {
+  font-size: 14px;
+  color: #316bff;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+}

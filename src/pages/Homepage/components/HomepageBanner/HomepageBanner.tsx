@@ -47,7 +47,7 @@ const HomepageBannerHeading = styled.h2`
   }
 `;
 
-const HomepageBannerDescription = styled.p`
+const HomepageBannerDescription = styled.div`
   font-size: 18px;
   max-width: 500px;
   font-weight: 500;
@@ -65,7 +65,7 @@ const HomepageBannerDescription = styled.p`
   }
 `;
 
-const HomepageBannerAuthorName = styled.p`
+const HomepageBannerAuthorName = styled.div`
   font-size: 16px;
   font-weight: 500;
   color: #000;

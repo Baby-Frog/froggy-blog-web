@@ -1,3 +1,3 @@
-import HomepageAuthenModal from "./HomepageAuthenModal";
+import HomepageRegisterModal from "./HomepageRegisterModal";
 
-export default HomepageAuthenModal;
+export default HomepageRegisterModal;

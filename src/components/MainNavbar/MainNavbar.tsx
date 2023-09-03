@@ -1,10 +1,11 @@
-import { NavLink } from "react-router-dom";
-import Logo from "src/assets/logo-4.png";
-import { styled } from "styled-components";
-import { path } from "src/constants/path";
-import { useMedia } from "react-use";
 import { useState } from "react";
-import HomepageAuthenModal from "src/pages/Homepage/components/HomepageAuthenModal";
+import { NavLink } from "react-router-dom";
+import { useMedia } from "react-use";
+import Logo from "src/assets/logo-4.png";
+import { path } from "src/constants/path";
+import HomepageRegisterModal from "src/pages/Homepage/components/HomepageAuthenModal";
+import HomepageAuthenModal from "src/pages/Homepage/components/HomepageAuthenModal/HomepageAuthenModal";
+import { styled } from "styled-components";
 const MainNavbarWrapper = styled.div`
   background-color: ${(props) => props.theme.colors.primary};
   border-bottom: 1px solid #000;
@@ -29,6 +30,7 @@ const MainNavbarWrapper = styled.div`
     .main-navbar-title {
       font-weight: 700;
       font-size: 32px;
+      letter-spacing: -2px;
       /* font-family: "Noe Display"; */
       color: #000;
     }
