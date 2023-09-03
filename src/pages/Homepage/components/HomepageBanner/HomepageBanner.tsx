@@ -26,7 +26,8 @@ const HomepageBannerMain = styled.div`
     padding-inline: 16px;
   }
   @media screen and (max-width: 767px) {
-    background-position: 50% 50%;
+    /* background-position: 50% 50%; */
+    background-image: none;
     padding-inline: 12px;
   }
 `;
@@ -52,13 +53,13 @@ const HomepageBannerHeading = styled.h2`
     text-decoration: underline;
   }
   @media screen and (max-width: 767px) {
-    font-size: 72px;
+    font-size: 64px;
     margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
     .Typewriter {
-      font-size: 72px;
+      font-size: 64px;
     }
   }
 `;
@@ -78,6 +79,11 @@ const HomepageBannerDescription = styled.div`
     margin-top: 32px;
     word-break: break-all;
     height: 105px;
+  }
+  @media screen and (max-width: 767.98px) {
+    .Typewriter {
+      height: auto;
+    }
   }
 `;
 
@@ -122,7 +128,7 @@ const HomepageBanner = () => {
                   .typeString("creative!")
                   .pauseFor(1500)
                   .deleteChars(9)
-                  .typeString("imaginative!")
+                  .typeString("inspired!")
                   .pauseFor(1500);
               }}
               options={{
