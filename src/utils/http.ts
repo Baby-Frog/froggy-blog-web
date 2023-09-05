@@ -23,6 +23,10 @@ class Http {
         return Promise.reject(err);
       },
     );
+    // this.instance.interceptors.response.use((response) => {
+    //   const { url } = response.config;
+    //   if(url)
+    // });
   }
 }
 
