@@ -161,7 +161,7 @@ const HomepageBanner = () => {
           <HomepageBannerAuthorName>
             <Typewriter
               onInit={(typewriter) => {
-                typewriter.pauseFor(3500).start().typeString("- Zoe Sugg");
+                typewriter.pauseFor(2900).typeString("- Zoe Sugg").start();
               }}
               options={{
                 delay: 15,
