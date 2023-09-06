@@ -73,7 +73,7 @@ const MainNavbarWrapper = styled.div`
 
 const MainNavbar = () => {
   // Khi xuống mobile thì navbar sẽ là một component hoàn toàn khác => đỡ suy nghĩ CSS responsive đau đầu
-  const isMobile = useMedia("(max-width:767px)");
+  // const isMobile = useMedia("(max-width:767px)");
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   return (
     <MainNavbarWrapper>
@@ -93,7 +93,11 @@ const MainNavbar = () => {
             <li className="main-navbar-item">
               <NavLink to={path.HOMEPAGE}>About</NavLink>
             </li>
-            <li className="main-navbar-item">
+            <li
+              className="main-navbar-item"
+              onClick={() => setModalIsOpen(true)}
+              aria-hidden
+            >
               <NavLink to={path.HOMEPAGE}>Sign in</NavLink>
             </li>
             <li

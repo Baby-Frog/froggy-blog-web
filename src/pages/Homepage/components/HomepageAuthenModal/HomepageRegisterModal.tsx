@@ -45,7 +45,7 @@ const HomepageRegisterModal = ({
       maxWidth="466px"
     >
       <div className="modal-content">
-        <h2 className="modal-heading">Welcome back!</h2>
+        <h2 className="modal-heading">Sign up your account!</h2>
         <div className="modal-login-methods">
           <button className="modal-login-method modal-login-method--google">
             <GoogleIcon colored></GoogleIcon>

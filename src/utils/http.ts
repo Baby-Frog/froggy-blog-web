@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { TAuthResponse } from "src/types/auth-response.types";
-import { clearAllAuthenticationInfoFromLS, saveAccessTokenToLS } from "./auth";
+import { clearAllAuthenticationInfoFromLS, saveAccessTokenToLS, saveRefreshTokenToLS } from "./auth";
 class Http {
   instance: AxiosInstance;
   private accessToken: string;
@@ -35,8 +35,11 @@ class Http {
         const accessToken = data.data.access_token;
         const refreshToken = data.data.refresh_token;
         saveAccessTokenToLS(accessToken);
+        saveRefreshTokenToLS(refreshToken);
       } else if (url === "/logout") {
         this.accessToken = "";
+        this.refreshToken = "";
+        this.refreshTokenRequest = null;
         clearAllAuthenticationInfoFromLS();
       }
       return response;
