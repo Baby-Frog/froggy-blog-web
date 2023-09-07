@@ -1,11 +1,14 @@
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosError, AxiosInstance, HttpStatusCode } from "axios";
 import { TAuthResponse } from "src/types/auth-response.types";
 import { clearAllAuthenticationInfoFromLS, saveAccessTokenToLS, saveRefreshTokenToLS } from "./auth";
+import { ENDPOINTS } from "src/constants/endpoints";
+import { toast } from "react-toastify";
 class Http {
   instance: AxiosInstance;
   private accessToken: string;
   private refreshToken: string;
   private refreshTokenRequest: Promise<string> | null;
+  private TIME_BEFORE_LOOKING_FOR_A_NEW_REFRESH_TOKEN: number;
   constructor() {
     this.instance = axios.create({
       baseURL: import.meta.env.LOCAL_API_URL,
@@ -28,22 +31,50 @@ class Http {
         return Promise.reject(err);
       },
     );
-    this.instance.interceptors.response.use((response) => {
-      const { url } = response.config;
-      if (url === "/login" || url === "/register") {
-        const data = response.data as TAuthResponse;
-        const accessToken = data.data.access_token;
-        const refreshToken = data.data.refresh_token;
-        saveAccessTokenToLS(accessToken);
-        saveRefreshTokenToLS(refreshToken);
-      } else if (url === "/logout") {
+    this.instance.interceptors.response.use(
+      (response) => {
+        const { url } = response.config;
+        if (url === ENDPOINTS.LOGIN || url === ENDPOINTS.REGISTER) {
+          const data = response.data as TAuthResponse;
+          const accessToken = data.data.access_token;
+          const refreshToken = data.data.refresh_token;
+          saveAccessTokenToLS(accessToken);
+          saveRefreshTokenToLS(refreshToken);
+        } else if (url === ENDPOINTS.LOGOUT) {
+          this.accessToken = "";
+          this.refreshToken = "";
+          this.refreshTokenRequest = null;
+          clearAllAuthenticationInfoFromLS();
+        }
+        return response;
+      },
+      (error: AxiosError) => {
+        if (
+          ![HttpStatusCode.UnprocessableEntity, HttpStatusCode.Unauthorized].includes(error?.response?.status as number)
+        ) {
+          // @typescript-eslint/no-explicit-any
+          const data: any | undefined = error?.response?.data;
+          const message = data?.message || error.message;
+          toast.error(message);
+        }
+      },
+    );
+  }
+  private handleRefreshAccessToken() {
+    return this.instance
+      .get(ENDPOINTS.REFRESH_TOKEN)
+      .then((response) => {
+        const { access_token } = response.data.data;
+        saveAccessTokenToLS(access_token);
+        this.accessToken = access_token;
+      })
+      .catch((error) => {
+        clearAllAuthenticationInfoFromLS();
         this.accessToken = "";
         this.refreshToken = "";
-        this.refreshTokenRequest = null;
-        clearAllAuthenticationInfoFromLS();
-      }
-      return response;
-    });
+        console.error(error);
+        return Promise.reject(error);
+      });
   }
 }
 
