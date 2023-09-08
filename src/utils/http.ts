@@ -20,6 +20,7 @@ class Http {
     this.accessToken = "";
     this.refreshToken = "";
     this.refreshTokenRequest = null;
+    this.TIME_BEFORE_LOOKING_FOR_A_NEW_REFRESH_TOKEN = 10000;
     this.instance.interceptors.request.use(
       (config) => {
         if (this.accessToken) {
@@ -52,7 +53,7 @@ class Http {
         if (
           ![HttpStatusCode.UnprocessableEntity, HttpStatusCode.Unauthorized].includes(error?.response?.status as number)
         ) {
-          // @typescript-eslint/no-explicit-any
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const data: any | undefined = error?.response?.data;
           const message = data?.message || error.message;
           toast.error(message);

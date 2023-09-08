@@ -2,8 +2,8 @@ import * as yup from "yup";
 export const authenticationSchema = yup.object({
   email: yup
     .string()
-    .email("Your e-mail address is invalid, please try another one")
-    .required("E-mail address is required"),
+    .required("E-mail address is required")
+    .email("Your e-mail address is invalid, please try another one"),
   password: yup
     .string()
     .required("Password is required")
