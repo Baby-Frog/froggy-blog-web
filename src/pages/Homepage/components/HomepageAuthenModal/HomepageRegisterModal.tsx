@@ -7,6 +7,8 @@ import Label from "src/components/Label";
 import Modal from "src/components/Modal";
 import { registerSchema } from "src/schemas/authentication.schemas";
 import "./HomepageAuthenModal.scss";
+import { useMutation } from "react-query";
+import { authApi } from "src/apis/auth.apis";
 
 type THomepageRegisterModalProps = {
   isOpen?: boolean;
@@ -34,9 +36,11 @@ const HomepageRegisterModal = ({
     reValidateMode: "onSubmit",
     resolver: yupResolver(registerSchema),
   });
-
+  const { data: registerAccountData, mutate: registerAccountMutate } = useMutation({
+    mutationFn: authApi.register,
+  });
   const handleRegister = handleSubmit((data) => {
-    console.log(data);
+    registerAccountMutate(data);
   });
   return (
     <Modal

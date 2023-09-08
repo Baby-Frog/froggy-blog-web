@@ -11,7 +11,7 @@ class Http {
   private TIME_BEFORE_LOOKING_FOR_A_NEW_REFRESH_TOKEN: number;
   constructor() {
     this.instance = axios.create({
-      baseURL: import.meta.env.LOCAL_API_URL,
+      baseURL: import.meta.env.VITE_LOCAL_API_URL,
       timeout: 15000,
       headers: {
         "Content-Type": "application/json",

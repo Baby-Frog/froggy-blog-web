@@ -104,6 +104,7 @@ const HomepageBannerButton = styled.button`
 `;
 
 const HomepageBanner = () => {
+  console.log(import.meta.env.VITE_LOCAL_API_URL);
   return (
     <HomepageBannerContainer>
       <HomepageBannerMain>
