@@ -8,7 +8,6 @@ type TInputProps = {
   errorMsg?: string;
   placeholder?: string;
   name: string;
-  className?: string;
   inputClassName?: string;
   containerClassName?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -59,7 +58,6 @@ const Input = ({
   errorMsg,
   name,
   register,
-  className,
   inputClassName,
   containerClassName,
   rules,

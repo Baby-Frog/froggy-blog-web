@@ -1,5 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
+import { authApi } from "src/apis/auth.apis";
 import Button from "src/components/Button";
 import { FacebookIcon, GoogleIcon } from "src/components/Icon";
 import Input from "src/components/Input";
@@ -7,8 +9,6 @@ import Label from "src/components/Label";
 import Modal from "src/components/Modal";
 import { registerSchema } from "src/schemas/authentication.schemas";
 import "./HomepageAuthenModal.scss";
-import { useMutation } from "react-query";
-import { authApi } from "src/apis/auth.apis";
 
 type THomepageRegisterModalProps = {
   isOpen?: boolean;
@@ -36,7 +36,7 @@ const HomepageRegisterModal = ({
     reValidateMode: "onSubmit",
     resolver: yupResolver(registerSchema),
   });
-  const { data: registerAccountData, mutate: registerAccountMutate } = useMutation({
+  const { mutate: registerAccountMutate } = useMutation({
     mutationFn: authApi.register,
   });
   const handleRegister = handleSubmit((data) => {
