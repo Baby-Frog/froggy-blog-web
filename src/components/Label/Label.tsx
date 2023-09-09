@@ -9,6 +9,7 @@ type TLabelProps = {
 
 const StyledLabel = styled.label`
   color: ${(props) => props.theme.colors.charcoal};
+  display: block;
 `;
 
 const Label = ({ children, htmlFor, className }: TLabelProps) => {

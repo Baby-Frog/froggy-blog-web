@@ -26,7 +26,7 @@ const InputEl = styled.input`
   height: 48px;
   flex-shrink: 0;
   outline: none;
-  padding: 10px;
+  padding: 10px 46px 10px 10px;
   background-color: #e7ecf3;
 `;
 

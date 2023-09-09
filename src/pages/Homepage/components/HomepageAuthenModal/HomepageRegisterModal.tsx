@@ -73,7 +73,12 @@ const HomepageRegisterModal = ({
             placeholder="Enter your e-mail address"
             errorMsg={errors.email?.message}
           ></Input>
-          <Label htmlFor="password">Password</Label>
+          <Label
+            htmlFor="password"
+            className="mt-1"
+          >
+            Password
+          </Label>
           <Input
             type="password"
             id="password"
@@ -83,7 +88,12 @@ const HomepageRegisterModal = ({
             register={register}
             errorMsg={errors.password?.message}
           />
-          <Label htmlFor="rePassword">Confirm password</Label>
+          <Label
+            htmlFor="rePassword"
+            className="mt-1"
+          >
+            Confirm password
+          </Label>
           <Input
             name="rePassword"
             type="password"
