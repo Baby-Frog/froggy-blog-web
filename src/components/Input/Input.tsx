@@ -1,7 +1,7 @@
-import React, { InputHTMLAttributes } from "react";
+import React, { InputHTMLAttributes, useState } from "react";
 import { RegisterOptions, UseFormRegister } from "react-hook-form";
 import { styled } from "styled-components";
-import { FailureIcon } from "../Icon";
+import { FailureIcon, HidePasswordIcon, ShowPasswordIcon } from "../Icon";
 
 type TInputProps = {
   type?: React.HTMLInputTypeAttribute;
@@ -16,7 +16,9 @@ type TInputProps = {
   rules?: RegisterOptions;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-const InputContainer = styled.div``;
+const InputContainer = styled.div`
+  position: relative;
+`;
 const InputEl = styled.input`
   width: 100%;
   border-radius: 6px;
@@ -27,6 +29,16 @@ const InputEl = styled.input`
   outline: none;
   padding: 10px;
   background-color: #e7ecf3;
+`;
+
+const InputPasswordIcon = styled.span`
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
 `;
 
 const ErrorWrapper = styled.div`
@@ -56,15 +68,28 @@ const Input = ({
   ...rest
 }: TInputProps) => {
   const registerResult = register(name, rules);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
   if (type === "password") {
     return (
       <InputContainer className={containerClassName}>
         <InputEl
-          type="password"
+          type={showPassword ? "text" : "password"}
           placeholder={placeholder}
           className={inputClassName}
           {...registerResult}
         />
+        {showPassword ? (
+          <InputPasswordIcon onClick={handleTogglePassword}>
+            <ShowPasswordIcon></ShowPasswordIcon>
+          </InputPasswordIcon>
+        ) : (
+          <InputPasswordIcon onClick={handleTogglePassword}>
+            <HidePasswordIcon></HidePasswordIcon>
+          </InputPasswordIcon>
+        )}
         {errorMsg && (
           <ErrorWrapper>
             <FailureIcon></FailureIcon>
