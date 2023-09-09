@@ -45,8 +45,7 @@ const ErrorWrapper = styled.div`
   display: flex;
   gap: 4px;
   align-items: center;
-  min-height: 10px;
-  margin-top: 4px;
+  /* min-height: 10px; */
 `;
 
 const ErrorMessage = styled.div`
@@ -74,46 +73,50 @@ const Input = ({
   };
   if (type === "password") {
     return (
-      <InputContainer className={containerClassName}>
-        <InputEl
-          type={showPassword ? "text" : "password"}
-          placeholder={placeholder}
-          className={inputClassName}
-          {...registerResult}
-        />
-        {showPassword ? (
-          <InputPasswordIcon onClick={handleTogglePassword}>
-            <ShowPasswordIcon></ShowPasswordIcon>
-          </InputPasswordIcon>
-        ) : (
-          <InputPasswordIcon onClick={handleTogglePassword}>
-            <HidePasswordIcon></HidePasswordIcon>
-          </InputPasswordIcon>
-        )}
+      <>
+        <InputContainer className={containerClassName}>
+          <InputEl
+            type={showPassword ? "text" : "password"}
+            placeholder={placeholder}
+            className={inputClassName}
+            {...registerResult}
+          />
+          {showPassword ? (
+            <InputPasswordIcon onClick={handleTogglePassword}>
+              <ShowPasswordIcon></ShowPasswordIcon>
+            </InputPasswordIcon>
+          ) : (
+            <InputPasswordIcon onClick={handleTogglePassword}>
+              <HidePasswordIcon></HidePasswordIcon>
+            </InputPasswordIcon>
+          )}
+        </InputContainer>
         {errorMsg && (
           <ErrorWrapper>
             <FailureIcon></FailureIcon>
             <ErrorMessage>{errorMsg}</ErrorMessage>
           </ErrorWrapper>
         )}
-      </InputContainer>
+      </>
     );
   }
   return (
-    <InputContainer className={containerClassName}>
-      <InputEl
-        type={type}
-        placeholder={placeholder}
-        className={inputClassName}
-        {...registerResult}
-      />
+    <>
+      <InputContainer className={containerClassName}>
+        <InputEl
+          type={type}
+          placeholder={placeholder}
+          className={inputClassName}
+          {...registerResult}
+        />
+      </InputContainer>
       {errorMsg && (
         <ErrorWrapper>
           <FailureIcon></FailureIcon>
           <ErrorMessage>{errorMsg}</ErrorMessage>
         </ErrorWrapper>
       )}
-    </InputContainer>
+    </>
   );
 };
 

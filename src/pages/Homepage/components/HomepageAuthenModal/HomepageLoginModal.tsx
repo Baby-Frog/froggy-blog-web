@@ -66,7 +66,7 @@ const HomepageLoginModal = ({
           <Label htmlFor="email">E-mail address</Label>
           <Input
             name="email"
-            containerClassName="mb-3 mt-1"
+            containerClassName="mt-1"
             register={register}
             placeholder="Enter your e-mail address"
             errorMsg={errors.email?.message}

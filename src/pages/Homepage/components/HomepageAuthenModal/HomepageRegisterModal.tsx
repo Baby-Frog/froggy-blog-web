@@ -68,7 +68,7 @@ const HomepageRegisterModal = ({
           <Label htmlFor="email">E-mail address</Label>
           <Input
             name="email"
-            containerClassName="mb-3 mt-1"
+            containerClassName="mt-1"
             register={register}
             placeholder="Enter your e-mail address"
             errorMsg={errors.email?.message}
@@ -78,7 +78,7 @@ const HomepageRegisterModal = ({
             type="password"
             id="password"
             name="password"
-            containerClassName="mt-1 mb-3"
+            containerClassName="mt-1"
             placeholder="Enter your password"
             register={register}
             errorMsg={errors.password?.message}
@@ -87,7 +87,7 @@ const HomepageRegisterModal = ({
           <Input
             name="rePassword"
             type="password"
-            containerClassName="mb-3 mt-1"
+            containerClassName="mt-1"
             register={register}
             placeholder="Enter your confirm password"
             errorMsg={errors.rePassword?.message}
