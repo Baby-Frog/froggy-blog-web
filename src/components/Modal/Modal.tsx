@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { createPortal } from "react-dom";
 import { styled } from "styled-components";
-import { CloseButtonIcon } from "../Icon";
+import CloseButtonIcon from "../Icon/CloseButtonIcon";
 
 type TModalProps = {
   isOpen?: boolean;

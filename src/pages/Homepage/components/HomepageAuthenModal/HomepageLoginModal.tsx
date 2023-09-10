@@ -8,6 +8,8 @@ import { loginSchema } from "src/schemas/authentication.schemas";
 import "./HomepageAuthenModal.scss";
 import GoogleIcon from "src/components/Icon/GoogleIcon";
 import FacebookIcon from "src/components/Icon/FacebookIcon";
+import { useMutation } from "react-query";
+import { authApi } from "src/apis/auth.apis";
 
 type THomepageAuthenModalProps = {
   isOpen?: boolean;
@@ -34,9 +36,11 @@ const HomepageLoginModal = ({
     reValidateMode: "onSubmit",
     resolver: yupResolver(loginSchema),
   });
-
+  const { mutate } = useMutation({
+    mutationFn: authApi.login,
+  });
   const handleLogin = handleSubmit((data) => {
-    console.log(data);
+    mutate(data);
   });
 
   return (
