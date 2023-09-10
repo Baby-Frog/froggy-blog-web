@@ -11,6 +11,7 @@ import "sweetalert2/src/sweetalert2.scss";
 import GlobalStyle from "./styles/globalStyles.ts";
 import { theme } from "./constants/themes.ts";
 import { ThemeProvider } from "styled-components";
+import { AuthProvider } from "./contexts/auth.contexts.tsx";
 
 const queryClient = new QueryClient();
 
@@ -19,7 +20,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
-          <App />
+          <AuthProvider>
+            <App />
+          </AuthProvider>
           <GlobalStyle />
           <ReactQueryDevtools />
           <ToastContainer />

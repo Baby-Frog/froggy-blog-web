@@ -36,11 +36,11 @@ class Http {
       (response) => {
         const { url } = response.config;
         if (url === ENDPOINTS.LOGIN || url === ENDPOINTS.REGISTER) {
-          const data = response.data as TAuthResponse;
-          const accessToken = data.data.access_token;
-          const refreshToken = data.data.refresh_token;
-          saveAccessTokenToLS(accessToken);
-          saveRefreshTokenToLS(refreshToken);
+          // const data = response.data as TAuthResponse;
+          // const accessToken = data.data.access_token;
+          // const refreshToken = data.data.refresh_token;
+          // saveAccessTokenToLS(accessToken);
+          // saveRefreshTokenToLS(refreshToken);
         } else if (url === ENDPOINTS.LOGOUT) {
           this.accessToken = "";
           this.refreshToken = "";
@@ -58,6 +58,7 @@ class Http {
           const message = data?.message || error.message;
           toast.error(message);
         }
+        return Promise.reject(error);
       },
     );
   }

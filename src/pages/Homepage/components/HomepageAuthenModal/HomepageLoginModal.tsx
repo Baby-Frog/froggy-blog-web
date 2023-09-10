@@ -10,6 +10,10 @@ import GoogleIcon from "src/components/Icon/GoogleIcon";
 import FacebookIcon from "src/components/Icon/FacebookIcon";
 import { useMutation } from "react-query";
 import { authApi } from "src/apis/auth.apis";
+import { useMemo } from "react";
+import { isAxiosError } from "axios";
+import { isUnprocessableEntityError } from "src/utils/isAxiosError";
+import { TErrorApiResponse } from "src/types/response.types";
 
 type THomepageAuthenModalProps = {
   isOpen?: boolean;
@@ -30,17 +34,31 @@ const HomepageLoginModal = ({
   const {
     handleSubmit,
     register,
+    setError,
     formState: { errors },
   } = useForm<TLoginForm>({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
     resolver: yupResolver(loginSchema),
   });
-  const { mutate } = useMutation({
+  const loginAccountMutation = useMutation({
     mutationFn: authApi.login,
   });
   const handleLogin = handleSubmit((data) => {
-    mutate(data);
+    loginAccountMutation.mutate(data, {
+      onSuccess: (data) => {},
+      onError: (error) => {
+        if (
+          isAxiosError<TErrorApiResponse<TLoginForm>>(error) &&
+          isUnprocessableEntityError<TErrorApiResponse<TLoginForm>>(error)
+        ) {
+          // console.log("Error!");
+          const formError = error.response?.data.message;
+          setError("email", { message: formError });
+          setError("password", { message: formError });
+        }
+      },
+    });
   });
 
   return (
@@ -68,6 +86,7 @@ const HomepageLoginModal = ({
         >
           <Label htmlFor="email">E-mail address</Label>
           <Input
+            type="email"
             name="email"
             containerClassName="mt-1"
             register={register}

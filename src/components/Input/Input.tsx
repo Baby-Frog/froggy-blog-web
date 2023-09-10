@@ -20,7 +20,7 @@ type TInputProps = {
 const InputContainer = styled.div`
   position: relative;
 `;
-const InputEl = styled.input`
+const InputEl = styled.input<{ $hasErrors?: boolean }>`
   width: 100%;
   border-radius: 6px;
   font-size: 14px;
@@ -29,7 +29,11 @@ const InputEl = styled.input`
   flex-shrink: 0;
   outline: none;
   padding: 10px 46px 10px 10px;
-  background-color: #e7ecf3;
+  border: ${(props) => (props.$hasErrors ? "1px solid red" : "1px solid transparent")};
+  background-color: ${(props) => (props.$hasErrors ? "rgb(255, 215, 215)" : "#e7ecf3")};
+  &::placeholder {
+    color: ${(props) => (props.$hasErrors ? "rgb(255, 49, 49)" : "#9ca3be")};
+  }
 `;
 
 const InputPasswordIcon = styled.span`
@@ -78,6 +82,7 @@ const Input = ({
           <InputEl
             type={showPassword ? "text" : "password"}
             placeholder={placeholder}
+            $hasErrors={Boolean(errorMsg)}
             className={inputClassName}
             {...registerResult}
           />
@@ -106,6 +111,7 @@ const Input = ({
         <InputEl
           type={type}
           placeholder={placeholder}
+          $hasErrors={Boolean(errorMsg)}
           className={inputClassName}
           {...registerResult}
         />
