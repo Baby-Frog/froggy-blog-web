@@ -23,6 +23,7 @@ const HomepageAuthenModal = ({ handleClose, isOpen }: THomepageAuthenModalProps)
       ) : (
         <HomepageRegisterModal
           handleClose={handleClose}
+          setIsLoginModal={setIsLoginModal}
           isOpen={isOpen}
           handleToggleBetweenLoginAndRegister={handleToggleBetweenLoginAndRegister}
         ></HomepageRegisterModal>

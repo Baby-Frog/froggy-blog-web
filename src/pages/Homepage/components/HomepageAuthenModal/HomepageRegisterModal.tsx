@@ -17,6 +17,7 @@ import { TErrorApiResponse } from "src/types/response.types";
 type THomepageRegisterModalProps = {
   isOpen?: boolean;
   handleClose?: () => void;
+  setIsLoginModal: React.Dispatch<React.SetStateAction<boolean>>;
   handleToggleBetweenLoginAndRegister?: () => void;
 };
 
@@ -27,8 +28,9 @@ type TRegisterForm = {
 };
 
 const HomepageRegisterModal = ({
-  handleClose,
   isOpen,
+  handleClose,
+  setIsLoginModal,
   handleToggleBetweenLoginAndRegister,
 }: THomepageRegisterModalProps) => {
   const {
@@ -46,7 +48,9 @@ const HomepageRegisterModal = ({
   });
   const handleRegister = handleSubmit((data) => {
     registerAccountMutation.mutate(data, {
-      onSuccess: (data) => {},
+      onSuccess: (data) => {
+        setIsLoginModal(true);
+      },
       onError: (error) => {
         if (
           isAxiosError<TErrorApiResponse<TRegisterForm>>(error) &&
