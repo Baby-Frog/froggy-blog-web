@@ -1,12 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import Button from "src/components/Button";
-import { FacebookIcon, GoogleIcon } from "src/components/Icon";
 import Input from "src/components/Input";
 import Label from "src/components/Label";
 import Modal from "src/components/Modal";
 import { loginSchema } from "src/schemas/authentication.schemas";
 import "./HomepageAuthenModal.scss";
+import GoogleIcon from "src/components/Icon/GoogleIcon";
+import FacebookIcon from "src/components/Icon/FacebookIcon";
 
 type THomepageAuthenModalProps = {
   isOpen?: boolean;

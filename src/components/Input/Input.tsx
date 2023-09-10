@@ -1,7 +1,9 @@
 import React, { InputHTMLAttributes, useState } from "react";
 import { RegisterOptions, UseFormRegister } from "react-hook-form";
 import { styled } from "styled-components";
-import { FailureIcon, HidePasswordIcon, ShowPasswordIcon } from "../Icon";
+import ShowPasswordIcon from "../Icon/ShowPasswordIcon";
+import HidePasswordIcon from "../Icon/HidePasswordIcon";
+import FailureIcon from "../Icon/FailureIcon";
 
 type TInputProps = {
   type?: React.HTMLInputTypeAttribute;

@@ -3,12 +3,13 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { authApi } from "src/apis/auth.apis";
 import Button from "src/components/Button";
-import { FacebookIcon, GoogleIcon } from "src/components/Icon";
 import Input from "src/components/Input";
 import Label from "src/components/Label";
 import Modal from "src/components/Modal";
 import { registerSchema } from "src/schemas/authentication.schemas";
 import "./HomepageAuthenModal.scss";
+import FacebookIcon from "src/components/Icon/FacebookIcon";
+import GoogleIcon from "src/components/Icon/GoogleIcon";
 
 type THomepageRegisterModalProps = {
   isOpen?: boolean;
