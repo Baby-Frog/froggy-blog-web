@@ -10,6 +10,9 @@ import { registerSchema } from "src/schemas/authentication.schemas";
 import "./HomepageAuthenModal.scss";
 import FacebookIcon from "src/components/Icon/FacebookIcon";
 import GoogleIcon from "src/components/Icon/GoogleIcon";
+import { isAxiosError } from "axios";
+import { isUnprocessableEntityError } from "src/utils/isAxiosError";
+import { TErrorApiResponse } from "src/types/response.types";
 
 type THomepageRegisterModalProps = {
   isOpen?: boolean;
@@ -31,17 +34,29 @@ const HomepageRegisterModal = ({
   const {
     handleSubmit,
     register,
+    setError,
     formState: { errors },
   } = useForm<TRegisterForm>({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
     resolver: yupResolver(registerSchema),
   });
-  const { mutate: registerAccountMutate } = useMutation({
+  const registerAccountMutation = useMutation({
     mutationFn: authApi.register,
   });
   const handleRegister = handleSubmit((data) => {
-    registerAccountMutate(data);
+    registerAccountMutation.mutate(data, {
+      onSuccess: (data) => {},
+      onError: (error) => {
+        if (
+          isAxiosError<TErrorApiResponse<TRegisterForm>>(error) &&
+          isUnprocessableEntityError<TErrorApiResponse<TRegisterForm>>(error)
+        ) {
+          const formError = error.response?.data.message;
+          setError("email", { message: formError });
+        }
+      },
+    });
   });
   return (
     <Modal

@@ -50,6 +50,7 @@ const ErrorWrapper = styled.div`
   display: flex;
   gap: 4px;
   align-items: center;
+  margin-top: 4px;
   /* min-height: 10px; */
 `;
 
