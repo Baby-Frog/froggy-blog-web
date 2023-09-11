@@ -96,7 +96,12 @@ const HomepageRegisterModal = ({
             placeholder="Enter your full name"
             errorMsg={errors.fullName?.message}
           ></Input>
-          <Label htmlFor="email">E-mail address</Label>
+          <Label
+            htmlFor="email"
+            className="mt-2"
+          >
+            E-mail address
+          </Label>
           <Input
             name="email"
             containerClassName="mt-1"
@@ -106,7 +111,7 @@ const HomepageRegisterModal = ({
           ></Input>
           <Label
             htmlFor="password"
-            className="mt-1"
+            className="mt-2"
           >
             Password
           </Label>
@@ -121,7 +126,7 @@ const HomepageRegisterModal = ({
           />
           <Label
             htmlFor="rePassword"
-            className="mt-1"
+            className="mt-2"
           >
             Confirm password
           </Label>
