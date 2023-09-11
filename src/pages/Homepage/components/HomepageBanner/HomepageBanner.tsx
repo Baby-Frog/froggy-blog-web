@@ -59,7 +59,7 @@ const HomepageBannerHeading = styled.h2`
     justify-content: center;
     align-items: center;
     .Typewriter {
-      font-size: 64px;
+      font-size: 56px;
     }
   }
 `;
