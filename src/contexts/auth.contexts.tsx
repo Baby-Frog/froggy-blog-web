@@ -1,12 +1,12 @@
 import { createContext, useState } from "react";
-import { TUser } from "src/types/user.types";
+import { TUserProfile } from "src/types/user.types";
 import { getAccessTokenFromLS, getRefreshTokenFromLS, getUserProfileFromLS } from "src/utils/auth";
 
 type TInitialAuthContext = {
   isAuthenticated: boolean;
-  userProfile: TUser | null;
+  userProfile: TUserProfile | null;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
-  setUserProfile: React.Dispatch<React.SetStateAction<TUser | null>>;
+  setUserProfile: React.Dispatch<React.SetStateAction<TUserProfile | null>>;
   clearAuthenInfoFromContext: () => void;
 };
 
@@ -22,7 +22,7 @@ export const AuthContext = createContext(initialAuthContext);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(initialAuthContext.isAuthenticated);
-  const [userProfile, setUserProfile] = useState<TUser | null>(initialAuthContext.userProfile);
+  const [userProfile, setUserProfile] = useState<TUserProfile | null>(initialAuthContext.userProfile);
   const clearAuthenInfoFromContext = () => {
     setIsAuthenticated(false);
     setUserProfile(null);

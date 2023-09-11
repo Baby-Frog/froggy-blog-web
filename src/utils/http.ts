@@ -1,6 +1,11 @@
 import axios, { AxiosError, AxiosInstance, HttpStatusCode } from "axios";
 import { TAuthResponse } from "src/types/auth-response.types";
-import { clearAllAuthenticationInfoFromLS, saveAccessTokenToLS, saveRefreshTokenToLS } from "./auth";
+import {
+  clearAllAuthenticationInfoFromLS,
+  saveAccessTokenToLS,
+  saveRefreshTokenToLS,
+  saveUserProfileToLS,
+} from "./auth";
 import { ENDPOINTS } from "src/constants/endpoints";
 import { toast } from "react-toastify";
 class Http {
@@ -39,8 +44,10 @@ class Http {
           const data = response.data as TAuthResponse;
           const accessToken = data.data.accessToken;
           const refreshToken = data.data.refreshToken;
+          const user = data.data.profile;
           saveAccessTokenToLS(accessToken);
           saveRefreshTokenToLS(refreshToken);
+          saveUserProfileToLS(user);
         } else if (url === ENDPOINTS.LOGOUT) {
           this.accessToken = "";
           this.refreshToken = "";
