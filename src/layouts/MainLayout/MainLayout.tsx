@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import MainNavbar from "src/components/MainNavbar/MainNavbar";
+import { AuthContext } from "src/contexts/auth.contexts";
 import HomepageBanner from "src/pages/Homepage/components/HomepageBanner";
 import { styled } from "styled-components";
 
@@ -19,11 +21,19 @@ type TMainLayoutProps = {
 };
 
 const MainLayout = ({ children }: TMainLayoutProps) => {
+  const { isAuthenticated } = useContext(AuthContext);
+  console.log(isAuthenticated);
   return (
     <>
-      <MainNavbar></MainNavbar>
-      <HomepageBanner></HomepageBanner>
-      <MainLayoutWrapper>{children}</MainLayoutWrapper>
+      {!isAuthenticated ? (
+        <>
+          <MainNavbar></MainNavbar>
+          <HomepageBanner></HomepageBanner>
+          <MainLayoutWrapper>{children}</MainLayoutWrapper>
+        </>
+      ) : (
+        <div>Hello World!</div>
+      )}
     </>
   );
 };
