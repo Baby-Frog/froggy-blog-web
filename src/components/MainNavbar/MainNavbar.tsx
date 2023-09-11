@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useMedia } from "react-use";
 import Logo from "src/assets/logo-4.png";
 import { path } from "src/constants/path";
-import HomepageRegisterModal from "src/pages/Homepage/components/HomepageAuthenModal";
 import HomepageAuthenModal from "src/pages/Homepage/components/HomepageAuthenModal/HomepageAuthenModal";
 import { styled } from "styled-components";
 const MainNavbarWrapper = styled.div`
@@ -92,13 +90,6 @@ const MainNavbar = () => {
             </li>
             <li className="main-navbar-item">
               <NavLink to={path.HOMEPAGE}>About</NavLink>
-            </li>
-            <li
-              className="main-navbar-item"
-              onClick={() => setModalIsOpen(true)}
-              aria-hidden
-            >
-              <NavLink to={path.HOMEPAGE}>Sign in</NavLink>
             </li>
             <li
               className="main-navbar-item--button"

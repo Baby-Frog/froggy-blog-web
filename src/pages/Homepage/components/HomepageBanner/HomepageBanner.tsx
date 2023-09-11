@@ -1,9 +1,5 @@
-import React from "react";
 import { styled } from "styled-components";
 import Typewriter from "typewriter-effect";
-type THomepageBannerProps = {
-  something: string;
-};
 
 const HomepageBannerContainer = styled.section`
   border-bottom: 1px solid #000;
