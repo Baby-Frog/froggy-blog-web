@@ -35,12 +35,12 @@ class Http {
     this.instance.interceptors.response.use(
       (response) => {
         const { url } = response.config;
-        if (url === ENDPOINTS.LOGIN || url === ENDPOINTS.REGISTER) {
-          // const data = response.data as TAuthResponse;
-          // const accessToken = data.data.access_token;
-          // const refreshToken = data.data.refresh_token;
-          // saveAccessTokenToLS(accessToken);
-          // saveRefreshTokenToLS(refreshToken);
+        if (url === ENDPOINTS.LOGIN) {
+          const data = response.data as TAuthResponse;
+          const accessToken = data.data.accessToken;
+          const refreshToken = data.data.refreshToken;
+          saveAccessTokenToLS(accessToken);
+          saveRefreshTokenToLS(refreshToken);
         } else if (url === ENDPOINTS.LOGOUT) {
           this.accessToken = "";
           this.refreshToken = "";
