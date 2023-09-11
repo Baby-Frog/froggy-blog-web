@@ -71,7 +71,7 @@ class Http {
   }
   private handleRefreshAccessToken() {
     return this.instance
-      .get(ENDPOINTS.REFRESH_TOKEN)
+      .post(ENDPOINTS.REFRESH_TOKEN)
       .then((response) => {
         const { access_token } = response.data.data;
         saveAccessTokenToLS(access_token);

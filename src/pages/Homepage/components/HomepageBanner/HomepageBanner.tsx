@@ -53,7 +53,7 @@ const HomepageBannerHeading = styled.h2`
     text-decoration: underline;
   }
   @media screen and (max-width: 767px) {
-    font-size: 64px;
+    font-size: 56px;
     margin: 0 auto;
     display: flex;
     justify-content: center;

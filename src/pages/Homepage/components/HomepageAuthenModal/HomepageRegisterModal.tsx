@@ -23,6 +23,7 @@ type THomepageRegisterModalProps = {
 };
 
 type TRegisterForm = {
+  fullname: string;
   email: string;
   password: string;
   rePassword: string;
@@ -87,6 +88,14 @@ const HomepageRegisterModal = ({
           noValidate
           autoComplete="on"
         >
+          <Label htmlFor="fullname">Full name</Label>
+          <Input
+            name="fullname"
+            containerClassName="mt-1"
+            register={register}
+            placeholder="Enter your full name"
+            errorMsg={errors.fullname?.message}
+          ></Input>
           <Label htmlFor="email">E-mail address</Label>
           <Input
             name="email"
