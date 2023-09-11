@@ -1,6 +1,6 @@
 import * as yup from "yup";
 export const authenticationSchema = yup.object({
-  fullname: yup
+  fullName: yup
     .string()
     .required("Full name is required")
     .min(6, "Full name must be at least 6 characters long")
@@ -20,7 +20,7 @@ export const authenticationSchema = yup.object({
     .oneOf([yup.ref("password")], "Password and confirm password is mismatched"),
 });
 
-export const registerSchema = authenticationSchema.pick(["email", "password", "rePassword", "fullname"]);
+export const registerSchema = authenticationSchema.pick(["email", "password", "rePassword", "fullName"]);
 export const loginSchema = authenticationSchema.pick(["email", "password"]);
 
 export type TLoginSchema = yup.InferType<typeof loginSchema>;
