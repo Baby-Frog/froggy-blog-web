@@ -50,7 +50,7 @@ const HomepageRegisterModal = ({
   });
   const handleRegister = handleSubmit((data) => {
     registerAccountMutation.mutate(data, {
-      onSuccess: () => {
+      onSuccess: (data) => {
         setIsLoginModal(true);
         toast.success(data.data.message);
       },
