@@ -10,10 +10,11 @@ import GoogleIcon from "src/components/Icon/GoogleIcon";
 import FacebookIcon from "src/components/Icon/FacebookIcon";
 import { useMutation } from "react-query";
 import { authApi } from "src/apis/auth.apis";
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { isAxiosError } from "axios";
 import { isUnprocessableEntityError } from "src/utils/isAxiosError";
 import { TErrorApiResponse } from "src/types/response.types";
+import { AuthContext } from "src/contexts/auth.contexts";
 
 type THomepageAuthenModalProps = {
   isOpen?: boolean;
@@ -31,6 +32,7 @@ const HomepageLoginModal = ({
   isOpen,
   handleToggleBetweenLoginAndRegister,
 }: THomepageAuthenModalProps) => {
+  const { setUserProfile } = useContext(AuthContext);
   const {
     handleSubmit,
     register,
@@ -46,7 +48,11 @@ const HomepageLoginModal = ({
   });
   const handleLogin = handleSubmit((data) => {
     loginAccountMutation.mutate(data, {
-      onSuccess: (data) => {},
+      onSuccess: (data) => {
+        console.log(data);
+
+        // setUserProfile(data.data.data.user);
+      },
       onError: (error) => {
         if (
           isAxiosError<TErrorApiResponse<TLoginForm>>(error) &&
