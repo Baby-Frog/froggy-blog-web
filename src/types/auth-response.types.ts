@@ -1,4 +1,4 @@
 import { TSuccessApiResponse } from "./response.types";
-import { TUser } from "./user.types";
+import { TUserProfile } from "./user.types";
 
-export type TAuthResponse = TSuccessApiResponse<{ access_token: string; refresh_token: string; user: TUser }>;
+export type TAuthResponse = TSuccessApiResponse<{ accessToken: string; refreshToken: string; profile: TUserProfile }>;

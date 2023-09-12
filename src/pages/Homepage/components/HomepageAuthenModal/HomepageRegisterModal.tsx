@@ -13,6 +13,7 @@ import GoogleIcon from "src/components/Icon/GoogleIcon";
 import { isAxiosError } from "axios";
 import { isUnprocessableEntityError } from "src/utils/isAxiosError";
 import { TErrorApiResponse } from "src/types/response.types";
+import { toast } from "react-toastify";
 
 type THomepageRegisterModalProps = {
   isOpen?: boolean;
@@ -22,6 +23,7 @@ type THomepageRegisterModalProps = {
 };
 
 type TRegisterForm = {
+  fullName: string;
   email: string;
   password: string;
   rePassword: string;
@@ -50,6 +52,7 @@ const HomepageRegisterModal = ({
     registerAccountMutation.mutate(data, {
       onSuccess: () => {
         setIsLoginModal(true);
+        toast.success(data.data.message);
       },
       onError: (error) => {
         if (
@@ -85,7 +88,20 @@ const HomepageRegisterModal = ({
           noValidate
           autoComplete="on"
         >
-          <Label htmlFor="email">E-mail address</Label>
+          <Label htmlFor="fullName">Full name</Label>
+          <Input
+            name="fullName"
+            containerClassName="mt-1"
+            register={register}
+            placeholder="Enter your full name"
+            errorMsg={errors.fullName?.message}
+          ></Input>
+          <Label
+            htmlFor="email"
+            className="mt-2"
+          >
+            E-mail address
+          </Label>
           <Input
             name="email"
             containerClassName="mt-1"
@@ -95,7 +111,7 @@ const HomepageRegisterModal = ({
           ></Input>
           <Label
             htmlFor="password"
-            className="mt-1"
+            className="mt-2"
           >
             Password
           </Label>
@@ -110,7 +126,7 @@ const HomepageRegisterModal = ({
           />
           <Label
             htmlFor="rePassword"
-            className="mt-1"
+            className="mt-2"
           >
             Confirm password
           </Label>

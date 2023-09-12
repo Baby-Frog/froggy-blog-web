@@ -1,9 +1,5 @@
-import React from "react";
 import { styled } from "styled-components";
 import Typewriter from "typewriter-effect";
-type THomepageBannerProps = {
-  something: string;
-};
 
 const HomepageBannerContainer = styled.section`
   border-bottom: 1px solid #000;
@@ -53,13 +49,13 @@ const HomepageBannerHeading = styled.h2`
     text-decoration: underline;
   }
   @media screen and (max-width: 767px) {
-    font-size: 64px;
+    font-size: 56px;
     margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
     .Typewriter {
-      font-size: 64px;
+      font-size: 56px;
     }
   }
 `;

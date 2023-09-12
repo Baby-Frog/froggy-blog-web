@@ -1,6 +1,11 @@
 import axios, { AxiosError, AxiosInstance, HttpStatusCode } from "axios";
 import { TAuthResponse } from "src/types/auth-response.types";
-import { clearAllAuthenticationInfoFromLS, saveAccessTokenToLS, saveRefreshTokenToLS } from "./auth";
+import {
+  clearAllAuthenticationInfoFromLS,
+  saveAccessTokenToLS,
+  saveRefreshTokenToLS,
+  saveUserProfileToLS,
+} from "./auth";
 import { ENDPOINTS } from "src/constants/endpoints";
 import { toast } from "react-toastify";
 class Http {
@@ -35,12 +40,14 @@ class Http {
     this.instance.interceptors.response.use(
       (response) => {
         const { url } = response.config;
-        if (url === ENDPOINTS.LOGIN || url === ENDPOINTS.REGISTER) {
-          // const data = response.data as TAuthResponse;
-          // const accessToken = data.data.access_token;
-          // const refreshToken = data.data.refresh_token;
-          // saveAccessTokenToLS(accessToken);
-          // saveRefreshTokenToLS(refreshToken);
+        if (url === ENDPOINTS.LOGIN) {
+          const data = response.data as TAuthResponse;
+          const accessToken = data.data.accessToken;
+          const refreshToken = data.data.refreshToken;
+          const user = data.data.profile;
+          saveAccessTokenToLS(accessToken);
+          saveRefreshTokenToLS(refreshToken);
+          saveUserProfileToLS(user);
         } else if (url === ENDPOINTS.LOGOUT) {
           this.accessToken = "";
           this.refreshToken = "";
@@ -64,7 +71,7 @@ class Http {
   }
   private handleRefreshAccessToken() {
     return this.instance
-      .get(ENDPOINTS.REFRESH_TOKEN)
+      .post(ENDPOINTS.REFRESH_TOKEN)
       .then((response) => {
         const { access_token } = response.data.data;
         saveAccessTokenToLS(access_token);

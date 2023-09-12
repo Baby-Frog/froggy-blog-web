@@ -1,20 +1,20 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { isAxiosError } from "axios";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
+import { authApi } from "src/apis/auth.apis";
 import Button from "src/components/Button";
+import FacebookIcon from "src/components/Icon/FacebookIcon";
+import GoogleIcon from "src/components/Icon/GoogleIcon";
 import Input from "src/components/Input";
 import Label from "src/components/Label";
 import Modal from "src/components/Modal";
-import { loginSchema } from "src/schemas/authentication.schemas";
-import "./HomepageAuthenModal.scss";
-import GoogleIcon from "src/components/Icon/GoogleIcon";
-import FacebookIcon from "src/components/Icon/FacebookIcon";
-import { useMutation } from "react-query";
-import { authApi } from "src/apis/auth.apis";
-import { useContext, useMemo } from "react";
-import { isAxiosError } from "axios";
-import { isUnprocessableEntityError } from "src/utils/isAxiosError";
-import { TErrorApiResponse } from "src/types/response.types";
 import { AuthContext } from "src/contexts/auth.contexts";
+import { loginSchema } from "src/schemas/authentication.schemas";
+import { TErrorApiResponse } from "src/types/response.types";
+import { isUnprocessableEntityError } from "src/utils/isAxiosError";
+import "./HomepageAuthenModal.scss";
 
 type THomepageAuthenModalProps = {
   isOpen?: boolean;
@@ -32,7 +32,7 @@ const HomepageLoginModal = ({
   isOpen,
   handleToggleBetweenLoginAndRegister,
 }: THomepageAuthenModalProps) => {
-  const { setUserProfile } = useContext(AuthContext);
+  const { setIsAuthenticated } = useContext(AuthContext);
   const {
     handleSubmit,
     register,
@@ -49,9 +49,7 @@ const HomepageLoginModal = ({
   const handleLogin = handleSubmit((data) => {
     loginAccountMutation.mutate(data, {
       onSuccess: (data) => {
-        console.log(data);
-
-        // setUserProfile(data.data.data.user);
+        setIsAuthenticated(true);
       },
       onError: (error) => {
         if (

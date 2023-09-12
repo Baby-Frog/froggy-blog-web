@@ -34,6 +34,12 @@ const InputEl = styled.input<{ $hasErrors?: boolean }>`
   &::placeholder {
     color: ${(props) => (props.$hasErrors ? "rgb(255, 49, 49)" : "#9ca3be")};
   }
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px ${(props) => (props.$hasErrors ? "rgb(255, 215, 215)" : "#e7ecf3")} inset !important;
+  }
 `;
 
 const InputPasswordIcon = styled.span`
@@ -85,6 +91,7 @@ const Input = ({
             placeholder={placeholder}
             $hasErrors={Boolean(errorMsg)}
             className={inputClassName}
+            autoComplete="on"
             {...registerResult}
           />
           {showPassword ? (
