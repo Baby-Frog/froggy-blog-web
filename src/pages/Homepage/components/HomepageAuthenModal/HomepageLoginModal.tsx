@@ -32,7 +32,7 @@ const HomepageLoginModal = ({
   isOpen,
   handleToggleBetweenLoginAndRegister,
 }: THomepageAuthenModalProps) => {
-  const { setIsAuthenticated } = useContext(AuthContext);
+  const { setIsAuthenticated, setUserProfile } = useContext(AuthContext);
   const {
     handleSubmit,
     register,
@@ -50,6 +50,7 @@ const HomepageLoginModal = ({
     loginAccountMutation.mutate(data, {
       onSuccess: (data) => {
         setIsAuthenticated(true);
+        setUserProfile(data.data.data.profile);
       },
       onError: (error) => {
         if (
