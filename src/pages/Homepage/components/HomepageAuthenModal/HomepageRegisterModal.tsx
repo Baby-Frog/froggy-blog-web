@@ -56,11 +56,13 @@ const HomepageRegisterModal = ({
       },
       onError: (error) => {
         if (
-          isAxiosError<TErrorApiResponse<TRegisterForm>>(error) &&
-          isUnprocessableEntityError<TErrorApiResponse<TRegisterForm>>(error)
+          isAxiosError<TErrorApiResponse<Record<keyof TRegisterForm, { message: string }>>>(error) &&
+          isUnprocessableEntityError<TErrorApiResponse<Record<keyof TRegisterForm, { message: string }>>>(error)
         ) {
-          const formError = error.response?.data.message;
-          setError("email", { message: formError });
+          const formError = error.response?.data.data;
+          setError("email", { message: formError?.email.message });
+          setError("password", { message: formError?.password.message });
+          setError("rePassword", { message: formError?.rePassword.message });
         }
       },
     });
