@@ -8,3 +8,7 @@ export const isAxiosError = <T>(error: unknown): error is AxiosError<T> => {
 export const isUnprocessableEntityError = <T>(error: unknown): error is AxiosError<T> => {
   return isAxiosError(error) && error.response?.status === HttpStatusCode.UnprocessableEntity;
 };
+
+export const isBadRequestError = <T>(error: unknown): error is AxiosError<T> => {
+  return isAxiosError(error) && error.response?.status === HttpStatusCode.BadRequest;
+};

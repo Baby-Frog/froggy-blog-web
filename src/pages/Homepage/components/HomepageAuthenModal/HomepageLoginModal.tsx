@@ -13,7 +13,7 @@ import Modal from "src/components/Modal";
 import { AuthContext } from "src/contexts/auth.contexts";
 import { loginSchema } from "src/schemas/authentication.schemas";
 import { TErrorApiResponse } from "src/types/response.types";
-import { isUnprocessableEntityError } from "src/utils/isAxiosError";
+import { isBadRequestError, isUnprocessableEntityError } from "src/utils/isAxiosError";
 import "./HomepageAuthenModal.scss";
 
 type THomepageAuthenModalProps = {
@@ -55,7 +55,7 @@ const HomepageLoginModal = ({
       onError: (error) => {
         if (
           isAxiosError<TErrorApiResponse<TLoginForm>>(error) &&
-          isUnprocessableEntityError<TErrorApiResponse<TLoginForm>>(error)
+          isBadRequestError<TErrorApiResponse<TLoginForm>>(error)
         ) {
           // console.log("Error!");
           const formError = error.response?.data.message;
