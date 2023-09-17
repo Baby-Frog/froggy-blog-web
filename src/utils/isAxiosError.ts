@@ -12,3 +12,7 @@ export const isUnprocessableEntityError = <T>(error: unknown): error is AxiosErr
 export const isBadRequestError = <T>(error: unknown): error is AxiosError<T> => {
   return isAxiosError(error) && error.response?.status === HttpStatusCode.BadRequest;
 };
+
+export const isUnauthorizedError = <T>(error: unknown): error is AxiosError<T> => {
+  return isAxiosError(error) && error.response?.status === HttpStatusCode.Unauthorized;
+};

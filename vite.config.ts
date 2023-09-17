@@ -7,6 +7,7 @@ export default defineConfig({
   server: {
     // Các bạn có thể sửa theo ý mình
     port: 3000,
+    open: true,
   },
   css: {
     // Thêm cái này vô để debug css dễ hơn
