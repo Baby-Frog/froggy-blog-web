@@ -6,5 +6,6 @@ export const authApi = {
   register: (body: { email: string; password: string; rePassword: string }) =>
     http.post<TAuthResponse>(ENDPOINTS.REGISTER, body),
   login: (body: { email: string; password: string }) => http.post<TAuthResponse>(ENDPOINTS.LOGIN, body),
-  logout: () => http.post(ENDPOINTS.LOGOUT),
+  logout: (body: { refreshToken: string }) => http.post(`/api${ENDPOINTS.LOGOUT}`, body),
+  refreshToken: (body: { refreshToken: string }) => http.post<TAuthResponse>(ENDPOINTS.REFRESH_TOKEN, body),
 };

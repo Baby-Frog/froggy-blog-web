@@ -1,5 +1,7 @@
 import { TUserProfile } from "src/types/user.types";
 
+export const LocalStorageEventTarget = new EventTarget();
+
 // Note: LS stands for Local Storage
 export const getAccessTokenFromLS = () => {
   return localStorage.getItem("access_token");
@@ -33,4 +35,6 @@ export const clearAllAuthenticationInfoFromLS = () => {
   localStorage.removeItem("access_token");
   localStorage.removeItem("refresh_token");
   localStorage.removeItem("user");
+  const clearAuthenInfoEvent = new Event("clearAuthen");
+  LocalStorageEventTarget.dispatchEvent(clearAuthenInfoEvent);
 };

@@ -48,7 +48,7 @@ class Http {
           saveAccessTokenToLS(accessToken);
           saveRefreshTokenToLS(refreshToken);
           saveUserProfileToLS(user);
-        } else if (url === ENDPOINTS.LOGOUT) {
+        } else if (url === `/api${ENDPOINTS.LOGOUT}`) {
           this.accessToken = "";
           this.refreshToken = "";
           this.refreshTokenRequest = null;
@@ -60,12 +60,10 @@ class Http {
         if (
           ![HttpStatusCode.UnprocessableEntity, HttpStatusCode.Unauthorized].includes(error?.response?.status as number)
         ) {
-          if (error.config?.url !== ENDPOINTS.LOGIN) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const data: any | undefined = error?.response?.data;
-            const message = data?.message || error.message;
-            toast.error(message);
-          }
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const data: any | undefined = error?.response?.data;
+          const message = data?.message || error.message;
+          toast.error(message);
         }
         return Promise.reject(error);
       },

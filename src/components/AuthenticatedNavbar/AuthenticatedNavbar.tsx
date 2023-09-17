@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { path } from "src/constants/path";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import Logo from "src/assets/logo-4.png";
 import { useForm } from "react-hook-form";
 import SearchIcon from "../Icon/SearchIcon";
@@ -10,6 +10,15 @@ import { useContext, useState } from "react";
 import { AuthContext } from "src/contexts/auth.contexts";
 import PopoverDismiss from "../PopoverDismiss";
 import ChevronIcon from "../Icon/ChevronIcon";
+import { useMutation } from "react-query";
+import { authApi } from "src/apis/auth.apis";
+import { getRefreshTokenFromLS } from "src/utils/auth";
+import { toast } from "react-toastify";
+import ProfileIcon from "../Icon/ProfileIcon";
+import SettingIcon from "../Icon/SettingIcon";
+import LogoutIcon from "../Icon/LogoutIcon";
+import Divider from "../Divider";
+import { hideEmail } from "src/utils/hideEmail";
 type TAuthenticatedNavbarProps = {
   something: string;
 };
@@ -66,15 +75,16 @@ const AuthenticatedNavbarLeft = styled.div`
 const AuthenticatedNavbarRight = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
 `;
 
-const UserAvatar = styled.button`
+const UserAvatar = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   width: 80px;
+  cursor: pointer;
   img {
     width: 32px;
     height: 32px;
@@ -83,8 +93,32 @@ const UserAvatar = styled.button`
   }
 `;
 
+const UserDropdown = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 240px;
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+`;
+
+const StyledDropdownLink = styled(Link)<{ $displayColumn?: boolean }>`
+  font-size: 14px;
+  font-weight: 400;
+  display: flex;
+  align-items: ${(props) => (props.$displayColumn ? "flex-start" : "center")};
+  flex-direction: ${(props) => (props.$displayColumn ? "column" : "row")};
+  gap: ${(props) => (props.$displayColumn ? "0px" : "12px")};
+  padding: 8px 24px;
+  color: ${(props) => props.theme.colors.lightGrey};
+  &:hover {
+    color: ${(props) => props.theme.colors.darkGrey};
+  }
+`;
+
 const AuthenticatedNavbar = () => {
   const { userProfile } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [popoverIsOpen, setPopoverIsOpen] = useState<boolean>(false);
   const {
     handleSubmit,
@@ -93,7 +127,20 @@ const AuthenticatedNavbar = () => {
   } = useForm({
     mode: "onChange",
   });
-
+  const logoutMutation = useMutation({
+    mutationFn: authApi.logout,
+    onSuccess: () => {
+      toast.success("Logout successfully!");
+      navigate(path.HOMEPAGE);
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error("Oops! Something went wrong. Please try again later");
+    },
+  });
+  const handleLogout = () => {
+    logoutMutation.mutate({ refreshToken: getRefreshTokenFromLS() as string });
+  };
   return (
     <AuthenticatedNavbarContainer>
       <AuthenticatedNavbarLeft>
@@ -120,14 +167,46 @@ const AuthenticatedNavbar = () => {
           ></EditIcon>
           <span>Write</span>
         </div>
-        <BellIcon></BellIcon>
+        <BellIcon
+          width={36}
+          height={36}
+          className="cursor-pointer"
+        ></BellIcon>
         <PopoverDismiss
           setIsOpen={setPopoverIsOpen}
           isOpen={popoverIsOpen}
           as="button"
-          renderPopover={<div className="bg-gray-300 flex flex-col items-center justify-center">Sign out</div>}
-          placement="bottom"
-          enableArrow
+          renderPopover={
+            <UserDropdown>
+              <StyledDropdownLink to={path.PROFILE}>
+                <ProfileIcon
+                  width={24}
+                  height={24}
+                  color="#000"
+                ></ProfileIcon>
+                <span>Profile</span>
+              </StyledDropdownLink>
+              <StyledDropdownLink to={path.SETTING}>
+                <SettingIcon
+                  width={24}
+                  height={24}
+                  color=""
+                ></SettingIcon>
+                <span>Settings</span>
+              </StyledDropdownLink>
+              <Divider></Divider>
+              <StyledDropdownLink
+                to={path.HOMEPAGE}
+                onClick={handleLogout}
+                $displayColumn
+              >
+                <div>Sign out</div>
+                <div>{hideEmail(userProfile?.email)}</div>
+              </StyledDropdownLink>
+            </UserDropdown>
+          }
+          placement="bottom-start"
+          sameWidthWithChildren={false}
         >
           <UserAvatar>
             <img

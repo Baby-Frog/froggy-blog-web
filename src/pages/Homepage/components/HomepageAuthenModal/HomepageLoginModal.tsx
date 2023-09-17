@@ -13,7 +13,7 @@ import Modal from "src/components/Modal";
 import { AuthContext } from "src/contexts/auth.contexts";
 import { loginSchema } from "src/schemas/authentication.schemas";
 import { TErrorApiResponse } from "src/types/response.types";
-import { isBadRequestError, isUnauthorizedError, isUnprocessableEntityError } from "src/utils/isAxiosError";
+import { isUnauthorizedError } from "src/utils/isAxiosError";
 import "./HomepageAuthenModal.scss";
 
 type THomepageAuthenModalProps = {
@@ -54,13 +54,12 @@ const HomepageLoginModal = ({
       },
       onError: (error) => {
         if (
-          isAxiosError<TErrorApiResponse<Record<keyof TLoginForm, { message: string }>>>(error) &&
-          isUnauthorizedError<TErrorApiResponse<Record<keyof TLoginForm, { message: string }>>>(error)
+          isAxiosError<TErrorApiResponse<TLoginForm>>(error) &&
+          isUnauthorizedError<TErrorApiResponse<TLoginForm>>(error)
         ) {
-          // console.log("Error!");
-          const formError = error.response?.data.data;
-          setError("email", { message: formError?.email.message });
-          setError("password", { message: formError?.password.message });
+          const formError = error.response?.data;
+          setError("email", { message: formError?.message });
+          setError("password", { message: formError?.message });
         }
       },
     });
