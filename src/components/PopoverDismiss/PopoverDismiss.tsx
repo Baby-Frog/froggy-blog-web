@@ -20,6 +20,7 @@ type PopoverDismissProps = {
   initialOpen?: boolean;
   placement?: Placement;
   offsetPx?: number;
+  sameWidthWithChildren?: boolean;
   enableArrow?: boolean;
   isOpen?: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -33,7 +34,8 @@ const PopoverDismiss = ({
   setIsOpen,
   offsetPx = 10,
   enableArrow = true,
-  placement = "bottom-end",
+  sameWidthWithChildren = true,
+  placement = "bottom-start",
   as: Element = "div",
 }: PopoverDismissProps) => {
   const arrowRef = useRef<HTMLElement>(null);
@@ -42,20 +44,21 @@ const PopoverDismiss = ({
       offset(offsetPx),
       shift(),
       arrow({ element: arrowRef }),
-      size({
-        apply({ rects, elements }) {
-          Object.assign(elements.floating.style, {
-            width: `${rects.reference.width}px`,
-          });
-        },
-      }),
+      sameWidthWithChildren
+        ? size({
+            apply({ rects, elements }) {
+              Object.assign(elements.floating.style, {
+                width: `${rects.reference.width}px`,
+              });
+            },
+          })
+        : null,
     ],
-    placement: placement,
+    placement,
     open: isOpen,
     onOpenChange: setIsOpen,
   });
   const dismiss = useDismiss(context);
-
   const { getReferenceProps, getFloatingProps } = useInteractions([dismiss]);
   return (
     <Element
@@ -82,9 +85,9 @@ const PopoverDismiss = ({
                 transformOrigin: `${middlewareData.arrow?.x}px top`,
                 zIndex: 1,
               }}
-              initial={{ opacity: 0, transform: "scale(0)" }}
-              animate={{ opacity: 1, transform: "scale(1)" }}
-              exit={{ opacity: 0, transform: "scale(0)" }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.1 }}
               {...getFloatingProps()}
             >
