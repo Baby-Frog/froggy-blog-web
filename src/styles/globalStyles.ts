@@ -11,6 +11,10 @@ const GlobalStyle = createGlobalStyle`
     font-size:14px;
     font-family: "DM Sans", "Lora", Helvetica, Sans-Serif;
   }
+
+  input {
+  outline: none;
+  }
 `;
 
 export default GlobalStyle;
