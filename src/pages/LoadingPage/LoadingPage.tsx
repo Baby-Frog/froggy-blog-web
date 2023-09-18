@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import LoadingGIF from "src/assets/loading.gif";
 import Logo from "src/assets/logo-4.png";
 type TLoadingPageProps = {
@@ -5,6 +6,16 @@ type TLoadingPageProps = {
 };
 
 const LoadingPage = ({ children }: TLoadingPageProps) => {
+  const [dotAnimation, setDotAnimation] = useState<string>(".");
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDotAnimation((prev) => {
+        if (prev.length === 3) return ".";
+        return prev + ".";
+      });
+    }, 400);
+    return () => clearInterval(interval);
+  }, []);
   return (
     <div className="w-screen v-screen bg-white">
       <div className="fixed top-4 left-1/2 -translate-x-1/2">
@@ -18,12 +29,18 @@ const LoadingPage = ({ children }: TLoadingPageProps) => {
         </div>
       </div>
       <div className="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
-        <img
-          src={LoadingGIF}
-          alt=""
-          width={350}
-          height={350}
-        />
+        <div className="flex flex-col gap-3 items-center justify-center">
+          <img
+            src={LoadingGIF}
+            alt=""
+            width={380}
+            height={380}
+          />
+          <div className="text-lg flex items-center">
+            {children}
+            <span className="w-[25px]">{dotAnimation}</span>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -39,7 +39,7 @@ const MainLayout = ({ children }: TMainLayoutProps) => {
           <MainLayoutWrapper>{children}</MainLayoutWrapper>
         </>
       ) : (
-        <Suspense fallback={<LoadingPage></LoadingPage>}>
+        <Suspense fallback={<LoadingPage>Please wait, we're loading your content</LoadingPage>}>
           <AuthenticatedNavbar></AuthenticatedNavbar>
         </Suspense>
       )}
