@@ -1,4 +1,11 @@
+import { motion, useIsPresent } from "framer-motion";
 import { Suspense, lazy, useContext } from "react";
+import MainNavbar from "src/components/MainNavbar/MainNavbar";
+import PageTransition from "src/components/PageTransition";
+import { AuthContext } from "src/contexts/auth.contexts";
+import HomepageBanner from "src/pages/Homepage/components/HomepageBanner";
+import LoadingPage from "src/pages/LoadingPage";
+import { styled } from "styled-components";
 const AuthenticatedNavbar = lazy(async () => {
   const [moduleExports] = await Promise.all([
     import("src/components/AuthenticatedNavbar"),
@@ -6,11 +13,6 @@ const AuthenticatedNavbar = lazy(async () => {
   ]);
   return moduleExports;
 });
-import MainNavbar from "src/components/MainNavbar/MainNavbar";
-import { AuthContext } from "src/contexts/auth.contexts";
-import HomepageBanner from "src/pages/Homepage/components/HomepageBanner";
-import { styled } from "styled-components";
-import LoadingPage from "src/pages/LoadingPage";
 
 const MainLayoutWrapper = styled.div`
   max-width: 1320px;
@@ -30,6 +32,7 @@ type TMainLayoutProps = {
 
 const MainLayout = ({ children }: TMainLayoutProps) => {
   const { isAuthenticated } = useContext(AuthContext);
+
   return (
     <>
       {!isAuthenticated ? (
@@ -41,6 +44,7 @@ const MainLayout = ({ children }: TMainLayoutProps) => {
       ) : (
         <Suspense fallback={<LoadingPage>Please wait, we're loading your content</LoadingPage>}>
           <AuthenticatedNavbar></AuthenticatedNavbar>
+          <MainLayoutWrapper>{children}</MainLayoutWrapper>
         </Suspense>
       )}
     </>

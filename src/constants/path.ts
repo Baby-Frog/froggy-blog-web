@@ -3,4 +3,5 @@ export const path = {
   PROFILE: "/user/profile",
   SETTING: "/user/setting",
   DASHBOARD: "/dashboard",
+  NEWSTORY: "/new-story",
 } as const;

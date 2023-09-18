@@ -19,6 +19,7 @@ import SettingIcon from "../Icon/SettingIcon";
 import LogoutIcon from "../Icon/LogoutIcon";
 import Divider from "../Divider";
 import { hideEmail } from "src/utils/hideEmail";
+import { useMedia } from "react-use";
 type TAuthenticatedNavbarProps = {
   something: string;
 };
@@ -119,6 +120,7 @@ const StyledDropdownLink = styled(Link)<{ $displayColumn?: boolean }>`
 const AuthenticatedNavbar = () => {
   const { userProfile } = useContext(AuthContext);
   const navigate = useNavigate();
+  const isMobile = useMedia("(max-width: 767px)");
   const [popoverIsOpen, setPopoverIsOpen] = useState<boolean>(false);
   const {
     handleSubmit,
@@ -150,34 +152,46 @@ const AuthenticatedNavbar = () => {
             alt="Logo"
           />
         </div>
-        <form className="navbar-search">
-          <SearchIcon className="navbar-search-icon"></SearchIcon>
-          <input
-            type="text"
-            placeholder="Search Froggy Blog"
-            className="navbar-search-input"
-          />
-        </form>
+        {!isMobile && (
+          <form className="navbar-search">
+            <SearchIcon className="navbar-search-icon"></SearchIcon>
+
+            <input
+              type="text"
+              placeholder="Search Froggy Blog"
+              className="navbar-search-input"
+            />
+          </form>
+        )}
       </AuthenticatedNavbarLeft>
       <AuthenticatedNavbarRight>
-        <div className="default-row default-row--grey cursor-pointer">
-          <EditIcon
-            width={24}
-            height={24}
-          ></EditIcon>
-          <span>Write</span>
-        </div>
-        <BellIcon
-          width={36}
-          height={36}
-          className="cursor-pointer"
-        ></BellIcon>
+        {!isMobile ? (
+          <div className="default-row default-row--grey cursor-pointer">
+            <EditIcon
+              width={24}
+              height={24}
+            ></EditIcon>
+            <span>Write</span>
+          </div>
+        ) : (
+          <SearchIcon variants="secondary"></SearchIcon>
+        )}
+        <BellIcon className="cursor-pointer"></BellIcon>
         <PopoverDismiss
           setIsOpen={setPopoverIsOpen}
           isOpen={popoverIsOpen}
           as="button"
           renderPopover={
             <UserDropdown>
+              {isMobile && (
+                <StyledDropdownLink to={path.NEWSTORY}>
+                  <EditIcon
+                    width={24}
+                    height={24}
+                  ></EditIcon>
+                  <span>Write</span>
+                </StyledDropdownLink>
+              )}
               <StyledDropdownLink to={path.PROFILE}>
                 <ProfileIcon
                   width={24}

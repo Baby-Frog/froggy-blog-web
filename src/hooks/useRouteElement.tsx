@@ -4,6 +4,8 @@ import { path } from "src/constants/path";
 import { AuthContext } from "src/contexts/auth.contexts";
 import MainLayout from "src/layouts/MainLayout/MainLayout";
 import Homepage from "src/pages/Homepage";
+import SettingPage from "src/pages/SettingPage";
+import UserProfilePage from "src/pages/UserProfilePage";
 
 function ProtectedRoute() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -18,8 +20,7 @@ function RejectedRoute() {
 export default function useRouteElement() {
   const routeElements = useRoutes([
     {
-      path: "/",
-      index: true,
+      path: path.HOMEPAGE,
       element: (
         <>
           <MainLayout>
@@ -27,6 +28,28 @@ export default function useRouteElement() {
           </MainLayout>
         </>
       ),
+    },
+    {
+      path: "",
+      element: <ProtectedRoute></ProtectedRoute>,
+      children: [
+        {
+          path: path.PROFILE,
+          element: (
+            <MainLayout>
+              <UserProfilePage></UserProfilePage>
+            </MainLayout>
+          ),
+        },
+        {
+          path: path.SETTING,
+          element: (
+            <MainLayout>
+              <SettingPage></SettingPage>
+            </MainLayout>
+          ),
+        },
+      ],
     },
   ]);
   return routeElements;
