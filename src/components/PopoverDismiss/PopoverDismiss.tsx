@@ -22,6 +22,7 @@ type PopoverDismissProps = {
   offsetPx?: number;
   sameWidthWithChildren?: boolean;
   enableArrow?: boolean;
+  backgroundColor?: string;
   isOpen?: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -33,6 +34,7 @@ const PopoverDismiss = ({
   isOpen,
   setIsOpen,
   offsetPx = 10,
+  backgroundColor,
   enableArrow = true,
   sameWidthWithChildren = true,
   placement = "bottom-start",
@@ -83,7 +85,8 @@ const PopoverDismiss = ({
                 left: x ?? 0,
                 width: "max-content",
                 transformOrigin: `${middlewareData.arrow?.x}px top`,
-                zIndex: 1,
+                zIndex: 4,
+                backgroundColor: backgroundColor ?? "#fff",
               }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

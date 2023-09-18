@@ -11,8 +11,8 @@ const UserProfilePage = () => {
   const isPresent = useIsPresent();
   const { isAuthenticated } = useContext(AuthContext);
   return (
-    <div>
-      <div className="">Hello User Profile Page</div>
+    <div className="relative -z-10">
+      <div>Hello User Profile Page</div>
       <PageTransition isPresent={isPresent && isAuthenticated}></PageTransition>
     </div>
   );
