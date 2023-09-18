@@ -146,12 +146,15 @@ const AuthenticatedNavbar = () => {
   return (
     <AuthenticatedNavbarContainer>
       <AuthenticatedNavbarLeft>
-        <div className="logo-wrapper">
+        <Link
+          to={path.HOMEPAGE}
+          className="logo-wrapper"
+        >
           <img
             src={Logo}
             alt="Logo"
           />
-        </div>
+        </Link>
         {!isMobile && (
           <form className="navbar-search">
             <SearchIcon className="navbar-search-icon"></SearchIcon>

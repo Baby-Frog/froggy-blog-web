@@ -1,5 +1,7 @@
 import { useIsPresent } from "framer-motion";
+import { useContext } from "react";
 import PageTransition from "src/components/PageTransition";
+import { AuthContext } from "src/contexts/auth.contexts";
 
 type TUserProfilePageProps = {
   something: string;
@@ -7,10 +9,11 @@ type TUserProfilePageProps = {
 
 const UserProfilePage = () => {
   const isPresent = useIsPresent();
+  const { isAuthenticated } = useContext(AuthContext);
   return (
     <div>
       <div className="">Hello User Profile Page</div>
-      <PageTransition isPresent={isPresent}></PageTransition>
+      <PageTransition isPresent={isPresent && isAuthenticated}></PageTransition>
     </div>
   );
 };
