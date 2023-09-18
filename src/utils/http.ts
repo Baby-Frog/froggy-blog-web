@@ -65,6 +65,8 @@ class Http {
           const message = data?.message || error.message;
           toast.error(message);
         }
+        // if (isAxios) {
+        // }
         return Promise.reject(error);
       },
     );

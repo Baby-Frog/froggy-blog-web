@@ -1,9 +1,16 @@
-import { useContext } from "react";
-import AuthenticatedNavbar from "src/components/AuthenticatedNavbar";
+import { Suspense, lazy, useContext } from "react";
+const AuthenticatedNavbar = lazy(async () => {
+  const [moduleExports] = await Promise.all([
+    import("src/components/AuthenticatedNavbar"),
+    new Promise((resolve) => setTimeout(resolve, 4000)),
+  ]);
+  return moduleExports;
+});
 import MainNavbar from "src/components/MainNavbar/MainNavbar";
 import { AuthContext } from "src/contexts/auth.contexts";
 import HomepageBanner from "src/pages/Homepage/components/HomepageBanner";
 import { styled } from "styled-components";
+import LoadingPage from "src/pages/LoadingPage";
 
 const MainLayoutWrapper = styled.div`
   max-width: 1320px;
@@ -32,7 +39,9 @@ const MainLayout = ({ children }: TMainLayoutProps) => {
           <MainLayoutWrapper>{children}</MainLayoutWrapper>
         </>
       ) : (
-        <AuthenticatedNavbar></AuthenticatedNavbar>
+        <Suspense fallback={<LoadingPage></LoadingPage>}>
+          <AuthenticatedNavbar></AuthenticatedNavbar>
+        </Suspense>
       )}
     </>
   );
