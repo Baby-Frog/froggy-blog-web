@@ -15,6 +15,7 @@ function App() {
       LocalStorageEventTarget.removeEventListener("clearAuthen", clearAuthenInfoFromContext);
     };
   }, [clearAuthenInfoFromContext]);
+
   return (
     <>
       <AnimatePresence

@@ -32,6 +32,7 @@ type TMainLayoutProps = {
 
 const MainLayout = ({ children }: TMainLayoutProps) => {
   const { isAuthenticated } = useContext(AuthContext);
+  const isPresent = useIsPresent();
   return (
     <>
       {!isAuthenticated ? (
@@ -44,6 +45,7 @@ const MainLayout = ({ children }: TMainLayoutProps) => {
         <Suspense fallback={<LoadingPage>Please wait, we're loading your content</LoadingPage>}>
           <AuthenticatedNavbar></AuthenticatedNavbar>
           <MainLayoutWrapper>{children}</MainLayoutWrapper>
+          <PageTransition isPresent={isPresent}></PageTransition>
         </Suspense>
       )}
     </>

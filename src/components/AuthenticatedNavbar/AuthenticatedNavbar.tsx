@@ -30,6 +30,7 @@ const AuthenticatedNavbarContainer = styled.div`
   align-items: center;
   padding: 24px;
   height: 80px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 `;
 
 const AuthenticatedNavbarLeft = styled.div`
