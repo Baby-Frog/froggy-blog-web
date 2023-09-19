@@ -66,14 +66,14 @@ const HomepageBannerDescription = styled.div`
   font-weight: 500;
   color: #000;
   margin-top: 32px;
-  word-break: break-all;
+  word-break: break-word;
   .Typewriter {
     font-size: 18px;
     max-width: 410px;
     font-weight: 500;
     color: #000;
     margin-top: 32px;
-    word-break: break-all;
+    word-break: break-word;
     height: 105px;
   }
   @media screen and (max-width: 767.98px) {
@@ -141,7 +141,7 @@ const HomepageBanner = () => {
                   .pauseFor(500)
 
                   .typeString(
-                    "Every time you post something online, you have a choice. You can either make it something that adds to the happiness levels in the world—or you can make it something that takes away.",
+                    "<p>Every time you post something online, you have a choice. You can either make it something that adds to the happiness levels in the world—or you can make it something that takes away.</p>",
                   )
                   .callFunction(() => {
                     // console.log(document.querySelectorAll(".Typewriter__cursor")[2]);
@@ -152,13 +152,14 @@ const HomepageBanner = () => {
               }}
               options={{
                 delay: 10,
+                cursor: "",
               }}
             />
           </HomepageBannerDescription>
           <HomepageBannerAuthorName>
             <Typewriter
               onInit={(typewriter) => {
-                typewriter.pauseFor(2900).typeString("- Zoe Sugg").start();
+                typewriter.pauseFor(3500).typeString("- Zoe Sugg").start();
               }}
               options={{
                 delay: 15,
