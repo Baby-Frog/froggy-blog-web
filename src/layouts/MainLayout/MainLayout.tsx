@@ -32,7 +32,6 @@ type TMainLayoutProps = {
 
 const MainLayout = ({ children }: TMainLayoutProps) => {
   const { isAuthenticated } = useContext(AuthContext);
-
   return (
     <>
       {!isAuthenticated ? (

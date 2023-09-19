@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance, HttpStatusCode } from "axios";
+import axios, { AxiosError, AxiosInstance, HttpStatusCode, InternalAxiosRequestConfig } from "axios";
 import { TAuthResponse } from "src/types/auth-response.types";
 import {
   clearAllAuthenticationInfoFromLS,
@@ -8,6 +8,8 @@ import {
 } from "./auth";
 import { ENDPOINTS } from "src/constants/endpoints";
 import { toast } from "react-toastify";
+import { isExpiredTokenError, isUnauthorizedError } from "./isAxiosError";
+import { TErrorApiResponse } from "src/types/response.types";
 class Http {
   instance: AxiosInstance;
   private accessToken: string;
@@ -65,19 +67,47 @@ class Http {
           const message = data?.message || error.message;
           toast.error(message);
         }
-        // if (isAxios) {
-        // }
+        if (isUnauthorizedError<TErrorApiResponse<{ message: string }>>(error)) {
+          const config = error.response?.config || ({ headers: {} } as InternalAxiosRequestConfig);
+          const { url } = config;
+          // Lỗi 401 có 2 trường hợp
+          // TH1: Lỗi 401 do access_token hết hạn => ta sẽ phải refresh token
+          if (isExpiredTokenError(error) && url !== ENDPOINTS.REFRESH_TOKEN) {
+            this.refreshTokenRequest = this.refreshTokenRequest
+              ? this.handleRefreshAccessToken()
+              : this.handleRefreshAccessToken().finally(() => {
+                  setTimeout(() => {
+                    this.refreshTokenRequest = null;
+                  }, this.TIME_BEFORE_LOOKING_FOR_A_NEW_REFRESH_TOKEN);
+                });
+            return this.refreshTokenRequest.then((access_token) => {
+              if (config?.headers) {
+                config.headers.Authorization = access_token;
+              }
+              // Nghĩa là chúng ta tiếp tục request cũ vừa bị lỗi sau khi refresh thành công, chỉ là thay thế header Authorization bằng token mới
+              return this.instance({
+                ...config,
+                headers: { ...config.headers, Authorization: access_token },
+              });
+            });
+          }
+          clearAllAuthenticationInfoFromLS();
+          this.accessToken = "";
+          this.refreshToken = "";
+          toast.error(error.response?.data.data?.message);
+        }
         return Promise.reject(error);
       },
     );
   }
-  private handleRefreshAccessToken() {
+  private async handleRefreshAccessToken() {
     return this.instance
       .post(ENDPOINTS.REFRESH_TOKEN)
       .then((response) => {
         const { access_token } = response.data.data;
         saveAccessTokenToLS(access_token);
         this.accessToken = access_token;
+        return access_token;
       })
       .catch((error) => {
         clearAllAuthenticationInfoFromLS();
