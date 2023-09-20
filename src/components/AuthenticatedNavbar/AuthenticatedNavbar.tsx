@@ -30,7 +30,6 @@ const AuthenticatedNavbarContainer = styled.div`
   align-items: center;
   padding: 24px;
   height: 80px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 `;
 
 const AuthenticatedNavbarLeft = styled.div`
@@ -170,13 +169,16 @@ const AuthenticatedNavbar = () => {
       </AuthenticatedNavbarLeft>
       <AuthenticatedNavbarRight>
         {!isMobile ? (
-          <div className="default-row default-row--grey cursor-pointer">
+          <Link
+            to={path.NEWSTORY}
+            className="default-row default-row--grey cursor-pointer"
+          >
             <EditIcon
               width={24}
               height={24}
             ></EditIcon>
             <span>Write</span>
-          </div>
+          </Link>
         ) : (
           <SearchIcon variants="secondary"></SearchIcon>
         )}

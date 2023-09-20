@@ -3,6 +3,7 @@ import { Navigate, Outlet, useRoutes } from "react-router-dom";
 import { path } from "src/constants/path";
 import { AuthContext } from "src/contexts/auth.contexts";
 import MainLayout from "src/layouts/MainLayout/MainLayout";
+import BlogWritingPage from "src/pages/BlogWritingPage";
 import Homepage from "src/pages/Homepage";
 import SettingPage from "src/pages/SettingPage";
 import UserProfilePage from "src/pages/UserProfilePage";
@@ -46,6 +47,14 @@ export default function useRouteElement() {
           element: (
             <MainLayout>
               <SettingPage></SettingPage>
+            </MainLayout>
+          ),
+        },
+        {
+          path: path.NEWSTORY,
+          element: (
+            <MainLayout>
+              <BlogWritingPage></BlogWritingPage>
             </MainLayout>
           ),
         },

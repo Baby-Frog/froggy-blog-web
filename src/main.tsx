@@ -1,17 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import { ToastContainer } from "react-toastify";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { BrowserRouter } from "react-router-dom";
 import { ReactQueryDevtools } from "react-query/devtools";
-import "./styles/index.scss";
+import { BrowserRouter } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "sweetalert2/src/sweetalert2.scss";
-import GlobalStyle from "./styles/globalStyles.ts";
-import { theme } from "./constants/themes.ts";
 import { ThemeProvider } from "styled-components";
+import "sweetalert2/src/sweetalert2.scss";
+import App from "./App.tsx";
+import { theme } from "./constants/themes.ts";
 import { AuthProvider } from "./contexts/auth.contexts.tsx";
+import GlobalStyle from "./styles/globalStyles.ts";
+import "./styles/index.scss";
 
 const queryClient = new QueryClient();
 

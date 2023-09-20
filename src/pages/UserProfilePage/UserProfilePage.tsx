@@ -8,12 +8,9 @@ type TUserProfilePageProps = {
 };
 
 const UserProfilePage = () => {
-  const isPresent = useIsPresent();
-  const { isAuthenticated } = useContext(AuthContext);
   return (
     <div className="relative -z-10">
       <div>Hello User Profile Page</div>
-      <PageTransition isPresent={isPresent && isAuthenticated}></PageTransition>
     </div>
   );
 };

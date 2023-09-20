@@ -1,4 +1,4 @@
-import { motion, useIsPresent } from "framer-motion";
+import { useIsPresent } from "framer-motion";
 import { Suspense, lazy, useContext } from "react";
 import MainNavbar from "src/components/MainNavbar/MainNavbar";
 import PageTransition from "src/components/PageTransition";
