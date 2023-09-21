@@ -12,7 +12,7 @@ const TextEditor = () => {
     <Editor
       onInit={(evt, editor) => (editorRef.current = editor)}
       initialValue="<p>This is the initial content of the editor.</p>"
-      apiKey={import.meta.env.VITE_TINY_API_KEY}
+      apiKey={import.meta.env.VITE_TINY_MCE_API_KEYY}
       init={{
         plugins:
           "print preview importcss tinydrive searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap  quickbars linkchecker emoticons  ",
@@ -76,7 +76,7 @@ const TextEditor = () => {
         toolbar_mode: "sliding",
         spellchecker_ignore_list: ["Ephox", "Moxiecode"],
         content_style: ".mymention{ color: gray; }",
-        contextmenu: "link image imagetools table configure",
+        contextmenu: "link image imagetools table",
         a11y_advanced_options: true,
         _selector: ".mymention",
         _item_type: "profile",
