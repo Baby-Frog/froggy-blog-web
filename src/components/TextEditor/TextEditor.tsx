@@ -25,11 +25,11 @@ const TextEditor = () => {
       apiKey={import.meta.env.VITE_TINY_MCE_API_KEY}
       init={{
         plugins:
-          "print preview importcss  searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars linkchecker emoticons",
+          "print preview importcss searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars linkchecker emoticons",
         tinydrive_token_provider: "URL_TO_YOUR_TOKEN_PROVIDER",
         mobile: {
           plugins:
-            "print preview casechange importcss searchreplace autolink autosave save directionality  visualblocks visualchars fullscreen image link media mediaembed template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount textpattern noneditable help formatpainter charmap quickbars linkchecker emoticons",
+            "print preview  importcss searchreplace autolink autosave save directionality  visualblocks visualchars fullscreen image link media  template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount textpattern noneditable help  charmap quickbars linkchecker emoticons",
         },
         menu: {
           tc: {
@@ -39,7 +39,7 @@ const TextEditor = () => {
         },
         menubar: "file edit view insert format tools table tc help",
         toolbar:
-          "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist  | forecolor backcolor casechange  formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment",
+          "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist  | forecolor backcolor    removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment",
         autosave_ask_before_unload: true,
         image_advtab: true,
         link_list: [
