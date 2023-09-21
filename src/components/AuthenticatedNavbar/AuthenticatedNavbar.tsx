@@ -210,7 +210,6 @@ const AuthenticatedNavbar = () => {
                 <SettingIcon
                   width={24}
                   height={24}
-                  color=""
                 ></SettingIcon>
                 <span>Settings</span>
               </StyledDropdownLink>
