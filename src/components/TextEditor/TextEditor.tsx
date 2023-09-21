@@ -5,11 +5,7 @@ const TextEditor = () => {
   const editorRef = useRef<TinyMCEEditor | null>();
   const [value, setValue] = useState<string>("");
   const [rawText, setRawText] = useState<string>("");
-  const log = () => {
-    if (editorRef.current) {
-      console.log(editorRef.current.getContent());
-    }
-  };
+
   return (
     <Editor
       onInit={(evt, editor) => {
@@ -83,6 +79,9 @@ const TextEditor = () => {
         a11y_advanced_options: true,
         _selector: ".mymention",
         _item_type: "profile",
+        // images_upload_handler: function (blobInfo, success) {
+
+        // }
       }}
     />
   );
