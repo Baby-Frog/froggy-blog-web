@@ -1,8 +1,10 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Editor as TinyMCEEditor } from "tinymce";
 const TextEditor = () => {
   const editorRef = useRef<TinyMCEEditor | null>();
+  const [value, setValue] = useState<string>("");
+  const [rawText, setRawText] = useState<string>("");
   const log = () => {
     if (editorRef.current) {
       console.log(editorRef.current.getContent());
@@ -10,19 +12,24 @@ const TextEditor = () => {
   };
   return (
     <Editor
-      onInit={(evt, editor) => (editorRef.current = editor)}
-      initialValue="<p>This is the initial content of the editor.</p>"
-      apiKey={import.meta.env.VITE_TINY_MCE_API_KEYY}
+      onInit={(evt, editor) => {
+        setRawText(editor.getContent({ format: "text" }));
+        return (editorRef.current = editor);
+      }}
+      initialValue=""
+      value={value}
+      onEditorChange={(newValue, editor) => {
+        setValue(newValue);
+        setRawText(editor.getContent({ format: "text" }));
+      }}
+      apiKey={import.meta.env.VITE_TINY_MCE_API_KEY}
       init={{
         plugins:
-          "print preview importcss tinydrive searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap  quickbars linkchecker emoticons  ",
+          "print preview importcss  searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars linkchecker emoticons",
         tinydrive_token_provider: "URL_TO_YOUR_TOKEN_PROVIDER",
-        tinydrive_dropbox_app_key: "YOUR_DROPBOX_APP_KEY",
-        tinydrive_google_drive_key: "YOUR_GOOGLE_DRIVE_KEY",
-        tinydrive_google_drive_client_id: "YOUR_GOOGLE_DRIVE_CLIENT_ID",
         mobile: {
           plugins:
-            "print preview casechange importcss tinydrive searchreplace autolink autosave save directionality  visualblocks visualchars fullscreen image link media mediaembed template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount textpattern noneditable help formatpainter  charmap  quickbars linkchecker emoticons ",
+            "print preview casechange importcss searchreplace autolink autosave save directionality  visualblocks visualchars fullscreen image link media mediaembed template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount textpattern noneditable help formatpainter charmap quickbars linkchecker emoticons",
         },
         menu: {
           tc: {
@@ -34,10 +41,6 @@ const TextEditor = () => {
         toolbar:
           "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist  | forecolor backcolor casechange  formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment",
         autosave_ask_before_unload: true,
-        autosave_interval: "30s",
-        autosave_prefix: "{path}{query}-{id}-",
-        autosave_restore_when_empty: false,
-        autosave_retention: "2m",
         image_advtab: true,
         link_list: [
           { title: "My page 1", value: "https://www.tiny.cloud" },
