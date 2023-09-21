@@ -13,9 +13,7 @@ import { TErrorApiResponse } from "src/types/response.types";
 class Http {
   instance: AxiosInstance;
   private accessToken: string;
-  private refreshToken: string;
   private refreshTokenRequest: Promise<string> | null;
-  private TIME_BEFORE_LOOKING_FOR_A_NEW_REFRESH_TOKEN: number;
   constructor() {
     this.instance = axios.create({
       baseURL: import.meta.env.VITE_LOCAL_API_URL,
@@ -25,9 +23,7 @@ class Http {
       },
     });
     this.accessToken = "";
-    this.refreshToken = "";
     this.refreshTokenRequest = null;
-    this.TIME_BEFORE_LOOKING_FOR_A_NEW_REFRESH_TOKEN = 10000;
     this.instance.interceptors.request.use(
       (config) => {
         if (this.accessToken) {
@@ -50,15 +46,14 @@ class Http {
           saveAccessTokenToLS(accessToken);
           saveRefreshTokenToLS(refreshToken);
           saveUserProfileToLS(user);
-        } else if (url === `/api${ENDPOINTS.LOGOUT}`) {
+        } else if (url === ENDPOINTS.LOGOUT) {
           this.accessToken = "";
-          this.refreshToken = "";
           this.refreshTokenRequest = null;
           clearAllAuthenticationInfoFromLS();
         }
         return response;
       },
-      (error: AxiosError) => {
+      async (error: AxiosError) => {
         if (
           ![HttpStatusCode.UnprocessableEntity, HttpStatusCode.Unauthorized].includes(error?.response?.status as number)
         ) {
@@ -74,13 +69,11 @@ class Http {
           // TH1: Lỗi 401 do access_token hết hạn => ta sẽ phải refresh token
           if (isExpiredTokenError(error) && url !== ENDPOINTS.REFRESH_TOKEN) {
             this.refreshTokenRequest = this.refreshTokenRequest
-              ? this.handleRefreshAccessToken()
-              : this.handleRefreshAccessToken().finally(() => {
-                  setTimeout(() => {
-                    this.refreshTokenRequest = null;
-                  }, this.TIME_BEFORE_LOOKING_FOR_A_NEW_REFRESH_TOKEN);
+              ? await this.handleRefreshAccessToken()
+              : await this.handleRefreshAccessToken().finally(() => {
+                  this.refreshTokenRequest = null;
                 });
-            return this.refreshTokenRequest.then((access_token) => {
+            return this?.refreshTokenRequest?.then((access_token) => {
               if (config?.headers) {
                 config.headers.Authorization = access_token;
               }
@@ -93,7 +86,6 @@ class Http {
           }
           clearAllAuthenticationInfoFromLS();
           this.accessToken = "";
-          this.refreshToken = "";
           toast.error(error.response?.data.data?.message);
         }
         return Promise.reject(error);
@@ -112,7 +104,6 @@ class Http {
       .catch((error) => {
         clearAllAuthenticationInfoFromLS();
         this.accessToken = "";
-        this.refreshToken = "";
         console.error(error);
         return Promise.reject(error);
       });

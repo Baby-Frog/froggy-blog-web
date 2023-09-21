@@ -1,6 +1,6 @@
 export const ENDPOINTS = {
   LOGIN: "/login",
   REGISTER: "/register",
-  LOGOUT: "/logout",
+  LOGOUT: "/api/logout",
   REFRESH_TOKEN: "/refreshToken",
 } as const;
