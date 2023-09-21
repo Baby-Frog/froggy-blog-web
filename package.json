@@ -16,6 +16,7 @@
     "@floating-ui/react": "^0.25.0",
     "@hookform/resolvers": "^3.2.0",
     "@tinymce/tinymce-react": "^4.3.0",
+    "antd": "^5.9.2",
     "axios": "^1.4.0",
     "framer-motion": "^10.15.0",
     "html-react-parser": "^4.2.0",
