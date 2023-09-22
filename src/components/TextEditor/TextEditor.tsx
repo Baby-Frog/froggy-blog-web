@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Editor as TinyMCEEditor } from "tinymce";
+import "./TextEditor.scss";
 const TextEditor = () => {
   const editorRef = useRef<TinyMCEEditor | null>();
   const [value, setValue] = useState<string>("");
@@ -21,11 +22,11 @@ const TextEditor = () => {
       apiKey={import.meta.env.VITE_TINY_MCE_API_KEY}
       init={{
         plugins:
-          "print preview importcss searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars linkchecker emoticons",
+          "print preview importcss directionality image link codesample table hr nonbreaking insertdatetime advlist lists wordcount imagetools textpattern noneditable help quickbars linkchecker emoticons",
         tinydrive_token_provider: "URL_TO_YOUR_TOKEN_PROVIDER",
         mobile: {
           plugins:
-            "print preview  importcss searchreplace autolink autosave save directionality  visualblocks visualchars fullscreen image link media  template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount textpattern noneditable help  charmap quickbars linkchecker emoticons",
+            "print preview importcss directionality image link codesample table hr nonbreaking insertdatetime advlist lists wordcount textpattern noneditable help charmap quickbars linkchecker emoticons",
         },
         menu: {
           tc: {
@@ -33,9 +34,9 @@ const TextEditor = () => {
             items: "addcomment showcomments deleteallconversations",
           },
         },
-        menubar: "file edit view insert format tools table tc help",
+        menubar: false,
         toolbar:
-          "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist  | forecolor backcolor    removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment",
+          "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist  | forecolor backcolor removeformat | pagebreak | emoticons | insertfile image link codesample | ltr rtl",
         autosave_ask_before_unload: true,
         image_advtab: true,
         link_list: [
@@ -72,7 +73,7 @@ const TextEditor = () => {
         image_caption: true,
         quickbars_selection_toolbar: "bold italic | quicklink h2 h3 blockquote quickimage quicktable",
         noneditable_noneditable_class: "mceNonEditable",
-        toolbar_mode: "sliding",
+        toolbar_mode: "wrap",
         spellchecker_ignore_list: ["Ephox", "Moxiecode"],
         content_style: ".mymention{ color: gray; }",
         contextmenu: "link image imagetools table",
