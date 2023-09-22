@@ -7,10 +7,10 @@ const TextEditor = () => {
   const editorRef = useRef<TinyMCEEditor | null>();
   const [value, setValue] = useState<string>("");
   const [, setRawText] = useState<string>("");
+  // I was forced to use "any" because tiny-mce react documentation is so stupid
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const example_image_upload_handler = async (blobInfo: any, progress: any) => {
     const bodyFormData = new FormData();
-    console.log(progress);
     bodyFormData.append("image", blobInfo.blob());
     const response = await axios({
       method: "post",
@@ -22,6 +22,7 @@ const TextEditor = () => {
     });
     return response.data.data.url;
   };
+  console.log(value);
   return (
     <Editor
       onInit={(evt, editor) => {

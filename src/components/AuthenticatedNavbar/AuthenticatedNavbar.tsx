@@ -136,7 +136,6 @@ const AuthenticatedNavbar = () => {
       navigate(path.HOMEPAGE);
     },
     onError: (error) => {
-      console.log(error);
       toast.error("Oops! Something went wrong. Please try again later");
     },
   });

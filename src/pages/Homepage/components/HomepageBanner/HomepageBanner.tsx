@@ -100,7 +100,6 @@ const HomepageBannerButton = styled.button`
 `;
 
 const HomepageBanner = () => {
-  console.log(import.meta.env.VITE_LOCAL_API_URL);
   return (
     <HomepageBannerContainer>
       <HomepageBannerMain>
@@ -144,8 +143,6 @@ const HomepageBanner = () => {
                     "<p>Every time you post something online, you have a choice. You can either make it something that adds to the happiness levels in the world—or you can make it something that takes away.</p>",
                   )
                   .callFunction(() => {
-                    // console.log(document.querySelectorAll(".Typewriter__cursor")[2]);
-
                     document.querySelectorAll(".Typewriter__cursor")[2].remove();
                   })
                   .start();
