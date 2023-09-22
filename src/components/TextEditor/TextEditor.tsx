@@ -1,12 +1,27 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Editor as TinyMCEEditor } from "tinymce";
 import "./TextEditor.scss";
 const TextEditor = () => {
   const editorRef = useRef<TinyMCEEditor | null>();
   const [value, setValue] = useState<string>("");
-  const [rawText, setRawText] = useState<string>("");
+  const [, setRawText] = useState<string>("");
+  // `const handleImageUpload = (blobInfo: any, success: any, failure: any) => {
+  //   const formData = new FormData();
+  //   formData.append("file", blobInfo.blob(), blobInfo.filename());
 
+  //   fetch("http://localhost:8080/api/upload-image", {
+  //     method: "POST",
+  //     body: formData,
+  //   })
+  //     .then((response) => response.json())
+  //     .then((result) => {
+  //       success(result.url);
+  //     })
+  //     .catch((error) => {
+  //       failure("Image upload failed");
+  //     });
+  // };`
   return (
     <Editor
       onInit={(evt, editor) => {
@@ -80,6 +95,7 @@ const TextEditor = () => {
         a11y_advanced_options: true,
         _selector: ".mymention",
         _item_type: "profile",
+        resize: false,
         // images_upload_handler: function (blobInfo, success) {
 
         // }
