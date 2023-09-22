@@ -2,26 +2,26 @@ import { useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Editor as TinyMCEEditor } from "tinymce";
 import "./TextEditor.scss";
+import axios from "axios";
 const TextEditor = () => {
   const editorRef = useRef<TinyMCEEditor | null>();
   const [value, setValue] = useState<string>("");
   const [, setRawText] = useState<string>("");
-  // `const handleImageUpload = (blobInfo: any, success: any, failure: any) => {
-  //   const formData = new FormData();
-  //   formData.append("file", blobInfo.blob(), blobInfo.filename());
-
-  //   fetch("http://localhost:8080/api/upload-image", {
-  //     method: "POST",
-  //     body: formData,
-  //   })
-  //     .then((response) => response.json())
-  //     .then((result) => {
-  //       success(result.url);
-  //     })
-  //     .catch((error) => {
-  //       failure("Image upload failed");
-  //     });
-  // };`
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const example_image_upload_handler = async (blobInfo: any, progress: any) => {
+    const bodyFormData = new FormData();
+    console.log(progress);
+    bodyFormData.append("image", blobInfo.blob());
+    const response = await axios({
+      method: "post",
+      url: "https://api.imgbb.com/1/upload?key=3c83bf0d94037028b0b4041a18bcb093",
+      data: bodyFormData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data.data.url;
+  };
   return (
     <Editor
       onInit={(evt, editor) => {
@@ -37,11 +37,11 @@ const TextEditor = () => {
       apiKey={import.meta.env.VITE_TINY_MCE_API_KEY}
       init={{
         plugins:
-          "heading print preview importcss directionality image link codesample hr nonbreaking insertdatetime advlist lists wordcount imagetools textpattern noneditable help quickbars linkchecker emoticons",
+          "preview importcss directionality image link codesample nonbreaking insertdatetime advlist lists wordcount imagetools help quickbars emoticons",
         tinydrive_token_provider: "URL_TO_YOUR_TOKEN_PROVIDER",
         mobile: {
           plugins:
-            "heading print preview importcss directionality image link codesample hr nonbreaking insertdatetime advlist lists wordcount textpattern noneditable help charmap quickbars linkchecker emoticons",
+            "preview importcss directionality image link codesample nonbreaking insertdatetime advlist lists wordcount help charmap quickbars emoticons",
         },
         menu: {
           tc: {
@@ -51,22 +51,15 @@ const TextEditor = () => {
         },
         menubar: false,
         toolbar:
-          "h1 h2 bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | forecolor backcolor emoticons | insertfile image link codesample | ltr rtl",
+          "h1 h2 | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | forecolor backcolor emoticons | insertfile image link codesample | ltr rtl",
         autosave_ask_before_unload: true,
         image_advtab: true,
-        link_list: [
-          { title: "My page 1", value: "https://www.tiny.cloud" },
-          { title: "My page 2", value: "http://www.moxiecode.com" },
-        ],
-        image_list: [
-          { title: "My page 1", value: "https://www.tiny.cloud" },
-          { title: "My page 2", value: "http://www.moxiecode.com" },
-        ],
         image_class_list: [
           { title: "None", value: "" },
           { title: "Some class", value: "class-name" },
         ],
         importcss_append: true,
+        body_class: "mce-content-body-v2",
         templates: [
           {
             title: "New Table",
@@ -96,9 +89,9 @@ const TextEditor = () => {
         _selector: ".mymention",
         _item_type: "profile",
         resize: false,
-        // images_upload_handler: function (blobInfo, success) {
-
-        // }
+        automatic_uploads: true,
+        // images_upload_url: "https://api.imgbb.com/1/upload?key=3c83bf0d94037028b0b4041a18bcb093",
+        images_upload_handler: example_image_upload_handler,
       }}
     />
   );

@@ -12,13 +12,15 @@
 .tox .tox-tbtn {
   width: 30px !important;
   &:hover {
-    width: 30px !important;
     background-color: #b2b3bd !important;
   }
   &--enabled {
-    width: 30px !important;
     background-color: #b2b3bd !important;
   }
+}
+
+.tox .tox-tbtn--bespoke {
+  width: max-content !important;
 }
 
 .tox .tox-toolbar {
@@ -27,4 +29,8 @@
 
 .tox .tox-tbtn--select {
   padding: unset !important;
+}
+
+.mce-content-body {
+  font-family: "Pacifico", sans-serif !important;
 }
