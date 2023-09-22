@@ -22,11 +22,11 @@ const TextEditor = () => {
       apiKey={import.meta.env.VITE_TINY_MCE_API_KEY}
       init={{
         plugins:
-          "print preview importcss directionality image link codesample table hr nonbreaking insertdatetime advlist lists wordcount imagetools textpattern noneditable help quickbars linkchecker emoticons",
+          "heading print preview importcss directionality image link codesample hr nonbreaking insertdatetime advlist lists wordcount imagetools textpattern noneditable help quickbars linkchecker emoticons",
         tinydrive_token_provider: "URL_TO_YOUR_TOKEN_PROVIDER",
         mobile: {
           plugins:
-            "print preview importcss directionality image link codesample table hr nonbreaking insertdatetime advlist lists wordcount textpattern noneditable help charmap quickbars linkchecker emoticons",
+            "heading print preview importcss directionality image link codesample hr nonbreaking insertdatetime advlist lists wordcount textpattern noneditable help charmap quickbars linkchecker emoticons",
         },
         menu: {
           tc: {
@@ -36,7 +36,7 @@ const TextEditor = () => {
         },
         menubar: false,
         toolbar:
-          "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist  | forecolor backcolor removeformat | pagebreak | emoticons | insertfile image link codesample | ltr rtl",
+          "h1 h2 bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | forecolor backcolor emoticons | insertfile image link codesample | ltr rtl",
         autosave_ask_before_unload: true,
         image_advtab: true,
         link_list: [
@@ -71,7 +71,7 @@ const TextEditor = () => {
         template_mdate_format: "[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]",
         height: 600,
         image_caption: true,
-        quickbars_selection_toolbar: "bold italic | quicklink h2 h3 blockquote quickimage quicktable",
+        quickbars_selection_toolbar: "bold italic | quicklink h2 h3 blockquote quickimage",
         noneditable_noneditable_class: "mceNonEditable",
         toolbar_mode: "wrap",
         spellchecker_ignore_list: ["Ephox", "Moxiecode"],

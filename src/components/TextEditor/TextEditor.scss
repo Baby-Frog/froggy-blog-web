@@ -1,3 +1,30 @@
 .tox:not(.tox-tinymce-inline) .tox-editor-header:not(.tox-editor-dock-transition) {
   margin: 0 auto;
 }
+
+.tox:not(.tox-tinymce-inline) .tox-editor-header {
+  box-shadow: none !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  padding: 12px 0 !important;
+}
+
+.tox .tox-tbtn {
+  width: 30px !important;
+  &:hover {
+    width: 30px !important;
+    background-color: #b2b3bd !important;
+  }
+  &--enabled {
+    width: 30px !important;
+    background-color: #b2b3bd !important;
+  }
+}
+
+.tox .tox-toolbar {
+  background-color: #e3e3e3 !important;
+}
+
+.tox .tox-tbtn--select {
+  padding: unset !important;
+}
