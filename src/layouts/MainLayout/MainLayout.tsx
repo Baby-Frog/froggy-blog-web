@@ -9,7 +9,7 @@ import { styled } from "styled-components";
 const AuthenticatedNavbar = lazy(async () => {
   const [moduleExports] = await Promise.all([
     import("src/components/AuthenticatedNavbar"),
-    new Promise((resolve) => setTimeout(resolve, 4000)),
+    new Promise((resolve) => setTimeout(resolve, 2000)),
   ]);
   return moduleExports;
 });

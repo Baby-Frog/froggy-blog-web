@@ -1,16 +1,21 @@
-import TextEditor from "src/components/TextEditor";
-import TextToSpeech from "src/components/TextToSpeech";
-
+import { styled } from "styled-components";
+import NewStorySidebar from "./components/NewStorySidebar";
 type TNewStoryPageProps = {
   something: string;
 };
 
+const NewStoryPageWrapper = styled.div`
+  height: 300vh;
+  position: relative;
+  overflow: visible;
+  display: flex;
+`;
+
 const NewStoryPage = () => {
   return (
-    <div>
-      <TextToSpeech text="Hey man, i just want to say that i love you">Click here</TextToSpeech>
-      <TextEditor></TextEditor>
-    </div>
+    <NewStoryPageWrapper>
+      <NewStorySidebar></NewStorySidebar>
+    </NewStoryPageWrapper>
   );
 };
 

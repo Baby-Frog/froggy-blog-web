@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { AuthContext } from "./contexts/auth.contexts";
 import useRouteElement from "./hooks/useRouteElement";
 import { LocalStorageEventTarget } from "./utils/auth";
+import ScrollToTopButton from "./components/ScrollToTop/ScrollToTop";
 
 function App() {
   const routeElements = useRouteElement();

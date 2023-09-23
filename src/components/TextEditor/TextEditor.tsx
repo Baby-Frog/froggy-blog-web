@@ -54,7 +54,6 @@ const TextEditor = () => {
         toolbar:
           "h1 h2 | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | forecolor backcolor emoticons | insertfile image link codesample | ltr rtl",
         autosave_ask_before_unload: true,
-        image_advtab: true,
         image_class_list: [
           { title: "None", value: "" },
           { title: "Some class", value: "class-name" },
