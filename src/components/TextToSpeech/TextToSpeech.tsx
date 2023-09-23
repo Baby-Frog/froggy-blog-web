@@ -7,11 +7,24 @@ type TTextToSpeechProps = {
 
 const TextToSpeech: React.FC<TTextToSpeechProps> = ({ text, children }) => {
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [paused, setPaused] = useState<boolean>(false);
+  const [speaking, setSpeaking] = useState<boolean>(false);
 
   const handleButtonClick = () => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.voice = voices?.[0] || null;
-    window.speechSynthesis.speak(utterance);
+    if (speaking) {
+      if (paused) {
+        window.speechSynthesis.resume();
+        setPaused(false);
+      } else {
+        window.speechSynthesis.pause();
+        setPaused(true);
+      }
+    } else {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.voice = voices?.[0];
+      window.speechSynthesis.speak(utterance);
+      setSpeaking(true);
+    }
   };
 
   const handleVoicesChanged = () => {
