@@ -1,3 +1,3 @@
-import BlogWritingPage from "./BlogWritingPage";
+import NewStoryPage from "./BlogWritingPage";
 
-export default BlogWritingPage;
+export default NewStoryPage;

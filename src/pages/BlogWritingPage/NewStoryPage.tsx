@@ -1,11 +1,11 @@
 import TextEditor from "src/components/TextEditor";
 import TextToSpeech from "src/components/TextToSpeech";
 
-type TBlogWritingPageProps = {
+type TNewStoryPageProps = {
   something: string;
 };
 
-const BlogWritingPage = () => {
+const NewStoryPage = () => {
   return (
     <div>
       <TextToSpeech text="Hey man, i just want to say that i love you">Click here</TextToSpeech>
@@ -14,4 +14,4 @@ const BlogWritingPage = () => {
   );
 };
 
-export default BlogWritingPage;
+export default NewStoryPage;
