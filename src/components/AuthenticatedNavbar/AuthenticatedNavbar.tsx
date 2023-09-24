@@ -1,28 +1,24 @@
-import { styled } from "styled-components";
-import { path } from "src/constants/path";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import Logo from "src/assets/logo-4.png";
-import { useForm } from "react-hook-form";
-import SearchIcon from "../Icon/SearchIcon";
-import EditIcon from "../Icon/EditIcon";
-import BellIcon from "../Icon/BellIcon";
 import { useContext, useState } from "react";
-import { AuthContext } from "src/contexts/auth.contexts";
-import PopoverDismiss from "../PopoverDismiss";
-import ChevronIcon from "../Icon/ChevronIcon";
+import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
-import { authApi } from "src/apis/auth.apis";
-import { getRefreshTokenFromLS } from "src/utils/auth";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import ProfileIcon from "../Icon/ProfileIcon";
-import SettingIcon from "../Icon/SettingIcon";
-import LogoutIcon from "../Icon/LogoutIcon";
-import Divider from "../Divider";
+import useMedia from "react-use/lib/useMedia";
+import { authApi } from "src/apis/auth.apis";
+import Logo from "src/assets/logo-4.png";
+import { path } from "src/constants/path";
+import { AuthContext } from "src/contexts/auth.contexts";
+import { getRefreshTokenFromLS } from "src/utils/auth";
 import { hideEmail } from "src/utils/hideEmail";
-import { useMedia } from "react-use";
-type TAuthenticatedNavbarProps = {
-  something: string;
-};
+import { styled } from "styled-components";
+import Divider from "../Divider";
+import BellIcon from "../Icon/BellIcon";
+import ChevronIcon from "../Icon/ChevronIcon";
+import EditIcon from "../Icon/EditIcon";
+import ProfileIcon from "../Icon/ProfileIcon";
+import SearchIcon from "../Icon/SearchIcon";
+import SettingIcon from "../Icon/SettingIcon";
+import PopoverDismiss from "../PopoverDismiss";
 
 const AuthenticatedNavbarContainer = styled.div`
   display: flex;
@@ -135,7 +131,7 @@ const AuthenticatedNavbar = () => {
       toast.success("Logout successfully!");
       navigate(path.HOMEPAGE);
     },
-    onError: (error) => {
+    onError: () => {
       toast.error("Oops! Something went wrong. Please try again later");
     },
   });

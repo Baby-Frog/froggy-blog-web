@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import LoadingGIF from "src/assets/loading.gif";
-import { useMedia } from "react-use";
+import useMedia from "react-use/lib/useMedia";
 import Logo from "src/assets/logo-4.png";
 type TLoadingPageProps = {
   children?: React.ReactNode;

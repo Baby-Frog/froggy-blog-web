@@ -3,26 +3,45 @@ import { Editor } from "@tinymce/tinymce-react";
 import { Editor as TinyMCEEditor } from "tinymce";
 import "./TextEditor.scss";
 import axios from "axios";
+import { useMutation } from "react-query";
+import { storyApi } from "src/apis/story.apis";
+import { toast } from "react-toastify";
 const TextEditor = () => {
   const editorRef = useRef<TinyMCEEditor | null>();
   const [value, setValue] = useState<string>("");
   const [, setRawText] = useState<string>("");
+
+  const uploadImageMutation = useMutation({
+    mutationFn: storyApi.uploadImage,
+  });
+
   // I was forced to use "any" because tiny-mce react documentation is so stupid
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const example_image_upload_handler = async (blobInfo: any, progress: any) => {
     const bodyFormData = new FormData();
-    bodyFormData.append("image", blobInfo.blob());
-    const response = await axios({
-      method: "post",
-      url: import.meta.env.VITE_IBB_IMAGE_UPLOAD_API_URL,
-      data: bodyFormData,
-      headers: {
-        "Content-Type": "multipart/form-data",
+    bodyFormData.append("file", blobInfo.blob());
+    const result = await uploadImageMutation.mutateAsync(bodyFormData, {
+      onSuccess: (data) => {
+        console.log(data);
+        return data.data.urlImage;
+      },
+      onError: (error) => {
+        console.log(error);
+        toast.error(error as string);
       },
     });
-    return response.data.data.url;
+    console.log(result);
+    return "";
+    // const response = await axios({
+    //   method: "post",
+    //   url: import.meta.env.VITE_LOCAL_IMAGE_UPLOAD_API_URL,
+    //   data: bodyFormData,
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
+    //   },
+    // });
+    // return response.data.data.urlImage;
   };
-  console.log(value);
   return (
     <Editor
       onInit={(evt, editor) => {

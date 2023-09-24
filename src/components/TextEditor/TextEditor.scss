@@ -1,3 +1,7 @@
+.tox-tinymce {
+  border: 2px solid #c4c5cd !important;
+}
+
 .tox:not(.tox-tinymce-inline) .tox-editor-header:not(.tox-editor-dock-transition) {
   margin: 0 auto;
 }
@@ -12,19 +16,22 @@
 .tox .tox-tbtn {
   width: 30px !important;
   &:hover {
-    background-color: #b2b3bd !important;
+    background-color: #cdcdcd !important;
   }
   &--enabled {
-    background-color: #b2b3bd !important;
+    background-color: #cdcdcd !important;
   }
 }
-
+.tox-statusbar__help-text {
+  opacity: 0;
+  visibility: hidden;
+}
 .tox .tox-tbtn--bespoke {
   width: max-content !important;
 }
 
 .tox .tox-toolbar {
-  background-color: #e3e3e3 !important;
+  background-color: #ebebeb !important;
 }
 
 .tox .tox-tbtn--select {
