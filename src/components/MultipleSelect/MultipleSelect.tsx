@@ -1,29 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Select, SelectProps, Spin } from "antd";
-import React from "react";
-import { useQuery } from "react-query";
-import { topicApi } from "src/apis/topic.apis";
+import { useState } from "react";
 
 type TMultipleSelectProps<ValueType = any> = {
-  fetchOptions: (search: string) => Promise<ValueType[]>;
+  fetchOptions?: (search: string) => Promise<ValueType[]>;
   debounceTimeout?: number;
-} & Omit<SelectProps<ValueType | ValueType[]>, "options" | "children">;
+  isLoading?: boolean;
+} & SelectProps;
 
-const MultipleSelect = ({
-  fetchOptions,
-  debounceTimeout,
-  ...props
-}: TMultipleSelectProps & { key?: string; label: React.ReactNode; value: string | number }) => {
-  const { data: topicData, isLoading } = useQuery({
-    queryKey: ["topics"],
-    queryFn: () => topicApi.getTopics(),
-  });
-  console.log(topicData?.data.data.data);
+type ValueType = { key?: string; label: React.ReactNode; value: string | number };
+
+const MultipleSelect = ({ fetchOptions, debounceTimeout, isLoading, ...props }: TMultipleSelectProps) => {
+  const [options, setOptions] = useState<ValueType[]>([]);
   return (
     <Select
       labelInValue
+      mode="multiple"
+      fetchOptions={fetchOptions}
       filterOption={false}
       notFoundContent={isLoading ? <Spin size="small" /> : null}
+      options={options}
       {...props}
     />
   );

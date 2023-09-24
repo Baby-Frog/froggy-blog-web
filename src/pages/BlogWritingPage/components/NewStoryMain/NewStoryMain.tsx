@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useForm } from "react-hook-form";
 import Input from "src/components/Input";
 import Label from "src/components/Label";
@@ -5,9 +6,14 @@ import TextEditor from "src/components/TextEditor";
 import { styled } from "styled-components";
 import { Select } from "antd";
 import MultipleSelect from "src/components/MultipleSelect";
+import { topicApi } from "src/apis/topic.apis";
+import { useQuery } from "react-query";
+import { useEffect, useState } from "react";
 type TNewStoryMainProps = {
   something: string;
 };
+
+type ValueType = { key?: string; label: React.ReactNode; value: string | number };
 
 const NewStoryMainWrapper = styled.div`
   flex: 7.5;
@@ -43,6 +49,19 @@ const NewStoryMain = () => {
     mode: "onChange",
     reValidateMode: "onBlur",
   });
+  const [value, setValue] = useState<ValueType[]>([]);
+  const { data: topicData, isLoading } = useQuery({
+    queryKey: ["topics"],
+    queryFn: () => topicApi.getTopics(),
+  });
+  useEffect(() => {
+    const newOptions =
+      topicData?.data?.data?.data?.map((topic) => ({
+        value: topic.id,
+        label: topic.topicName,
+      })) || [];
+    setOptions(newOptions);
+  }, [topicData]);
 
   return (
     <NewStoryMainWrapper>
@@ -57,7 +76,14 @@ const NewStoryMain = () => {
         </FlexColumn>
         <FlexColumn>
           <Label htmlFor="title">Your story topics</Label>
-          <MultipleSelect></MultipleSelect>
+          <MultipleSelect
+            fetchOptions={(search: string) => topicApi.getTopicsByKeyword(search) as Promise<any>}
+            value={value}
+            isLoading={isLoading}
+            onChange={(newValue) => {
+              setValue(newValue);
+            }}
+          ></MultipleSelect>
         </FlexColumn>
       </GridRow>
       <TextEditor></TextEditor>

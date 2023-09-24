@@ -9,3 +9,13 @@ export type TErrorApiResponse<Data> = {
   message: string;
   data?: Data;
 };
+
+export type TQueryResponse<Data> = {
+  pageNumber: number;
+  pageSize: number;
+  totalRecord: number;
+  totalPage: number;
+  data: {
+    data: Data;
+  };
+};
