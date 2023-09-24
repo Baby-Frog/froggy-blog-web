@@ -4,6 +4,7 @@ import Label from "src/components/Label";
 import TextEditor from "src/components/TextEditor";
 import { styled } from "styled-components";
 import { Select } from "antd";
+import MultipleSelect from "src/components/MultipleSelect";
 type TNewStoryMainProps = {
   something: string;
 };
@@ -42,6 +43,7 @@ const NewStoryMain = () => {
     mode: "onChange",
     reValidateMode: "onBlur",
   });
+
   return (
     <NewStoryMainWrapper>
       <NewStoryHeading>Write your new story 🚀</NewStoryHeading>
@@ -55,17 +57,7 @@ const NewStoryMain = () => {
         </FlexColumn>
         <FlexColumn>
           <Label htmlFor="title">Your story topics</Label>
-          {/* <Select
-            mode="multiple"
-            placeholder="Inserted are removed"
-            value={selectedItems}
-            onChange={setSelectedItems}
-            style={{ width: "100%" }}
-            options={filteredOptions.map((item) => ({
-              value: item,
-              label: item,
-            }))}
-          /> */}
+          <MultipleSelect></MultipleSelect>
         </FlexColumn>
       </GridRow>
       <TextEditor></TextEditor>

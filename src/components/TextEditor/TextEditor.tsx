@@ -4,7 +4,7 @@ import { Editor as TinyMCEEditor } from "tinymce";
 import "./TextEditor.scss";
 import axios from "axios";
 import { useMutation } from "react-query";
-import { storyApi } from "src/apis/story.apis";
+import { imageApi } from "src/apis/image.apis";
 import { toast } from "react-toastify";
 const TextEditor = () => {
   const editorRef = useRef<TinyMCEEditor | null>();
@@ -12,7 +12,7 @@ const TextEditor = () => {
   const [, setRawText] = useState<string>("");
 
   const uploadImageMutation = useMutation({
-    mutationFn: storyApi.uploadImage,
+    mutationFn: imageApi.uploadImage,
   });
 
   // I was forced to use "any" because tiny-mce react documentation is so stupid
@@ -22,25 +22,13 @@ const TextEditor = () => {
     bodyFormData.append("file", blobInfo.blob());
     const result = await uploadImageMutation.mutateAsync(bodyFormData, {
       onSuccess: (data) => {
-        console.log(data);
-        return data.data.urlImage;
+        return data.data.data.urlImage;
       },
       onError: (error) => {
-        console.log(error);
         toast.error(error as string);
       },
     });
-    console.log(result);
-    return "";
-    // const response = await axios({
-    //   method: "post",
-    //   url: import.meta.env.VITE_LOCAL_IMAGE_UPLOAD_API_URL,
-    //   data: bodyFormData,
-    //   headers: {
-    //     "Content-Type": "multipart/form-data",
-    //   },
-    // });
-    // return response.data.data.urlImage;
+    return result.data.data.urlImage;
   };
   return (
     <Editor
@@ -92,7 +80,6 @@ const TextEditor = () => {
         _item_type: "profile",
         resize: false,
         automatic_uploads: true,
-        // images_upload_url: "https://api.imgbb.com/1/upload?key=3c83bf0d94037028b0b4041a18bcb093",
         images_upload_handler: example_image_upload_handler,
       }}
     />
