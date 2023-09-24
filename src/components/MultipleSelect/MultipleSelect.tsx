@@ -16,9 +16,9 @@ const MultipleSelect = ({
 }: TMultipleSelectProps & { key?: string; label: React.ReactNode; value: string | number }) => {
   const { data: topicData, isLoading } = useQuery({
     queryKey: ["topics"],
-    queryFn: () => topicApi.getTopics,
+    queryFn: () => topicApi.getTopics(),
   });
-  console.log(topicData);
+  console.log(topicData?.data.data.data);
   return (
     <Select
       labelInValue
@@ -28,3 +28,5 @@ const MultipleSelect = ({
     />
   );
 };
+
+export default MultipleSelect;
