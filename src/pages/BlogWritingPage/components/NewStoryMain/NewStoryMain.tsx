@@ -55,7 +55,17 @@ const NewStoryMain = () => {
         </FlexColumn>
         <FlexColumn>
           <Label htmlFor="title">Your story topics</Label>
-          Selectelect
+          {/* <Select
+            mode="multiple"
+            placeholder="Inserted are removed"
+            value={selectedItems}
+            onChange={setSelectedItems}
+            style={{ width: "100%" }}
+            options={filteredOptions.map((item) => ({
+              value: item,
+              label: item,
+            }))}
+          /> */}
         </FlexColumn>
       </GridRow>
       <TextEditor></TextEditor>
