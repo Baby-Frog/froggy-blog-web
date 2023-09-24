@@ -2,6 +2,8 @@ import axios, { AxiosError, AxiosInstance, HttpStatusCode, InternalAxiosRequestC
 import { TAuthResponse } from "src/types/auth-response.types";
 import {
   clearAllAuthenticationInfoFromLS,
+  getAccessTokenFromLS,
+  getRefreshTokenFromLS,
   saveAccessTokenToLS,
   saveRefreshTokenToLS,
   saveUserProfileToLS,
@@ -13,6 +15,7 @@ import { TErrorApiResponse } from "src/types/response.types";
 class Http {
   instance: AxiosInstance;
   private accessToken: string;
+  private refreshToken: string;
   private refreshTokenRequest: Promise<string> | null;
   constructor() {
     this.instance = axios.create({
@@ -22,12 +25,14 @@ class Http {
         "Content-Type": "application/json",
       },
     });
-    this.accessToken = "";
+    this.accessToken = getAccessTokenFromLS() as string;
+    this.refreshToken = getRefreshTokenFromLS() as string;
     this.refreshTokenRequest = null;
     this.instance.interceptors.request.use(
       (config) => {
         if (this.accessToken) {
           config.headers.Authorization = `Bearer ${this.accessToken}`;
+          return config;
         }
         return config;
       },
@@ -84,7 +89,6 @@ class Http {
               });
             });
           }
-          clearAllAuthenticationInfoFromLS();
           this.accessToken = "";
           toast.error(error.response?.data.data?.message);
         }

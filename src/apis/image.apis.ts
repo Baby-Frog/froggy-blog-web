@@ -2,7 +2,7 @@ import axios from "axios";
 import { ENDPOINTS } from "src/constants/endpoints";
 import http from "src/utils/http";
 
-export const storyApi = {
+export const imageApi = {
   uploadImage: (body: FormData) =>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     http.post<any>(ENDPOINTS.UPLOAD_IMAGE, body, {
