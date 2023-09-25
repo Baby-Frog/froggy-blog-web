@@ -1,6 +1,9 @@
 .ant-select-multiple {
   font-family: "DM Sans", sans-serif !important;
   height: 48px !important;
+  @media screen and (max-width: 1280px) {
+    height: unset !important;
+  }
 }
 
 .ant-select-selector {
@@ -17,4 +20,21 @@
 
 .ant-select-selection-placeholder {
   color: #9ca3be !important;
+}
+
+.ant-select-has-error {
+  .ant-select-selector {
+    background-color: rgb(255, 215, 215) !important;
+  }
+  .ant-select-selector {
+    border: 1px solid red !important;
+    &:hover,
+    &:active,
+    &:focus {
+      border-color: 1px solid red !important;
+    }
+  }
+  .ant-select-selection-placeholder {
+    color: rgb(255, 49, 49) !important;
+  }
 }

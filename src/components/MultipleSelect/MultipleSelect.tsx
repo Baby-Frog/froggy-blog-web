@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Select, SelectProps } from "antd";
 import { debounce } from "lodash";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import "./MultipleSelect.scss";
 type TMultipleSelectProps<ValueType = any> = {
   fetchOptions?: (search: string) => Promise<ValueType[]>;
+  errorMsg?: string;
   debounceTimeout?: number;
   isLoading?: boolean;
 } & SelectProps;
 
 type ValueType = { key?: string; label: React.ReactNode; value: string | number };
 
-const MultipleSelect = ({ fetchOptions, debounceTimeout, ...props }: TMultipleSelectProps) => {
+const MultipleSelect = ({ fetchOptions, debounceTimeout, errorMsg = "", ...props }: TMultipleSelectProps) => {
   const [options, setOptions] = useState<ValueType[]>([]);
   const debounceFetcher = useMemo(() => {
     const loadOptions = (value: string) => {
@@ -23,15 +24,19 @@ const MultipleSelect = ({ fetchOptions, debounceTimeout, ...props }: TMultipleSe
     return debounce(loadOptions, debounceTimeout);
   }, [debounceTimeout, fetchOptions]);
   return (
-    <Select
-      labelInValue
-      mode="multiple"
-      filterOption={false}
-      onSearch={debounceFetcher}
-      notFoundContent={options ? <div className="ant-type-something">Type something to begin searching...</div> : null}
-      options={options}
-      {...props}
-    />
+    <>
+      <Select
+        labelInValue
+        mode="multiple"
+        filterOption={false}
+        onSearch={debounceFetcher}
+        notFoundContent={
+          options ? <div className="ant-type-something">Type something to begin searching...</div> : null
+        }
+        options={options}
+        {...props}
+      />
+    </>
   );
 };
 
