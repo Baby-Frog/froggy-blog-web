@@ -7,6 +7,6 @@ export const topicApi = {
   getTopics: () => http.get<TQueryResponse<TTopics[]>>(ENDPOINTS.GET_TOPICS),
   getTopicsByKeyword: (keyword: string) =>
     http.get<TQueryResponse<TTopics[]>>(ENDPOINTS.GET_TOPICS, {
-      params: { keyword: keyword, orderName: "asc", pageNumber: 1, pageSize: 5 },
+      params: { keyword: keyword, orderName: "asc", pageNumber: 1, pageSize: 7 },
     }),
 };
