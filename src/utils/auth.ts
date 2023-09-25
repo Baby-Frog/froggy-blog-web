@@ -4,11 +4,11 @@ export const LocalStorageEventTarget = new EventTarget();
 
 // Note: LS stands for Local Storage
 export const getAccessTokenFromLS = () => {
-  return localStorage.getItem("access_token");
+  return localStorage.getItem("accessToken") || "";
 };
 
 export const getRefreshTokenFromLS = () => {
-  return localStorage.getItem("refresh_token");
+  return localStorage.getItem("refreshToken") || "";
 };
 
 export const getUserProfileFromLS = () => {
@@ -19,12 +19,12 @@ export const getUserProfileFromLS = () => {
   return null;
 };
 
-export const saveAccessTokenToLS = (access_token: string) => {
-  localStorage.setItem("access_token", access_token);
+export const saveAccessTokenToLS = (accessToken: string) => {
+  localStorage.setItem("accessToken", accessToken);
 };
 
-export const saveRefreshTokenToLS = (refresh_token: string) => {
-  localStorage.setItem("refresh_token", refresh_token);
+export const saveRefreshTokenToLS = (refreshToken: string) => {
+  localStorage.setItem("refreshToken", refreshToken);
 };
 
 export const saveUserProfileToLS = (user: TUserProfile) => {
@@ -32,8 +32,8 @@ export const saveUserProfileToLS = (user: TUserProfile) => {
 };
 
 export const clearAllAuthenticationInfoFromLS = () => {
-  localStorage.removeItem("access_token");
-  localStorage.removeItem("refresh_token");
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
   localStorage.removeItem("user");
   const clearAuthenInfoEvent = new Event("clearAuthen");
   LocalStorageEventTarget.dispatchEvent(clearAuthenInfoEvent);

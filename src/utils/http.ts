@@ -18,6 +18,9 @@ class Http {
   private refreshToken: string;
   private refreshTokenRequest: Promise<string> | null;
   constructor() {
+    this.accessToken = getAccessTokenFromLS();
+    this.refreshToken = getRefreshTokenFromLS();
+    this.refreshTokenRequest = null;
     this.instance = axios.create({
       baseURL: import.meta.env.VITE_LOCAL_API_URL,
       timeout: 15000,
@@ -25,9 +28,6 @@ class Http {
         "Content-Type": "application/json",
       },
     });
-    this.accessToken = getAccessTokenFromLS() as string;
-    this.refreshToken = getRefreshTokenFromLS() as string;
-    this.refreshTokenRequest = null;
     this.instance.interceptors.request.use(
       (config) => {
         if (this.accessToken) {
@@ -45,14 +45,13 @@ class Http {
         const { url } = response.config;
         if (url === ENDPOINTS.LOGIN) {
           const data = response.data as TAuthResponse;
-          const accessToken = data.data.accessToken;
-          const refreshToken = data.data.refreshToken;
-          const user = data.data.profile;
-          saveAccessTokenToLS(accessToken);
-          saveRefreshTokenToLS(refreshToken);
-          saveUserProfileToLS(user);
+          this.accessToken = data.data.accessToken;
+          this.refreshToken = data.data.refreshToken;
+          saveAccessTokenToLS(this.accessToken);
+          saveRefreshTokenToLS(this.refreshToken);
         } else if (url === ENDPOINTS.LOGOUT) {
           this.accessToken = "";
+          this.refreshToken = "";
           this.refreshTokenRequest = null;
           clearAllAuthenticationInfoFromLS();
         }
@@ -70,7 +69,6 @@ class Http {
         if (isUnauthorizedError<TErrorApiResponse<{ message: string }>>(error)) {
           const config = error.response?.config || ({ headers: {} } as InternalAxiosRequestConfig);
           const { url } = config;
-          console.log("error", error);
           // Lỗi 401 có 2 trường hợp
           // TH1: Lỗi 401 do access_token hết hạn => ta sẽ phải refresh token
           if (isExpiredTokenError(error) && url !== ENDPOINTS.REFRESH_TOKEN) {
@@ -81,21 +79,22 @@ class Http {
                   // tránh các trường hợp bất đắc dĩ handleRefreshToken() bị invoke 2 lần
                   setTimeout(() => {
                     this.refreshTokenRequest = null;
-                  }, 10000);
+                  }, 1000);
                 });
-            return this.refreshTokenRequest.then((access_token) => {
-              console.log(access_token);
+            return this.refreshTokenRequest.then((accessToken) => {
               if (config?.headers) {
-                config.headers.Authorization = access_token;
+                config.headers.Authorization = `Bearer ${accessToken}`;
               }
               // Nghĩa là chúng ta tiếp tục request cũ vừa bị lỗi sau khi refresh thành công, chỉ là thay thế header Authorization bằng token mới
               return this.instance({
                 ...config,
-                headers: { ...config.headers, Authorization: access_token },
+                headers: { ...config.headers, Authorization: `Bearer ${accessToken}` },
               });
             });
           }
+          clearAllAuthenticationInfoFromLS();
           this.accessToken = "";
+          this.refreshToken = "";
           toast.error(error.response?.data.data?.message);
         }
         return Promise.reject(error);
@@ -109,7 +108,6 @@ class Http {
       })
       .then((response) => {
         const { accessToken } = response.data.data;
-        console.log(accessToken);
         saveAccessTokenToLS(accessToken);
         this.accessToken = accessToken;
         return accessToken;
@@ -117,8 +115,8 @@ class Http {
       .catch((error) => {
         clearAllAuthenticationInfoFromLS();
         this.accessToken = "";
-        console.error(error);
-        return Promise.reject(error);
+        this.refreshToken = "";
+        throw error;
       });
   }
 }
