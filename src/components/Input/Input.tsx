@@ -92,6 +92,7 @@ const Input = ({
             $hasErrors={Boolean(errorMsg)}
             className={inputClassName}
             autoComplete="on"
+            {...rest}
             {...registerResult}
           />
           {showPassword ? (
@@ -121,6 +122,7 @@ const Input = ({
           placeholder={placeholder}
           $hasErrors={Boolean(errorMsg)}
           className={inputClassName}
+          {...rest}
           {...registerResult}
         />
       </InputContainer>
