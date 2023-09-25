@@ -70,15 +70,21 @@ class Http {
         if (isUnauthorizedError<TErrorApiResponse<{ message: string }>>(error)) {
           const config = error.response?.config || ({ headers: {} } as InternalAxiosRequestConfig);
           const { url } = config;
+          console.log("error", error);
           // Lỗi 401 có 2 trường hợp
           // TH1: Lỗi 401 do access_token hết hạn => ta sẽ phải refresh token
           if (isExpiredTokenError(error) && url !== ENDPOINTS.REFRESH_TOKEN) {
             this.refreshTokenRequest = this.refreshTokenRequest
-              ? await this.handleRefreshAccessToken()
-              : await this.handleRefreshAccessToken().finally(() => {
-                  this.refreshTokenRequest = null;
+              ? this.refreshTokenRequest
+              : this.handleRefreshAccessToken().finally(() => {
+                  // giữ refresh token request trong một khoảng thời gian nhất định rồi mới set lại là null để
+                  // tránh các trường hợp bất đắc dĩ handleRefreshToken() bị invoke 2 lần
+                  setTimeout(() => {
+                    this.refreshTokenRequest = null;
+                  }, 10000);
                 });
-            return this?.refreshTokenRequest?.then((access_token) => {
+            return this.refreshTokenRequest.then((access_token) => {
+              console.log(access_token);
               if (config?.headers) {
                 config.headers.Authorization = access_token;
               }
@@ -98,12 +104,15 @@ class Http {
   }
   private async handleRefreshAccessToken() {
     return this.instance
-      .post(ENDPOINTS.REFRESH_TOKEN)
+      .post(ENDPOINTS.REFRESH_TOKEN, {
+        refreshToken: this.refreshToken,
+      })
       .then((response) => {
-        const { access_token } = response.data.data;
-        saveAccessTokenToLS(access_token);
-        this.accessToken = access_token;
-        return access_token;
+        const { accessToken } = response.data.data;
+        console.log(accessToken);
+        saveAccessTokenToLS(accessToken);
+        this.accessToken = accessToken;
+        return accessToken;
       })
       .catch((error) => {
         clearAllAuthenticationInfoFromLS();
