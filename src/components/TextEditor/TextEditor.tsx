@@ -26,7 +26,6 @@ const TextEditor = ({ setTextEditorValue, textEditorValue }: TTextEditorProps) =
     const bodyFormData = new FormData();
     bodyFormData.append("file", blobInfo.blob());
     const result = await uploadImageMutation.mutateAsync(bodyFormData);
-    console.log(result);
     return result.data.data.urlImage;
   };
   return (

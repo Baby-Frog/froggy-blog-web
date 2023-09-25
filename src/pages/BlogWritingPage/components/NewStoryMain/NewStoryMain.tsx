@@ -70,7 +70,6 @@ const NewStoryMain = () => {
       content: textEditorValue,
     });
   });
-  console.log(errors);
   return (
     <NewStoryMainWrapper>
       <NewStoryHeading>Write your new story 🚀</NewStoryHeading>
