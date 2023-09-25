@@ -4,7 +4,6 @@ import { Editor as TinyMCEEditor } from "tinymce";
 import "./TextEditor.scss";
 import { useMutation } from "react-query";
 import { imageApi } from "src/apis/image.apis";
-import { toast } from "react-toastify";
 
 type TTextEditorProps = {
   textEditorValue: string;
@@ -13,9 +12,7 @@ type TTextEditorProps = {
 
 const TextEditor = ({ setTextEditorValue, textEditorValue }: TTextEditorProps) => {
   const editorRef = useRef<TinyMCEEditor | null>();
-
   const [, setRawText] = useState<string>("");
-
   const uploadImageMutation = useMutation({
     mutationFn: imageApi.uploadImage,
   });

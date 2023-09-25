@@ -1,19 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { topicApi } from "src/apis/topic.apis";
 import Input from "src/components/Input";
 import Label from "src/components/Label";
-import TextEditor from "src/components/TextEditor";
-import { styled } from "styled-components";
-import { Select } from "antd";
 import MultipleSelect from "src/components/MultipleSelect";
-import { topicApi } from "src/apis/topic.apis";
-import { useQuery } from "react-query";
-import { useEffect, useState } from "react";
-import { yupResolver } from "@hookform/resolvers/yup";
+import TextEditor from "src/components/TextEditor";
 import { TStorySchema, storySchema } from "src/schemas/story.schemas";
-type TNewStoryMainProps = {
-  something: string;
-};
+import { styled } from "styled-components";
 
 type ValueType = { key?: string; label: React.ReactNode; value: string | number };
 

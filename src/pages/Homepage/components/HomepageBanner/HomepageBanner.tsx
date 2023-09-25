@@ -22,7 +22,6 @@ const HomepageBannerMain = styled.div`
     padding-inline: 16px;
   }
   @media screen and (max-width: 767px) {
-    /* background-position: 50% 50%; */
     background-image: none;
     padding-inline: 12px;
   }

@@ -1,5 +1,5 @@
 import { ENDPOINTS } from "src/constants/endpoints";
-import { TQueryResponse, TSuccessApiResponse } from "src/types/response.types";
+import { TQueryResponse } from "src/types/response.types";
 import { TTopics } from "src/types/topic.types";
 import http from "src/utils/http";
 
@@ -10,5 +10,3 @@ export const topicApi = {
       params: { keyword: keyword, orderName: "asc", pageNumber: 1 },
     }),
 };
-
-// orderName=asc&pageNumber=1

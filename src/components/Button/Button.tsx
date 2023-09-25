@@ -20,7 +20,6 @@ const StyledButton = styled.button<{ $marginTop?: string; $width?: string }>`
     background-color: #000;
     color: #fff;
   }
-  /* box-shadow: 0px 14px 21px 0px rgba(20, 92, 230, 0.12); */
 `;
 
 const Button = ({ children, className }: TButtonProps) => {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Select, SelectProps, Spin } from "antd";
+import { Select, SelectProps } from "antd";
 import { debounce } from "lodash";
 import { useMemo, useState } from "react";
 import "./MultipleSelect.scss";
@@ -11,7 +11,7 @@ type TMultipleSelectProps<ValueType = any> = {
 
 type ValueType = { key?: string; label: React.ReactNode; value: string | number };
 
-const MultipleSelect = ({ fetchOptions, debounceTimeout, isLoading, ...props }: TMultipleSelectProps) => {
+const MultipleSelect = ({ fetchOptions, debounceTimeout, ...props }: TMultipleSelectProps) => {
   const [options, setOptions] = useState<ValueType[]>([]);
   const debounceFetcher = useMemo(() => {
     const loadOptions = (value: string) => {
