@@ -22,17 +22,11 @@ const TextEditor = ({ setTextEditorValue, textEditorValue }: TTextEditorProps) =
 
   // I was forced to use "any" because tiny-mce react documentation is so stupid
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const example_image_upload_handler = async (blobInfo: any, progress: any) => {
+  const handleUploadImage = async (blobInfo: any, progress: any) => {
     const bodyFormData = new FormData();
     bodyFormData.append("file", blobInfo.blob());
-    const result = await uploadImageMutation.mutateAsync(bodyFormData, {
-      onSuccess: (data) => {
-        return data.data.data.urlImage;
-      },
-      onError: (error) => {
-        toast.error(error as string);
-      },
-    });
+    const result = await uploadImageMutation.mutateAsync(bodyFormData);
+    console.log(result);
     return result.data.data.urlImage;
   };
   return (
@@ -85,7 +79,7 @@ const TextEditor = ({ setTextEditorValue, textEditorValue }: TTextEditorProps) =
         _item_type: "profile",
         resize: false,
         automatic_uploads: true,
-        images_upload_handler: example_image_upload_handler,
+        images_upload_handler: handleUploadImage,
       }}
     />
   );

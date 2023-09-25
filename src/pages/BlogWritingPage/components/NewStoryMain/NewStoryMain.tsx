@@ -9,6 +9,8 @@ import MultipleSelect from "src/components/MultipleSelect";
 import { topicApi } from "src/apis/topic.apis";
 import { useQuery } from "react-query";
 import { useEffect, useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { TStorySchema, storySchema } from "src/schemas/story.schemas";
 type TNewStoryMainProps = {
   something: string;
 };
@@ -46,9 +48,10 @@ const NewStoryMain = () => {
     register,
     setValue,
     formState: { errors },
-  } = useForm({
+  } = useForm<TStorySchema>({
     mode: "onChange",
     reValidateMode: "onBlur",
+    resolver: yupResolver(storySchema),
   });
   const [values, setValues] = useState<ValueType[]>([]);
   const [textEditorValue, setTextEditorValue] = useState<string>("");
@@ -67,6 +70,7 @@ const NewStoryMain = () => {
       content: textEditorValue,
     });
   });
+  console.log(errors);
   return (
     <NewStoryMainWrapper>
       <NewStoryHeading>Write your new story 🚀</NewStoryHeading>
