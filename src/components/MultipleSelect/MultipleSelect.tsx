@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Select, SelectProps, Spin } from "antd";
-import { useState } from "react";
-
+import { debounce } from "lodash";
+import { useMemo, useState } from "react";
+import "./MultipleSelect.scss";
 type TMultipleSelectProps<ValueType = any> = {
   fetchOptions?: (search: string) => Promise<ValueType[]>;
   debounceTimeout?: number;
@@ -12,12 +13,21 @@ type ValueType = { key?: string; label: React.ReactNode; value: string | number 
 
 const MultipleSelect = ({ fetchOptions, debounceTimeout, isLoading, ...props }: TMultipleSelectProps) => {
   const [options, setOptions] = useState<ValueType[]>([]);
+  const debounceFetcher = useMemo(() => {
+    const loadOptions = (value: string) => {
+      setOptions([]);
+      fetchOptions?.(value).then((newOptions) => {
+        setOptions(newOptions);
+      });
+    };
+    return debounce(loadOptions, debounceTimeout);
+  }, [debounceTimeout, fetchOptions]);
   return (
     <Select
       labelInValue
       mode="multiple"
-      fetchOptions={fetchOptions}
       filterOption={false}
+      onSearch={debounceFetcher}
       notFoundContent={isLoading ? <Spin size="small" /> : null}
       options={options}
       {...props}

@@ -2,13 +2,18 @@ import { useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Editor as TinyMCEEditor } from "tinymce";
 import "./TextEditor.scss";
-import axios from "axios";
 import { useMutation } from "react-query";
 import { imageApi } from "src/apis/image.apis";
 import { toast } from "react-toastify";
-const TextEditor = () => {
+
+type TTextEditorProps = {
+  textEditorValue: string;
+  setTextEditorValue: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const TextEditor = ({ setTextEditorValue, textEditorValue }: TTextEditorProps) => {
   const editorRef = useRef<TinyMCEEditor | null>();
-  const [value, setValue] = useState<string>("");
+
   const [, setRawText] = useState<string>("");
 
   const uploadImageMutation = useMutation({
@@ -37,9 +42,9 @@ const TextEditor = () => {
         return (editorRef.current = editor);
       }}
       initialValue=""
-      value={value}
+      value={textEditorValue}
       onEditorChange={(newValue, editor) => {
-        setValue(newValue);
+        setTextEditorValue(newValue);
         setRawText(editor.getContent({ format: "text" }));
       }}
       apiKey={import.meta.env.VITE_TINY_MCE_API_KEY}
