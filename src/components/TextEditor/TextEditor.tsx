@@ -45,7 +45,6 @@ const TextEditor = forwardRef<TinyMCEEditor, TTextEditorProps>(function TextEdit
         init={{
           plugins:
             "preview importcss directionality image link codesample nonbreaking insertdatetime advlist lists wordcount help quickbars emoticons",
-          tinydrive_token_provider: "URL_TO_YOUR_TOKEN_PROVIDER",
           mobile: {
             plugins:
               "preview importcss directionality image link codesample nonbreaking insertdatetime advlist lists wordcount help charmap quickbars emoticons",
@@ -59,7 +58,6 @@ const TextEditor = forwardRef<TinyMCEEditor, TTextEditorProps>(function TextEdit
           menubar: false,
           toolbar:
             "h1 h2 | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | forecolor backcolor emoticons | insertfile image link codesample | ltr rtl",
-          autosave_ask_before_unload: true,
           image_class_list: [
             { title: "None", value: "" },
             { title: "Some class", value: "class-name" },

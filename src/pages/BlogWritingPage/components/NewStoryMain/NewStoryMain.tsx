@@ -53,7 +53,7 @@ const NewStoryMain = () => {
     getValues,
     formState: { errors },
   } = useForm<TStorySchema>({
-    mode: "onBlur",
+    mode: "onSubmit",
     reValidateMode: "onBlur",
     resolver: yupResolver(storySchema),
   });
@@ -74,10 +74,6 @@ const NewStoryMain = () => {
       content: textEditorValue,
     });
   });
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
-  console.log(getValues("topicId"));
   return (
     <NewStoryMainWrapper>
       <NewStoryHeading>Write your new story 🚀</NewStoryHeading>
@@ -148,7 +144,7 @@ const NewStoryMain = () => {
         ></Controller>
         <Button
           type="submit"
-          className="!w-[300px] !mx-auto !block !bg-normalGreen !outline-none !border-none !text-white hover:!bg-green-600 !p-[13px] !rounded-xl"
+          className="!w-[300px] !mx-auto !block !bg-normalGreen !outline-none !border-none !text-white hover:!bg-normalGreenHover !p-[13px] !rounded-xl"
         >
           Submit
         </Button>

@@ -6,6 +6,7 @@ import {
   getRefreshTokenFromLS,
   saveAccessTokenToLS,
   saveRefreshTokenToLS,
+  saveUserProfileToLS,
 } from "./auth";
 import { ENDPOINTS } from "src/constants/endpoints";
 import { toast } from "react-toastify";
@@ -46,8 +47,10 @@ class Http {
           const data = response.data as TAuthResponse;
           this.accessToken = data.data.accessToken;
           this.refreshToken = data.data.refreshToken;
+          const profile = data.data.profile;
           saveAccessTokenToLS(this.accessToken);
           saveRefreshTokenToLS(this.refreshToken);
+          saveUserProfileToLS(profile);
         } else if (url === ENDPOINTS.LOGOUT) {
           this.accessToken = "";
           this.refreshToken = "";
