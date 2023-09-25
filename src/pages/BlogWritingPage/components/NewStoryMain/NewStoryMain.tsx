@@ -63,7 +63,6 @@ const NewStoryMain = () => {
       }));
     });
   }
-
   const handleCreateNewStory = handleSubmit((data) => {
     console.log({
       ...data,

@@ -28,7 +28,7 @@ const MultipleSelect = ({ fetchOptions, debounceTimeout, isLoading, ...props }: 
       mode="multiple"
       filterOption={false}
       onSearch={debounceFetcher}
-      notFoundContent={isLoading ? <Spin size="small" /> : null}
+      notFoundContent={options ? <div className="ant-type-something">Type something to begin searching...</div> : null}
       options={options}
       {...props}
     />
