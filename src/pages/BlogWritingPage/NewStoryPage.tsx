@@ -6,7 +6,6 @@ type TNewStoryPageProps = {
 };
 
 const NewStoryPageWrapper = styled.div`
-  height: 300vh;
   position: relative;
   overflow: visible;
   display: flex;
