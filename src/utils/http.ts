@@ -6,7 +6,6 @@ import {
   getRefreshTokenFromLS,
   saveAccessTokenToLS,
   saveRefreshTokenToLS,
-  saveUserProfileToLS,
 } from "./auth";
 import { ENDPOINTS } from "src/constants/endpoints";
 import { toast } from "react-toastify";
