@@ -5,7 +5,8 @@
       {
         "displayName": false,
         "minify": false,
-        "transpileTemplateLiterals": false
+        "transpileTemplateLiterals": false,
+        "pure": true
       }
     ]
   ]
