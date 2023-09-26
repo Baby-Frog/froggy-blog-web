@@ -4,8 +4,7 @@ import { useLocation } from "react-router-dom";
 import { AuthContext } from "./contexts/auth.contexts";
 import useRouteElement from "./hooks/useRouteElement";
 import { LocalStorageEventTarget } from "./utils/auth";
-import ScrollToTopButton from "./components/ScrollToTop/ScrollToTop";
-
+import Logo from "./assets/logo-4.png";
 function App() {
   const routeElements = useRouteElement();
   const location = useLocation();
@@ -16,17 +15,34 @@ function App() {
       LocalStorageEventTarget.removeEventListener("clearAuthen", clearAuthenInfoFromContext);
     };
   }, [clearAuthenInfoFromContext]);
-
   return (
     <>
-      <AnimatePresence
-        mode="wait"
-        initial={false}
-      >
-        {React.cloneElement(routeElements as ReactElement<unknown, string | JSXElementConstructor<unknown>>, {
-          key: location.pathname || "/user/profile",
-        })}
-      </AnimatePresence>
+      {import.meta.env.VITE_ENV === "LOCAL" || import.meta.env.VITE_ENV === "PROD" ? (
+        <AnimatePresence
+          mode="wait"
+          initial={false}
+        >
+          {React.cloneElement(routeElements as ReactElement<unknown, string | JSXElementConstructor<unknown>>, {
+            key: location.pathname || "/user/profile",
+          })}
+        </AnimatePresence>
+      ) : (
+        <div className="p-2 flex gap-4 items-center flex-col justify-center h-screen text-lg font-medium">
+          <div className="flex items-center gap-3 text-[32px] font-bold tracking-[-2px]">
+            <img
+              src={Logo}
+              alt="Froggy Blog"
+              className="w-28 h-28"
+            />
+            <h1>Froggy Blog</h1>
+          </div>
+          <span className="max-w-[1000px] w-full text-center">
+            Dear the person that's running this project, you must config your .env file properly before running this
+            project, please follow the .env.example file to config your .env file or paste the .env file that i sent you
+            into the root folder.
+          </span>
+        </div>
+      )}
     </>
   );
 }
