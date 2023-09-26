@@ -1,10 +1,9 @@
-import { forwardRef, useEffect, useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import { Editor as TinyMCEEditor } from "tinymce";
-import "./TextEditor.scss";
+import { forwardRef, useState } from "react";
 import { useMutation } from "react-query";
 import { imageApi } from "src/apis/image.apis";
-import { toast } from "react-toastify";
+import { Editor as TinyMCEEditor } from "tinymce";
+import "./TextEditor.scss";
 
 type TTextEditorProps = {
   errorMsg?: string;
