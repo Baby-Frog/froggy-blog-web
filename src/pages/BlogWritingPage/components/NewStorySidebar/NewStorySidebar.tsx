@@ -19,10 +19,9 @@ const NewStorySidebarWrapper = styled.div<{ $isScrolledDown?: boolean }>`
   row-gap: 12px;
   background-color: #fff;
   transition: all 350ms ease-in-out;
-
   border-radius: 12px;
   position: sticky;
-  top: ${(props) => (props.$isScrolledDown ? "50%" : "0")};
+  top: ${(props) => (props.$isScrolledDown ? "40%" : "0")};
   transform: ${(props) => (props.$isScrolledDown ? "translateY(-50%)" : "")};
   left: 0;
 `;
