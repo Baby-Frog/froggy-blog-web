@@ -81,7 +81,7 @@ class Http {
                   // tránh các trường hợp bất đắc dĩ handleRefreshToken() bị invoke 2 lần
                   setTimeout(() => {
                     this.refreshTokenRequest = null;
-                  }, 1000);
+                  }, 10000);
                 });
             return this.refreshTokenRequest.then((accessToken) => {
               if (config?.headers) {

@@ -50,7 +50,6 @@ const NewStoryMain = () => {
     setValue,
     control,
     setError,
-    getValues,
     formState: { errors },
   } = useForm<TStorySchema>({
     mode: "onSubmit",

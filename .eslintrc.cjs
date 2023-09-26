@@ -31,7 +31,6 @@ module.exports = {
     },
   },
   rules: {
-    // Tắt rule yêu cầu import React trong file jsx
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/no-unused-vars": "warn",
     "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],

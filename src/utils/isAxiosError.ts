@@ -20,7 +20,9 @@ export const isUnauthorizedError = <T>(error: unknown): error is AxiosError<T> =
 
 export const isExpiredTokenError = <T>(error: unknown): error is AxiosError<T> => {
   return (
-    isUnauthorizedError<TErrorApiResponse<{ name: string; message: string }>>(error) &&
-    error.response?.data?.message === "TOKEN EXPIRED"
+    (isUnauthorizedError<TErrorApiResponse<{ name: string; message: string }>>(error) &&
+      error.response?.data?.message === "TOKEN EXPIRED") ||
+    (isUnauthorizedError<TErrorApiResponse<{ name: string; message: string }>>(error) &&
+      error.response?.data?.message === "TOKEN INVALID")
   );
 };
