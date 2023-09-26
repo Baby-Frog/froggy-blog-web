@@ -17,6 +17,7 @@ import MultipleSelectV2 from "src/components/MultipleSelect/MultipleSelectV2";
 import TextEditor from "src/components/TextEditor";
 import { AuthContext } from "src/contexts/auth.contexts";
 import { TStorySchema, storySchema } from "src/schemas/story.schemas";
+import { useScroll } from "react-use";
 type TNewStoryPageProps = {
   something: string;
 };
@@ -56,7 +57,7 @@ const FlexColumn = styled.div`
   gap: 6px;
 `;
 
-const ONE_MEGABYTE_TO_BYTES = 1048576;
+const THREE_MEGABYTE_TO_BYTES = 3 * 1024 * 1024;
 
 const NewStoryPage = () => {
   const {
@@ -100,25 +101,19 @@ const NewStoryPage = () => {
   };
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileFromLocal = e.target.files?.[0];
-    if (fileFromLocal && fileFromLocal.size >= ONE_MEGABYTE_TO_BYTES) {
-      toast.error("Kích cỡ ảnh không được vượt quá 1MB");
-      // Set lại value để có thể chọn lại bức ảnh trước một lần nữa đề phòng có chuyện gì xảy ra
-
-      e.target.value = "";
-      return;
-    }
     if (fileFromLocal && !fileFromLocal.type.includes("image")) {
-      toast.error(
-        <div className="text-sm">
-          File không đúng định dạng quy định
-          <br />
-          (.JPEG, .PNG, .JPG)
-        </div>,
-      );
+      toast.error(<div className="text-sm">Wrong file format, we only accept .JPEG, .PNG, .JPG file format</div>);
       // Set lại value để có thể hiển thị lại lỗi đề phòng có chuyện gì xảy ra
       e.target.value = "";
       return;
     }
+    if (fileFromLocal && fileFromLocal.size >= THREE_MEGABYTE_TO_BYTES) {
+      toast.error("Your image size is too big, we only accept image size under 3MB");
+      // Set lại value để có thể chọn lại bức ảnh trước một lần nữa đề phòng có chuyện gì xảy ra
+      e.target.value = "";
+      return;
+    }
+
     setPreviewImageFile(fileFromLocal);
   };
   return (
@@ -191,24 +186,20 @@ const NewStoryPage = () => {
               );
             }}
           ></Controller>
-
+          <h2>Your post will look like this:</h2>
           <InputFile
             handleChangeFile={handleChangeFile}
             handleClickOnInput={handleClickOnInput}
             inputFileRef={inputFileRef}
           >
-            <div className="my-5 flex w-full h-full items-center justify-center overflow-hidden">
+            <div className="mt-2 flex w-[200px] h-[200px] rounded-lg items-center justify-center overflow-hidden">
               <img
-                src={previewImageURL || userProfile?.avatarPath}
+                src={previewImageURL}
                 alt="Something happened"
                 className="object-cover w-full h-full"
               />
             </div>
           </InputFile>
-          <div className="mt-3 text-gray-400">
-            <div>Dụng lượng file tối đa 1 MB</div>
-            <div>Định dạng .jpg .jpeg .png</div>
-          </div>
           <Button
             type="submit"
             className="!w-[300px] !mx-auto !block !bg-normalGreen !outline-none !border-none !text-white hover:!bg-normalGreenHover !p-[13px] !rounded-xl !text-[16px] !font-medium"
