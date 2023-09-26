@@ -10,6 +10,7 @@ export const storySchema = yup.object({
   // thumbnail: yup.string().required("Thumbnail is required"),
   // topicId is an array with string type, and it must not []
   topicId: yup.array().of(yup.string()).required("Topic is required").min(1, "Topic is required"),
+  thumbnail: yup.string().required("Thumbnail is required"),
 });
 
 export type TStorySchema = yup.InferType<typeof storySchema>;
