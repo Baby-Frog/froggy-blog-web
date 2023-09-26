@@ -6,10 +6,11 @@ type TNewStoryPageProps = {
 };
 
 const NewStoryPageWrapper = styled.div`
+  height: 200vh;
   position: relative;
   overflow: visible;
   display: flex;
-  gap: 32px;
+  gap: 96px;
 `;
 
 const NewStoryPage = () => {

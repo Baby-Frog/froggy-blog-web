@@ -144,9 +144,9 @@ const NewStoryMain = () => {
         ></Controller>
         <Button
           type="submit"
-          className="!w-[300px] !mx-auto !block !bg-normalGreen !outline-none !border-none !text-white hover:!bg-normalGreenHover !p-[13px] !rounded-xl"
+          className="!w-[300px] !mx-auto !block !bg-normalGreen !outline-none !border-none !text-white hover:!bg-normalGreenHover !p-[13px] !rounded-xl !text-[16px] !font-medium"
         >
-          Submit
+          Submit your story
         </Button>
       </form>
     </NewStoryMainWrapper>
