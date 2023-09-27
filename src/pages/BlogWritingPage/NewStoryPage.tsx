@@ -17,7 +17,7 @@ import MultipleSelectV2 from "src/components/MultipleSelect/MultipleSelectV2";
 import TextEditor from "src/components/TextEditor";
 import { AuthContext } from "src/contexts/auth.contexts";
 import { TStorySchema, storySchema } from "src/schemas/story.schemas";
-import { useScroll } from "react-use";
+
 type TNewStoryPageProps = {
   something: string;
 };
@@ -90,6 +90,16 @@ const NewStoryPage = () => {
       }));
     });
   }
+  const handleResetForm = () => {
+    reset({
+      title: "",
+      topicId: [],
+      content: "",
+    });
+    setTopicValues([]);
+    setTextEditorValue("");
+    // setPreviewImageFile(undefined);
+  };
   const handleCreateNewStory = handleSubmit((data) => {
     console.log({
       ...data,
@@ -118,7 +128,7 @@ const NewStoryPage = () => {
   };
   return (
     <NewStoryPageWrapper>
-      <NewStorySidebar></NewStorySidebar>
+      <NewStorySidebar handleResetForm={handleResetForm}></NewStorySidebar>
       <NewStoryMain>
         <NewStoryHeading>Write your new story 🚀</NewStoryHeading>
         <form onSubmit={handleCreateNewStory}>

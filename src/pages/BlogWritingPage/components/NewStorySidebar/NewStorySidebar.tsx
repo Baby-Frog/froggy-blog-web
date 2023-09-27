@@ -4,9 +4,10 @@ import $ from "jquery";
 import { useContext, useEffect, useState } from "react";
 import { motionValue, useScroll, useTransform } from "framer-motion";
 import TickIcon from "src/components/Icon/TickIcon";
+import RewindIcon from "src/components/Icon/RewindIcon";
 
 type TNewStorySidebarProps = {
-  scrollY: number;
+  handleResetForm: () => void;
 };
 
 const NewStorySidebarWrapper = styled.div<{ $isScrolledDown?: boolean }>`
@@ -17,12 +18,12 @@ const NewStorySidebarWrapper = styled.div<{ $isScrolledDown?: boolean }>`
   flex-direction: column;
   align-items: center;
   row-gap: 12px;
-  background-color: #fff;
+  background-color: transparent;
   transition: all 350ms ease-in-out;
   border-radius: 12px;
   position: sticky;
   top: ${(props) => (props.$isScrolledDown ? "35%" : "0")};
-  transform: ${(props) => (props.$isScrolledDown ? "translateY(-50%)" : "")};
+  transform: ${(props) => (props.$isScrolledDown ? "translate(40px, -50%)" : "")};
   left: 0;
 `;
 
@@ -48,7 +49,7 @@ const NewStorySidebarItem = styled.button<{ $isActive?: boolean; $backgroundColo
   }
 `;
 
-const NewStorySidebar = () => {
+const NewStorySidebar = ({ handleResetForm }: TNewStorySidebarProps) => {
   const [scrollY, setScrollY] = useState(0);
   useEffect(() => {
     const handleScroll = () => {
@@ -94,6 +95,18 @@ const NewStorySidebar = () => {
           width={24}
           height={24}
         ></TickIcon>
+      </NewStorySidebarItem>
+      <NewStorySidebarItem
+        $color="#fff"
+        $backgroundColor="#EB5757"
+        onClick={handleResetForm}
+        title="Reset"
+      >
+        <RewindIcon
+          width={24}
+          height={24}
+          color="currentColor"
+        ></RewindIcon>
       </NewStorySidebarItem>
     </NewStorySidebarWrapper>
   );

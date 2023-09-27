@@ -61,6 +61,7 @@ const TextEditor = forwardRef<TinyMCEEditor, TTextEditorProps>(function TextEdit
             { title: "None", value: "" },
             { title: "Some class", value: "class-name" },
           ],
+
           importcss_append: true,
           body_class: "mce-content-body-v2",
           height: 600,
