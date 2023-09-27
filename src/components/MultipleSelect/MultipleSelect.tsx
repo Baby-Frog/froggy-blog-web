@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Select, SelectProps } from "antd";
 import { debounce } from "lodash";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import "./MultipleSelect.scss";
 type TMultipleSelectProps<ValueType = any> = {
   fetchOptions?: (search: string) => Promise<ValueType[]>;
