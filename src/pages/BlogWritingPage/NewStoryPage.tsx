@@ -25,7 +25,6 @@ type TNewStoryPageProps = {
 type ValueType = { key?: string; label: React.ReactNode; value: string | number };
 
 const NewStoryPageWrapper = styled.div`
-  height: 200vh;
   position: relative;
   overflow: visible;
   display: flex;
@@ -41,7 +40,14 @@ const NewStoryHeading = styled.h1`
   text-align: center;
   font-size: 28px;
   font-weight: 700;
-  margin-bottom: 56px;
+`;
+
+const NewStorySubheading = styled.h2`
+  text-align: center;
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 40px;
+  color: ${(props) => props.theme.colors.lightGrey};
 `;
 
 const GridRow = styled.div`
@@ -131,10 +137,17 @@ const NewStoryPage = () => {
       <NewStorySidebar handleResetForm={handleResetForm}></NewStorySidebar>
       <NewStoryMain>
         <NewStoryHeading>Write your new story 🚀</NewStoryHeading>
+        <NewStorySubheading>Share your story with us ^o^</NewStorySubheading>
         <form onSubmit={handleCreateNewStory}>
           <GridRow>
             <FlexColumn>
-              <Label htmlFor="title">Your story title</Label>
+              <Label
+                htmlFor="title"
+                className="font-medium"
+                isRequired
+              >
+                Your story title
+              </Label>
               <Input
                 name="title"
                 placeholder="Enter your story title"
@@ -143,7 +156,13 @@ const NewStoryPage = () => {
               ></Input>
             </FlexColumn>
             <FlexColumn>
-              <Label htmlFor="topicId">Your story topics</Label>
+              <Label
+                htmlFor="topicId"
+                className="font-medium"
+                isRequired
+              >
+                Your story topics
+              </Label>
               <Controller
                 control={control}
                 name="topicId"
@@ -176,6 +195,13 @@ const NewStoryPage = () => {
               ></Controller>
             </FlexColumn>
           </GridRow>
+          <Label
+            htmlFor="content"
+            className="font-medium"
+            isRequired
+          >
+            Write your story here
+          </Label>
           <Controller
             control={control}
             name="content"
