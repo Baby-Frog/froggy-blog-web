@@ -25,7 +25,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           </AuthProvider>
           <GlobalStyle />
           <ReactQueryDevtools />
-          <ToastContainer />
+          <ToastContainer
+            closeOnClick
+            newestOnTop
+          />
         </ThemeProvider>
       </QueryClientProvider>
     </BrowserRouter>
