@@ -4,6 +4,7 @@ import { styled } from "styled-components";
 type TLabelProps = {
   htmlFor: string;
   children: React.ReactNode;
+  note?: string;
   className?: string;
   isRequired?: boolean;
 };
@@ -23,7 +24,13 @@ const StyledLabel = styled.label<{ $isRequired: boolean }>`
   }
 `;
 
-const Label = ({ children, htmlFor, className, isRequired = false }: TLabelProps) => {
+const Note = styled.span`
+  margin-left: 4px;
+  font-size: 12px;
+  color: ${(props) => props.theme.colors.lightGrey};
+`;
+
+const Label = ({ children, htmlFor, className, note, isRequired = false }: TLabelProps) => {
   return (
     <StyledLabel
       htmlFor={htmlFor}
@@ -31,6 +38,7 @@ const Label = ({ children, htmlFor, className, isRequired = false }: TLabelProps
       $isRequired={isRequired}
     >
       {children}
+      <Note>{note && `(${note})`}</Note>
     </StyledLabel>
   );
 };

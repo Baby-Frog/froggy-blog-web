@@ -3,7 +3,7 @@
 import { styled } from "styled-components";
 import NewStorySidebar from "./components/NewStorySidebar";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useContext, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
@@ -132,6 +132,11 @@ const NewStoryPage = () => {
 
     setPreviewImageFile(fileFromLocal);
   };
+  useEffect(() => {
+    if (errors.content) {
+      toast.error(<div className="text-sm">{errors.content.message}</div>);
+    }
+  }, [errors.content]);
   return (
     <NewStoryPageWrapper>
       <NewStorySidebar handleResetForm={handleResetForm}></NewStorySidebar>
@@ -144,12 +149,14 @@ const NewStoryPage = () => {
               <Label
                 htmlFor="title"
                 className="font-medium"
+                note="Must be more than 5 characters"
                 isRequired
               >
                 Your story title
               </Label>
               <Input
                 name="title"
+                id="title"
                 placeholder="Enter your story title"
                 register={register}
                 errorMsg={errors.title?.message}
@@ -159,6 +166,7 @@ const NewStoryPage = () => {
               <Label
                 htmlFor="topicId"
                 className="font-medium"
+                note="You can choose up to 5 topics"
                 isRequired
               >
                 Your story topics
@@ -200,7 +208,7 @@ const NewStoryPage = () => {
             className="font-medium"
             isRequired
           >
-            Write your story here
+            Write your story here 📖
           </Label>
           <Controller
             control={control}
@@ -231,7 +239,7 @@ const NewStoryPage = () => {
             <div className="mt-2 flex w-[200px] h-[200px] rounded-lg items-center justify-center overflow-hidden">
               <img
                 src={previewImageURL}
-                alt="Something happened"
+                alt="Failed to load"
                 className="object-cover w-full h-full"
               />
             </div>

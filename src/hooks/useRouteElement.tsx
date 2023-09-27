@@ -3,6 +3,7 @@ import { Navigate, Outlet, useRoutes } from "react-router-dom";
 import { path } from "src/constants/path";
 import { AuthContext } from "src/contexts/auth.contexts";
 import MainLayout from "src/layouts/MainLayout/MainLayout";
+import NewStoryLayout from "src/layouts/NewStoryLayout";
 import NewStoryPage from "src/pages/BlogWritingPage";
 import Homepage from "src/pages/Homepage";
 import SettingPage from "src/pages/SettingPage";
@@ -53,9 +54,9 @@ export default function useRouteElement() {
         {
           path: path.NEWSTORY,
           element: (
-            <MainLayout>
+            <NewStoryLayout>
               <NewStoryPage></NewStoryPage>
-            </MainLayout>
+            </NewStoryLayout>
           ),
         },
       ],

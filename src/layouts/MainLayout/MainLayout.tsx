@@ -40,6 +40,7 @@ const MainLayout = ({ children }: TMainLayoutProps) => {
           <MainNavbar></MainNavbar>
           <HomepageBanner></HomepageBanner>
           <MainLayoutWrapper>{children}</MainLayoutWrapper>
+          <PageTransition isPresent={isPresent}></PageTransition>
         </>
       ) : (
         <Suspense fallback={<LoadingPage>Please wait, we're loading your content</LoadingPage>}>
