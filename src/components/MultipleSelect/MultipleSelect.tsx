@@ -12,7 +12,7 @@ type TMultipleSelectProps<ValueType = any> = {
 
 type ValueType = { key?: string; label: React.ReactNode; value: string | number };
 
-const MultipleSelect = ({ fetchOptions, debounceTimeout, errorMsg = "", ...props }: TMultipleSelectProps) => {
+const MultipleSelect = ({ fetchOptions, debounceTimeout, ...props }: TMultipleSelectProps) => {
   const [options, setOptions] = useState<ValueType[]>([]);
   const debounceFetcher = useMemo(() => {
     const loadOptions = (value: string) => {
