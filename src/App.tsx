@@ -17,7 +17,7 @@ function App() {
   }, [clearAuthenInfoFromContext]);
   return (
     <>
-      {import.meta.env.VITE_ENV === "LOCAL" ||
+      {(import.meta.env.VITE_ENV === "LOCAL" && import.meta.env.VITE_TINY_MCE_API_KEY) ||
       (import.meta.env.VITE_ENV === "PROD" && import.meta.env.VITE_TINY_MCE_API_KEY) ? (
         <AnimatePresence
           mode="wait"
