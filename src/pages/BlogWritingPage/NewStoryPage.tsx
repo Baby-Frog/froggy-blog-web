@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { styled } from "styled-components";
 import NewStorySidebar from "./components/NewStorySidebar";
 
+import NoImageAvaliable from "src/assets/no-img-avaliable.png";
 import useMedia from "react-use/lib/useMedia";
 import { topicApi } from "src/apis/topic.apis";
 import Button from "src/components/Button";
@@ -16,6 +17,7 @@ import Label from "src/components/Label";
 import MultipleSelectV2 from "src/components/MultipleSelect/MultipleSelectV2";
 import TextEditor from "src/components/TextEditor";
 import { TStorySchema, storySchema } from "src/schemas/story.schemas";
+import ImageIcon from "src/components/Icon/ImageIcon";
 
 type ValueType = { key?: string; label: React.ReactNode; value: string | number };
 
@@ -231,18 +233,33 @@ const NewStoryPage = () => {
               );
             }}
           ></Controller>
-          <h2>Your post will look like this:</h2>
+          <Label
+            htmlFor="thumbnail"
+            className="mt-2"
+          >
+            Thumbnail
+          </Label>
           <InputFile
             handleChangeFile={handleChangeFile}
             handleClickOnInput={handleClickOnInput}
             inputFileRef={inputFileRef}
           >
-            <div className="mt-2 flex w-[200px] h-[200px] rounded-lg items-center justify-center overflow-hidden">
-              <img
-                src={previewImageURL}
-                alt="Failed to load"
-                className="object-cover w-full h-full"
-              />
+            <div className="flex w-[200px] h-[200px] rounded-lg items-center justify-center overflow-hidden">
+              {!previewImageFile ? (
+                <div className="w-full h-full bg-gray-200 flex items-center justify-center flex-col gap-2">
+                  <ImageIcon
+                    width={36}
+                    height={36}
+                  ></ImageIcon>
+                  <span className="text-sm font-medium">Upload your thumbnail</span>
+                </div>
+              ) : (
+                <img
+                  src={previewImageURL}
+                  alt="Failed to load"
+                  className="object-cover w-full h-full rounded-lg"
+                />
+              )}
             </div>
           </InputFile>
           <Button

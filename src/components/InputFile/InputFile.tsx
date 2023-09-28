@@ -21,7 +21,7 @@ const InputFile = ({ children, className, handleChangeFile, handleClickOnInput, 
       <button
         type="button"
         onClick={handleClickOnInput}
-        className="flex items-center justify-end rounded-sm border bg-white text-sm text-gray-600 shadow-sm"
+        className="flex items-center text-sm text-gray-600"
       >
         {children}
       </button>
