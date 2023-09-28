@@ -8,7 +8,7 @@ import {
   saveRefreshTokenToLS,
   saveUserProfileToLS,
 } from "./auth";
-import { ENDPOINTS } from "src/constants/endpoints";
+import { AUTH_ENDPOINTS } from "src/constants/endpoints";
 import { toast } from "react-toastify";
 import { isExpiredTokenError, isUnauthorizedError } from "./isAxiosError";
 import { TErrorApiResponse } from "src/types/response.types";
@@ -43,7 +43,7 @@ class Http {
     this.instance.interceptors.response.use(
       (response) => {
         const { url } = response.config;
-        if (url === ENDPOINTS.LOGIN) {
+        if (url === AUTH_ENDPOINTS.LOGIN) {
           const data = response.data as TAuthResponse;
           this.accessToken = data.data.accessToken;
           this.refreshToken = data.data.refreshToken;
@@ -51,7 +51,7 @@ class Http {
           saveAccessTokenToLS(this.accessToken);
           saveRefreshTokenToLS(this.refreshToken);
           saveUserProfileToLS(profile);
-        } else if (url === ENDPOINTS.LOGOUT) {
+        } else if (url === AUTH_ENDPOINTS.LOGOUT) {
           this.accessToken = "";
           this.refreshToken = "";
           this.refreshTokenRequest = null;
@@ -73,7 +73,7 @@ class Http {
           const { url } = config;
           // Lỗi 401 có 2 trường hợp
           // TH1: Lỗi 401 do access_token hết hạn => ta sẽ phải refresh token
-          if (isExpiredTokenError(error) && url !== ENDPOINTS.REFRESH_TOKEN) {
+          if (isExpiredTokenError(error) && url !== AUTH_ENDPOINTS.REFRESH_TOKEN) {
             this.refreshTokenRequest = this.refreshTokenRequest
               ? this.refreshTokenRequest
               : this.handleRefreshAccessToken().finally(() => {
@@ -105,7 +105,7 @@ class Http {
   }
   private async handleRefreshAccessToken() {
     return this.instance
-      .post(ENDPOINTS.REFRESH_TOKEN, {
+      .post(AUTH_ENDPOINTS.REFRESH_TOKEN, {
         refreshToken: this.refreshToken,
       })
       .then((response) => {
