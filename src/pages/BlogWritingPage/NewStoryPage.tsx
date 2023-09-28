@@ -18,7 +18,6 @@ import Label from "src/components/Label";
 import MultipleSelectV2 from "src/components/MultipleSelect/MultipleSelectV2";
 import TextEditor from "src/components/TextEditor";
 import { TStorySchema, storySchema } from "src/schemas/story.schemas";
-import _ from "lodash";
 import { imageApi } from "src/apis/image.apis";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -144,7 +143,6 @@ const NewStoryPage = () => {
           ...data,
           content: textEditorValue,
           thumbnail: yourThumbnail,
-          credit: "hehe",
         },
         {
           onSuccess: () => {
