@@ -1,23 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { styled } from "styled-components";
 import NewStorySidebar from "./components/NewStorySidebar";
 
-import NoImageAvaliable from "src/assets/no-img-avaliable.png";
+import { useMutation } from "react-query";
 import useMedia from "react-use/lib/useMedia";
+import { storyApi } from "src/apis/story.apis";
 import { topicApi } from "src/apis/topic.apis";
 import Button from "src/components/Button";
+import ImageIcon from "src/components/Icon/ImageIcon";
 import Input from "src/components/Input";
 import InputFile from "src/components/InputFile";
 import Label from "src/components/Label";
 import MultipleSelectV2 from "src/components/MultipleSelect/MultipleSelectV2";
 import TextEditor from "src/components/TextEditor";
 import { TStorySchema, storySchema } from "src/schemas/story.schemas";
-import ImageIcon from "src/components/Icon/ImageIcon";
+import _ from "lodash";
+import { imageApi } from "src/apis/image.apis";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 type ValueType = { key?: string; label: React.ReactNode; value: string | number };
 
@@ -76,11 +79,18 @@ const NewStoryPage = () => {
     setValue,
     control,
     reset,
+    watch,
     setError,
     formState: { errors },
   } = useForm<TStorySchema>({
     mode: "onSubmit",
     reValidateMode: "onBlur",
+    defaultValues: {
+      thumbnail: "",
+      content: "",
+      title: "",
+      topicId: [],
+    },
     resolver: yupResolver(storySchema),
   });
   const isTablet = useMedia("(max-width: 1024px)");
@@ -88,9 +98,19 @@ const NewStoryPage = () => {
   const [textEditorValue, setTextEditorValue] = useState<string>("");
   const [previewImageFile, setPreviewImageFile] = useState<Blob>();
   const inputFileRef = useRef<HTMLInputElement>(null);
+  const thumbnail = watch("thumbnail");
   const previewImageURL = useMemo(() => {
     return previewImageFile ? URL.createObjectURL(previewImageFile) : "";
   }, [previewImageFile]);
+
+  const createPostMutation = useMutation({
+    mutationFn: storyApi.createStory,
+  });
+
+  const uploadThumbnail = useMutation({
+    mutationFn: imageApi.uploadImage,
+  });
+
   async function fetchTopicList(keyword: string) {
     return topicApi.getTopicsByKeyword(keyword).then((res) => {
       return res.data.data.data.map((topic) => ({
@@ -107,13 +127,35 @@ const NewStoryPage = () => {
     });
     setTopicValues([]);
     setTextEditorValue("");
-    // setPreviewImageFile(undefined);
+    setPreviewImageFile(undefined);
   };
-  const handleCreateNewStory = handleSubmit((data) => {
-    console.log({
-      ...data,
-      content: textEditorValue,
-    });
+  const handleCreateNewStory = handleSubmit(async (data) => {
+    try {
+      let yourThumbnail = thumbnail;
+      if (previewImageFile) {
+        const formData = new FormData();
+        formData.append("file", previewImageFile);
+        const uploadRes = await uploadThumbnail.mutateAsync(formData);
+        yourThumbnail = uploadRes.data.data.urlImage;
+        setValue("thumbnail", yourThumbnail);
+      }
+      createPostMutation.mutate(
+        {
+          ...data,
+          content: textEditorValue,
+          thumbnail: yourThumbnail,
+          credit: "hehe",
+        },
+        {
+          onSuccess: () => {
+            toast.success("Yes sir");
+          },
+        },
+      );
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
   });
   const handleClickOnInput = () => {
     inputFileRef.current?.click();
@@ -235,7 +277,7 @@ const NewStoryPage = () => {
           ></Controller>
           <Label
             htmlFor="thumbnail"
-            className="mt-2"
+            className="mt-2 md:mx-0 mx-auto font-medium text-sm"
           >
             Thumbnail
           </Label>
@@ -243,15 +285,19 @@ const NewStoryPage = () => {
             handleChangeFile={handleChangeFile}
             handleClickOnInput={handleClickOnInput}
             inputFileRef={inputFileRef}
+            className="flex items-center justify-center md:block"
           >
-            <div className="flex w-[200px] h-[200px] rounded-lg items-center justify-center overflow-hidden">
+            <div className="flex md:w-[200px] md:h-[200px] rounded-lg items-center justify-center overflow-hidden w-[300px] h-[300px]">
               {!previewImageFile ? (
                 <div className="w-full h-full bg-gray-200 flex items-center justify-center flex-col gap-2">
                   <ImageIcon
                     width={36}
                     height={36}
+                    opacity={0.6}
                   ></ImageIcon>
-                  <span className="text-sm font-medium">Upload your thumbnail</span>
+                  <span className="text-[14px] w-[150px] font-medium text-center text-black text-opacity-40">
+                    Upload thumbnail to make it more inviting to readers
+                  </span>
                 </div>
               ) : (
                 <img

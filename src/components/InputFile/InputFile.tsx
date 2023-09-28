@@ -5,6 +5,7 @@ type TInputFileProps = {
   children?: React.ReactNode;
   handleChangeFile?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleClickOnInput?: () => void;
+
   inputFileRef?: React.RefObject<HTMLInputElement>;
 };
 
