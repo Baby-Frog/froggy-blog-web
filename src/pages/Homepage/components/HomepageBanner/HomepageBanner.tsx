@@ -29,7 +29,7 @@ const HomepageBannerMain = styled.div`
 
 const HomepageBannerLeft = styled.div`
   display: block;
-  @media screen and (max-width: 767.98px) {
+  @media screen and (max-width: 767px) {
     margin: 0 auto;
     text-align: center;
   }
@@ -75,7 +75,7 @@ const HomepageBannerDescription = styled.div`
     word-break: break-word;
     height: 105px;
   }
-  @media screen and (max-width: 767.98px) {
+  @media screen and (max-width: 767px) {
     .Typewriter {
       height: auto;
     }

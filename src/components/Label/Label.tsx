@@ -28,6 +28,9 @@ const Note = styled.span`
   margin-left: 4px;
   font-size: 12px;
   color: ${(props) => props.theme.colors.lightGrey};
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 const Label = ({ children, htmlFor, className, note, isRequired = false }: TLabelProps) => {

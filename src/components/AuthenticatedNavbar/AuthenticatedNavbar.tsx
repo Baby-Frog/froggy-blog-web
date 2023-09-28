@@ -20,6 +20,10 @@ import SearchIcon from "../Icon/SearchIcon";
 import SettingIcon from "../Icon/SettingIcon";
 import PopoverDismiss from "../PopoverDismiss";
 
+type TAuthenticatedNavbarProps = {
+  isWritingBlog?: boolean;
+};
+
 const AuthenticatedNavbarContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -113,7 +117,7 @@ const StyledDropdownLink = styled(Link)<{ $displayColumn?: boolean }>`
   }
 `;
 
-const AuthenticatedNavbar = () => {
+const AuthenticatedNavbar = ({ isWritingBlog }: TAuthenticatedNavbarProps) => {
   const { userProfile } = useContext(AuthContext);
   const navigate = useNavigate();
   const isMobile = useMedia("(max-width: 767px)");
@@ -150,7 +154,7 @@ const AuthenticatedNavbar = () => {
             alt="Logo"
           />
         </Link>
-        {!isMobile && (
+        {!isMobile && !isWritingBlog && (
           <form className="navbar-search">
             <SearchIcon className="navbar-search-icon"></SearchIcon>
 
@@ -160,6 +164,9 @@ const AuthenticatedNavbar = () => {
               className="navbar-search-input"
             />
           </form>
+        )}
+        {!isMobile && isWritingBlog && (
+          <div className="text-[24px] font-[Pacifico] font-medium tracking-wide">Create your story</div>
         )}
       </AuthenticatedNavbarLeft>
       <AuthenticatedNavbarRight>

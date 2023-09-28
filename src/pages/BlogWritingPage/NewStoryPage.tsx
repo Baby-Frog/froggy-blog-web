@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { styled } from "styled-components";
-import NewStorySidebar from "./components/NewStorySidebar";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { styled } from "styled-components";
+import NewStorySidebar from "./components/NewStorySidebar";
 
 import useMedia from "react-use/lib/useMedia";
 import { topicApi } from "src/apis/topic.apis";
@@ -15,12 +15,7 @@ import InputFile from "src/components/InputFile";
 import Label from "src/components/Label";
 import MultipleSelectV2 from "src/components/MultipleSelect/MultipleSelectV2";
 import TextEditor from "src/components/TextEditor";
-import { AuthContext } from "src/contexts/auth.contexts";
 import { TStorySchema, storySchema } from "src/schemas/story.schemas";
-
-type TNewStoryPageProps = {
-  something: string;
-};
 
 type ValueType = { key?: string; label: React.ReactNode; value: string | number };
 
@@ -40,6 +35,9 @@ const NewStoryHeading = styled.h1`
   text-align: center;
   font-size: 28px;
   font-weight: 700;
+  @media screen and (max-width: 767px) {
+    font-size: 20px;
+  }
 `;
 
 const NewStorySubheading = styled.h2`
@@ -52,9 +50,13 @@ const NewStorySubheading = styled.h2`
 
 const GridRow = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
   margin-bottom: 24px;
+  @media screen and (max-width: 1023px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 `;
 
 const FlexColumn = styled.div`
@@ -80,10 +82,9 @@ const NewStoryPage = () => {
     resolver: yupResolver(storySchema),
   });
   const isTablet = useMedia("(max-width: 1024px)");
-  const { userProfile } = useContext(AuthContext);
   const [topicValues, setTopicValues] = useState<ValueType[]>([]);
   const [textEditorValue, setTextEditorValue] = useState<string>("");
-  const [previewImageFile, setPreviewImageFile] = useState<File>();
+  const [previewImageFile, setPreviewImageFile] = useState<Blob>();
   const inputFileRef = useRef<HTMLInputElement>(null);
   const previewImageURL = useMemo(() => {
     return previewImageFile ? URL.createObjectURL(previewImageFile) : "";

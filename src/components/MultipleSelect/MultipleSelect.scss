@@ -1,9 +1,6 @@
 .ant-select-multiple {
   font-family: "DM Sans", sans-serif !important;
   height: 48px !important;
-  @media screen and (max-width: 1280px) {
-    height: unset !important;
-  }
 }
 
 .ant-select-selection-overflow {

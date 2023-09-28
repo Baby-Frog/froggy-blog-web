@@ -4,6 +4,7 @@ import Logo from "src/assets/logo-4.png";
 import { path } from "src/constants/path";
 import HomepageAuthenModal from "src/pages/Homepage/components/HomepageAuthenModal/HomepageAuthenModal";
 import { styled } from "styled-components";
+
 const MainNavbarWrapper = styled.div`
   background-color: ${(props) => props.theme.colors.primary};
   border-bottom: 1px solid #000;

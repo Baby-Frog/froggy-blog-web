@@ -8,11 +8,7 @@ import NewStoryPage from "src/pages/BlogWritingPage";
 import Homepage from "src/pages/Homepage";
 import SettingPage from "src/pages/SettingPage";
 import UserProfilePage from "src/pages/UserProfilePage";
-
-function ProtectedRoute() {
-  const { isAuthenticated } = useContext(AuthContext);
-  return isAuthenticated ? <Outlet></Outlet> : <Navigate to={path.HOMEPAGE}></Navigate>;
-}
+import ProtectedRoute from "src/routes/ProtectedRoute";
 
 function RejectedRoute() {
   const { isAuthenticated } = useContext(AuthContext);

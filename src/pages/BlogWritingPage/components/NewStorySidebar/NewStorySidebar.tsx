@@ -1,10 +1,10 @@
-import PointUpIcon from "src/components/Icon/PointUpIcon";
-import { styled } from "styled-components/";
+import { motionValue, useTransform } from "framer-motion";
 import $ from "jquery";
-import { useContext, useEffect, useState } from "react";
-import { motionValue, useScroll, useTransform } from "framer-motion";
-import TickIcon from "src/components/Icon/TickIcon";
+import { useEffect, useState } from "react";
+import PointUpIcon from "src/components/Icon/PointUpIcon";
 import RewindIcon from "src/components/Icon/RewindIcon";
+import TickIcon from "src/components/Icon/TickIcon";
+import { styled } from "styled-components/";
 
 type TNewStorySidebarProps = {
   handleResetForm: () => void;
@@ -17,7 +17,7 @@ const NewStorySidebarWrapper = styled.div<{ $isScrolledDown?: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  row-gap: 12px;
+  gap: 12px;
   background-color: transparent;
   transition: all 350ms ease-in-out;
   border-radius: 12px;
@@ -25,6 +25,14 @@ const NewStorySidebarWrapper = styled.div<{ $isScrolledDown?: boolean }>`
   top: ${(props) => (props.$isScrolledDown ? "35%" : "0")};
   transform: ${(props) => (props.$isScrolledDown ? "translate(40px, -50%)" : "")};
   left: 0;
+  @media screen and (max-width: 767px) {
+    position: fixed;
+    gap: 8px;
+    z-index: 999;
+    top: 0;
+    transform: unset;
+    left: 0;
+  }
 `;
 
 const NewStorySidebarItem = styled.button<{ $isActive?: boolean; $backgroundColor?: string; $color?: string }>`
@@ -46,6 +54,10 @@ const NewStorySidebarItem = styled.button<{ $isActive?: boolean; $backgroundColo
     box-shadow:
       rgba(50, 50, 93, 0.45) 0px 13px 27px -5px,
       rgba(0, 0, 0, 0.55) 0px 8px 16px -8px;
+  }
+  @media screen and (max-width: 767px) {
+    width: 36px;
+    height: 36px;
   }
 `;
 
