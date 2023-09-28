@@ -6,8 +6,10 @@ import { toast } from "react-toastify";
 import { styled } from "styled-components";
 import NewStorySidebar from "./components/NewStorySidebar";
 
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "react-query";
 import useMedia from "react-use/lib/useMedia";
+import { imageApi } from "src/apis/image.apis";
 import { storyApi } from "src/apis/story.apis";
 import { topicApi } from "src/apis/topic.apis";
 import Button from "src/components/Button";
@@ -18,8 +20,6 @@ import Label from "src/components/Label";
 import MultipleSelectV2 from "src/components/MultipleSelect/MultipleSelectV2";
 import TextEditor from "src/components/TextEditor";
 import { TStorySchema, storySchema } from "src/schemas/story.schemas";
-import { imageApi } from "src/apis/image.apis";
-import { yupResolver } from "@hookform/resolvers/yup";
 
 type ValueType = { key?: string; label: React.ReactNode; value: string | number };
 
@@ -146,6 +146,7 @@ const NewStoryPage = () => {
         },
         {
           onSuccess: () => {
+            handleResetForm();
             toast.success("Yes sir");
           },
         },
