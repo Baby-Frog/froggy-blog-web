@@ -7,6 +7,8 @@ export const AUTH_ENDPOINTS = {
   REGISTER: "/register",
   LOGOUT: "/api/logout",
   REFRESH_TOKEN: "/refreshToken",
+  GET_RECAPTCHA: "/api/captcha/generate",
+  VERIFY_RECAPTCHA: "/api/captcha/verify",
 } as const;
 
 export const IMAGE_ENPOINTS = {

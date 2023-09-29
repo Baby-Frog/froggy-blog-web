@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { authApi } from "src/apis/auth.apis";
 import Button from "src/components/Button";
 import Input from "src/components/Input";
@@ -27,6 +27,7 @@ type TRegisterForm = {
   email: string;
   password: string;
   rePassword: string;
+  captcha: string;
 };
 
 const HomepageRegisterModal = ({
@@ -45,9 +46,15 @@ const HomepageRegisterModal = ({
     reValidateMode: "onSubmit",
     resolver: yupResolver(registerSchema),
   });
+  const { data: recaptchaData } = useQuery({
+    queryKey: ["recaptcha"],
+    queryFn: authApi.getRecaptcha,
+    retry: false,
+  });
   const registerAccountMutation = useMutation({
     mutationFn: authApi.register,
   });
+
   const handleRegister = handleSubmit((data) => {
     registerAccountMutation.mutate(data, {
       onSuccess: (data) => {
@@ -67,6 +74,7 @@ const HomepageRegisterModal = ({
       },
     });
   });
+  console.log(recaptchaData?.data);
   return (
     <Modal
       handleClose={handleClose}
@@ -139,6 +147,19 @@ const HomepageRegisterModal = ({
             register={register}
             placeholder="Enter your confirm password"
             errorMsg={errors.rePassword?.message}
+          ></Input>
+          <Label
+            htmlFor="recaptcha"
+            className="mt-2"
+          >
+            Captcha verification
+          </Label>
+          <Input
+            name="captcha"
+            containerClassName="mt-1"
+            register={register}
+            placeholder="Enter the captcha code below"
+            errorMsg={errors.captcha?.message}
           ></Input>
           <Button type="submit">Sign up</Button>
         </form>

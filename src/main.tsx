@@ -13,7 +13,15 @@ import { AuthProvider } from "./contexts/auth.contexts.tsx";
 import GlobalStyle from "./styles/globalStyles.ts";
 import "./styles/index.scss";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
