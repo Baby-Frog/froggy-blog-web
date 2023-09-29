@@ -77,8 +77,6 @@ class Http {
             this.refreshTokenRequest = this.refreshTokenRequest
               ? this.refreshTokenRequest
               : this.handleRefreshAccessToken().finally(() => {
-                  // giữ refresh token request trong một khoảng thời gian nhất định rồi mới set lại là null để
-                  // tránh các trường hợp bất đắc dĩ handleRefreshToken() bị invoke 2 lần
                   setTimeout(() => {
                     this.refreshTokenRequest = null;
                   }, 10000);
@@ -87,13 +85,13 @@ class Http {
               if (config?.headers) {
                 config.headers.Authorization = `Bearer ${accessToken}`;
               }
-              // Nghĩa là chúng ta tiếp tục request cũ vừa bị lỗi sau khi refresh thành công, chỉ là thay thế header Authorization bằng token mới
               return this.instance({
                 ...config,
                 headers: { ...config.headers, Authorization: `Bearer ${accessToken}` },
               });
             });
           }
+          // TH2: Lỗi 401 do refresh_token hết hạn => ta sẽ phải logout
           clearAllAuthenticationInfoFromLS();
           this.accessToken = "";
           this.refreshToken = "";
