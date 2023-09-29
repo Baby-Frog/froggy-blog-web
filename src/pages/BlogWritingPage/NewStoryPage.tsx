@@ -182,7 +182,10 @@ const NewStoryPage = () => {
   }, [errors.content]);
   return (
     <NewStoryPageWrapper>
-      <NewStorySidebar handleResetForm={handleResetForm}></NewStorySidebar>
+      <NewStorySidebar
+        handleResetForm={handleResetForm}
+        handleCreateNewStory={handleCreateNewStory}
+      ></NewStorySidebar>
       <NewStoryMain>
         <NewStoryHeading>Write your new story 🚀</NewStoryHeading>
         <NewStorySubheading>Share your story with us ^o^</NewStorySubheading>

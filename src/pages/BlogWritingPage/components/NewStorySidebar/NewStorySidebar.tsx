@@ -8,6 +8,7 @@ import { styled } from "styled-components/";
 
 type TNewStorySidebarProps = {
   handleResetForm: () => void;
+  handleCreateNewStory: (e?: React.BaseSyntheticEvent<object, unknown, unknown> | undefined) => Promise<void>;
 };
 
 const NewStorySidebarWrapper = styled.div<{ $isScrolledDown?: boolean }>`
@@ -61,7 +62,7 @@ const NewStorySidebarItem = styled.button<{ $isActive?: boolean; $backgroundColo
   }
 `;
 
-const NewStorySidebar = ({ handleResetForm }: TNewStorySidebarProps) => {
+const NewStorySidebar = ({ handleResetForm, handleCreateNewStory }: TNewStorySidebarProps) => {
   const [scrollY, setScrollY] = useState(0);
   useEffect(() => {
     const handleScroll = () => {
@@ -99,7 +100,7 @@ const NewStorySidebar = ({ handleResetForm }: TNewStorySidebarProps) => {
       <NewStorySidebarItem
         $color="#fff"
         $backgroundColor="#1DC071"
-        onClick={handleScrollUp}
+        onClick={handleCreateNewStory}
         title="Submit your story"
       >
         <TickIcon
