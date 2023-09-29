@@ -91,6 +91,7 @@ const UserAvatar = styled.div`
     height: 32px;
     border-radius: 50%;
     object-fit: cover;
+    border: 1px solid black;
   }
 `;
 

@@ -46,11 +46,7 @@ const HomepageRegisterModal = ({
     reValidateMode: "onSubmit",
     resolver: yupResolver(registerSchema),
   });
-  const { data: recaptchaData } = useQuery({
-    queryKey: ["recaptcha"],
-    queryFn: authApi.getRecaptcha,
-    retry: false,
-  });
+
   const registerAccountMutation = useMutation({
     mutationFn: authApi.register,
   });
@@ -74,7 +70,6 @@ const HomepageRegisterModal = ({
       },
     });
   });
-  console.log(recaptchaData?.data);
   return (
     <Modal
       handleClose={handleClose}
@@ -148,20 +143,7 @@ const HomepageRegisterModal = ({
             placeholder="Enter your confirm password"
             errorMsg={errors.rePassword?.message}
           ></Input>
-          <Label
-            htmlFor="recaptcha"
-            className="mt-2"
-          >
-            Captcha verification
-          </Label>
-          <Input
-            name="captcha"
-            containerClassName="mt-1"
-            register={register}
-            placeholder="Enter the captcha code below"
-            errorMsg={errors.captcha?.message}
-          ></Input>
-          <Button type="submit">Sign up</Button>
+          <Button>Sign up</Button>
         </form>
         <div className="modal-toggle">
           <span>Already have an account?</span>
