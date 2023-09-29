@@ -20,6 +20,7 @@ import Label from "src/components/Label";
 import MultipleSelectV2 from "src/components/MultipleSelect/MultipleSelectV2";
 import TextEditor from "src/components/TextEditor";
 import { TStorySchema, storySchema } from "src/schemas/story.schemas";
+import ErrorToastIcon from "src/components/Icon/ToastIcon/ErrorToastIcon";
 
 type ValueType = { key?: string; label: React.ReactNode; value: string | number };
 
@@ -123,6 +124,8 @@ const NewStoryPage = () => {
       title: "",
       topicId: [],
       content: "",
+      thumbnail: "",
+      credit: "",
     });
     setTopicValues([]);
     setTextEditorValue("");
@@ -162,13 +165,27 @@ const NewStoryPage = () => {
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileFromLocal = e.target.files?.[0];
     if (fileFromLocal && !fileFromLocal.type.includes("image")) {
-      toast.error(<div className="text-sm">Wrong file format, we only accept .JPEG, .PNG, .JPG file format</div>);
+      toast.error(<div className="text-sm">Wrong file format, we only accept .JPEG, .PNG, .JPG file format</div>, {
+        icon: (
+          <ErrorToastIcon
+            width={24}
+            height={24}
+          />
+        ),
+      });
       // Set lại value để có thể hiển thị lại lỗi đề phòng có chuyện gì xảy ra
       e.target.value = "";
       return;
     }
     if (fileFromLocal && fileFromLocal.size >= THREE_MEGABYTE_TO_BYTES) {
-      toast.error("Your image size is too big, we only accept image size under 3MB");
+      toast.error("Your image size is too big, we only accept image size under 3MB", {
+        icon: (
+          <ErrorToastIcon
+            width={24}
+            height={24}
+          />
+        ),
+      });
       // Set lại value để có thể chọn lại bức ảnh trước một lần nữa đề phòng có chuyện gì xảy ra
       e.target.value = "";
       return;
@@ -178,7 +195,14 @@ const NewStoryPage = () => {
   };
   useEffect(() => {
     if (errors.content) {
-      toast.error(<div className="text-sm">{errors.content.message}</div>);
+      toast.error(<div className="text-sm">{errors.content.message}</div>, {
+        icon: (
+          <ErrorToastIcon
+            width={24}
+            height={24}
+          />
+        ),
+      });
     }
   }, [errors.content]);
   return (

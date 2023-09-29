@@ -28,8 +28,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <ToastContainer
             closeOnClick
             newestOnTop
-            pauseOnHover={false}
+            pauseOnHover
             autoClose={3000}
+            position="top-center"
+            className="froggy-blog-toast"
             draggable
           />
         </ThemeProvider>

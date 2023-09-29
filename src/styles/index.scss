@@ -35,3 +35,10 @@
 .tox-statusbar__branding {
   display: none;
 }
+
+// Toast CSS overrides
+
+.Toastify__toast-theme--light {
+  background: rgba(0, 0, 0, 0.8) !important;
+  color: white !important;
+}
