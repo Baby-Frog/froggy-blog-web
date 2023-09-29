@@ -28,6 +28,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <ToastContainer
             closeOnClick
             newestOnTop
+            pauseOnHover={false}
+            autoClose={3000}
+            draggable
           />
         </ThemeProvider>
       </QueryClientProvider>
