@@ -19,6 +19,7 @@ import ProfileIcon from "../Icon/ProfileIcon";
 import SearchIcon from "../Icon/SearchIcon";
 import SettingIcon from "../Icon/SettingIcon";
 import PopoverDismiss from "../PopoverDismiss";
+import SuccessToastIcon from "../Icon/ToastIcon/SuccessToastIcon";
 
 type TAuthenticatedNavbarProps = {
   isWritingBlog?: boolean;
@@ -133,7 +134,9 @@ const AuthenticatedNavbar = ({ isWritingBlog }: TAuthenticatedNavbarProps) => {
   const logoutMutation = useMutation({
     mutationFn: authApi.logout,
     onSuccess: () => {
-      toast.success("Logout successfully!");
+      toast.success("Logout successfully!", {
+        icon: <SuccessToastIcon></SuccessToastIcon>,
+      });
       navigate(path.HOMEPAGE);
     },
     onError: () => {

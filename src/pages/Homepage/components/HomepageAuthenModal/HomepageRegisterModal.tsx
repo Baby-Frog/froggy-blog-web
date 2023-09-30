@@ -14,6 +14,7 @@ import { isAxiosError } from "axios";
 import { isUnprocessableEntityError } from "src/utils/isAxiosError";
 import { TErrorApiResponse } from "src/types/response.types";
 import { toast } from "react-toastify";
+import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
 
 type THomepageRegisterModalProps = {
   isOpen?: boolean;
@@ -55,7 +56,9 @@ const HomepageRegisterModal = ({
     registerAccountMutation.mutate(data, {
       onSuccess: (data) => {
         setIsLoginModal(true);
-        toast.success(data.data.message);
+        toast.success(data.data.message, {
+          icon: <SuccessToastIcon></SuccessToastIcon>,
+        });
       },
       onError: (error) => {
         if (
