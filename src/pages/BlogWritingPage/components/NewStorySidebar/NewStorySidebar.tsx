@@ -24,7 +24,7 @@ const NewStorySidebarWrapper = styled.div<{ $isScrolledDown?: boolean }>`
   border-radius: 12px;
   position: sticky;
   top: ${(props) => (props.$isScrolledDown ? "35%" : "0")};
-  transform: ${(props) => (props.$isScrolledDown ? "translate(40px, -50%)" : "")};
+  transform: ${(props) => (props.$isScrolledDown ? "translate(40px, -50%)" : "translate(40px, 0)")};
   left: 0;
   @media screen and (max-width: 767px) {
     position: fixed;

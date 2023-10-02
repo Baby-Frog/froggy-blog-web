@@ -3,7 +3,7 @@ import { TAuthResponse } from "src/types/auth-response.types";
 import http from "src/utils/http";
 
 export const authApi = {
-  register: (body: { fullName: string; captcha: string; email: string; password: string; rePassword: string }) =>
+  register: (body: { fullName: string; email: string; password: string; rePassword: string; captcha: string }) =>
     http.post<TAuthResponse>(AUTH_ENDPOINTS.REGISTER, body),
   login: (body: { email: string; password: string }) => http.post<TAuthResponse>(AUTH_ENDPOINTS.LOGIN, body),
   logout: (body: { refreshToken: string }) => http.post(AUTH_ENDPOINTS.LOGOUT, body),

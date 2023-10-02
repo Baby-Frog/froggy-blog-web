@@ -168,8 +168,8 @@ const NewStoryPage = () => {
       toast.error(<div className="text-sm">Wrong file format, we only accept .JPEG, .PNG, .JPG file format</div>, {
         icon: (
           <ErrorToastIcon
-            width={24}
-            height={24}
+            width={40}
+            height={40}
           />
         ),
       });
@@ -181,8 +181,8 @@ const NewStoryPage = () => {
       toast.error("Your image size is too big, we only accept image size under 3MB", {
         icon: (
           <ErrorToastIcon
-            width={24}
-            height={24}
+            width={40}
+            height={40}
           />
         ),
       });
@@ -198,8 +198,8 @@ const NewStoryPage = () => {
       toast.error(<div className="text-sm">{errors.content.message}</div>, {
         icon: (
           <ErrorToastIcon
-            width={24}
-            height={24}
+            width={40}
+            height={40}
           />
         ),
       });

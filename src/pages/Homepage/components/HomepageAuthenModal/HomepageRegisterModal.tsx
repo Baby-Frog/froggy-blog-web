@@ -14,6 +14,9 @@ import { isAxiosError } from "axios";
 import { isUnprocessableEntityError } from "src/utils/isAxiosError";
 import { TErrorApiResponse } from "src/types/response.types";
 import { toast } from "react-toastify";
+import ReCAPTCHA from "react-google-recaptcha";
+import { useState } from "react";
+import { set } from "lodash";
 
 type THomepageRegisterModalProps = {
   isOpen?: boolean;
@@ -46,11 +49,7 @@ const HomepageRegisterModal = ({
     reValidateMode: "onSubmit",
     resolver: yupResolver(registerSchema),
   });
-  const { data: recaptchaData } = useQuery({
-    queryKey: ["recaptcha"],
-    queryFn: authApi.getRecaptcha,
-    retry: false,
-  });
+  const [isRegisterButtonDisabled, setIsRegisterButtonDisabled] = useState<boolean>(true);
   const registerAccountMutation = useMutation({
     mutationFn: authApi.register,
   });
@@ -74,7 +73,11 @@ const HomepageRegisterModal = ({
       },
     });
   });
-  console.log(recaptchaData?.data);
+  const handleTriggerCaptcha = (value: string) => {
+    if (value) {
+      setIsRegisterButtonDisabled(false);
+    }
+  };
   return (
     <Modal
       handleClose={handleClose}
@@ -148,25 +151,17 @@ const HomepageRegisterModal = ({
             placeholder="Enter your confirm password"
             errorMsg={errors.rePassword?.message}
           ></Input>
-          <Label
-            htmlFor="recaptcha"
-            className="mt-2"
-          >
-            Captcha verification
-          </Label>
-          <Input
-            name="captcha"
-            containerClassName="mt-1"
-            register={register}
-            placeholder="Enter the captcha code below"
-            errorMsg={errors.captcha?.message}
-          ></Input>
+          <ReCAPTCHA
+            sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+            // onChange={handleTriggerCaptcha}
+          ></ReCAPTCHA>
           <Button type="submit">Sign up</Button>
         </form>
         <div className="modal-toggle">
           <span>Already have an account?</span>
           <button
             className="modal-toggle-button"
+            disabled={isRegisterButtonDisabled}
             onClick={handleToggleBetweenLoginAndRegister}
           >
             Sign in
