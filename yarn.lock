@@ -1093,13 +1093,6 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
-"@babel/runtime@^7.17.9":
-  version "7.23.1"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.23.1.tgz#72741dc4d413338a91dcb044a86f3c0bc402646d"
-  integrity sha512-hC2v6p8ZSI/W0HUzh3V8C5g+NwSKzKPtJwSpTjwl0o297GP9+ZLQSkdvHz46CM3LqyoXxq+5G9komY+eSqSO0g==
-  dependencies:
-    regenerator-runtime "^0.14.0"
-
 "@babel/template@^7.22.15", "@babel/template@^7.22.5":
   version "7.22.15"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.22.15.tgz#09576efc3830f0430f4548ef971dde1350ef2f38"
@@ -1360,13 +1353,6 @@
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.1.1.tgz#1a5b1959a528e374e8037c4396c3e825d6cf4a83"
   integrity sha512-m0G6wlnhm/AX0H12IOWtK8gASEMffnX08RtKkCgTdHb9JpHKGloI7icFfLg9ZmQeavcvR0PKmzxClyuFPSjKWw==
-
-"@hcaptcha/react-hcaptcha@^1.8.1":
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/@hcaptcha/react-hcaptcha/-/react-hcaptcha-1.8.1.tgz#3e6e0423100158bae089e4ef6507db0d4c62ec3f"
-  integrity sha512-33tIl77HgeahiQ6R0+JPDA8cGBBv95cIVcdOcFVwiGCJhrOxyiOQetCdEUNTDS13xrkvIP29K/PrqLXXSbKl6Q==
-  dependencies:
-    "@babel/runtime" "^7.17.9"
 
 "@hookform/resolvers@^3.2.0":
   version "3.3.1"

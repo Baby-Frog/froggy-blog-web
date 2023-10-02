@@ -4,6 +4,7 @@ import { useMutation, useQuery } from "react-query";
 import { authApi } from "src/apis/auth.apis";
 import Button from "src/components/Button";
 import Input from "src/components/Input";
+import { ReCAPTCHA } from "react-google-recaptcha";
 import Label from "src/components/Label";
 import Modal from "src/components/Modal";
 import { registerSchema } from "src/schemas/authentication.schemas";
@@ -146,8 +147,10 @@ const HomepageRegisterModal = ({
             placeholder="Enter your confirm password"
             errorMsg={errors.rePassword?.message}
           ></Input>
-          <Button>Sign up</Button>
+          <ReCAPTCHA sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY} />
+          <Button className="mt-2">Sign up</Button>
         </form>
+
         <div className="modal-toggle">
           <span>Already have an account?</span>
           <button
