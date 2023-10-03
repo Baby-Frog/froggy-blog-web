@@ -142,7 +142,7 @@ const HomepageBanner = () => {
                     "<span>Every time you post something online, you have a choice. You can either make it something that adds to the happiness levels in the world—or you can make it something that takes away.</span>",
                   )
                   .callFunction(() => {
-                    document.getElementsByClassName("Typewriter__cursor")[1].remove();
+                    document.getElementsByClassName("Typewriter__cursor")[2].remove();
                   })
                   .start();
               }}

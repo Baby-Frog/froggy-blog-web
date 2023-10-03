@@ -10,10 +10,7 @@ import SettingPage from "src/pages/SettingPage";
 import UserProfilePage from "src/pages/UserProfilePage";
 import ProtectedRoute from "src/routes/ProtectedRoute";
 
-function RejectedRoute() {
-  const { isAuthenticated } = useContext(AuthContext);
-  return !isAuthenticated ? <Outlet></Outlet> : <Navigate to={path.HOMEPAGE}></Navigate>;
-}
+function RejectedRoute() {}
 
 export default function useRouteElement() {
   const routeElements = useRoutes([
