@@ -1,0 +1,32 @@
+.entry-content {
+  * {
+    color: #242424;
+    word-break: break-word;
+  }
+  p {
+    line-height: 32px;
+    font-size: 20px;
+    font-weight: 400;
+  }
+  h1 {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    line-height: 30px;
+    margin-top: 16px;
+  }
+  h2 {
+    line-height: 24px;
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 12px;
+  }
+  ol {
+    list-style: decimal;
+    font-size: 20px;
+  }
+  ul {
+    list-style: disc;
+    font-size: 20px;
+  }
+}
