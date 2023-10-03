@@ -5,6 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { styled } from "styled-components";
 import NewStorySidebar from "./components/NewStorySidebar";
+// eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from "react-google-recaptcha";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "react-query";
@@ -14,6 +15,7 @@ import { storyApi } from "src/apis/story.apis";
 import { topicApi } from "src/apis/topic.apis";
 import Button from "src/components/Button";
 import ImageIcon from "src/components/Icon/ImageIcon";
+import Signature from "src/assets/signature.png";
 import Input from "src/components/Input";
 import InputFile from "src/components/InputFile";
 import Label from "src/components/Label";
@@ -86,6 +88,12 @@ const FlexColumn = styled.div`
 const Paragraph = styled.p`
   font-size: 14px;
   color: ${(props) => props.theme.colors.darkGrey};
+`;
+
+const SignatureImage = styled.img`
+  width: 100%;
+  height: 100px;
+  margin-top: -10px;
 `;
 
 const THREE_MEGABYTE_TO_BYTES = 3 * 1024 * 1024;
@@ -405,6 +413,10 @@ const NewStoryPage = () => {
               <Paragraph>
                 - If your story is not published after 3 hours, please contact us via email: froggyblog@blog.com
               </Paragraph>
+              <SignatureImage
+                src={Signature}
+                alt="Signature"
+              />
             </FlexColumn>
           </LastRow>
           {!captchaToken ? (
