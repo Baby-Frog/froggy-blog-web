@@ -18,7 +18,7 @@ export const authenticationSchema = yup.object({
     .string()
     .required("Please confirm your password")
     .oneOf([yup.ref("password")], "Password and confirm password is mismatched"),
-  captcha: yup.string().required("Please verify you are not a robot"),
+  captcha: yup.string(),
 });
 
 export const registerSchema = authenticationSchema.pick(["email", "password", "rePassword", "fullName", "captcha"]);

@@ -20,10 +20,21 @@ const StyledButton = styled.button<{ $marginTop?: string; $width?: string }>`
     background-color: #000;
     color: #fff;
   }
+  &:disabled {
+    background-color: #ccc;
+    color: #fff;
+  }
 `;
 
-const Button = ({ children, className }: TButtonProps) => {
-  return <StyledButton className={className}>{children}</StyledButton>;
+const Button = ({ children, className, ...props }: TButtonProps) => {
+  return (
+    <StyledButton
+      className={className}
+      {...props}
+    >
+      {children}
+    </StyledButton>
+  );
 };
 
 export default Button;
