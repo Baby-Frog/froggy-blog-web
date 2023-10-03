@@ -237,6 +237,7 @@ const NewStoryPage = () => {
   const handleVerifyCaptcha = (value: string | null) => {
     setCaptchaToken(value ?? "");
   };
+
   return (
     <NewStoryPageWrapper>
       <NewStorySidebar

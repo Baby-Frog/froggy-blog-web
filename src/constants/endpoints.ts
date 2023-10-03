@@ -17,5 +17,6 @@ export const IMAGE_ENPOINTS = {
 };
 
 export const STORY_ENDPOINTS = {
+  GET_RECENT_STORIES: "/api/post/search",
   CREATE_NEW_STORY: "/api/post/save",
 };
