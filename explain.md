@@ -1,18 +1,17 @@
-<!--  -->
-
-## Giải thích ý nghĩa từng dependencies
+## Giải thích ý nghĩa từng dependencies cho Nam
 
 axios: Không cần nói (mức độ khó: khó)
-lodash: Cung cấp hàng loạt các functions tiện ích được viết sẵn mà không cần tự mình viết (mức độ khó: trung bình)
-sass: Để React có thể hiểu code SCSS mà không cần convert qua CSS (mức độ khó: dễ)
-styled-components: Không cần giải thích (mức độ khó: trung bình)
-react-toastify: Hiển thị pop-up notification (mức độ khó: cực dễ)
-swiper: Mục đích làm slider (mức độ khó: docs khó hiểu => cũng khó)
-react-hook-form và yup: Bộ đôi để xử lí giá trị form và validate form (mức độ khó: khó)
+lodash: Cung cấp hàng loạt các functions tiện ích được viết sẵn mà không cần tự mình viết (mức độ khó: trung bình/khó do mặc dù docs viết tốt nhưng mà mình phải hiểu nó dùng làm gì và trường hợp nào)
+sass: Để React có thể hiểu code SCSS mà không cần convert qua CSS (mức độ khó: dễ do cú pháp dễ hiểu, khái niệm dễ hiểu)
+styled-components: Không cần giải thích (mức độ khó: trung bình, sẽ hơi khó nếu đào sâu thêm)
+react-toastify: Hiển thị pop-up notification (mức độ khó: dễ do docs viết tốt, đặt tên biến dễ hiểu)
+react-hook-form và yup: Bộ đôi để xử lí giá trị form và validate form (mức độ khó: khó do nhiều khái niệm)
 tailwind: CSS nhanh hơn, tiện hơn (mức độ khó: trung bình)
-i18n: đa ngôn ngữ, dịch tiếng anh - tiếng việt (đương nhiên là tự dịch) (mực độ khó: trung bình)
-sweetalert2: hiện lên các loại modal để accept/deny/cancel (mức độ khó: cực dễ)
-react-helmet-async: cung cấp khả năng SEO cho React App (thay đổi title,description,author,... khi chuyển trang) (mức độ khó: cực dễ)
-react-use: cung cấp thêm rất nhiều hooks tiện ích (useMedia, useVanVanMayMay...) (mức độ khó: dễ)
-react-quill: tích hợp trình gõ văn bản thông minh vào trong website (mức độ khó: trung bình)
+sweetalert2: hiện lên các loại modal để accept/deny/cancel (mức độ khó: trung bình)
+react-helmet-async: cung cấp khả năng SEO cho React App (thay đổi title,description,author,... khi chuyển trang) (mức độ khó: cực dễ do chỉ cần viết 2-3 dòng)
+react-use: cung cấp thêm rất nhiều hooks tiện ích (useMedia, useVanVanMayMay...) (mức độ khó: trung bình)
+tinymce: cung cấp khả năng soạn thảo văn bản (mức độ khó: cực khó do docs viết cho ngôn ngữ Typescript đểu kinh khủng, ngược lại cho Vanilla JS hay cho React + Javascript thì lại khá dễ)
 html-react-parser: như tên gọi của nó, parse từ html thành JSX rồi hiển thị ra UI (mức độ khó: dễ)
+antd: cung cấp hàng loạt các component tiện ích (mức độ khó: trung bình/khó do khả năng custom và cũng như giới hạn khả năng của nó + với docs cho typescript buồn cười )
+react-router-dom: cung cấp khả năng routing cho React App (mức độ khó: trung bình/khó, sẽ hơi khó nếu tìm hiểu sâu)
+react-google-recaptcha: cung cấp khả năng xác thực người dùng (mức độ khó: khó)

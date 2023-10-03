@@ -21,6 +21,7 @@ import MultipleSelectV2 from "src/components/MultipleSelect/MultipleSelectV2";
 import TextEditor from "src/components/TextEditor";
 import { TStorySchema, storySchema } from "src/schemas/story.schemas";
 import ErrorToastIcon from "src/components/Icon/ToastIcon/ErrorToastIcon";
+import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
 
 type ValueType = { key?: string; label: React.ReactNode; value: string | number };
 
@@ -150,7 +151,9 @@ const NewStoryPage = () => {
         {
           onSuccess: () => {
             handleResetForm();
-            toast.success("Yes sir");
+            toast.success("Yes sir", {
+              icon: <SuccessToastIcon></SuccessToastIcon>,
+            });
           },
         },
       );

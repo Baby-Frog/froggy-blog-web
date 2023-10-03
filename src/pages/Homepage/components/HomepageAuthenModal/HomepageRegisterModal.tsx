@@ -16,7 +16,7 @@ import { TErrorApiResponse } from "src/types/response.types";
 import { toast } from "react-toastify";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useState } from "react";
-import { set } from "lodash";
+import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
 
 type THomepageRegisterModalProps = {
   isOpen?: boolean;
@@ -49,7 +49,6 @@ const HomepageRegisterModal = ({
     reValidateMode: "onSubmit",
     resolver: yupResolver(registerSchema),
   });
-  const [isRegisterButtonDisabled, setIsRegisterButtonDisabled] = useState<boolean>(true);
   const registerAccountMutation = useMutation({
     mutationFn: authApi.register,
   });
@@ -58,7 +57,9 @@ const HomepageRegisterModal = ({
     registerAccountMutation.mutate(data, {
       onSuccess: (data) => {
         setIsLoginModal(true);
-        toast.success(data.data.message);
+        toast.success(data.data.message, {
+          icon: <SuccessToastIcon></SuccessToastIcon>,
+        });
       },
       onError: (error) => {
         if (
@@ -73,11 +74,7 @@ const HomepageRegisterModal = ({
       },
     });
   });
-  const handleTriggerCaptcha = (value: string) => {
-    if (value) {
-      setIsRegisterButtonDisabled(false);
-    }
-  };
+
   return (
     <Modal
       handleClose={handleClose}
@@ -161,7 +158,6 @@ const HomepageRegisterModal = ({
           <span>Already have an account?</span>
           <button
             className="modal-toggle-button"
-            disabled={isRegisterButtonDisabled}
             onClick={handleToggleBetweenLoginAndRegister}
           >
             Sign in
