@@ -158,6 +158,7 @@ const HomepageRegisterModal = ({
           <ReCAPTCHA
             sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
             id="captcha"
+            hl="en"
             onChange={handleVerifyCaptcha}
             style={{
               marginTop: "12px",
@@ -173,7 +174,6 @@ const HomepageRegisterModal = ({
           ) : (
             <Button type="submit">Sign up</Button>
           )}
-          {/* <Button type="submit">Sign up</Button> */}
         </form>
 
         <div className="modal-toggle">

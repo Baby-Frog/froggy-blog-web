@@ -5,7 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { styled } from "styled-components";
 import NewStorySidebar from "./components/NewStorySidebar";
-
+import ReCAPTCHA from "react-google-recaptcha";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "react-query";
 import useMedia from "react-use/lib/useMedia";
@@ -26,6 +26,7 @@ import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
 type ValueType = { key?: string; label: React.ReactNode; value: string | number };
 
 const NewStoryPageWrapper = styled.div`
+  height: 155vh;
   position: relative;
   overflow: visible;
   display: flex;
@@ -65,10 +66,26 @@ const GridRow = styled.div`
   }
 `;
 
+const LastRow = styled.div`
+  display: grid;
+  grid-template-columns: 200px 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+  @media screen and (max-width: 1023px) {
+    grid-template-columns: 200px 1fr;
+    gap: 16px;
+  }
+`;
+
 const FlexColumn = styled.div`
   display: flex;
   flex-direction: column;
   gap: 6px;
+`;
+
+const Paragraph = styled.p`
+  font-size: 14px;
+  color: ${(props) => props.theme.colors.darkGrey};
 `;
 
 const THREE_MEGABYTE_TO_BYTES = 3 * 1024 * 1024;
@@ -98,6 +115,7 @@ const NewStoryPage = () => {
   const [topicValues, setTopicValues] = useState<ValueType[]>([]);
   const [textEditorValue, setTextEditorValue] = useState<string>("");
   const [previewImageFile, setPreviewImageFile] = useState<Blob>();
+  const [captchaToken, setCaptchaToken] = useState<string>("");
   const inputFileRef = useRef<HTMLInputElement>(null);
   const thumbnail = watch("thumbnail");
   const previewImageURL = useMemo(() => {
@@ -208,6 +226,9 @@ const NewStoryPage = () => {
       });
     }
   }, [errors.content]);
+  const handleVerifyCaptcha = (value: string | null) => {
+    setCaptchaToken(value ?? "");
+  };
   return (
     <NewStoryPageWrapper>
       <NewStorySidebar
@@ -310,39 +331,98 @@ const NewStoryPage = () => {
           >
             Thumbnail
           </Label>
-          <InputFile
-            handleChangeFile={handleChangeFile}
-            handleClickOnInput={handleClickOnInput}
-            inputFileRef={inputFileRef}
-            className="flex items-center justify-center md:block"
-          >
-            <div className="flex md:w-[200px] md:h-[200px] rounded-lg items-center justify-center overflow-hidden w-[300px] h-[300px]">
-              {!previewImageFile ? (
-                <div className="w-full h-full bg-gray-200 flex items-center justify-center flex-col gap-2">
-                  <ImageIcon
-                    width={36}
-                    height={36}
-                    opacity={0.6}
-                  ></ImageIcon>
-                  <span className="text-[14px] w-[150px] font-medium text-center text-black text-opacity-40">
-                    Upload thumbnail to make it more inviting to readers
-                  </span>
-                </div>
-              ) : (
-                <img
-                  src={previewImageURL}
-                  alt="Failed to load"
-                  className="object-cover w-full h-full rounded-lg"
-                />
-              )}
-            </div>
-          </InputFile>
-          <Button
-            type="submit"
-            className="!w-[300px] !mx-auto !block !bg-normalGreen !outline-none !border-none !text-white hover:!bg-normalGreenHover !p-[13px] !rounded-xl !text-[16px] !font-medium"
-          >
-            Submit your story
-          </Button>
+          <LastRow>
+            <InputFile
+              handleChangeFile={handleChangeFile}
+              handleClickOnInput={handleClickOnInput}
+              inputFileRef={inputFileRef}
+              className="flex items-center justify-center md:block"
+            >
+              <div className="flex md:w-[200px] md:h-[200px] rounded-lg items-center justify-center overflow-hidden w-[300px] h-[300px]">
+                {!previewImageFile ? (
+                  <div className="w-full h-full bg-gray-200 flex items-center justify-center flex-col gap-2">
+                    <ImageIcon
+                      width={36}
+                      height={36}
+                      opacity={0.6}
+                    ></ImageIcon>
+                    <span className="text-[14px] w-[180px] font-medium text-center text-black text-opacity-40">
+                      Upload high-quality thumbnail to make it more inviting to readers
+                    </span>
+                  </div>
+                ) : (
+                  <img
+                    src={previewImageURL}
+                    alt="Failed to load"
+                    className="object-cover w-full h-full rounded-lg"
+                  />
+                )}
+              </div>
+            </InputFile>
+            <FlexColumn
+              style={{
+                marginTop: "-22px",
+              }}
+            >
+              <Label
+                htmlFor="credit"
+                className="font-medium"
+                note="Do you copy this article from anywhere?"
+              >
+                Credits
+              </Label>
+              <Input
+                name="credit"
+                id="credit"
+                placeholder="Enter your credit"
+                register={register}
+              ></Input>
+              <ReCAPTCHA
+                sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+                id="captcha"
+                hl="en"
+                onChange={handleVerifyCaptcha}
+                style={{
+                  marginTop: "12px",
+                }}
+              ></ReCAPTCHA>
+            </FlexColumn>
+            <FlexColumn
+              style={{
+                marginTop: "-22px",
+              }}
+            >
+              <Label
+                htmlFor="note"
+                className="font-medium"
+              >
+                Notes:
+              </Label>
+              <Paragraph>
+                - Thanks for using our services, your story will be reviewed by our team before being published, it will
+                take about 2-3 hours please be patient 🤗
+              </Paragraph>
+              <Paragraph>
+                - If your story is not published after 3 hours, please contact us via email: froggyblog@blog.com
+              </Paragraph>
+            </FlexColumn>
+          </LastRow>
+          {!captchaToken ? (
+            <Button
+              type="button"
+              className="!w-[300px] !mx-auto !block !outline-none !p-[13px] !rounded-xl !text-[16px] !font-medium"
+              disabled
+            >
+              Submit your story
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              className="!w-[300px] !mx-auto !block !bg-normalGreen !outline-none !border-none !text-white hover:!bg-normalGreenHover !p-[13px] !rounded-xl !text-[16px] !font-medium"
+            >
+              Submit your story
+            </Button>
+          )}
         </form>
       </NewStoryMain>
     </NewStoryPageWrapper>

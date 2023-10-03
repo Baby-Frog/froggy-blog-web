@@ -21,8 +21,10 @@ const StyledButton = styled.button<{ $marginTop?: string; $width?: string }>`
     color: #fff;
   }
   &:disabled {
-    background-color: #ccc;
+    background-color: #b1b5c3;
     color: #fff;
+    border: 1px solid transparent;
+    cursor: not-allowed;
   }
 `;
 
