@@ -26,6 +26,18 @@ const MainLayoutWrapper = styled.div`
   }
 `;
 
+const MainLayoutWrapperV2 = styled.div`
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  @media screen and (max-width: 1320px) {
+    padding-inline: 16px;
+  }
+  @media screen and (max-width: 767px) {
+    padding-inline: 12px;
+  }
+`;
+
 type TMainLayoutProps = {
   children: React.ReactNode;
 };
@@ -39,7 +51,7 @@ const MainLayout = ({ children }: TMainLayoutProps) => {
         <>
           <MainNavbar></MainNavbar>
           <HomepageBanner></HomepageBanner>
-          <MainLayoutWrapper>{children}</MainLayoutWrapper>
+          <MainLayoutWrapperV2>{children}</MainLayoutWrapperV2>
           <PageTransition isPresent={isPresent}></PageTransition>
         </>
       ) : (

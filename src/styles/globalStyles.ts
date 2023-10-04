@@ -6,6 +6,7 @@ const GlobalStyle = createGlobalStyle`
   src: url("../fonts/FontsFree-Net-Noe-Display-Medium.ttf");
   }
   body {
+    color: #242424;
     margin: 0;
     padding: 0;
     font-size:14px;
