@@ -6,17 +6,18 @@ import { Editor as TinyMCEEditor } from "tinymce";
 import "./TextEditor.scss";
 
 type TTextEditorProps = {
+  value: string;
   errorMsg?: string;
+  rawText: string;
   onChange?: (newValue: string, editor: TinyMCEEditor) => void;
   onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
-  value: string;
+  setRawText: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const TextEditor = forwardRef<TinyMCEEditor, TTextEditorProps>(function TextEditorInner(
-  { value, errorMsg, onChange, onBlur },
+  { value, errorMsg, rawText, setRawText, onChange, onBlur },
   ref,
 ) {
-  const [, setRawText] = useState<string>("");
   const uploadImageMutation = useMutation({
     mutationFn: imageApi.uploadImage,
   });
@@ -34,6 +35,7 @@ const TextEditor = forwardRef<TinyMCEEditor, TTextEditorProps>(function TextEdit
       <Editor
         onInit={(evt, editor) => {
           setRawText(editor.getContent({ format: "text" }));
+          console.log(rawText);
           return ((ref as React.MutableRefObject<TinyMCEEditor>).current = editor);
         }}
         initialValue=""

@@ -122,6 +122,7 @@ const NewStoryPage = () => {
   const isTablet = useMedia("(max-width: 1024px)");
   const [topicValues, setTopicValues] = useState<ValueType[]>([]);
   const [textEditorValue, setTextEditorValue] = useState<string>("");
+  const [rawText, setRawText] = useState<string>("");
   const [previewImageFile, setPreviewImageFile] = useState<Blob>();
   const [captchaToken, setCaptchaToken] = useState<string>("");
   const inputFileRef = useRef<HTMLInputElement>(null);
@@ -152,12 +153,15 @@ const NewStoryPage = () => {
       topicId: [],
       content: "",
       thumbnail: "",
+      raw: "",
       credit: "",
     });
     setTopicValues([]);
     setTextEditorValue("");
+    setRawText("");
     setPreviewImageFile(undefined);
   };
+
   const handleCreateNewStory = handleSubmit(async (data) => {
     try {
       let yourThumbnail = thumbnail;
@@ -172,10 +176,12 @@ const NewStoryPage = () => {
         {
           ...data,
           content: textEditorValue,
+          raw: rawText,
           thumbnail: yourThumbnail,
         },
         {
-          onSuccess: () => {
+          onSuccess: (data) => {
+            console.log(data);
             handleResetForm();
             toast.success("Yes sir", {
               icon: <SuccessToastIcon></SuccessToastIcon>,
@@ -237,7 +243,6 @@ const NewStoryPage = () => {
   const handleVerifyCaptcha = (value: string | null) => {
     setCaptchaToken(value ?? "");
   };
-
   return (
     <NewStoryPageWrapper>
       <NewStorySidebar
@@ -321,9 +326,12 @@ const NewStoryPage = () => {
               return (
                 <TextEditor
                   errorMsg={errors.content?.message}
+                  rawText={rawText}
+                  setRawText={setRawText}
                   {...field}
                   onChange={(newValue, editor) => {
                     setTextEditorValue(newValue);
+                    setRawText(editor.getContent({ format: "text" }));
                     field.onChange(editor.getContent({ format: "text" }));
                   }}
                   onBlur={() => {
