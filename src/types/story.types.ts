@@ -1,3 +1,4 @@
+import { TAuthor } from "./author.types";
 import { TTopics } from "./topic.types";
 
 export type TStory = {
@@ -8,6 +9,8 @@ export type TStory = {
   title: string;
   credit?: string;
   topicId: string[];
+  timeRead: string;
   publishDate: string;
   listTopic: TTopics[];
+  author: TAuthor;
 };

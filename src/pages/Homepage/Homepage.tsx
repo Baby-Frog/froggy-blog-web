@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useQuery } from "react-query";
 import { storyApi } from "src/apis/story.apis";
 import TrendingIcon from "src/components/Icon/TrendingIcon";
@@ -6,6 +6,7 @@ import { AuthContext } from "src/contexts/auth.contexts";
 import { styled } from "styled-components";
 import HomepageTrendingPost from "./components/HomepageTrendingPost";
 import HomepageRecentPost from "./components/HomepageRecentPost";
+import { TStory } from "src/types/story.types";
 
 const HomepageHeading = styled.h2`
   font-size: 16px;
@@ -42,11 +43,11 @@ const Grid = styled.div<{ $itemsPerRow: number; $gap: number }>`
 
 const Homepage = () => {
   const { isAuthenticated } = useContext(AuthContext);
+  const [recentStories, setRecentStories] = useState<TStory[]>([]);
   const { data: storiesData, isLoading: storiesIsLoading } = useQuery({
     queryKey: ["stories"],
     queryFn: () => storyApi.getRecentStories({ keyword: "", pageSize: 5 }),
   });
-  console.log(storiesData);
   return (
     <>
       {!isAuthenticated ? (
@@ -65,11 +66,7 @@ const Homepage = () => {
           </div>
           <MainContentWrapper>
             <RecentPostsWrapper>
-              <HomepageRecentPost></HomepageRecentPost>
-              <HomepageRecentPost></HomepageRecentPost>
-              <HomepageRecentPost></HomepageRecentPost>
-              <HomepageRecentPost></HomepageRecentPost>
-              <HomepageRecentPost></HomepageRecentPost>
+              {storiesData?.data.data.data.map((story) => <HomepageRecentPost story={story}></HomepageRecentPost>)}
             </RecentPostsWrapper>
             <SideStuffsWrapper>Hello side stuffs</SideStuffsWrapper>
           </MainContentWrapper>
