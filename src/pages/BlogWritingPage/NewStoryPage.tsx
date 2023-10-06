@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 // eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from "react-google-recaptcha";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import useMedia from "react-use/lib/useMedia";
 import { imageApi } from "src/apis/image.apis";
 import { storyApi } from "src/apis/story.apis";
@@ -121,6 +121,7 @@ const NewStoryPage = () => {
     resolver: yupResolver(storySchema),
   });
   const isTablet = useMedia("(max-width: 1024px)");
+  const queryClient = useQueryClient();
   const [topicValues, setTopicValues] = useState<ValueType[]>([]);
   const [textEditorValue, setTextEditorValue] = useState<string>("");
   const [rawText, setRawText] = useState<string>("");
@@ -134,6 +135,9 @@ const NewStoryPage = () => {
 
   const createPostMutation = useMutation({
     mutationFn: storyApi.createStory,
+    onSuccess: () => {
+      queryClient.invalidateQueries("stories");
+    },
   });
 
   const uploadThumbnail = useMutation({
