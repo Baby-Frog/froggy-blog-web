@@ -43,7 +43,7 @@ const Grid = styled.div<{ $itemsPerRow: number; $gap: number }>`
 
 const Homepage = () => {
   const { isAuthenticated } = useContext(AuthContext);
-  const [recentStories, setRecentStories] = useState<TStory[]>([]);
+  // const [recentStories, setRecentStories] = useState<TStory[]>([]);
   const { data: storiesData, isLoading: storiesIsLoading } = useQuery({
     queryKey: ["stories"],
     queryFn: () => storyApi.getRecentStories({ keyword: "", pageSize: 5 }),

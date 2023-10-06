@@ -7,6 +7,7 @@ export const AUTH_ENDPOINTS = {
   REGISTER: "/register",
   LOGOUT: "/api/logout",
   REFRESH_TOKEN: "/refreshToken",
+  GET_ME: "/api/user/me",
   GET_RECAPTCHA: "/api/captcha/generate",
   VERIFY_RECAPTCHA: "/api/captcha/verify",
 } as const;

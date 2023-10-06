@@ -204,7 +204,7 @@ const NewStoryPage = () => {
               thumbnail: yourThumbnail,
             },
             {
-              onSuccess: (data) => {
+              onSuccess: () => {
                 queryClient.invalidateQueries({ queryKey: ["stories"] });
                 reset({
                   title: "",
@@ -279,6 +279,7 @@ const NewStoryPage = () => {
       });
     }
   }, [errors.content]);
+  console.log(textEditorValue);
   const handleVerifyCaptcha = (value: string | null) => {
     setCaptchaToken(value ?? "");
   };

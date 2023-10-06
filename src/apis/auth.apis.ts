@@ -1,5 +1,7 @@
 import { AUTH_ENDPOINTS } from "src/constants/endpoints";
 import { TAuthResponse } from "src/types/auth-response.types";
+import { TSuccessApiResponse } from "src/types/response.types";
+import { TUserProfile } from "src/types/user.types";
 import http from "src/utils/http";
 
 export const authApi = {
@@ -8,13 +10,5 @@ export const authApi = {
   login: (body: { email: string; password: string }) => http.post<TAuthResponse>(AUTH_ENDPOINTS.LOGIN, body),
   logout: (body: { refreshToken: string }) => http.post(AUTH_ENDPOINTS.LOGOUT, body),
   refreshToken: (body: { refreshToken: string }) => http.post<TAuthResponse>(AUTH_ENDPOINTS.REFRESH_TOKEN, body),
-  getRecaptcha: () => http.get<Blob>(AUTH_ENDPOINTS.GET_RECAPTCHA),
-  verifyCaptcha: (params: { captcha: string }) =>
-    http.post(
-      AUTH_ENDPOINTS.VERIFY_RECAPTCHA,
-      {},
-      {
-        params,
-      },
-    ),
+  getMe: () => http.get<TSuccessApiResponse<TUserProfile>>(AUTH_ENDPOINTS.GET_ME),
 };

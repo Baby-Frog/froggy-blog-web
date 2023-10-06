@@ -35,7 +35,7 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
         <img
           src={story.thumbnail}
           alt=""
-          className="w-full h-full rounded-md"
+          className="w-full h-full rounded-md object-cover"
         />
       </div>
     </div>
