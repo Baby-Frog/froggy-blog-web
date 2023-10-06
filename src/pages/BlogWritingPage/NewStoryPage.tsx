@@ -5,6 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { styled } from "styled-components";
 import NewStorySidebar from "./components/NewStorySidebar";
+import Swal from "sweetalert2";
 // eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from "react-google-recaptcha";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -148,18 +149,30 @@ const NewStoryPage = () => {
     });
   }
   const handleResetForm = () => {
-    reset({
-      title: "",
-      topicId: [],
-      content: "",
-      thumbnail: "",
-      raw: "",
-      credit: "",
+    Swal.fire({
+      title: "Do you want to reset what you've filled in?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: `Yes`,
+      denyButtonText: `No`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        reset({
+          title: "",
+          topicId: [],
+          content: "",
+          thumbnail: "",
+          raw: "",
+          credit: "",
+        });
+        setTopicValues([]);
+        setTextEditorValue("");
+        setRawText("");
+        setPreviewImageFile(undefined);
+      } else if (result.isDenied) {
+        Swal.fire("You're safe to go", "", "success");
+      }
     });
-    setTopicValues([]);
-    setTextEditorValue("");
-    setRawText("");
-    setPreviewImageFile(undefined);
   };
 
   const handleCreateNewStory = handleSubmit(async (data) => {

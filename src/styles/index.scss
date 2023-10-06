@@ -42,3 +42,11 @@
 .Toastify__toast-theme--light {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
+
+// Swal2 CSS overrides
+button:where(.swal2-styled).swal2-confirm {
+  background-color: #1dc071;
+  &:hover {
+    background-color: #4acd8d;
+  }
+}
