@@ -118,7 +118,7 @@ const NewStoryPage = () => {
       title: "",
       topicId: [],
     },
-    resolver: yupResolver(storySchema),
+    // resolver: yupResolver(storySchema),
   });
   const isTablet = useMedia("(max-width: 1024px)");
   const queryClient = useQueryClient();
@@ -156,7 +156,6 @@ const NewStoryPage = () => {
     Swal.fire({
       title: "Do you want to reset what you've filled in?",
       showDenyButton: true,
-      showCancelButton: true,
       confirmButtonText: `Yes`,
       denyButtonText: `No`,
     }).then((result) => {

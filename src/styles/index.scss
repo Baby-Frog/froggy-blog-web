@@ -44,9 +44,9 @@
 }
 
 // Swal2 CSS overrides
-button:where(.swal2-styled).swal2-confirm {
-  background-color: #1dc071;
+button.swal2-confirm {
+  background-color: #1dc071 !important;
   &:hover {
-    background-color: #4acd8d;
+    background-color: #4acd8d !important;
   }
 }
