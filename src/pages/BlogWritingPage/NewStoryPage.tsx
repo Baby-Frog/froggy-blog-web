@@ -180,31 +180,41 @@ const NewStoryPage = () => {
 
   const handleCreateNewStory = handleSubmit(async (data) => {
     try {
-      let yourThumbnail = thumbnail;
-      if (previewImageFile) {
-        const formData = new FormData();
-        formData.append("file", previewImageFile);
-        const uploadRes = await uploadThumbnail.mutateAsync(formData);
-        yourThumbnail = uploadRes.data.data.urlImage;
-        setValue("thumbnail", yourThumbnail);
-      }
-      createPostMutation.mutate(
-        {
-          ...data,
-          content: textEditorValue,
-          raw: rawText,
-          thumbnail: yourThumbnail,
-        },
-        {
-          onSuccess: (data) => {
-            console.log(data);
-            handleResetForm();
-            toast.success("Yes sir", {
-              icon: <SuccessToastIcon></SuccessToastIcon>,
-            });
-          },
-        },
-      );
+      Swal.fire({
+        title: "Are you sure you want to submit this story 🤔?",
+        text: "You can still edit this story after submitting!",
+        showDenyButton: true,
+        confirmButtonText: `Yes`,
+        denyButtonText: `No`,
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          let yourThumbnail = thumbnail;
+          if (previewImageFile) {
+            const formData = new FormData();
+            formData.append("file", previewImageFile);
+            const uploadRes = await uploadThumbnail.mutateAsync(formData);
+            yourThumbnail = uploadRes.data.data.urlImage;
+            setValue("thumbnail", yourThumbnail);
+          }
+          createPostMutation.mutate(
+            {
+              ...data,
+              content: textEditorValue,
+              raw: rawText,
+              thumbnail: yourThumbnail,
+            },
+            {
+              onSuccess: (data) => {
+                console.log(data);
+                handleResetForm();
+                toast.success("Yes sir", {
+                  icon: <SuccessToastIcon></SuccessToastIcon>,
+                });
+              },
+            },
+          );
+        }
+      });
     } catch (err) {
       console.log(err);
       return err;
