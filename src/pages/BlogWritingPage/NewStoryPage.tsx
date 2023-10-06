@@ -205,14 +205,27 @@ const NewStoryPage = () => {
             },
             {
               onSuccess: (data) => {
-                console.log(data);
-                handleResetForm();
+                queryClient.invalidateQueries({ queryKey: ["stories"] });
+                reset({
+                  title: "",
+                  topicId: [],
+                  content: "",
+                  thumbnail: "",
+                  raw: "",
+                  credit: "",
+                });
+                setTopicValues([]);
+                setTextEditorValue("");
+                setRawText("");
+                setPreviewImageFile(undefined);
                 toast.success("Yes sir", {
                   icon: <SuccessToastIcon></SuccessToastIcon>,
                 });
               },
             },
           );
+        } else if (result.isDenied) {
+          Swal.fire("You're safe to go", "", "success");
         }
       });
     } catch (err) {

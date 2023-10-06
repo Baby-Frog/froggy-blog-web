@@ -1,4 +1,5 @@
 import { TStory } from "src/types/story.types";
+import { getMonthName } from "src/utils/getMonthName";
 
 type THomepageRecentPostProps = {
   story: TStory;
@@ -23,7 +24,9 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
         <h3 className="text-xl font-bold tracking-tighter">{story.title}</h3>
         <p className="text-lightGrey text-[16px] font-medium line-clamp-3">{story.raw}</p>
         <span className="flex items-center gap-2">
-          <span>Sep 29</span>
+          <span>
+            {getMonthName(new Date(story.publishDate))} {new Date(story.publishDate).getDate()}
+          </span>
           <span>•</span>
           <span>{story.timeRead} read</span>
         </span>
