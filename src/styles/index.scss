@@ -53,3 +53,18 @@ button.swal2-confirm {
     box-shadow: none !important;
   }
 }
+
+// Tabs CSS overrides
+
+.ant-tabs-tab-btn {
+  color: #242424 !important;
+  opacity: 0.7;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  opacity: 1;
+}
+
+.ant-tabs-ink-bar {
+  background-color: #242424 !important;
+}
