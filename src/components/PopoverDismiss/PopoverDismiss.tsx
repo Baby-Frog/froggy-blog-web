@@ -57,7 +57,9 @@ const PopoverDismiss = ({
     open: isOpen,
     onOpenChange: setIsOpen,
   });
-  const dismiss = useDismiss(context);
+  const dismiss = useDismiss(context, {
+    referencePress: true,
+  });
   const { getReferenceProps, getFloatingProps } = useInteractions([dismiss]);
   return (
     <Element

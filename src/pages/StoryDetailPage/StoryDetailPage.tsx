@@ -14,7 +14,9 @@ import Popover from "src/components/Popover";
 import PopoverDismiss from "src/components/PopoverDismiss";
 import TextToSpeech from "src/components/TextToSpeech";
 import { AuthContext } from "src/contexts/auth.contexts";
+import { toast } from "react-toastify";
 import { getCustomDate } from "src/utils/formatDate";
+import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
 
 const StoryDetailPage = () => {
   const { storyId } = useParams();
@@ -25,7 +27,12 @@ const StoryDetailPage = () => {
     queryKey: ["story", storyId],
     queryFn: () => storyApi.getStoryById(storyId as string),
   });
-
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(currentStoryUrl);
+    toast.success("Copied link to clipboard", {
+      icon: <SuccessToastIcon></SuccessToastIcon>,
+    });
+  };
   return (
     <div className="mt-8">
       <h1 className="text-[40px] font-bold">{storyDetailData?.data.data.title}</h1>
@@ -120,14 +127,23 @@ const StoryDetailPage = () => {
             placement="bottom"
             renderPopover={
               <div className="shadow-niceShadowSpread">
-                <div className="p-2 text-normalGrey  hover:bg-black hover:bg-opacity-10 cursor-pointer flex items-center gap-2">
+                <div
+                  className="p-2 text-normalGrey  hover:bg-black hover:bg-opacity-10 cursor-pointer flex items-center gap-2"
+                  onClick={handleCopyLink}
+                  aria-hidden
+                >
                   <CopyIcon color="#6b6b6b"></CopyIcon>
                   <span>Copy link</span>
                 </div>
-                <div className="p-2 text-normalGrey  hover:bg-black hover:bg-opacity-10 cursor-pointer flex items-center gap-2">
+                <a
+                  href={`https://twitter.com/intent/tweet?text=${storyDetailData?.data.data.title}%20by%20${storyDetailData?.data.data.author.fullName}&url=${currentStoryUrl}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="p-2 text-normalGrey  hover:bg-black hover:bg-opacity-10 cursor-pointer flex items-center gap-2"
+                >
                   <TwitterIcon color="#6b6b6b"></TwitterIcon>
-                  <span>Share to Twitter</span>
-                </div>
+                  <span>Share on Twitter</span>
+                </a>
               </div>
             }
           >
