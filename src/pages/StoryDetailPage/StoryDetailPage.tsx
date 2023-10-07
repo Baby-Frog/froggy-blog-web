@@ -17,6 +17,7 @@ import { AuthContext } from "src/contexts/auth.contexts";
 import { toast } from "react-toastify";
 import { getCustomDate } from "src/utils/formatDate";
 import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
+import { path } from "src/constants/path";
 
 const StoryDetailPage = () => {
   const { storyId } = useParams();
@@ -54,7 +55,7 @@ const StoryDetailPage = () => {
             <span className="font-medium">{storyDetailData?.data.data.author.fullName}</span>
             <span className="text-xs text-normalGrey">•</span>
             <Link
-              to="/123"
+              to={`${path.PROFILE}/${storyDetailData?.data.data.author.id}`}
               className="font-medium text-normalGreen hover:text-normalGreenHover"
             >
               Go to profile

@@ -13,26 +13,7 @@ const ProfileRight = styled.div`
   flex: 4;
 `;
 
-const tabItems = [
-  {
-    key: "1",
-    label: "Tab 1",
-    children: "Content of Tab Pane 1",
-  },
-  {
-    key: "2",
-    label: "Tab 2",
-    children: "Content of Tab Pane 2",
-  },
-  {
-    key: "3",
-    label: "Tab 3",
-    children: "Content of Tab Pane 3",
-  },
-];
-
 const UserProfilePage = () => {
-  const [tabContent, setTabContent] = useState();
   const [count, setCount] = useState(1);
   const { data: meData } = useQuery({
     queryKey: ["me"],

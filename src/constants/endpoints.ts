@@ -8,17 +8,16 @@ export const AUTH_ENDPOINTS = {
   LOGOUT: "/api/logout",
   REFRESH_TOKEN: "/refreshToken",
   GET_ME: "/api/user/me",
-  GET_RECAPTCHA: "/api/captcha/generate",
-  VERIFY_RECAPTCHA: "/api/captcha/verify",
+  GET_ANONYMOUS_PROFILE: "/api/user/findById",
 } as const;
 
 export const IMAGE_ENPOINTS = {
   GET_IMAGE_DEFAULT: "/api/image/get/f581b622-adb3-40e1-b09b-1bd80a9697f7.jpg",
   UPLOAD_IMAGE: "/api/image/upload",
-};
+} as const;
 
 export const STORY_ENDPOINTS = {
   GET_RECENT_STORIES: "/api/post/search",
   CREATE_NEW_STORY: "/api/post/save",
   GET_STORY_BY_ID: `api/post/findById`,
-};
+} as const;
