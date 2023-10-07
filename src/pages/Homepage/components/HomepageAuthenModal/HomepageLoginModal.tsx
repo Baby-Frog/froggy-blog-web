@@ -15,6 +15,8 @@ import { loginSchema } from "src/schemas/authentication.schemas";
 import { TErrorApiResponse } from "src/types/response.types";
 import { isUnauthorizedError } from "src/utils/isAxiosError";
 import "./HomepageAuthenModal.scss";
+import { useNavigate } from "react-router-dom";
+import { path } from "src/constants/path";
 
 type THomepageAuthenModalProps = {
   isOpen?: boolean;
@@ -33,6 +35,7 @@ const HomepageLoginModal = ({
   handleToggleBetweenLoginAndRegister,
 }: THomepageAuthenModalProps) => {
   const { setIsAuthenticated, setUserProfile } = useContext(AuthContext);
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -50,6 +53,7 @@ const HomepageLoginModal = ({
     loginAccountMutation.mutate(data, {
       onSuccess: (data) => {
         setIsAuthenticated(true);
+        navigate(path.HOMEPAGE);
         setUserProfile(data.data.data.profile);
       },
       onError: (error) => {

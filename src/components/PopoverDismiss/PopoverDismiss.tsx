@@ -10,7 +10,7 @@ import {
   useInteractions,
 } from "@floating-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 type PopoverDismissProps = {
   children?: React.ReactNode;
@@ -23,16 +23,12 @@ type PopoverDismissProps = {
   sameWidthWithChildren?: boolean;
   enableArrow?: boolean;
   backgroundColor?: string;
-  isOpen?: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const PopoverDismiss = ({
   children,
   renderPopover,
   className,
-  isOpen,
-  setIsOpen,
   offsetPx = 10,
   backgroundColor,
   enableArrow = true,
@@ -41,6 +37,7 @@ const PopoverDismiss = ({
   as: Element = "div",
 }: PopoverDismissProps) => {
   const arrowRef = useRef<HTMLElement>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const { x, y, strategy, refs, context, middlewareData } = useFloating({
     middleware: [
       offset(offsetPx),
@@ -69,7 +66,7 @@ const PopoverDismiss = ({
       {...getReferenceProps()}
     >
       <div
-        onClick={() => setIsOpen((open) => !open)}
+        onClick={() => setIsOpen(!isOpen)}
         aria-hidden
       >
         {children}

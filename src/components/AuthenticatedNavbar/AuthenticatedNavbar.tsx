@@ -123,7 +123,6 @@ const AuthenticatedNavbar = ({ isWritingBlog }: TAuthenticatedNavbarProps) => {
   const { userProfile } = useContext(AuthContext);
   const navigate = useNavigate();
   const isMobile = useMedia("(max-width: 767px)");
-  const [popoverIsOpen, setPopoverIsOpen] = useState<boolean>(false);
   const {
     handleSubmit,
     register,
@@ -190,8 +189,6 @@ const AuthenticatedNavbar = ({ isWritingBlog }: TAuthenticatedNavbarProps) => {
         )}
         <BellIcon className="cursor-pointer"></BellIcon>
         <PopoverDismiss
-          setIsOpen={setPopoverIsOpen}
-          isOpen={popoverIsOpen}
           as="button"
           renderPopover={
             <UserDropdown>
