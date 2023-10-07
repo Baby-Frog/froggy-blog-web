@@ -1,4 +1,5 @@
 export type TUserProfile = {
+  id: string;
   fullName: string;
   email: string;
   avatarPath: string;

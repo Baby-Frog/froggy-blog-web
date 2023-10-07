@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Select, SelectProps } from "antd";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 import { useMemo, useState } from "react";
 import "./MultipleSelect.scss";
 type TMultipleSelectProps<ValueType = any> = {

@@ -1,9 +1,11 @@
 import { TabsProps } from "antd";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useQuery } from "react-query";
 import { authApi } from "src/apis/auth.apis";
+import { storyApi } from "src/apis/story.apis";
 import CustomTabs from "src/components/CustomTabs";
 import EllipsisIcon from "src/components/Icon/EllipsisIcon";
+import { AuthContext } from "src/contexts/auth.contexts";
 import { styled } from "styled-components";
 
 const ProfileLeft = styled.div`
@@ -15,10 +17,16 @@ const ProfileRight = styled.div`
 
 const UserProfilePage = () => {
   const [count, setCount] = useState(1);
+  const { userProfile } = useContext(AuthContext);
   const { data: meData } = useQuery({
     queryKey: ["me"],
     queryFn: () => authApi.getMe(),
   });
+  const { data: storiesData } = useQuery({
+    queryKey: ["stories", { userId: userProfile?.id as string }],
+    queryFn: () => storyApi.getStoriesByUserId(userProfile?.id as string),
+  });
+  console.log(storiesData);
   const items: TabsProps["items"] = [
     {
       key: "1",

@@ -9,7 +9,7 @@ import {
   useHover,
   useInteractions,
 } from "@floating-ui/react";
-import { AnimatePresence, circIn, motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import React, { useRef, useState } from "react";
 
 type PopoverProps = {

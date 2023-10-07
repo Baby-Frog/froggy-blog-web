@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Select, SelectProps } from "antd";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 import { forwardRef, useMemo, useState } from "react";
 import "./MultipleSelect.scss";
 import { styled } from "styled-components";

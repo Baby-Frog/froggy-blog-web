@@ -20,4 +20,5 @@ export const STORY_ENDPOINTS = {
   GET_RECENT_STORIES: "/api/post/search",
   CREATE_NEW_STORY: "/api/post/save",
   GET_STORY_BY_ID: `api/post/findById`,
+  GET_STORIES_BY_USER_ID: `api/post/findPostByUserId`,
 } as const;
