@@ -18,8 +18,8 @@ import EditIcon from "../Icon/EditIcon";
 import ProfileIcon from "../Icon/ProfileIcon";
 import SearchIcon from "../Icon/SearchIcon";
 import SettingIcon from "../Icon/SettingIcon";
-import PopoverDismiss from "../PopoverDismiss";
 import SuccessToastIcon from "../Icon/ToastIcon/SuccessToastIcon";
+import PopoverDismiss from "../PopoverDismiss";
 
 type TAuthenticatedNavbarProps = {
   isWritingBlog?: boolean;

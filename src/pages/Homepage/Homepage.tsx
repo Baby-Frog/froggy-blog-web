@@ -1,12 +1,11 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useQuery } from "react-query";
 import { storyApi } from "src/apis/story.apis";
 import TrendingIcon from "src/components/Icon/TrendingIcon";
 import { AuthContext } from "src/contexts/auth.contexts";
 import { styled } from "styled-components";
-import HomepageTrendingPost from "./components/HomepageTrendingPost";
 import HomepageRecentPost from "./components/HomepageRecentPost";
-import { TStory } from "src/types/story.types";
+import HomepageTrendingPost from "./components/HomepageTrendingPost";
 
 const HomepageHeading = styled.h2`
   font-size: 16px;

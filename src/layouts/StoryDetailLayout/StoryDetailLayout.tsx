@@ -1,10 +1,8 @@
 import { useIsPresent } from "framer-motion";
 import { Suspense, lazy, useContext } from "react";
-import MainNavbar from "src/components/MainNavbar/MainNavbar";
 import PageTransition from "src/components/PageTransition";
 import UnauthenticatedNavbar from "src/components/UnauthenticatedNavbar";
 import { AuthContext } from "src/contexts/auth.contexts";
-import HomepageBanner from "src/pages/Homepage/components/HomepageBanner";
 import LoadingPage from "src/pages/LoadingPage";
 import { styled } from "styled-components";
 const AuthenticatedNavbar = lazy(async () => {
@@ -17,18 +15,6 @@ const AuthenticatedNavbar = lazy(async () => {
 
 const MainLayoutWrapper = styled.div`
   max-width: 720px;
-  width: 100%;
-  margin: 0 auto;
-  @media screen and (max-width: 1320px) {
-    padding-inline: 16px;
-  }
-  @media screen and (max-width: 767px) {
-    padding-inline: 12px;
-  }
-`;
-
-const MainLayoutWrapperV2 = styled.div`
-  max-width: 1280px;
   width: 100%;
   margin: 0 auto;
   @media screen and (max-width: 1320px) {

@@ -1,6 +1,6 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { TStory } from "src/types/story.types";
-import { getCustomDate, getMonthName } from "src/utils/formatDate";
+import { getCustomDate } from "src/utils/formatDate";
 
 type THomepageRecentPostProps = {
   story: TStory;

@@ -4,27 +4,26 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { styled } from "styled-components";
-import NewStorySidebar from "./components/NewStorySidebar";
 import Swal from "sweetalert2";
+import NewStorySidebar from "./components/NewStorySidebar";
 // eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from "react-google-recaptcha";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation, useQueryClient } from "react-query";
 import useMedia from "react-use/lib/useMedia";
 import { imageApi } from "src/apis/image.apis";
 import { storyApi } from "src/apis/story.apis";
 import { topicApi } from "src/apis/topic.apis";
+import Signature from "src/assets/signature.png";
 import Button from "src/components/Button";
 import ImageIcon from "src/components/Icon/ImageIcon";
-import Signature from "src/assets/signature.png";
+import ErrorToastIcon from "src/components/Icon/ToastIcon/ErrorToastIcon";
+import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
 import Input from "src/components/Input";
 import InputFile from "src/components/InputFile";
 import Label from "src/components/Label";
 import MultipleSelectV2 from "src/components/MultipleSelect/MultipleSelectV2";
 import TextEditor from "src/components/TextEditor";
-import { TStorySchema, storySchema } from "src/schemas/story.schemas";
-import ErrorToastIcon from "src/components/Icon/ToastIcon/ErrorToastIcon";
-import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
+import { TStorySchema } from "src/schemas/story.schemas";
 
 type ValueType = { key?: string; label: React.ReactNode; value: string | number };
 

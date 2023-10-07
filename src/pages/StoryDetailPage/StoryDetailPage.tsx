@@ -1,16 +1,14 @@
-import React, { useState } from "react";
+import parse from "html-react-parser";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import { Link, useParams } from "react-router-dom";
 import { storyApi } from "src/apis/story.apis";
-import { TStory } from "src/types/story.types";
-import parse from "html-react-parser";
-import { getCustomDate } from "src/utils/formatDate";
 import ClapIcon from "src/components/Icon/ClapIcon";
 import CommentIcon from "src/components/Icon/CommentIcon";
+import { getCustomDate } from "src/utils/formatDate";
 
 const StoryDetailPage = () => {
   const { storyId } = useParams();
-  const [storyDetail, setStoryDetail] = useState<TStory>();
   const { data: storyDetailData, isLoading: storyDetailIsLoading } = useQuery({
     queryKey: ["story", storyId],
     queryFn: () => storyApi.getStoryById(storyId as string),
