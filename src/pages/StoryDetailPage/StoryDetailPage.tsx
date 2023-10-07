@@ -1,14 +1,26 @@
 import parse from "html-react-parser";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useQuery } from "react-query";
 import { Link, useParams } from "react-router-dom";
 import { storyApi } from "src/apis/story.apis";
 import ClapIcon from "src/components/Icon/ClapIcon";
 import CommentIcon from "src/components/Icon/CommentIcon";
+import CopyIcon from "src/components/Icon/CopyIcon";
+import PlayVoiceIcon from "src/components/Icon/PlayVoiceIcon";
+import SaveToFavoritesIcon from "src/components/Icon/SaveToFavoritesIcon";
+import ShareStoryIcon from "src/components/Icon/ShareStoryIcon";
+import TwitterIcon from "src/components/Icon/SocialIcon/TwitterIcon";
+import Popover from "src/components/Popover";
+import PopoverDismiss from "src/components/PopoverDismiss";
+import TextToSpeech from "src/components/TextToSpeech";
+import { AuthContext } from "src/contexts/auth.contexts";
 import { getCustomDate } from "src/utils/formatDate";
 
 const StoryDetailPage = () => {
   const { storyId } = useParams();
+  const { isAuthenticated } = useContext(AuthContext);
+  const currentStoryUrl = window.location.href;
+  console.log(currentStoryUrl);
   const { data: storyDetailData, isLoading: storyDetailIsLoading } = useQuery({
     queryKey: ["story", storyId],
     queryFn: () => storyApi.getStoryById(storyId as string),
@@ -48,7 +60,7 @@ const StoryDetailPage = () => {
           </div>
         </div>
       </div>
-      <div className="my-4 px-2 py-3 border-t-2 border-b-2 border-[#F2F2F2] flex items-center justify-betweenf">
+      <div className="mt-4 mb-7 px-2 py-3 border-t-2 border-b-2 border-[#F2F2F2] flex items-center justify-between">
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-1 cursor-pointer hover:text-softBlack">
             <ClapIcon
@@ -69,7 +81,64 @@ const StoryDetailPage = () => {
             <span className="translate-y-[1px]">0</span>
           </span>
         </div>
-        <div className="flex items-center gap-4"></div>
+        <div className="flex items-center gap-6">
+          {isAuthenticated && (
+            <Popover
+              backgroundColor="#000000a8"
+              sameWidthWithChildren={false}
+              placement="top"
+              offsetPx={5}
+              renderPopover={<div className="text-white p-1">Save to favorites</div>}
+            >
+              <SaveToFavoritesIcon
+                color="#6b6b6b"
+                width={24}
+                height={24}
+                className="cursor-pointer hover:text-softBlack"
+              ></SaveToFavoritesIcon>
+            </Popover>
+          )}
+          <Popover
+            backgroundColor="#000000a8"
+            sameWidthWithChildren={false}
+            placement="top"
+            offsetPx={5}
+            className="w-6 h-6"
+            renderPopover={<div className="text-white p-1">Hear this story</div>}
+          >
+            <TextToSpeech text={storyDetailData?.data.data.raw as string}>
+              <PlayVoiceIcon
+                color="#6b6b6b"
+                width={24}
+                height={24}
+                className="cursor-pointer hover:text-softBlack"
+              ></PlayVoiceIcon>
+            </TextToSpeech>
+          </Popover>
+          <PopoverDismiss
+            sameWidthWithChildren={false}
+            placement="bottom"
+            renderPopover={
+              <div className="shadow-niceShadowSpread">
+                <div className="p-2 text-normalGrey  hover:bg-black hover:bg-opacity-10 cursor-pointer flex items-center gap-2">
+                  <CopyIcon color="#6b6b6b"></CopyIcon>
+                  <span>Copy link</span>
+                </div>
+                <div className="p-2 text-normalGrey  hover:bg-black hover:bg-opacity-10 cursor-pointer flex items-center gap-2">
+                  <TwitterIcon color="#6b6b6b"></TwitterIcon>
+                  <span>Share to Twitter</span>
+                </div>
+              </div>
+            }
+          >
+            <ShareStoryIcon
+              color="#6b6b6b"
+              width={24}
+              height={24}
+              className="cursor-pointer hover:text-softBlack"
+            ></ShareStoryIcon>
+          </PopoverDismiss>
+        </div>
       </div>
       {storyDetailData?.data.data.content && (
         <div className="entry-content">{parse(storyDetailData.data.data.content as string)}</div>

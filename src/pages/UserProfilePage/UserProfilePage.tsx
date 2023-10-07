@@ -58,10 +58,10 @@ const UserProfilePage = () => {
     },
   ];
   return (
-    <div className="flex gap-12 justify-between">
+    <div className="flex mt-10 gap-12 justify-between">
       <ProfileLeft>
         <div className="flex items-center justify-between">
-          <h3 className="text-3xl font-bold">Baits</h3>
+          <h3 className="text-3xl font-bold">{meData?.data.data.fullName}</h3>
           <EllipsisIcon></EllipsisIcon>
         </div>
         <div className="mt-10">
