@@ -204,7 +204,7 @@ const NewStoryPage = () => {
               thumbnail: yourThumbnail,
             },
             {
-              onSuccess: () => {
+              onSuccess: (data) => {
                 queryClient.invalidateQueries({ queryKey: ["stories"] });
                 reset({
                   title: "",
@@ -218,7 +218,7 @@ const NewStoryPage = () => {
                 setTextEditorValue("");
                 setRawText("");
                 setPreviewImageFile(undefined);
-                toast.success("Yes sir", {
+                toast.success(`Your story:${data.data.data.title} has been submitted, please wait for censhorship`, {
                   icon: <SuccessToastIcon></SuccessToastIcon>,
                 });
               },

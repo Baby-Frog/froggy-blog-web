@@ -21,6 +21,7 @@ const ModalAlign = styled.div<{ $isOpen: boolean }>`
   padding: 20px;
   opacity: ${(props) => (props.$isOpen ? "1" : "0")};
   visibility: ${(props) => (props.$isOpen ? "visible" : "hidden")};
+  z-index: 999;
 `;
 
 const ModalOverlay = styled.div`

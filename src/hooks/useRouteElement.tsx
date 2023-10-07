@@ -1,16 +1,15 @@
-import { useContext } from "react";
-import { Navigate, Outlet, useRoutes } from "react-router-dom";
+import { useRoutes } from "react-router-dom";
 import { path } from "src/constants/path";
-import { AuthContext } from "src/contexts/auth.contexts";
+
 import MainLayout from "src/layouts/MainLayout/MainLayout";
 import NewStoryLayout from "src/layouts/NewStoryLayout";
+import StoryDetailLayout from "src/layouts/StoryDetailLayout";
 import NewStoryPage from "src/pages/BlogWritingPage";
 import Homepage from "src/pages/Homepage";
 import SettingPage from "src/pages/SettingPage";
+import StoryDetailPage from "src/pages/StoryDetailPage";
 import UserProfilePage from "src/pages/UserProfilePage";
 import ProtectedRoute from "src/routes/ProtectedRoute";
-
-function RejectedRoute() {}
 
 export default function useRouteElement() {
   const routeElements = useRoutes([
@@ -22,6 +21,14 @@ export default function useRouteElement() {
             <Homepage></Homepage>
           </MainLayout>
         </>
+      ),
+    },
+    {
+      path: path.STORY_DETAIL,
+      element: (
+        <StoryDetailLayout>
+          <StoryDetailPage></StoryDetailPage>
+        </StoryDetailLayout>
       ),
     },
     {

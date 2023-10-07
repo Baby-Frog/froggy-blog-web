@@ -4,6 +4,7 @@ import Typewriter from "typewriter-effect";
 const HomepageBannerContainer = styled.section`
   border-bottom: 1px solid #000;
   background-color: #ffc017;
+  padding-top: 60px;
 `;
 
 const HomepageBannerMain = styled.div`

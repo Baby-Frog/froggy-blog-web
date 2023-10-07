@@ -1,5 +1,6 @@
+import { Link, useNavigate } from "react-router-dom";
 import { TStory } from "src/types/story.types";
-import { getMonthName } from "src/utils/getMonthName";
+import { getCustomDate, getMonthName } from "src/utils/formatDate";
 
 type THomepageRecentPostProps = {
   story: TStory;
@@ -7,7 +8,10 @@ type THomepageRecentPostProps = {
 
 const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
   return (
-    <div className="flex items-center gap-2">
+    <Link
+      to={`/${story.id}`}
+      className="flex items-center gap-2"
+    >
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-2">
           <img
@@ -24,9 +28,7 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
         <h3 className="text-xl font-bold tracking-tighter">{story.title}</h3>
         <p className="text-lightGrey text-[16px] font-medium line-clamp-3">{story.raw}</p>
         <span className="flex items-center gap-2">
-          <span>
-            {getMonthName(new Date(story.publishDate))} {new Date(story.publishDate).getDate()}
-          </span>
+          <span>{getCustomDate(new Date(story.publishDate))}</span>
           <span>•</span>
           <span>{story.timeRead} read</span>
         </span>
@@ -38,7 +40,7 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
           className="w-full h-full rounded-md object-cover"
         />
       </div>
-    </div>
+    </Link>
   );
 };
 

@@ -1,16 +1,13 @@
-import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import Logo from "src/assets/logo-4.png";
 import { path } from "src/constants/path";
 import HomepageAuthenModal from "src/pages/Homepage/components/HomepageAuthenModal/HomepageAuthenModal";
 import { styled } from "styled-components";
 
-const MainNavbarWrapper = styled.div<{ $isScrolled?: boolean }>`
-  background-color: ${(props) => (props.$isScrolled ? "#fff" : props.theme.colors.primary)};
+const MainNavbarWrapper = styled.div`
+  background-color: #fff;
   border-bottom: 1px solid #000;
-  position: fixed;
-  width: 100%;
-  z-index: 5;
   .main-navbar {
     max-width: 1320px;
     width: 100%;
@@ -77,33 +74,19 @@ const MainNavbar = () => {
   // Khi xuống mobile thì navbar sẽ là một component hoàn toàn khác => đỡ suy nghĩ CSS responsive đau đầu
   // const isMobile = useMedia("(max-width:767px)");
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 500) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
-    <MainNavbarWrapper $isScrolled={isScrolled}>
+    <MainNavbarWrapper>
       <div className="main-navbar">
-        <div className="main-navbar-logo">
+        <Link
+          to={path.HOMEPAGE}
+          className="main-navbar-logo"
+        >
           <img
             src={Logo}
             alt="Logo"
           />
           <span className="main-navbar-title">Froggy Blog</span>
-        </div>
+        </Link>
         <div className="main-navbar-content">
           <ul className="main-navbar-list">
             <li className="main-navbar-item">

@@ -3,10 +3,15 @@
     color: #242424;
     word-break: break-word;
   }
+  figcaption {
+    text-align: center;
+    margin-bottom: 8px;
+  }
   p {
     line-height: 32px;
     font-size: 20px;
     font-weight: 400;
+    margin-bottom: 16px;
   }
   h1 {
     font-size: 24px;
