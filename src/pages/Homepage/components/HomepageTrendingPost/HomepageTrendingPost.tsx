@@ -18,7 +18,7 @@ const HomepageTrendingPost = () => {
       <h3 className="font-bold text-[16px] tracking-tighter">Mastering Customer Segmentation with LLM</h3>
       <div className="flex items-center gap-x-3">
         <span className="font-light text-xs">Sep 29</span>
-        <span>.</span>
+        <span className="text-xs text-normalGrey">•</span>
         <span className="font-light text-xs">6 min read</span>
       </div>
     </div>
