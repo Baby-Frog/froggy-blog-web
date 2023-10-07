@@ -18,12 +18,14 @@ import { toast } from "react-toastify";
 import { getCustomDate } from "src/utils/formatDate";
 import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
 import { path } from "src/constants/path";
+import PauseVoiceIcon from "src/components/Icon/PauseVoiceIcon";
 
 const StoryDetailPage = () => {
   const { storyId } = useParams();
   const { isAuthenticated } = useContext(AuthContext);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const currentStoryUrl = window.location.href;
-  console.log(currentStoryUrl);
+
   const { data: storyDetailData, isLoading: storyDetailIsLoading } = useQuery({
     queryKey: ["story", storyId],
     queryFn: () => storyApi.getStoryById(storyId as string),
@@ -114,13 +116,25 @@ const StoryDetailPage = () => {
             className="w-6 h-6"
             renderPopover={<div className="text-white p-1">Hear this story</div>}
           >
-            <TextToSpeech text={storyDetailData?.data.data.raw as string}>
-              <PlayVoiceIcon
-                color="#6b6b6b"
-                width={24}
-                height={24}
-                className="cursor-pointer hover:text-softBlack"
-              ></PlayVoiceIcon>
+            <TextToSpeech
+              text={storyDetailData?.data.data.raw as string}
+              onClick={() => setIsPlaying(!isPlaying)}
+            >
+              {!isPlaying ? (
+                <PlayVoiceIcon
+                  color="#6b6b6b"
+                  width={24}
+                  height={24}
+                  className="cursor-pointer hover:text-softBlack"
+                ></PlayVoiceIcon>
+              ) : (
+                <PauseVoiceIcon
+                  color="#6b6b6b"
+                  width={24}
+                  height={24}
+                  className="cursor-pointer hover:text-softBlack"
+                ></PauseVoiceIcon>
+              )}
             </TextToSpeech>
           </Popover>
           <PopoverDismiss
