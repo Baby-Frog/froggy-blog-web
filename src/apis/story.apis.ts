@@ -7,6 +7,9 @@ import http from "src/utils/http";
 export const storyApi = {
   getRecentStories: (params: { keyword?: string; pageSize?: number }) =>
     http.get<TQueryResponse<TStory[]>>(STORY_ENDPOINTS.GET_RECENT_STORIES, { params }),
-  createStory: (body: Omit<TStorySchema, "id">) => http.post(STORY_ENDPOINTS.CREATE_NEW_STORY, body),
+  getStoryById: (storyId: string) =>
+    http.get<TSuccessApiResponse<TStory>>(`${STORY_ENDPOINTS.GET_STORY_BY_ID}/${storyId}`),
+  createStory: (body: Omit<TStorySchema, "id">) =>
+    http.post<TSuccessApiResponse<TStory>>(STORY_ENDPOINTS.CREATE_NEW_STORY, body),
   updateStory: (body: TStorySchema) => http.post(STORY_ENDPOINTS.CREATE_NEW_STORY, body),
 };
