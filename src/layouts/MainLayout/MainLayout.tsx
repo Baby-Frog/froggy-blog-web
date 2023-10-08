@@ -1,14 +1,14 @@
 import { useIsPresent } from "framer-motion";
 import { Suspense, lazy, useContext } from "react";
 import MainNavbar from "src/components/MainNavbar/MainNavbar";
-import PageTransition from "src/components/PageTransition";
 import { AuthContext } from "src/contexts/auth.contexts";
 import HomepageBanner from "src/pages/Homepage/components/HomepageBanner";
 import LoadingPage from "src/pages/LoadingPage";
 import { styled } from "styled-components";
-const AuthenticatedNavbar = lazy(async () => {
+import AuthenticatedNavbar from "src/components/AuthenticatedNavbar";
+const PageTransition = lazy(async () => {
   const [moduleExports] = await Promise.all([
-    import("src/components/AuthenticatedNavbar"),
+    import("src/components/PageTransition"),
     new Promise((resolve) => setTimeout(resolve, 2000)),
   ]);
   return moduleExports;

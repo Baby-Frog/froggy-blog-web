@@ -119,23 +119,7 @@ const StoryDetailPage = () => {
             <TextToSpeech
               text={storyDetailData?.data.data.raw as string}
               onClick={() => setIsPlaying(!isPlaying)}
-            >
-              {!isPlaying ? (
-                <PlayVoiceIcon
-                  color="#6b6b6b"
-                  width={24}
-                  height={24}
-                  className="cursor-pointer hover:text-softBlack"
-                ></PlayVoiceIcon>
-              ) : (
-                <PauseVoiceIcon
-                  color="#6b6b6b"
-                  width={24}
-                  height={24}
-                  className="cursor-pointer hover:text-softBlack"
-                ></PauseVoiceIcon>
-              )}
-            </TextToSpeech>
+            ></TextToSpeech>
           </Popover>
           <PopoverDismiss
             sameWidthWithChildren={false}

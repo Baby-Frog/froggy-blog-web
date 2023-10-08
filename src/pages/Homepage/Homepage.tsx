@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useQuery } from "react-query";
 import { storyApi } from "src/apis/story.apis";
 import TrendingIcon from "src/components/Icon/TrendingIcon";
@@ -6,6 +6,8 @@ import { AuthContext } from "src/contexts/auth.contexts";
 import { styled } from "styled-components";
 import HomepageRecentPost from "./components/HomepageRecentPost";
 import HomepageTrendingPost from "./components/HomepageTrendingPost";
+import CustomTabs from "src/components/CustomTabs";
+import { TabsProps } from "antd";
 
 const HomepageHeading = styled.h2`
   font-size: 16px;
@@ -22,7 +24,7 @@ const MainContentWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const RecentPostsWrapper = styled.div`
+const MainStuffsWrapper = styled.div`
   display: flex;
   align-items: flex-start;
   flex-direction: column;
@@ -42,7 +44,51 @@ const Grid = styled.div<{ $itemsPerRow: number; $gap: number }>`
 
 const Homepage = () => {
   const { isAuthenticated } = useContext(AuthContext);
-
+  const { data: recentStories, isLoading: recentStoriesIsLoading } = useQuery({
+    queryKey: ["stories"],
+    queryFn: () => storyApi.getRecentStories({ keyword: "", pageSize: 5 }),
+  });
+  const [count, setCount] = useState<number>(0);
+  const items: TabsProps["items"] = [
+    {
+      key: "1",
+      label: "Recent",
+      children: (
+        <MainStuffsWrapper>
+          {recentStories?.data.data.data.map((story) => (
+            <HomepageRecentPost
+              key={story.id}
+              story={story}
+            ></HomepageRecentPost>
+          ))}
+        </MainStuffsWrapper>
+      ),
+    },
+    {
+      key: "2",
+      label: "Your stories",
+      children: (
+        <div
+          onClick={() => setCount(count + 1)}
+          aria-hidden
+        >
+          {count}
+        </div>
+      ),
+    },
+    {
+      key: "3",
+      label: "Trending",
+      children: (
+        <div
+          onClick={() => setCount(count + 1)}
+          aria-hidden
+        >
+          {count}
+        </div>
+      ),
+    },
+  ];
   // const [recentStories, setRecentStories] = useState<TStory[]>([]);
   const { data: storiesData, isLoading: storiesIsLoading } = useQuery({
     queryKey: ["stories"],
@@ -67,14 +113,24 @@ const Homepage = () => {
             <HomepageTrendingPost></HomepageTrendingPost>
           </div>
           <MainContentWrapper>
-            <RecentPostsWrapper>
-              {storiesData?.data.data.data.map((story) => <HomepageRecentPost story={story}></HomepageRecentPost>)}
-            </RecentPostsWrapper>
+            <MainStuffsWrapper>
+              {storiesData?.data.data.data.map((story) => (
+                <HomepageRecentPost
+                  key={story.id}
+                  story={story}
+                ></HomepageRecentPost>
+              ))}
+            </MainStuffsWrapper>
             <SideStuffsWrapper>Hello side stuffs</SideStuffsWrapper>
           </MainContentWrapper>
         </div>
       ) : (
-        <div className="">Hello man</div>
+        <MainContentWrapper>
+          <MainStuffsWrapper>
+            <CustomTabs items={items}></CustomTabs>
+          </MainStuffsWrapper>
+          <SideStuffsWrapper>Hello guys, i'm the side stuffs</SideStuffsWrapper>
+        </MainContentWrapper>
       )}
     </>
   );

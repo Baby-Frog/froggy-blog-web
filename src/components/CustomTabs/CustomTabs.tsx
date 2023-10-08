@@ -13,7 +13,7 @@ const CustomTabs = ({ items }: TTabsProps) => {
     <Tabs
       defaultActiveKey="1"
       items={items}
-      color="#000"
+      color="#242424"
       onChange={onChange}
     />
   );

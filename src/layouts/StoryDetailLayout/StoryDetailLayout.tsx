@@ -1,6 +1,5 @@
 import { useIsPresent } from "framer-motion";
 import { useContext } from "react";
-import { useLocation } from "react-router-dom";
 import AuthenticatedNavbar from "src/components/AuthenticatedNavbar";
 import PageTransition from "src/components/PageTransition";
 import UnauthenticatedNavbar from "src/components/UnauthenticatedNavbar";

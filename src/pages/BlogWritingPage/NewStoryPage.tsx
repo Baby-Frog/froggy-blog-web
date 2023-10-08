@@ -217,7 +217,7 @@ const NewStoryPage = () => {
                 setTextEditorValue("");
                 setRawText("");
                 setPreviewImageFile(undefined);
-                toast.success(`Your story:${data.data.data.title} has been submitted, please wait for censhorship`, {
+                toast.success(`Your story: "${data.data.data.title}" has been submitted, please wait for censhorship`, {
                   icon: <SuccessToastIcon></SuccessToastIcon>,
                 });
               },
