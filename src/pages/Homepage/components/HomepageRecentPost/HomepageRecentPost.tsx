@@ -49,7 +49,11 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
             <span>•</span>
             <span>{story.timeRead} read</span>
           </span>
-          <div className="flex items-center gap-2">
+          <div
+            className="flex items-center gap-2"
+            onClick={(e) => e.preventDefault()}
+            aria-hidden
+          >
             <Popover
               backgroundColor="#000000a8"
               sameWidthWithChildren={false}
@@ -62,7 +66,6 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
                 width={24}
                 height={24}
                 className="cursor-pointer hover:text-softBlack"
-                onClick={(e) => e.preventDefault()}
                 aria-hidden
               ></SaveToFavoritesIcon>
             </Popover>
@@ -83,6 +86,7 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
                     href={`https://twitter.com/intent/tweet?text=${story?.title}%20by%20${story.author.fullName}&url=${currentStoryUrl}`}
                     target="_blank"
                     rel="noreferrer"
+                    onClick={(e) => e.stopPropagation()}
                     className="p-2 text-normalGrey  hover:bg-black hover:bg-opacity-10 cursor-pointer flex items-center gap-2"
                   >
                     <TwitterIcon color="#6b6b6b"></TwitterIcon>
