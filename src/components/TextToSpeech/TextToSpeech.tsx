@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { path } from "src/constants/path";
+import PlayVoiceIcon from "../Icon/PlayVoiceIcon";
+import PauseVoiceIcon from "../Icon/PauseVoiceIcon";
 
 type TTextToSpeechProps = {
   text: string;
-  children: React.ReactNode;
 } & React.HTMLAttributes<HTMLButtonElement>;
 
-const TextToSpeech: React.FC<TTextToSpeechProps> = ({ text, children, ...props }) => {
+const TextToSpeech: React.FC<TTextToSpeechProps> = ({ text, ...props }) => {
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [paused, setPaused] = useState<boolean>(false);
   const [speaking, setSpeaking] = useState<boolean>(false);
@@ -62,7 +63,21 @@ const TextToSpeech: React.FC<TTextToSpeechProps> = ({ text, children, ...props }
       className={props.className}
       onClick={handleButtonClick}
     >
-      {children}
+      {speaking && !paused ? (
+        <PauseVoiceIcon
+          color="#6b6b6b"
+          width={24}
+          height={24}
+          className="cursor-pointer hover:text-softBlack"
+        ></PauseVoiceIcon>
+      ) : (
+        <PlayVoiceIcon
+          color="#6b6b6b"
+          width={24}
+          height={24}
+          className="cursor-pointer hover:text-softBlack"
+        ></PlayVoiceIcon>
+      )}
     </button>
   );
 };

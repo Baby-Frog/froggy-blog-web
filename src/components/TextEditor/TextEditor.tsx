@@ -72,13 +72,15 @@ const TextEditor = forwardRef<TinyMCEEditor, TTextEditorProps>(function TextEdit
           noneditable_noneditable_class: "mceNonEditable",
           toolbar_mode: "wrap",
           spellchecker_ignore_list: ["Ephox", "Moxiecode"],
-          content_style: ".mymention{ color: gray; }",
+          content_style:
+            "* { color: #242424; word-break: break-word; } mark { background-color: yellowgreen; } figcaption { text-align: center; margin-bottom: 8px; color: #6b6b6b; } p { line-height: 32px; font-size: 20px; font-weight: 400; margin-bottom: 16px; } h1 { font-size: 24px; font-weight: 600; letter-spacing: -0.3px; line-height: 30px; margin-top: 16px; } h2 { line-height: 24px; font-size: 20px; font-weight: 600; margin-top: 12px; } ol { list-style: decimal; font-size: 20px; } ul { list-style: disc; font-size: 20px; } img {max-width: 1120px}",
           contextmenu: "link image table",
           a11y_advanced_options: true,
-          _selector: ".mymention",
+          _selector: "textarea",
           _item_type: "profile",
           resize: false,
           automatic_uploads: true,
+          content_css: "p{color:red;}" + new Date().getTime(),
           images_upload_handler: handleUploadImage,
         }}
       />

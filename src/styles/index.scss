@@ -55,10 +55,17 @@ button.swal2-confirm {
 }
 
 // Tabs CSS overrides
+a:hover {
+  color: unset !important;
+}
+.ant-tabs-tab {
+  padding-top: 0 !important;
+  padding-bottom: 12px !important;
+}
 
 .ant-tabs-tab-btn {
   color: #242424 !important;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
