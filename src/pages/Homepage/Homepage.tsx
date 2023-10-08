@@ -67,26 +67,17 @@ const Homepage = () => {
     {
       key: "2",
       label: "Your stories",
-      children: (
-        <div
-          onClick={() => setCount(count + 1)}
-          aria-hidden
-        >
-          {count}
-        </div>
-      ),
+      children: <div>3</div>,
     },
     {
       key: "3",
       label: "Trending",
-      children: (
-        <div
-          onClick={() => setCount(count + 1)}
-          aria-hidden
-        >
-          {count}
-        </div>
-      ),
+      children: <div>1</div>,
+    },
+    {
+      key: "4",
+      label: "Saved",
+      children: <div>2</div>,
     },
   ];
   // const [recentStories, setRecentStories] = useState<TStory[]>([]);
