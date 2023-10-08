@@ -30,7 +30,7 @@ const AuthenticatedNavbarContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 24px;
-  height: 80px;
+  height: 60px;
 `;
 
 const AuthenticatedNavbarLeft = styled.div`
@@ -70,6 +70,9 @@ const AuthenticatedNavbarLeft = styled.div`
       width: 100%;
       background-color: #f0f0f0;
       border-radius: 16px;
+      &::placeholder {
+        color: ${props => props.theme.colors.normalGrey};
+      }
     }
   }
 `;

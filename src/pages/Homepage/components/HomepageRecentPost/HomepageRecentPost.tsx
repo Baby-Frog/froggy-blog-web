@@ -105,7 +105,7 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
           </div>
         </div>
       </div>
-      <div className="max-w-[200px] w-full h-full rounded-md overflow-hidden flex-shrink-0">
+      <div className="max-w-[200px] w-full h-[200px] rounded-md overflow-hidden flex-shrink-0">
         <img
           src={story.thumbnail}
           alt=""
