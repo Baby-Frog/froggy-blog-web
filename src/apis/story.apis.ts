@@ -10,7 +10,7 @@ export const storyApi = {
   getStoryById: (storyId: string) =>
     http.get<TSuccessApiResponse<TStory>>(`${STORY_ENDPOINTS.GET_STORY_BY_ID}/${storyId}`),
   getStoriesByUserId: (userId: string) =>
-    http.get<TSuccessApiResponse<TStory[]>>(`${STORY_ENDPOINTS.GET_STORIES_BY_USER_ID}/${userId}`),
+    http.get<TQueryResponse<TStory[]>>(`${STORY_ENDPOINTS.GET_STORIES_BY_USER_ID}/${userId}`),
   createStory: (body: Omit<TStorySchema, "id">) =>
     http.post<TSuccessApiResponse<TStory>>(STORY_ENDPOINTS.CREATE_NEW_STORY, body),
   updateStory: (body: TStorySchema) => http.post(STORY_ENDPOINTS.CREATE_NEW_STORY, body),
