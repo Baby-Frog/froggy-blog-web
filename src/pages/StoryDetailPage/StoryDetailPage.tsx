@@ -16,6 +16,7 @@ import PopoverDismiss from "src/components/PopoverDismiss";
 import TextToSpeech from "src/components/TextToSpeech";
 import { path } from "src/constants/path";
 import { AuthContext } from "src/contexts/auth.contexts";
+import useShareLink from "src/hooks/useShareLink";
 import { getCustomDate } from "src/utils/formatDate";
 import { getIdFromSlug } from "src/utils/slugify";
 
@@ -29,6 +30,11 @@ const StoryDetailPage = () => {
     queryKey: ["story", storyId],
     queryFn: () => storyApi.getStoryById(idFromSlug as string),
   });
+  const { handleCopyCurrentLink, shareOnTwitter } = useShareLink(
+    storyDetailData?.data.data.title,
+    storyDetailData?.data.data.author.fullName,
+    currentStoryUrl,
+  );
   const handleCopyLink = () => {
     navigator.clipboard.writeText(currentStoryUrl);
     toast.success("Copied link to clipboard", {
@@ -127,14 +133,18 @@ const StoryDetailPage = () => {
               <div className="shadow-niceShadowSpread">
                 <div
                   className="p-2 text-normalGrey  hover:bg-black hover:bg-opacity-10 cursor-pointer flex items-center gap-2"
-                  onClick={handleCopyLink}
+                  onClick={() => handleCopyCurrentLink(currentStoryUrl)}
                   aria-hidden
                 >
                   <CopyIcon color="#6b6b6b"></CopyIcon>
                   <span>Copy link</span>
                 </div>
                 <a
-                  href={`https://twitter.com/intent/tweet?text=${storyDetailData?.data.data.title}%20by%20${storyDetailData?.data.data.author.fullName}&url=${currentStoryUrl}`}
+                  href={shareOnTwitter({
+                    title: storyDetailData?.data.data.title as string,
+                    author: storyDetailData?.data.data.author.fullName as string,
+                    url: currentStoryUrl,
+                  })}
                   target="_blank"
                   rel="noreferrer"
                   className="p-2 text-normalGrey  hover:bg-black hover:bg-opacity-10 cursor-pointer flex items-center gap-2"

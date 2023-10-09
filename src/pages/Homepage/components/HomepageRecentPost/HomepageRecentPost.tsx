@@ -11,19 +11,15 @@ import { getCustomDate } from "src/utils/formatDate";
 import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
 import DefaultErrorImage from "src/assets/no-img-avaliable.png";
 import { generateSlug } from "src/utils/slugify";
+import useShareLink from "src/hooks/useShareLink";
 type THomepageRecentPostProps = {
   story: TStory;
 };
 
 const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
-  const currentStoryUrl = `${window.location.href}${story.id}`;
+  const currentStoryUrl = `${window.location.origin}/${generateSlug({ name: story.title, id: story.id })}`;
+  const { handleCopyCurrentLink, shareOnTwitter } = useShareLink(story.title, story.author.fullName, currentStoryUrl);
 
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(currentStoryUrl);
-    toast.success("Copied link to clipboard", {
-      icon: <SuccessToastIcon></SuccessToastIcon>,
-    });
-  };
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     if (e.currentTarget.src !== DefaultErrorImage) {
       e.currentTarget.src = DefaultErrorImage;
@@ -82,14 +78,14 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
                 <div className="shadow-niceShadowSpread">
                   <div
                     className="p-2 text-normalGrey  hover:bg-black hover:bg-opacity-10 cursor-pointer flex items-center gap-2"
-                    onClick={handleCopyLink}
+                    onClick={() => handleCopyCurrentLink(currentStoryUrl)}
                     aria-hidden
                   >
                     <CopyIcon color="#6b6b6b"></CopyIcon>
                     <span>Copy link</span>
                   </div>
                   <a
-                    href={`https://twitter.com/intent/tweet?text=${story?.title}%20by%20${story.author.fullName}&url=${currentStoryUrl}`}
+                    href={shareOnTwitter({ title: story.title, author: story.author.fullName, url: currentStoryUrl })}
                     target="_blank"
                     rel="noreferrer"
                     onClick={(e) => e.stopPropagation()}
