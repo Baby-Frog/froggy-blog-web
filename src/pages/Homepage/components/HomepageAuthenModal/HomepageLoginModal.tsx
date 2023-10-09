@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { isAxiosError } from "axios";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { authApi } from "src/apis/auth.apis";
 import Button from "src/components/Button";
 import FacebookIcon from "src/components/Icon/FacebookIcon";

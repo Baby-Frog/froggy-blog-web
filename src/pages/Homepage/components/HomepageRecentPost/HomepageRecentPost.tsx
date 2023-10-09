@@ -9,7 +9,7 @@ import PopoverDismiss from "src/components/PopoverDismiss";
 import { TStory } from "src/types/story.types";
 import { getCustomDate } from "src/utils/formatDate";
 import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
-
+import DefaultErrorImage from "src/assets/no-img-avaliable.png";
 type THomepageRecentPostProps = {
   story: TStory;
 };
@@ -22,6 +22,11 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
     toast.success("Copied link to clipboard", {
       icon: <SuccessToastIcon></SuccessToastIcon>,
     });
+  };
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    if (e.currentTarget.src !== DefaultErrorImage) {
+      e.currentTarget.src = DefaultErrorImage;
+    }
   };
   return (
     <Link
@@ -109,6 +114,7 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
         <img
           src={story.thumbnail}
           alt=""
+          onError={handleImageError}
           className="w-full h-full rounded-md object-cover"
         />
       </div>

@@ -2,23 +2,21 @@ import parse from "html-react-parser";
 import { useContext, useState } from "react";
 import { useQuery } from "react-query";
 import { Link, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { storyApi } from "src/apis/story.apis";
 import ClapIcon from "src/components/Icon/ClapIcon";
 import CommentIcon from "src/components/Icon/CommentIcon";
 import CopyIcon from "src/components/Icon/CopyIcon";
-import PlayVoiceIcon from "src/components/Icon/PlayVoiceIcon";
 import SaveToFavoritesIcon from "src/components/Icon/SaveToFavoritesIcon";
 import ShareStoryIcon from "src/components/Icon/ShareStoryIcon";
 import TwitterIcon from "src/components/Icon/SocialIcon/TwitterIcon";
+import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
 import Popover from "src/components/Popover";
 import PopoverDismiss from "src/components/PopoverDismiss";
 import TextToSpeech from "src/components/TextToSpeech";
-import { AuthContext } from "src/contexts/auth.contexts";
-import { toast } from "react-toastify";
-import { getCustomDate } from "src/utils/formatDate";
-import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
 import { path } from "src/constants/path";
-import PauseVoiceIcon from "src/components/Icon/PauseVoiceIcon";
+import { AuthContext } from "src/contexts/auth.contexts";
+import { getCustomDate } from "src/utils/formatDate";
 
 const StoryDetailPage = () => {
   const { storyId } = useParams();

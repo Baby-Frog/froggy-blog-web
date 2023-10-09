@@ -7,6 +7,7 @@ import CustomTabs from "src/components/CustomTabs";
 import EllipsisIcon from "src/components/Icon/EllipsisIcon";
 import { AuthContext } from "src/contexts/auth.contexts";
 import { styled } from "styled-components";
+import HomepageRecentPost from "../Homepage/components/HomepageRecentPost";
 
 const ProfileLeft = styled.div`
   flex: 6;
@@ -21,21 +22,28 @@ const UserProfilePage = () => {
   const { data: meData } = useQuery({
     queryKey: ["me"],
     queryFn: () => authApi.getMe(),
+    refetchOnMount: true,
   });
-  const { data: storiesData } = useQuery({
+  const { data: userStoriesData } = useQuery({
     queryKey: ["stories", { userId: userProfile?.id as string }],
     queryFn: () => storyApi.getStoriesByUserId(userProfile?.id as string),
+    refetchOnMount: true,
   });
-  console.log(storiesData);
   const items: TabsProps["items"] = [
     {
       key: "1",
       label: "Your stories",
-      children: <>{meData?.data.data.email}</>,
+      children: (
+        <>
+          {userStoriesData?.data.data.data &&
+            userStoriesData.data.data.data.map((story) => <HomepageRecentPost story={story}></HomepageRecentPost>)}
+          {!userStoriesData?.data.data.data && userStoriesData?.data.data.data.length === 0 && <div>No stories</div>}
+        </>
+      ),
     },
     {
       key: "2",
-      label: "About",
+      label: "Saved",
       children: (
         <div
           onClick={() => setCount(count + 1)}

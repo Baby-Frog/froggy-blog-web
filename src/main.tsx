@@ -14,11 +14,7 @@ import GlobalStyle from "./styles/globalStyles.ts";
 import "./styles/index.scss";
 
 const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnMount: false,
-    },
-  },
+  defaultOptions: {},
 });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

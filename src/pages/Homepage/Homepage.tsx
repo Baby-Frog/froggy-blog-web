@@ -47,8 +47,8 @@ const Homepage = () => {
   const { data: recentStories, isLoading: recentStoriesIsLoading } = useQuery({
     queryKey: ["stories"],
     queryFn: () => storyApi.getRecentStories({ keyword: "", pageSize: 5 }),
+    refetchOnMount: true,
   });
-  const [count, setCount] = useState<number>(0);
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -86,6 +86,7 @@ const Homepage = () => {
     queryFn: () => storyApi.getRecentStories({ keyword: "", pageSize: 5 }),
     staleTime: 1000 * 60 * 5,
     keepPreviousData: true,
+    refetchOnMount: true,
   });
   return (
     <>
