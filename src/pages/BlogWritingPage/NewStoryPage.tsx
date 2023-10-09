@@ -144,7 +144,7 @@ const NewStoryPage = () => {
   });
 
   async function fetchTopicList(keyword: string) {
-    return topicApi.getTopicsByKeyword(keyword).then((res) => {
+    return topicApi.getTopicsByKeyword({ keyword: keyword, pageSize: 8 }).then((res) => {
       return res.data.data.data.map((topic) => ({
         value: topic.id,
         label: topic.topicName,

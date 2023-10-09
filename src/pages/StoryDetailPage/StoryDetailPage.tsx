@@ -69,7 +69,7 @@ const StoryDetailPage = () => {
             </Link>
           </div>
           <div className="flex items-center gap-2 text-normalGrey">
-            <span>{storyDetailData?.data.data.timeRead}</span>
+            <span>{storyDetailData?.data.data.timeRead} read</span>
             <span className="text-xs text-normalGrey">•</span>
             <span>{getCustomDate(new Date(storyDetailData?.data.data.publishDate as string))}</span>
           </div>

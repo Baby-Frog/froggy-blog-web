@@ -8,6 +8,9 @@ import HomepageRecentPost from "./components/HomepageRecentPost";
 import HomepageTrendingPost from "./components/HomepageTrendingPost";
 import CustomTabs from "src/components/CustomTabs";
 import { TabsProps } from "antd";
+import { topicApi } from "src/apis/topic.apis";
+import { Link } from "react-router-dom";
+import { path } from "src/constants/path";
 
 const HomepageHeading = styled.h2`
   font-size: 16px;
@@ -37,12 +40,35 @@ const MainStuffsWrapper = styled.div`
 const SideStuffsWrapper = styled.div`
   flex-shrink: 1;
   flex: 4;
+  transform: translateX(70px);
+  position: sticky;
+  top: 85px;
+  right: 0;
 `;
 
-const Grid = styled.div<{ $itemsPerRow: number; $gap: number }>`
-  display: grid;
-  grid-template-columns: repeat(${($props) => $props.$itemsPerRow}, 1fr);
-  gap: ${($props) => $props.$gap || "0px"};
+const TopicsWrapper = styled.div`
+  display: flex;
+  gap: 8px;
+  margin-block: 16px;
+  flex-wrap: wrap;
+  max-width: 330px;
+  width: 100%;
+  padding-bottom: 24px;
+  border-bottom: 2px solid #f2f2f2;
+`;
+
+const SideStuffsFooter = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 330px;
+  width: 100%;
+  gap: 16px;
+  align-items: center;
+  span {
+    font-size: 14px;
+    font-weight: 500;
+    color: ${(props) => props.theme.colors.normalGrey};
+  }
 `;
 
 const Homepage = () => {
@@ -51,6 +77,10 @@ const Homepage = () => {
     queryKey: ["stories"],
     queryFn: () => storyApi.getRecentStories({ keyword: "", pageSize: 5 }),
     refetchOnMount: true,
+  });
+  const { data: topics, isLoading: topicsIsLoading } = useQuery({
+    queryKey: ["topics"],
+    queryFn: () => topicApi.getTopicsByKeyword({ keyword: "", pageNumber: 1, pageSize: 9 }),
   });
   const items: TabsProps["items"] = [
     {
@@ -118,6 +148,27 @@ const Homepage = () => {
             </MainStuffsWrapper>
             <SideStuffsWrapper>
               <p className="font-semibold text-lg tracking-tight">Discover more of what matters to you</p>
+              <TopicsWrapper>
+                {topics?.data.data.data.map((topic) => (
+                  <Link
+                    key={topic.id}
+                    className="px-2 py-3 font-medium bg-[#f2f2f2] text-sm rounded-2xl"
+                    to={path.HOMEPAGE}
+                  >
+                    {topic.topicName}
+                  </Link>
+                ))}
+              </TopicsWrapper>
+              <SideStuffsFooter>
+                <span>Help</span>
+                <span>Status</span>
+                <span>Writers</span>
+                <span>Blog</span>
+                <span>Privacy</span>
+                <span>Terms</span>
+                <span>About</span>
+                <span>Teams</span>
+              </SideStuffsFooter>
             </SideStuffsWrapper>
           </MainContentWrapper>
         </div>
