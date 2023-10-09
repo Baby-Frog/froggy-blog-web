@@ -25,7 +25,6 @@ const StoryDetailPage = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const currentStoryUrl = window.location.href;
   const idFromSlug = getIdFromSlug(storyId as string);
-  console.log(idFromSlug);
   const { data: storyDetailData, isLoading: storyDetailIsLoading } = useQuery({
     queryKey: ["story", storyId],
     queryFn: () => storyApi.getStoryById(idFromSlug as string),

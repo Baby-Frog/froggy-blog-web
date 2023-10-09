@@ -10,7 +10,6 @@ import { TStory } from "src/types/story.types";
 import { getCustomDate } from "src/utils/formatDate";
 import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
 import DefaultErrorImage from "src/assets/no-img-avaliable.png";
-import slugify from "slugify";
 import { generateSlug } from "src/utils/slugify";
 type THomepageRecentPostProps = {
   story: TStory;
@@ -32,7 +31,7 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
   };
   return (
     <Link
-      to={`${generateSlug({ name: story.title, id: story.id })}`}
+      to={`/${generateSlug({ name: story.title, id: story.id })}`}
       className="flex items-center gap-2"
     >
       <div className="flex flex-col gap-2">
