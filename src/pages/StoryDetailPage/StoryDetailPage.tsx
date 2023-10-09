@@ -17,16 +17,18 @@ import TextToSpeech from "src/components/TextToSpeech";
 import { path } from "src/constants/path";
 import { AuthContext } from "src/contexts/auth.contexts";
 import { getCustomDate } from "src/utils/formatDate";
+import { getIdFromSlug } from "src/utils/slugify";
 
 const StoryDetailPage = () => {
   const { storyId } = useParams();
   const { isAuthenticated } = useContext(AuthContext);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const currentStoryUrl = window.location.href;
-
+  const idFromSlug = getIdFromSlug(storyId as string);
+  console.log(idFromSlug);
   const { data: storyDetailData, isLoading: storyDetailIsLoading } = useQuery({
     queryKey: ["story", storyId],
-    queryFn: () => storyApi.getStoryById(storyId as string),
+    queryFn: () => storyApi.getStoryById(idFromSlug as string),
   });
   const handleCopyLink = () => {
     navigator.clipboard.writeText(currentStoryUrl);

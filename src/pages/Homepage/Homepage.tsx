@@ -20,7 +20,8 @@ const HomepageHeading = styled.h2`
 const MainContentWrapper = styled.div`
   margin-top: 48px;
   display: flex;
-  gap: 22px;
+  align-items: flex-start;
+  gap: 32px;
   justify-content: space-between;
 `;
 
@@ -30,9 +31,11 @@ const MainStuffsWrapper = styled.div`
   flex-direction: column;
   gap: 32px;
   flex: 6;
+  flex-shrink: 0;
 `;
 
 const SideStuffsWrapper = styled.div`
+  flex-shrink: 1;
   flex: 4;
 `;
 
@@ -113,7 +116,9 @@ const Homepage = () => {
                 ></HomepageRecentPost>
               ))}
             </MainStuffsWrapper>
-            <SideStuffsWrapper>Hello side stuffs</SideStuffsWrapper>
+            <SideStuffsWrapper>
+              <p className="font-semibold text-lg tracking-tight">Discover more of what matters to you</p>
+            </SideStuffsWrapper>
           </MainContentWrapper>
         </div>
       ) : (
