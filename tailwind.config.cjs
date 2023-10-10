@@ -12,8 +12,8 @@ export default {
         lightGrey: "#6B6B6B",
         darkGrey: "#242424",
         failure: "#EB5757",
-        normalGreen: "#1DC071",
-        normalGreenHover: "#4ACD8D",
+        normalGreen: "#1a8917",
+        normalGreenHover: "#156d12",
       },
       boxShadow: {
         niceShadowSpread: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",

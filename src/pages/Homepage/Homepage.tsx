@@ -177,7 +177,30 @@ const Homepage = () => {
           <MainStuffsWrapper>
             <CustomTabs items={items}></CustomTabs>
           </MainStuffsWrapper>
-          <SideStuffsWrapper>Hello guys, i'm the side stuffs</SideStuffsWrapper>
+          <SideStuffsWrapper>
+            <p className="font-semibold text-lg tracking-tight">Discover more of what matters to you</p>
+            <TopicsWrapper>
+              {topics?.data.data.data.map((topic) => (
+                <Link
+                  key={topic.id}
+                  className="px-2 py-3 font-medium bg-[#f2f2f2] text-sm rounded-2xl"
+                  to={path.HOMEPAGE}
+                >
+                  {topic.topicName}
+                </Link>
+              ))}
+            </TopicsWrapper>
+            <SideStuffsFooter>
+              <span>Help</span>
+              <span>Status</span>
+              <span>Writers</span>
+              <span>Blog</span>
+              <span>Privacy</span>
+              <span>Terms</span>
+              <span>About</span>
+              <span>Teams</span>
+            </SideStuffsFooter>
+          </SideStuffsWrapper>
         </MainContentWrapper>
       )}
     </>

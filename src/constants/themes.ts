@@ -8,7 +8,7 @@ export const theme = {
     darkGrey: "#242424",
     charcoal: "#36454F",
     failure: "#EB5757",
-    normalGreen: "#1DC071",
-    normalGreenHover: "#4ACD8D",
+    normalGreen: "#1a8917",
+    normalGreenHover: "#156d12",
   },
 } as const;
