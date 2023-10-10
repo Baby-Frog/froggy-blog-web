@@ -152,7 +152,7 @@ const Homepage = () => {
                 {topics?.data.data.data.map((topic) => (
                   <Link
                     key={topic.id}
-                    className="px-2 py-3 font-medium bg-[#f2f2f2] text-sm rounded-2xl"
+                    className="px-2 py-3 bg-[#f2f2f2] text-sm rounded-2xl"
                     to={path.HOMEPAGE}
                   >
                     {topic.topicName}
@@ -183,7 +183,7 @@ const Homepage = () => {
               {topics?.data.data.data.map((topic) => (
                 <Link
                   key={topic.id}
-                  className="px-2 py-3 font-medium bg-[#f2f2f2] text-sm rounded-2xl"
+                  className="px-2 py-3 bg-[#f2f2f2] text-sm rounded-2xl"
                   to={path.HOMEPAGE}
                 >
                   {topic.topicName}
