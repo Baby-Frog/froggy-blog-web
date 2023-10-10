@@ -228,7 +228,6 @@ const NewStoryPage = () => {
         }
       });
     } catch (err) {
-      console.log(err);
       return err;
     }
   });
@@ -278,13 +277,13 @@ const NewStoryPage = () => {
       });
     }
   }, [errors.content]);
-  console.log(textEditorValue);
   const handleVerifyCaptcha = (value: string | null) => {
     setCaptchaToken(value ?? "");
   };
   return (
     <NewStoryPageWrapper>
       <NewStorySidebar
+        captchaToken={captchaToken}
         handleResetForm={handleResetForm}
         handleCreateNewStory={handleCreateNewStory}
       ></NewStorySidebar>

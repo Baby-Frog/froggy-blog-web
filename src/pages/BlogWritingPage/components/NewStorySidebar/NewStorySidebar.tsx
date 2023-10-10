@@ -7,6 +7,7 @@ import TickIcon from "src/components/Icon/TickIcon";
 import { styled } from "styled-components/";
 
 type TNewStorySidebarProps = {
+  captchaToken?: string;
   handleResetForm: () => void;
   handleCreateNewStory: (e?: React.BaseSyntheticEvent<object, unknown, unknown> | undefined) => Promise<void>;
 };
@@ -62,7 +63,7 @@ const NewStorySidebarItem = styled.button<{ $isActive?: boolean; $backgroundColo
   }
 `;
 
-const NewStorySidebar = ({ handleResetForm, handleCreateNewStory }: TNewStorySidebarProps) => {
+const NewStorySidebar = ({ handleResetForm, handleCreateNewStory, captchaToken }: TNewStorySidebarProps) => {
   const [scrollY, setScrollY] = useState(0);
   useEffect(() => {
     const handleScroll = () => {
@@ -97,18 +98,35 @@ const NewStorySidebar = ({ handleResetForm, handleCreateNewStory }: TNewStorySid
           height={24}
         ></PointUpIcon>
       </NewStorySidebarItem>
-      <NewStorySidebarItem
-        $color="#fff"
-        $backgroundColor="#1DC071"
-        onClick={handleCreateNewStory}
-        title="Submit your story"
-      >
-        <TickIcon
-          color="currentColor"
-          width={24}
-          height={24}
-        ></TickIcon>
-      </NewStorySidebarItem>
+      {captchaToken ? (
+        <NewStorySidebarItem
+          $color="#fff"
+          $backgroundColor="#1DC071"
+          onClick={handleCreateNewStory}
+          title="Submit your story"
+        >
+          <TickIcon
+            color="currentColor"
+            width={24}
+            height={24}
+          ></TickIcon>
+        </NewStorySidebarItem>
+      ) : (
+        <NewStorySidebarItem
+          $color="#fff"
+          $backgroundColor="#B1B5C3"
+          style={{
+            cursor: "not-allowed",
+          }}
+          title="Submit your story"
+        >
+          <TickIcon
+            color="currentColor"
+            width={24}
+            height={24}
+          ></TickIcon>
+        </NewStorySidebarItem>
+      )}
       <NewStorySidebarItem
         $color="#fff"
         $backgroundColor="#EB5757"

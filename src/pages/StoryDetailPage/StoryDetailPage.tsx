@@ -1,6 +1,6 @@
 import parse from "html-react-parser";
 import { useContext, useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { storyApi } from "src/apis/story.apis";
@@ -26,6 +26,9 @@ const StoryDetailPage = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const currentStoryUrl = window.location.href;
   const idFromSlug = getIdFromSlug(storyId as string);
+  const saveToFavoritesMutation = useMutation({
+    mutationFn: storyApi.saveStoryToFavorites,
+  });
   const { data: storyDetailData, isLoading: storyDetailIsLoading } = useQuery({
     queryKey: ["story", storyId],
     queryFn: () => storyApi.getStoryById(idFromSlug as string),
@@ -39,6 +42,15 @@ const StoryDetailPage = () => {
     navigator.clipboard.writeText(currentStoryUrl);
     toast.success("Copied link to clipboard", {
       icon: <SuccessToastIcon></SuccessToastIcon>,
+    });
+  };
+  const handleSaveToFavorites = async () => {
+    saveToFavoritesMutation.mutate(idFromSlug as string, {
+      onSuccess: (data) => {
+        toast.success("Saved to favorites", {
+          icon: <SuccessToastIcon></SuccessToastIcon>,
+        });
+      },
     });
   };
   return (
@@ -110,6 +122,7 @@ const StoryDetailPage = () => {
                 width={24}
                 height={24}
                 className="cursor-pointer hover:text-softBlack"
+                onClick={handleSaveToFavorites}
               ></SaveToFavoritesIcon>
             </Popover>
           )}

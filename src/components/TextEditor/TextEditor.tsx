@@ -60,38 +60,11 @@ const TextEditor = forwardRef<TinyMCEEditor, TTextEditorProps>(function TextEdit
         return result.data.data.urlImage;
       });
     });
-  //   if (blobInfo.blob().size > THREE_MEGABYTE_TO_BYTES) {
-  //     toast.error("Your image size is too big, we only accept image size under 3MB", {
-  //       icon: (
-  //         <ErrorToastIcon
-  //           width={40}
-  //           height={40}
-  //         />
-  //       ),
-  //     });
-  //     return;
-  //   }
-  //   if ((blobInfo.blob() && !blobInfo.blob().type.includes("image")) || !blobInfo.blob()?.type.includes("gif")) {
-  //     toast.error(<div className="text-sm">Wrong file format, we only accept .JPEG, .PNG, .JPG file format</div>, {
-  //       icon: (
-  //         <ErrorToastIcon
-  //           width={40}
-  //           height={40}
-  //         />
-  //       ),
-  //     });
-  //     return;
-  //   }
-  //   const bodyFormData = new FormData();
-  //   bodyFormData.append("file", blobInfo.blob());
-  //   const result = await uploadImageMutation.mutateAsync(bodyFormData);
-  //   return result.data.data.urlImage;
   return (
     <>
       <Editor
         onInit={(evt, editor) => {
           setRawText(editor.getContent({ format: "text" }));
-          console.log(rawText);
           return ((ref as React.MutableRefObject<TinyMCEEditor>).current = editor);
         }}
         initialValue=""
@@ -136,6 +109,7 @@ const TextEditor = forwardRef<TinyMCEEditor, TTextEditorProps>(function TextEdit
           _item_type: "profile",
           resize: false,
           content_css: "p{color:red;}" + new Date().getTime(),
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           //@ts-ignore
           images_upload_handler: handleUploadImage,
         }}

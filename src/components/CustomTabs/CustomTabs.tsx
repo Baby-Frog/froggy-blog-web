@@ -6,15 +6,11 @@ type TTabsProps = {
 };
 
 const CustomTabs = ({ items }: TTabsProps) => {
-  const onChange = (key: string) => {
-    console.log(key);
-  };
   return (
     <Tabs
       defaultActiveKey="1"
       items={items}
       color="#242424"
-      onChange={onChange}
     />
   );
 };
