@@ -65,7 +65,7 @@ const StoryDetailPage = () => {
       <h1 className="text-[40px] font-bold">{storyDetailData?.data.data.title}</h1>
       <div className="flex items-center gap-2">
         {storyDetailData?.data.data.listTopic.map((topic) => (
-          <div className="rounded-2xl text-white bg-normalGreen px-4 text-xs py-1">{topic.topicName}</div>
+          <div className="rounded-2xl text-black bg-[#f2f2f2] px-4 text-xs py-1 flex-shrink-0">{topic.topicName}</div>
         ))}
       </div>
       <div className="flex items-center gap-2 mt-4">

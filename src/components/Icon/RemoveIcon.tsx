@@ -13,12 +13,10 @@ const RemoveIcon = (props: JSX.IntrinsicElements["svg"]) => {
         cy={12}
         r={9}
         stroke="currentColor"
-        strokeWidth={2}
       />
       <path
-        d="M18 18L6 6"
+        d="M7.5 12H16.5"
         stroke="currentColor"
-        strokeWidth={2}
       />
     </svg>
   );

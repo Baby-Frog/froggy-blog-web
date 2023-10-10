@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import CopyIcon from "src/components/Icon/CopyIcon";
-import { toast } from "react-toastify";
 import SaveToFavoritesIcon from "src/components/Icon/SaveToFavoritesIcon";
 import ShareStoryIcon from "src/components/Icon/ShareStoryIcon";
 import TwitterIcon from "src/components/Icon/SocialIcon/TwitterIcon";
@@ -8,7 +7,6 @@ import Popover from "src/components/Popover";
 import PopoverDismiss from "src/components/PopoverDismiss";
 import { TStory } from "src/types/story.types";
 import { getCustomDate } from "src/utils/formatDate";
-import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
 import DefaultErrorImage from "src/assets/no-img-avaliable.png";
 import { generateSlug } from "src/utils/slugify";
 import useShareLink from "src/hooks/useShareLink";
