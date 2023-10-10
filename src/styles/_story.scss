@@ -38,4 +38,13 @@
     list-style: disc;
     font-size: 20px;
   }
+  blockquote {
+    padding-left: 30px;
+    em {
+      font-weight: 300;
+    }
+  }
+  img {
+    margin: 0 auto;
+  }
 }
