@@ -228,7 +228,6 @@ const NewStoryPage = () => {
         }
       });
     } catch (err) {
-      console.log(err);
       return err;
     }
   });
@@ -237,7 +236,7 @@ const NewStoryPage = () => {
   };
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileFromLocal = e.target.files?.[0];
-    if (fileFromLocal && !fileFromLocal.type.includes("image")) {
+    if (fileFromLocal && !fileFromLocal.type.includes("image") && fileFromLocal?.type.includes("gif")) {
       toast.error(<div className="text-sm">Wrong file format, we only accept .JPEG, .PNG, .JPG file format</div>, {
         icon: (
           <ErrorToastIcon
@@ -278,13 +277,13 @@ const NewStoryPage = () => {
       });
     }
   }, [errors.content]);
-  console.log(textEditorValue);
   const handleVerifyCaptcha = (value: string | null) => {
     setCaptchaToken(value ?? "");
   };
   return (
     <NewStoryPageWrapper>
       <NewStorySidebar
+        captchaToken={captchaToken}
         handleResetForm={handleResetForm}
         handleCreateNewStory={handleCreateNewStory}
       ></NewStorySidebar>

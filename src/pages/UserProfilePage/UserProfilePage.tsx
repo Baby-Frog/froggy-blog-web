@@ -38,7 +38,6 @@ const AvatarWrapper = styled.div`
 `;
 
 const UserProfilePage = () => {
-  const [count, setCount] = useState(1);
   const { userProfile } = useContext(AuthContext);
   const { handleCopyCurrentLink } = useShareLink({});
   const profileLink = `${window.location.origin}/user/profile/${userProfile?.id as string}`;
@@ -51,6 +50,10 @@ const UserProfilePage = () => {
     queryKey: ["stories", { userId: userProfile?.id as string }],
     queryFn: () => storyApi.getStoriesByUserId(userProfile?.id as string),
     refetchOnMount: true,
+  });
+  const { data: userSavedStoriesData } = useQuery({
+    queryKey: ["savedStories"],
+    queryFn: () => storyApi.getFavoriteStories(),
   });
   const items: TabsProps["items"] = [
     {
@@ -68,12 +71,9 @@ const UserProfilePage = () => {
       key: "2",
       label: "Saved",
       children: (
-        <div
-          onClick={() => setCount(count + 1)}
-          aria-hidden
-        >
-          {count}
-        </div>
+        <>
+          {userSavedStoriesData?.data.data.data.map((story) => <HomepageRecentPost story={story}></HomepageRecentPost>)}
+        </>
       ),
     },
   ];

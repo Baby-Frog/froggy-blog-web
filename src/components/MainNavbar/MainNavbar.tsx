@@ -42,8 +42,7 @@ const MainNavbarWrapper = styled.div<{ $isScrolled?: boolean }>`
       }
     }
   }
-  .main-navbar-content {
-  }
+
   .main-navbar-list {
     display: flex;
     gap: 36px;
@@ -52,7 +51,7 @@ const MainNavbarWrapper = styled.div<{ $isScrolled?: boolean }>`
       color: #000;
       font-weight: 500;
       &--button {
-        background: #000;
+        background: ${(props) => (props.$isScrolled ? props.theme.colors.normalGreen : "#000")};
         border-radius: 24px;
         color: #fff;
         padding: 6px 8px;
@@ -62,6 +61,9 @@ const MainNavbarWrapper = styled.div<{ $isScrolled?: boolean }>`
         justify-content: center;
         align-items: center;
         /* font-family: "Pacifico"; */
+        &:hover {
+          background: ${(props) => (props.$isScrolled ? props.theme.colors.normalGreenHover : "#000")};
+        }
       }
       @media screen and (max-width: 767px) {
         &:nth-of-type(1),

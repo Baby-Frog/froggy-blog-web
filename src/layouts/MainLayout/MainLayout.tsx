@@ -5,11 +5,11 @@ import { AuthContext } from "src/contexts/auth.contexts";
 import HomepageBanner from "src/pages/Homepage/components/HomepageBanner";
 import LoadingPage from "src/pages/LoadingPage";
 import { styled } from "styled-components";
-import AuthenticatedNavbar from "src/components/AuthenticatedNavbar";
-const PageTransition = lazy(async () => {
+import PageTransition from "src/components/PageTransition";
+const AuthenticatedNavbar = lazy(async () => {
   const [moduleExports] = await Promise.all([
-    import("src/components/PageTransition"),
-    new Promise((resolve) => setTimeout(resolve, 2000)),
+    import("src/components/AuthenticatedNavbar"),
+    new Promise((resolve) => setTimeout(resolve, 3000)),
   ]);
   return moduleExports;
 });

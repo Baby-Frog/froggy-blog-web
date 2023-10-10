@@ -49,7 +49,7 @@ const MainNavbarWrapper = styled.div`
       color: #000;
       font-weight: 500;
       &--button {
-        background: #000;
+        background: ${(props) => props.theme.colors.normalGreen};
         border-radius: 24px;
         color: #fff;
         padding: 6px 8px;
@@ -58,7 +58,9 @@ const MainNavbarWrapper = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        /* font-family: "Pacifico"; */
+        &:hover {
+          background: ${(props) => props.theme.colors.normalGreenHover};
+        }
       }
       @media screen and (max-width: 767px) {
         &:nth-of-type(1),

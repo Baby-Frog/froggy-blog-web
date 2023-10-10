@@ -14,4 +14,6 @@ export const storyApi = {
   createStory: (body: Omit<TStorySchema, "id">) =>
     http.post<TSuccessApiResponse<TStory>>(STORY_ENDPOINTS.CREATE_NEW_STORY, body),
   updateStory: (body: TStorySchema) => http.post(STORY_ENDPOINTS.CREATE_NEW_STORY, body),
+  getFavoriteStories: () => http.get<TQueryResponse<TStory[]>>(STORY_ENDPOINTS.GET_FAVORITE_STORIES),
+  saveStoryToFavorites: (storyId: string) => http.post(`${STORY_ENDPOINTS.SAVE_STORY_TO_FAVORITES}/${storyId}`),
 };
