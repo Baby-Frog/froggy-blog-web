@@ -1,11 +1,11 @@
 import { Editor } from "@tinymce/tinymce-react";
-import { forwardRef, useState } from "react";
-import { toast } from "react-toastify";
+import { forwardRef } from "react";
 import { useMutation } from "react-query";
+import { toast } from "react-toastify";
 import { imageApi } from "src/apis/image.apis";
 import { Editor as TinyMCEEditor } from "tinymce";
-import "./TextEditor.scss";
 import ErrorToastIcon from "../Icon/ToastIcon/ErrorToastIcon";
+import "./TextEditor.scss";
 
 type TTextEditorProps = {
   value: string;
@@ -19,7 +19,7 @@ type TTextEditorProps = {
 const THREE_MEGABYTE_TO_BYTES = 3 * 1024 * 1024;
 
 const TextEditor = forwardRef<TinyMCEEditor, TTextEditorProps>(function TextEditorInner(
-  { value, errorMsg, rawText, setRawText, onChange, onBlur },
+  { value, setRawText, onChange, onBlur },
   ref,
 ) {
   const uploadImageMutation = useMutation({
@@ -28,7 +28,7 @@ const TextEditor = forwardRef<TinyMCEEditor, TTextEditorProps>(function TextEdit
 
   // I was forced to use "any" because tiny-mce react documentation is so stupid
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleUploadImage = (blobInfo: any, progress: any) =>
+  const handleUploadImage = (blobInfo: any) =>
     new Promise((resolve, reject) => {
       if (blobInfo.blob().size > THREE_MEGABYTE_TO_BYTES) {
         toast.error("Your image size is too big, we only accept image size under 3MB", {
@@ -108,7 +108,6 @@ const TextEditor = forwardRef<TinyMCEEditor, TTextEditorProps>(function TextEdit
           _selector: "textarea",
           _item_type: "profile",
           resize: false,
-          content_css: "p{color:red;}" + new Date().getTime(),
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           //@ts-ignore
           images_upload_handler: handleUploadImage,

@@ -1,12 +1,13 @@
 import parse from "html-react-parser";
 import { useContext, useState } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { storyApi } from "src/apis/story.apis";
 import ClapIcon from "src/components/Icon/ClapIcon";
 import CommentIcon from "src/components/Icon/CommentIcon";
 import CopyIcon from "src/components/Icon/CopyIcon";
+import RemoveIcon from "src/components/Icon/RemoveIcon";
 import SaveToFavoritesIcon from "src/components/Icon/SaveToFavoritesIcon";
 import ShareStoryIcon from "src/components/Icon/ShareStoryIcon";
 import TwitterIcon from "src/components/Icon/SocialIcon/TwitterIcon";
@@ -24,30 +25,36 @@ const StoryDetailPage = () => {
   const { storyId } = useParams();
   const { isAuthenticated } = useContext(AuthContext);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const queryClient = useQueryClient();
   const currentStoryUrl = window.location.href;
   const idFromSlug = getIdFromSlug(storyId as string);
+  const { data: savedStoriesData } = useQuery({
+    queryKey: ["savedStories"],
+    queryFn: () => storyApi.getFavoriteStories(),
+  });
   const saveToFavoritesMutation = useMutation({
     mutationFn: storyApi.saveStoryToFavorites,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["savedStories"] });
+    },
   });
+  const storyIsAlreadyInSavedList = Boolean(savedStoriesData?.data.data.data.find((story) => story.id === idFromSlug));
   const { data: storyDetailData, isLoading: storyDetailIsLoading } = useQuery({
     queryKey: ["story", storyId],
     queryFn: () => storyApi.getStoryById(idFromSlug as string),
   });
+
   const { handleCopyCurrentLink, shareOnTwitter } = useShareLink(
     storyDetailData?.data.data.title,
     storyDetailData?.data.data.author.fullName,
     currentStoryUrl,
   );
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(currentStoryUrl);
-    toast.success("Copied link to clipboard", {
-      icon: <SuccessToastIcon></SuccessToastIcon>,
-    });
-  };
+
   const handleSaveToFavorites = async () => {
     saveToFavoritesMutation.mutate(idFromSlug as string, {
       onSuccess: (data) => {
-        toast.success("Saved to favorites", {
+        toast.dismiss();
+        toast.success(data.data.message, {
           icon: <SuccessToastIcon></SuccessToastIcon>,
         });
       },
@@ -115,15 +122,29 @@ const StoryDetailPage = () => {
               sameWidthWithChildren={false}
               placement="top"
               offsetPx={5}
-              renderPopover={<div className="text-white p-1">Save to favorites</div>}
+              renderPopover={
+                <div className="text-white p-1">
+                  {storyIsAlreadyInSavedList ? "Remove from Saved List" : "Add to Saved List"}
+                </div>
+              }
             >
-              <SaveToFavoritesIcon
-                color="#6b6b6b"
-                width={24}
-                height={24}
-                className="cursor-pointer hover:text-softBlack"
-                onClick={handleSaveToFavorites}
-              ></SaveToFavoritesIcon>
+              {storyIsAlreadyInSavedList ? (
+                <RemoveIcon
+                  color="#6b6b6b"
+                  width={24}
+                  height={24}
+                  className="cursor-pointer hover:text-softBlack"
+                  onClick={handleSaveToFavorites}
+                ></RemoveIcon>
+              ) : (
+                <SaveToFavoritesIcon
+                  color="#6b6b6b"
+                  width={24}
+                  height={24}
+                  className="cursor-pointer hover:text-softBlack"
+                  onClick={handleSaveToFavorites}
+                ></SaveToFavoritesIcon>
+              )}
             </Popover>
           )}
           <Popover
