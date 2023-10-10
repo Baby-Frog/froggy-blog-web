@@ -30,11 +30,11 @@ const StoryDetailPage = () => {
     queryKey: ["story", storyId],
     queryFn: () => storyApi.getStoryById(idFromSlug as string),
   });
-  const { handleCopyCurrentLink, shareOnTwitter } = useShareLink(
-    storyDetailData?.data.data.title,
-    storyDetailData?.data.data.author.fullName,
+  const { handleCopyCurrentLink, shareOnTwitter } = useShareLink({
+    title: storyDetailData?.data.data.title,
+    author: storyDetailData?.data.data.author.fullName,
     currentStoryUrl,
-  );
+  });
   const handleCopyLink = () => {
     navigator.clipboard.writeText(currentStoryUrl);
     toast.success("Copied link to clipboard", {
