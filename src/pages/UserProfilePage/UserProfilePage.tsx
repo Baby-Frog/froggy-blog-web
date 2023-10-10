@@ -63,7 +63,9 @@ const UserProfilePage = () => {
         <>
           {userStoriesData?.data.data.data &&
             userStoriesData.data.data.data.map((story) => <HomepageRecentPost story={story}></HomepageRecentPost>)}
-          {!userStoriesData?.data.data.data && userStoriesData?.data.data.data.length === 0 && <div>No stories</div>}
+          {userStoriesData?.data.data.data.length === 0 && (
+            <div className="text-base">You haven't written any stories yet</div>
+          )}
         </>
       ),
     },
@@ -73,6 +75,7 @@ const UserProfilePage = () => {
       children: (
         <>
           {userSavedStoriesData?.data.data.data.map((story) => <HomepageRecentPost story={story}></HomepageRecentPost>)}
+          {userSavedStoriesData?.data.data.data.length === 0 && <div className="text-base">No saved stories yet</div>}
         </>
       ),
     },
@@ -91,7 +94,7 @@ const UserProfilePage = () => {
             <></>
           )}
           <div className="flex items-center justify-between">
-            <h3 className="text-3xl font-bold">{meData?.data.data.fullName}</h3>
+            <h3 className="text-3xl font-bold tracking-tighter">{meData?.data.data.fullName}</h3>
             <PopoverDismiss
               offsetPx={5}
               placement="bottom-end"
