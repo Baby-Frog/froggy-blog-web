@@ -237,7 +237,7 @@ const NewStoryPage = () => {
   };
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileFromLocal = e.target.files?.[0];
-    if (fileFromLocal && !fileFromLocal.type.includes("image")) {
+    if (fileFromLocal && !fileFromLocal.type.includes("image") && fileFromLocal?.type.includes("gif")) {
       toast.error(<div className="text-sm">Wrong file format, we only accept .JPEG, .PNG, .JPG file format</div>, {
         icon: (
           <ErrorToastIcon
