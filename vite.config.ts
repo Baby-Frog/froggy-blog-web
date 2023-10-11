@@ -5,7 +5,6 @@ import path from "path";
 export default defineConfig({
   plugins: [react()],
   server: {
-    // Các bạn có thể sửa theo ý mình
     port: 3000,
     open: true,
   },

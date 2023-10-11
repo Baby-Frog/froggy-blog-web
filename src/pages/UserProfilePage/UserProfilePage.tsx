@@ -89,8 +89,8 @@ const UserProfilePage = () => {
       label: "Saved",
       children: (
         <div className="flex flex-col gap-2">
-          {userSavedStoriesData?.data.data.data.map((story) => <HomepageRecentPost story={story}></HomepageRecentPost>)}
-          {userSavedStoriesData?.data.data.data.length === 0 && <div className="text-base">No saved stories yet</div>}
+          {userSavedStories?.map((story) => <HomepageRecentPost story={story}></HomepageRecentPost>)}
+          {userSavedStories?.length === 0 && <div className="text-base">No saved stories yet</div>}
         </div>
       ),
     },

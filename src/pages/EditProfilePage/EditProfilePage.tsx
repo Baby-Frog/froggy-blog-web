@@ -63,7 +63,6 @@ const CoverImageWrapper = styled.div`
 const THREE_MEGABYTE_TO_BYTES = 3 * 1024 * 1024;
 
 const EditProfilePage = () => {
-  const { userProfile } = useContext(AuthContext);
   const [previewAvatarFile, setPreviewAvatarFile] = useState<Blob>();
   const [previewCoverImageFile, setPreviewCoverImageFile] = useState<Blob>();
   const previewCoverImageURL = useMemo(() => {
@@ -165,12 +164,13 @@ const EditProfilePage = () => {
                   alt=""
                   className="w-full h-full object-cover object-center"
                 />
-                <div className="edit-overlay z-10 flex items-center justify-center">
+                <div className="edit-overlay z-10 flex items-center justify-center gap-2">
                   <EditAvatarIcon
                     width={36}
                     height={36}
                     color="#fff"
                   ></EditAvatarIcon>
+                  <span className="text-white font-medium">Change your banner</span>
                 </div>
               </CoverImageWrapper>
             </InputFile>
