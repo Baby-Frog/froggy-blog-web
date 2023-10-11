@@ -6,4 +6,5 @@ export const path = {
   DASHBOARD: "/dashboard",
   NEWSTORY: "/new-story",
   STORY_DETAIL: "/:storyId",
+  EDIT_PROFILE: "/user/profile/edit",
 } as const;

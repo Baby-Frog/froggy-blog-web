@@ -6,6 +6,7 @@ import NewStoryLayout from "src/layouts/NewStoryLayout";
 import StoryDetailLayout from "src/layouts/StoryDetailLayout";
 import AnonymousUserProfilePage from "src/pages/AnonymousUserProfilePage";
 import NewStoryPage from "src/pages/BlogWritingPage";
+import EditProfilePage from "src/pages/EditProfilePage";
 import Homepage from "src/pages/Homepage";
 import SettingPage from "src/pages/SettingPage";
 import StoryDetailPage from "src/pages/StoryDetailPage";
@@ -66,6 +67,14 @@ export default function useRouteElement() {
             <NewStoryLayout>
               <NewStoryPage></NewStoryPage>
             </NewStoryLayout>
+          ),
+        },
+        {
+          path: path.EDIT_PROFILE,
+          element: (
+            <MainLayout>
+              <EditProfilePage></EditProfilePage>
+            </MainLayout>
           ),
         },
       ],

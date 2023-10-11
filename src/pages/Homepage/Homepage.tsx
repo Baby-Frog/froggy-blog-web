@@ -72,11 +72,15 @@ const SideStuffsFooter = styled.div`
 `;
 
 const Homepage = () => {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, userProfile } = useContext(AuthContext);
   const { data: recentStories, isLoading: recentStoriesIsLoading } = useQuery({
     queryKey: ["stories"],
     queryFn: () => storyApi.getRecentStories({ keyword: "", pageSize: 5 }),
     refetchOnMount: true,
+  });
+  const { data: yourStoriesData, isLoading: yourStoriesIsLoading } = useQuery({
+    queryKey: ["yourStories"],
+    queryFn: () => storyApi.getStoriesByUserId(userProfile?.id as string),
   });
   const { data: topics, isLoading: topicsIsLoading } = useQuery({
     queryKey: ["topics"],
@@ -100,7 +104,16 @@ const Homepage = () => {
     {
       key: "2",
       label: "Your stories",
-      children: <div>3</div>,
+      children: (
+        <MainStuffsWrapper>
+          {yourStoriesData?.data.data.data.map((story) => (
+            <HomepageRecentPost
+              key={story.id}
+              story={story}
+            ></HomepageRecentPost>
+          ))}
+        </MainStuffsWrapper>
+      ),
     },
     {
       key: "3",

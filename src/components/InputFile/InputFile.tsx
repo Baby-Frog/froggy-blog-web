@@ -5,11 +5,18 @@ type TInputFileProps = {
   children?: React.ReactNode;
   handleChangeFile?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleClickOnInput?: () => void;
-
+  buttonClassName?: string;
   inputFileRef?: React.RefObject<HTMLInputElement>;
 };
 
-const InputFile = ({ children, className, handleChangeFile, handleClickOnInput, inputFileRef }: TInputFileProps) => {
+const InputFile = ({
+  children,
+  className,
+  buttonClassName,
+  handleChangeFile,
+  handleClickOnInput,
+  inputFileRef,
+}: TInputFileProps) => {
   return (
     <div className={className}>
       <input
@@ -22,7 +29,7 @@ const InputFile = ({ children, className, handleChangeFile, handleClickOnInput, 
       <button
         type="button"
         onClick={handleClickOnInput}
-        className="flex items-center text-sm text-gray-600"
+        className={`flex items-center text-sm text-gray-600 ${buttonClassName}`}
       >
         {children}
       </button>

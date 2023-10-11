@@ -16,7 +16,11 @@ type THomepageRecentPostProps = {
 
 const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
   const currentStoryUrl = `${window.location.origin}/${generateSlug({ name: story.title, id: story.id })}`;
-  const { handleCopyCurrentLink, shareOnTwitter } = useShareLink(story.title, story.author.fullName, currentStoryUrl);
+  const { handleCopyCurrentLink, shareOnTwitter } = useShareLink({
+    author: story.author.fullName,
+    title: story.title,
+    currentStoryUrl,
+  });
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     if (e.currentTarget.src !== DefaultErrorImage) {
@@ -42,7 +46,7 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
           </div>
         </div>
         <h3 className="text-xl font-bold tracking-tighter">{story.title}</h3>
-        <p className="text-lightGrey text-[16px] font-medium line-clamp-3">{story.raw}</p>
+        <p className="text-lightGrey text-sm font-medium line-clamp-3">{story.raw}</p>
         <div className="flex items-center justify-between">
           <span className="flex items-center gap-2">
             <span>{getCustomDate(new Date(story.publishDate))}</span>
