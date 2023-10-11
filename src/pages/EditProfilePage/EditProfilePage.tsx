@@ -6,9 +6,17 @@ import EditAvatarIcon from "src/components/Icon/EditAvatarIcon";
 import ErrorToastIcon from "src/components/Icon/ToastIcon/ErrorToastIcon";
 import InputFile from "src/components/InputFile";
 import { AuthContext } from "src/contexts/auth.contexts";
-import useShareLink from "src/hooks/useShareLink";
+
 import { styled } from "styled-components";
 import DefaultCoverImage from "src/assets/linkedin-default.png";
+import ImageIcon from "src/components/Icon/ImageIcon";
+import Label from "src/components/Label";
+import Input from "src/components/Input";
+import { useForm } from "react-hook-form";
+import { TProfileSchema, profileSchema } from "src/schemas/profile.schema";
+import Textarea from "src/components/Textarea";
+import { yupResolver } from "@hookform/resolvers/yup";
+import Button from "src/components/Button";
 const ProfileLeft = styled.div`
   flex: 6;
 `;
@@ -60,26 +68,53 @@ const CoverImageWrapper = styled.div`
   }
 `;
 
+const InputGroup = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+`;
+
+const InputBlock = styled.div`
+  display: block;
+  margin-top: 24px;
+`;
+
 const THREE_MEGABYTE_TO_BYTES = 3 * 1024 * 1024;
 
 const EditProfilePage = () => {
+  const { userProfile } = useContext(AuthContext);
   const [previewAvatarFile, setPreviewAvatarFile] = useState<Blob>();
   const [previewCoverImageFile, setPreviewCoverImageFile] = useState<Blob>();
   const previewCoverImageURL = useMemo(() => {
-    return previewCoverImageFile ? URL.createObjectURL(previewCoverImageFile) : "";
-  }, [previewCoverImageFile]);
+    return previewCoverImageFile ? URL.createObjectURL(previewCoverImageFile) : userProfile?.coverImgPath;
+  }, [previewCoverImageFile, userProfile?.coverImgPath]);
   const previewAvatarURL = useMemo(() => {
-    return previewAvatarFile ? URL.createObjectURL(previewAvatarFile) : "";
-  }, [previewAvatarFile]);
+    return previewAvatarFile ? URL.createObjectURL(previewAvatarFile) : userProfile?.coverImgPath;
+  }, [previewAvatarFile, userProfile?.coverImgPath]);
   const avatarInputFileRef = useRef<HTMLInputElement>(null);
   const coverImageInputFileRef = useRef<HTMLInputElement>(null);
-
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TProfileSchema>({
+    mode: "onChange",
+    reValidateMode: "onChange",
+    defaultValues: {
+      fullName: userProfile?.fullName,
+      phoneNumber: userProfile?.phoneNumber,
+      address: userProfile?.address,
+    },
+    resolver: yupResolver(profileSchema),
+  });
   const { data: meData } = useQuery({
     queryKey: ["me"],
     queryFn: () => authApi.getMe(),
     refetchOnMount: true,
   });
   const me = meData?.data.data;
+
   const handleClickOnAvatarInput = () => {
     avatarInputFileRef.current?.click();
   };
@@ -156,13 +191,13 @@ const EditProfilePage = () => {
               handleClickOnInput={handleClickOnCoverImageInput}
               inputFileRef={coverImageInputFileRef}
               buttonClassName="w-full"
-              className="w-full h-[150px]"
+              className="w-full"
             >
               <CoverImageWrapper>
                 <img
                   src={previewCoverImageURL || DefaultCoverImage}
                   alt=""
-                  className="w-full h-full object-cover object-center"
+                  className="w-full h-[150px] object-cover object-center"
                 />
                 <div className="edit-overlay z-10 flex items-center justify-center gap-2">
                   <EditAvatarIcon
@@ -180,24 +215,83 @@ const EditProfilePage = () => {
               handleClickOnInput={handleClickOnCoverImageInput}
               inputFileRef={coverImageInputFileRef}
               buttonClassName="w-full"
-              className="w-full h-[150px]"
+              className="w-full"
             >
               <CoverImageWrapper>
                 <img
-                  src={me.coverImgPath}
+                  src={previewCoverImageURL || me.coverImgPath}
                   alt=""
-                  className="w-full h-full object-cover object-center"
+                  className="w-full h-[150px] object-cover object-center"
                 />
                 <div className="edit-overlay z-10 flex items-center justify-center">
-                  <EditAvatarIcon
+                  <ImageIcon
                     width={36}
                     height={36}
                     color="#fff"
-                  ></EditAvatarIcon>
+                  ></ImageIcon>
                 </div>
               </CoverImageWrapper>
             </InputFile>
           )}
+          <h1 className="text-3xl font-bold mt-4">
+            <span>Edit your profile 📝</span>
+          </h1>
+          <InputGroup>
+            <div>
+              <Label
+                htmlFor="fullName"
+                className="font-medium"
+              >
+                Full Name
+              </Label>
+              <Input
+                name="fullName"
+                id="fullName"
+                placeholder="Enter your full name"
+                register={register}
+                errorMsg={errors.fullName?.message}
+              ></Input>
+            </div>
+            <div>
+              <Label
+                htmlFor="phoneNumber"
+                className="font-medium"
+              >
+                Phone Number
+              </Label>
+              <Input
+                name="phoneNumber"
+                id="phoneNumber"
+                placeholder="Enter your phone number"
+                register={register}
+                errorMsg={errors.phoneNumber?.message}
+              ></Input>
+            </div>
+          </InputGroup>
+          <InputBlock>
+            <Label htmlFor="address">Address</Label>
+            <Input
+              name="address"
+              id="address"
+              placeholder="Enter your address"
+              register={register}
+              errorMsg={errors.address?.message}
+            ></Input>
+          </InputBlock>
+          <InputBlock>
+            <Textarea
+              name="bio"
+              register={register}
+              placeholder="Enter your bio"
+              errorMsg={errors.bio?.message}
+            ></Textarea>
+          </InputBlock>
+          <Button
+            type="submit"
+            className="mb-10"
+          >
+            Edit my profile
+          </Button>
         </ProfileLeft>
         <ProfileRight>
           <InputFile
@@ -212,11 +306,11 @@ const EditProfilePage = () => {
                 className="rounded-full object-cover w-full h-full"
               />
               <div className="edit-overlay flex items-center justify-center">
-                <EditAvatarIcon
+                <ImageIcon
                   width={36}
                   height={36}
                   color="#fff"
-                ></EditAvatarIcon>
+                ></ImageIcon>
               </div>
             </AvatarWrapper>
           </InputFile>

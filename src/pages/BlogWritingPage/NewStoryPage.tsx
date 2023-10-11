@@ -23,7 +23,8 @@ import InputFile from "src/components/InputFile";
 import Label from "src/components/Label";
 import MultipleSelectV2 from "src/components/MultipleSelect/MultipleSelectV2";
 import TextEditor from "src/components/TextEditor";
-import { TStorySchema } from "src/schemas/story.schemas";
+import { TStorySchema, storySchema } from "src/schemas/story.schemas";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 type ValueType = { key?: string; label: React.ReactNode; value: string | number };
 
@@ -117,7 +118,7 @@ const NewStoryPage = () => {
       title: "",
       topicId: [],
     },
-    // resolver: yupResolver(storySchema),
+    resolver: yupResolver(storySchema),
   });
   const isTablet = useMedia("(max-width: 1024px)");
   const queryClient = useQueryClient();
@@ -400,6 +401,7 @@ const NewStoryPage = () => {
                       width={36}
                       height={36}
                       opacity={0.6}
+                      color="#222"
                     ></ImageIcon>
                     <span className="text-[14px] w-[180px] font-medium text-center text-black text-opacity-40">
                       Upload high-quality thumbnail to make it more inviting to readers
