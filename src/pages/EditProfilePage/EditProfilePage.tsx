@@ -95,6 +95,12 @@ const EditProfilePage = () => {
   }, [previewAvatarFile, userProfile?.coverImgPath]);
   const avatarInputFileRef = useRef<HTMLInputElement>(null);
   const coverImageInputFileRef = useRef<HTMLInputElement>(null);
+  const { data: meData } = useQuery({
+    queryKey: ["me"],
+    queryFn: () => authApi.getMe(),
+    refetchOnMount: true,
+  });
+  const me = meData?.data.data;
   const {
     register,
     handleSubmit,
@@ -104,18 +110,13 @@ const EditProfilePage = () => {
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
-      fullName: userProfile?.fullName,
-      phoneNumber: userProfile?.phoneNumber,
-      address: userProfile?.address,
+      fullName: me?.fullName,
+      phoneNumber: me?.phoneNumber,
+      address: me?.address,
+      bio: me?.bio,
     },
     resolver: yupResolver(profileSchema),
   });
-  const { data: meData } = useQuery({
-    queryKey: ["me"],
-    queryFn: () => authApi.getMe(),
-    refetchOnMount: true,
-  });
-  const me = meData?.data.data;
   const bioFormValue = watch("bio");
   const editProfileMutation = useMutation({
     mutationFn: authApi.updateMe,
