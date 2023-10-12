@@ -19,10 +19,10 @@ import { Link } from "react-router-dom";
 import { path } from "src/constants/path";
 
 const ProfileLeft = styled.div`
-  flex: 6;
+  width: calc(65% - 24px);
 `;
 const ProfileRight = styled.div`
-  flex: 4;
+  width: calc(35% - 24px);
 `;
 
 const AvatarWrapper = styled(Link)`
@@ -61,13 +61,13 @@ const UserProfilePage = () => {
     queryFn: () => authApi.getMe(),
     refetchOnMount: true,
   });
+  const me = meData?.data.data;
   const { data: userStoriesData } = useQuery({
     queryKey: ["yourStories", { userId: userProfile?.id as string }],
     queryFn: () => storyApi.getStoriesByUserId(userProfile?.id as string),
     refetchOnMount: true,
   });
   const userStories = userStoriesData?.data.data.data;
-  console.log(userStories);
   const { data: userSavedStoriesData } = useQuery({
     queryKey: ["savedStories"],
     queryFn: () => storyApi.getFavoriteStories(),
@@ -133,9 +133,9 @@ const UserProfilePage = () => {
     <>
       <div className="flex mt-10 gap-12 justify-between">
         <ProfileLeft>
-          {meData?.data.data.coverImgPath ? (
+          {me?.coverImgPath ? (
             <img
-              src={meData?.data.data.coverImgPath}
+              src={me.coverImgPath}
               alt=""
               className="w-full h-[150px] mb-10 object-cover"
             />
@@ -143,7 +143,7 @@ const UserProfilePage = () => {
             <></>
           )}
           <div className="flex items-center justify-between">
-            <h3 className="text-3xl font-bold tracking-tighter">{meData?.data.data.fullName}</h3>
+            <h3 className="text-3xl font-bold tracking-tighter">{me?.fullName}</h3>
             <PopoverDismiss
               offsetPx={5}
               placement="bottom-end"
@@ -185,7 +185,7 @@ const UserProfilePage = () => {
             className="rounded-full object-cover block w-[90px] h-[90px]"
           >
             <img
-              src={meData?.data.data.avatarPath}
+              src={me?.avatarPath}
               alt=""
               className="rounded-full object-cover w-full h-full"
             />
@@ -198,8 +198,36 @@ const UserProfilePage = () => {
             </div>
           </AvatarWrapper>
 
-          <div className="mt-4 font-semibold">{meData?.data.data.fullName}</div>
-          <div className="mt-4 font-medium">{meData?.data.data.bio || "No bio"}</div>
+          <div className="mt-4 font-semibold">{me?.fullName}</div>
+          {me?.bio ? (
+            <div className="mt-1 font-medium break-words">{me?.bio}</div>
+          ) : (
+            <div className="mt-1 font-light break-words">No bio</div>
+          )}
+          {me?.email && (
+            <>
+              <h5 className="mt-4 font-semibold">Email</h5>
+              <div className="mt-1 font-medium break-words">{me?.email}</div>
+            </>
+          )}
+          <h5 className="mt-4 font-semibold">Phone Number</h5>
+          {me?.phoneNumber ? (
+            <div className="mt-1 font-medium break-words">{me?.phoneNumber}</div>
+          ) : (
+            <div className="mt-1 font-light break-words">Not updated yet</div>
+          )}
+          <h5 className="mt-4 font-semibold">Address</h5>
+          {me?.address ? (
+            <div className="mt-1 font-medium break-words">{me?.address}</div>
+          ) : (
+            <div className="mt-1 font-light break-words">Not updated yet</div>
+          )}
+          <h5 className="mt-4 font-semibold">Date of birth</h5>
+          {me?.birthday ? (
+            <div className="mt-1 font-medium break-words">{me?.birthday}</div>
+          ) : (
+            <div className="mt-1 font-light break-words">Not updated yet</div>
+          )}
         </ProfileRight>
       </div>
     </>

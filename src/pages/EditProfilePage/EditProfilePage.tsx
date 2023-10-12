@@ -18,10 +18,10 @@ import Textarea from "src/components/Textarea";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "src/components/Button";
 const ProfileLeft = styled.div`
-  flex: 6;
+  width: calc(65% - 24px);
 `;
 const ProfileRight = styled.div`
-  flex: 4;
+  width: calc(35% - 24px);
 `;
 
 const AvatarWrapper = styled.div`
@@ -98,6 +98,7 @@ const EditProfilePage = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<TProfileSchema>({
     mode: "onChange",
@@ -115,6 +116,7 @@ const EditProfilePage = () => {
     refetchOnMount: true,
   });
   const me = meData?.data.data;
+  const bioFormValue = watch("bio");
   const editProfileMutation = useMutation({
     mutationFn: authApi.updateMe,
   });
@@ -324,7 +326,7 @@ const EditProfilePage = () => {
               type="submit"
               className="mb-10"
             >
-              Edit my profile
+              Submit
             </Button>
           </form>
         </ProfileLeft>
@@ -350,7 +352,35 @@ const EditProfilePage = () => {
             </AvatarWrapper>
           </InputFile>
           <div className="mt-4 font-semibold">{me?.fullName}</div>
-          <div className="mt-4 font-medium">{me?.bio || "No bio"}</div>
+          {bioFormValue ? (
+            <div className="mt-1 font-medium break-words">{bioFormValue}</div>
+          ) : (
+            <div className="mt-1 font-light break-words">No bio</div>
+          )}
+          {me?.email && (
+            <>
+              <h5 className="mt-4 font-semibold">Email</h5>
+              <div className="mt-1 font-medium break-words">{me?.email}</div>
+            </>
+          )}
+          <h5 className="mt-4 font-semibold">Phone Number</h5>
+          {me?.phoneNumber ? (
+            <div className="mt-1 font-medium break-words">{me?.phoneNumber}</div>
+          ) : (
+            <div className="mt-1 font-light break-words">Not updated yet</div>
+          )}
+          <h5 className="mt-4 font-semibold">Address</h5>
+          {me?.address ? (
+            <div className="mt-1 font-medium break-words">{me?.address}</div>
+          ) : (
+            <div className="mt-1 font-light break-words">Not updated yet</div>
+          )}
+          <h5 className="mt-4 font-semibold">Date of birth</h5>
+          {me?.birthday ? (
+            <div className="mt-1 font-medium break-words">{me?.birthday}</div>
+          ) : (
+            <div className="mt-1 font-light break-words">Not updated yet</div>
+          )}
         </ProfileRight>
       </div>
     </>
