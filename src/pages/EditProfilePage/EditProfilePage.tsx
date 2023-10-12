@@ -118,6 +118,8 @@ const EditProfilePage = () => {
     resolver: yupResolver(profileSchema),
   });
   const bioFormValue = watch("bio");
+  const addressFormValue = watch("address");
+  const phoneNumberFormValue = watch("phoneNumber");
   const editProfileMutation = useMutation({
     mutationFn: authApi.updateMe,
   });
@@ -365,14 +367,14 @@ const EditProfilePage = () => {
             </>
           )}
           <h5 className="mt-3 font-semibold">Phone Number 📞</h5>
-          {me?.phoneNumber ? (
-            <div className="mt-1 font-medium break-words">{me?.phoneNumber}</div>
+          {phoneNumberFormValue ? (
+            <div className="mt-1 font-medium break-words">{phoneNumberFormValue}</div>
           ) : (
             <div className="mt-1 font-light break-words">Not updated yet</div>
           )}
           <h5 className="mt-3 font-semibold">Address 🏠</h5>
-          {me?.address ? (
-            <div className="mt-1 font-medium break-words">{me?.address}</div>
+          {addressFormValue ? (
+            <div className="mt-1 font-medium break-words">{addressFormValue}</div>
           ) : (
             <div className="mt-1 font-light break-words">Not updated yet</div>
           )}
