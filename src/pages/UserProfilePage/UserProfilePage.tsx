@@ -25,7 +25,7 @@ const ProfileRight = styled.div`
   flex: 4;
 `;
 
-const AvatarWrapper = styled.div`
+const AvatarWrapper = styled(Link)`
   position: relative;
   .edit-overlay {
     cursor: pointer;
@@ -180,26 +180,24 @@ const UserProfilePage = () => {
           </div>
         </ProfileLeft>
         <ProfileRight>
-          <InputFile
-            handleChangeFile={handleChangeFile}
-            handleClickOnInput={handleClickOnInput}
-            inputFileRef={inputFileRef}
+          <AvatarWrapper
+            to={path.EDIT_PROFILE}
+            className="rounded-full object-cover block w-[90px] h-[90px]"
           >
-            <AvatarWrapper className="rounded-full object-cover w-[90px] h-[90px]">
-              <img
-                src={meData?.data.data.avatarPath}
-                alt=""
-                className="rounded-full object-cover w-full h-full"
-              />
-              <div className="edit-overlay flex items-center justify-center">
-                <EditAvatarIcon
-                  width={36}
-                  height={36}
-                  color="#fff"
-                ></EditAvatarIcon>
-              </div>
-            </AvatarWrapper>
-          </InputFile>
+            <img
+              src={meData?.data.data.avatarPath}
+              alt=""
+              className="rounded-full object-cover w-full h-full"
+            />
+            <div className="edit-overlay flex items-center justify-center">
+              <EditAvatarIcon
+                width={36}
+                height={36}
+                color="#fff"
+              ></EditAvatarIcon>
+            </div>
+          </AvatarWrapper>
+
           <div className="mt-4 font-semibold">{meData?.data.data.fullName}</div>
           <div className="mt-4 font-medium">{meData?.data.data.bio || "No bio"}</div>
         </ProfileRight>
