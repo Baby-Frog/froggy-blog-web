@@ -359,23 +359,23 @@ const EditProfilePage = () => {
           )}
           {me?.email && (
             <>
-              <h5 className="mt-4 font-semibold">Email</h5>
+              <h5 className="mt-4 font-semibold">Email 📨</h5>
               <div className="mt-1 font-medium break-words">{me?.email}</div>
             </>
           )}
-          <h5 className="mt-4 font-semibold">Phone Number</h5>
+          <h5 className="mt-3 font-semibold">Phone Number 📞</h5>
           {me?.phoneNumber ? (
             <div className="mt-1 font-medium break-words">{me?.phoneNumber}</div>
           ) : (
             <div className="mt-1 font-light break-words">Not updated yet</div>
           )}
-          <h5 className="mt-4 font-semibold">Address</h5>
+          <h5 className="mt-3 font-semibold">Address 🏠</h5>
           {me?.address ? (
             <div className="mt-1 font-medium break-words">{me?.address}</div>
           ) : (
             <div className="mt-1 font-light break-words">Not updated yet</div>
           )}
-          <h5 className="mt-4 font-semibold">Date of birth</h5>
+          <h5 className="mt-3 font-semibold">Date of birth 📅</h5>
           {me?.birthday ? (
             <div className="mt-1 font-medium break-words">{me?.birthday}</div>
           ) : (
