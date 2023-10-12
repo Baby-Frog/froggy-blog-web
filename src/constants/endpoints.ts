@@ -8,6 +8,7 @@ export const AUTH_ENDPOINTS = {
   LOGOUT: "/api/logout",
   REFRESH_TOKEN: "/refreshToken",
   GET_ME: "/api/user/me",
+  UPDATE_ME: "/api/user/profile/update",
   GET_ANONYMOUS_PROFILE: "/api/user/findById",
 } as const;
 

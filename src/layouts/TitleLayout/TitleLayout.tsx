@@ -6,6 +6,7 @@ import { styled } from "styled-components";
 
 type TNewStoryLayoutProps = {
   children: React.ReactNode;
+  title: string;
 };
 
 const NewStoryLayoutWrapper = styled.div`
@@ -20,15 +21,15 @@ const NewStoryLayoutWrapper = styled.div`
   }
 `;
 
-const NewStoryLayout = ({ children }: TNewStoryLayoutProps) => {
+const TitleLayout = ({ children, title }: TNewStoryLayoutProps) => {
   const isPresent = useIsPresent();
   return (
     <>
-      <AuthenticatedNavbar isWritingBlog></AuthenticatedNavbar>
+      <AuthenticatedNavbar title={title}></AuthenticatedNavbar>
       <NewStoryLayoutWrapper>{children}</NewStoryLayoutWrapper>
       <PageTransition isPresent={isPresent}></PageTransition>
     </>
   );
 };
 
-export default NewStoryLayout;
+export default TitleLayout;

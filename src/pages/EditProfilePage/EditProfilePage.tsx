@@ -1,12 +1,12 @@
 import { useContext, useMemo, useRef, useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { toast } from "react-toastify";
 import { authApi } from "src/apis/auth.apis";
 import EditAvatarIcon from "src/components/Icon/EditAvatarIcon";
 import ErrorToastIcon from "src/components/Icon/ToastIcon/ErrorToastIcon";
 import InputFile from "src/components/InputFile";
 import { AuthContext } from "src/contexts/auth.contexts";
-
+import ReactDatePicker from "react-datepicker";
 import { styled } from "styled-components";
 import DefaultCoverImage from "src/assets/linkedin-default.png";
 import ImageIcon from "src/components/Icon/ImageIcon";
@@ -84,6 +84,7 @@ const THREE_MEGABYTE_TO_BYTES = 3 * 1024 * 1024;
 
 const EditProfilePage = () => {
   const { userProfile } = useContext(AuthContext);
+  const [startDate, setStartDate] = useState<Date>(new Date());
   const [previewAvatarFile, setPreviewAvatarFile] = useState<Blob>();
   const [previewCoverImageFile, setPreviewCoverImageFile] = useState<Blob>();
   const previewCoverImageURL = useMemo(() => {
@@ -114,7 +115,9 @@ const EditProfilePage = () => {
     refetchOnMount: true,
   });
   const me = meData?.data.data;
-
+  const editProfileMutation = useMutation({
+    mutationFn: authApi.updateMe,
+  });
   const handleClickOnAvatarInput = () => {
     avatarInputFileRef.current?.click();
   };
@@ -181,6 +184,12 @@ const EditProfilePage = () => {
     }
     setPreviewAvatarFile(fileFromLocal);
   };
+  const handleEditProfile = handleSubmit((data) => {
+    console.log({
+      ...data,
+    });
+  });
+
   return (
     <>
       <div className="flex mt-10 gap-12 justify-between">
@@ -236,62 +245,88 @@ const EditProfilePage = () => {
           <h1 className="text-3xl font-bold mt-4">
             <span>Edit your profile 📝</span>
           </h1>
-          <InputGroup>
-            <div>
-              <Label
-                htmlFor="fullName"
-                className="font-medium"
-              >
-                Full Name
-              </Label>
-              <Input
-                name="fullName"
-                id="fullName"
-                placeholder="Enter your full name"
+          <form onSubmit={handleEditProfile}>
+            <InputGroup>
+              <div>
+                <Label
+                  htmlFor="fullName"
+                  className="font-medium"
+                >
+                  Full Name
+                </Label>
+                <Input
+                  name="fullName"
+                  id="fullName"
+                  placeholder="Enter your full name"
+                  register={register}
+                  errorMsg={errors.fullName?.message}
+                ></Input>
+              </div>
+              <div>
+                <Label
+                  htmlFor="phoneNumber"
+                  className="font-medium"
+                >
+                  Phone Number
+                </Label>
+                <Input
+                  name="phoneNumber"
+                  id="phoneNumber"
+                  placeholder="Enter your phone number"
+                  register={register}
+                  errorMsg={errors.phoneNumber?.message}
+                ></Input>
+              </div>
+            </InputGroup>
+            <InputGroup>
+              <div>
+                <Label
+                  htmlFor="address"
+                  className="font-medium"
+                >
+                  Address
+                </Label>
+                <Input
+                  name="address"
+                  id="address"
+                  placeholder="Enter your address"
+                  register={register}
+                  errorMsg={errors.address?.message}
+                ></Input>
+              </div>
+              <div>
+                <Label
+                  htmlFor="address"
+                  className="font-medium"
+                >
+                  Date Of Birth
+                </Label>
+                <ReactDatePicker
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date as Date)}
+                  wrapperClassName="w-full h-[48px] bg-[#e7ecf3] rounded-md overflow-hidden"
+                  className="p-[10px_46px_10px_10px] text-sm font-medium w-full h-[48px] bg-[#e7ecf3] rounded-md border-2"
+                  showYearDropdown
+                  dropdownMode="select"
+                  shouldCloseOnSelect={false}
+                ></ReactDatePicker>
+              </div>
+            </InputGroup>
+            <InputBlock>
+              <Textarea
+                name="bio"
                 register={register}
-                errorMsg={errors.fullName?.message}
-              ></Input>
-            </div>
-            <div>
-              <Label
-                htmlFor="phoneNumber"
-                className="font-medium"
-              >
-                Phone Number
-              </Label>
-              <Input
-                name="phoneNumber"
-                id="phoneNumber"
-                placeholder="Enter your phone number"
-                register={register}
-                errorMsg={errors.phoneNumber?.message}
-              ></Input>
-            </div>
-          </InputGroup>
-          <InputBlock>
-            <Label htmlFor="address">Address</Label>
-            <Input
-              name="address"
-              id="address"
-              placeholder="Enter your address"
-              register={register}
-              errorMsg={errors.address?.message}
-            ></Input>
-          </InputBlock>
-          <InputBlock>
-            <Textarea
-              name="bio"
-              register={register}
-              placeholder="Enter your bio"
-              errorMsg={errors.bio?.message}
-            ></Textarea>
-          </InputBlock>
-          <Button
-            type="submit"
-            className="mb-10"
-          >
-            Edit my profile
-          </Button>
+                placeholder="Enter your bio"
+                errorMsg={errors.bio?.message}
+              ></Textarea>
+            </InputBlock>
+            <Button
+              type="submit"
+              className="mb-10"
+            >
+              Edit my profile
+            </Button>
+          </form>
         </ProfileLeft>
         <ProfileRight>
           <InputFile

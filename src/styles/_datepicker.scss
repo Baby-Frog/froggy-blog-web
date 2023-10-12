@@ -1,0 +1,23 @@
+.react-datepicker__week {
+  .react-datepicker__day--selected {
+    background-color: #1a8917 !important;
+    border-radius: 100%;
+    &:hover {
+      border-radius: 100%;
+    }
+  }
+  .react-datepicker__day--keyboard-selected {
+    background-color: rgba($color: #1a8917, $alpha: 0.3) !important;
+    border-radius: 100%;
+    &:hover {
+      border-radius: 100%;
+    }
+    @apply text-black;
+  }
+}
+
+.react-datepicker__header {
+  background-color: white !important;
+  border-bottom: unset !important;
+  padding: 15px 10px !important;
+}

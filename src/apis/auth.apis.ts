@@ -11,6 +11,7 @@ export const authApi = {
   logout: (body: { refreshToken: string }) => http.post(AUTH_ENDPOINTS.LOGOUT, body),
   refreshToken: (body: { refreshToken: string }) => http.post<TAuthResponse>(AUTH_ENDPOINTS.REFRESH_TOKEN, body),
   getMe: () => http.get<TSuccessApiResponse<TUserProfile>>(AUTH_ENDPOINTS.GET_ME),
+  updateMe: () => http.get<TSuccessApiResponse<TUserProfile>>(AUTH_ENDPOINTS.UPDATE_ME),
   getAnonymousProfile: (userId: string) =>
     http.get<TSuccessApiResponse<TUserProfile>>(`${AUTH_ENDPOINTS.GET_ANONYMOUS_PROFILE}/${userId}`),
 };

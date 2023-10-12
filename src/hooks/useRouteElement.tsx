@@ -2,7 +2,7 @@ import { useRoutes } from "react-router-dom";
 import { path } from "src/constants/path";
 
 import MainLayout from "src/layouts/MainLayout/MainLayout";
-import NewStoryLayout from "src/layouts/NewStoryLayout";
+import TitleLayout from "src/layouts/TitleLayout";
 import StoryDetailLayout from "src/layouts/StoryDetailLayout";
 import AnonymousUserProfilePage from "src/pages/AnonymousUserProfilePage";
 import NewStoryPage from "src/pages/BlogWritingPage";
@@ -64,17 +64,17 @@ export default function useRouteElement() {
         {
           path: path.NEWSTORY,
           element: (
-            <NewStoryLayout>
+            <TitleLayout title="Create your story">
               <NewStoryPage></NewStoryPage>
-            </NewStoryLayout>
+            </TitleLayout>
           ),
         },
         {
           path: path.EDIT_PROFILE,
           element: (
-            <MainLayout>
+            <TitleLayout title="Edit profile">
               <EditProfilePage></EditProfilePage>
-            </MainLayout>
+            </TitleLayout>
           ),
         },
       ],

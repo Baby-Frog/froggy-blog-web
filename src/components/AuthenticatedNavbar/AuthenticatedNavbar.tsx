@@ -22,7 +22,7 @@ import SuccessToastIcon from "../Icon/ToastIcon/SuccessToastIcon";
 import PopoverDismiss from "../PopoverDismiss";
 
 type TAuthenticatedNavbarProps = {
-  isWritingBlog?: boolean;
+  title?: string;
 };
 
 const AuthenticatedNavbarContainer = styled.div`
@@ -71,7 +71,7 @@ const AuthenticatedNavbarLeft = styled.div`
       background-color: #f0f0f0;
       border-radius: 16px;
       &::placeholder {
-        color: ${props => props.theme.colors.normalGrey};
+        color: ${(props) => props.theme.colors.normalGrey};
       }
     }
   }
@@ -122,7 +122,7 @@ const StyledDropdownLink = styled(Link)<{ $displayColumn?: boolean }>`
   }
 `;
 
-const AuthenticatedNavbar = ({ isWritingBlog }: TAuthenticatedNavbarProps) => {
+const AuthenticatedNavbar = ({ title }: TAuthenticatedNavbarProps) => {
   const { userProfile } = useContext(AuthContext);
   const navigate = useNavigate();
   const isMobile = useMedia("(max-width: 767px)");
@@ -160,7 +160,7 @@ const AuthenticatedNavbar = ({ isWritingBlog }: TAuthenticatedNavbarProps) => {
             alt="Logo"
           />
         </Link>
-        {!isMobile && !isWritingBlog && (
+        {!isMobile && !title && (
           <form className="navbar-search">
             <SearchIcon className="navbar-search-icon"></SearchIcon>
 
@@ -171,9 +171,7 @@ const AuthenticatedNavbar = ({ isWritingBlog }: TAuthenticatedNavbarProps) => {
             />
           </form>
         )}
-        {!isMobile && isWritingBlog && (
-          <div className="text-[24px] font-[Pacifico] font-medium tracking-wide">Create your story</div>
-        )}
+        {!isMobile && title && <div className="text-[24px] font-[Pacifico] font-medium tracking-wide">{title}</div>}
       </AuthenticatedNavbarLeft>
       <AuthenticatedNavbarRight>
         {!isMobile ? (

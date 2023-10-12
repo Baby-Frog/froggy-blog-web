@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ThemeProvider } from "styled-components";
 import "sweetalert2/src/sweetalert2.scss";
+import "react-datepicker/dist/react-datepicker.css";
 import App from "./App.tsx";
 import { theme } from "./constants/themes.ts";
 import { AuthProvider } from "./contexts/auth.contexts.tsx";
