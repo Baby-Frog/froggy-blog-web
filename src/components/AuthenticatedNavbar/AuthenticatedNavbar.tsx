@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useMedia from "react-use/lib/useMedia";
@@ -126,6 +126,11 @@ const AuthenticatedNavbar = ({ title }: TAuthenticatedNavbarProps) => {
   const { userProfile } = useContext(AuthContext);
   const navigate = useNavigate();
   const isMobile = useMedia("(max-width: 767px)");
+  const { data: meData } = useQuery({
+    queryKey: ["me"],
+    queryFn: () => authApi.getMe(),
+  });
+  const me = meData?.data.data;
   const {
     handleSubmit,
     register,
@@ -224,7 +229,7 @@ const AuthenticatedNavbar = ({ title }: TAuthenticatedNavbarProps) => {
                 $displayColumn
               >
                 <div>Sign out</div>
-                <div>{hideEmail(userProfile?.email)}</div>
+                <div>{hideEmail(me?.email)}</div>
               </StyledDropdownLink>
             </UserDropdown>
           }
@@ -233,7 +238,7 @@ const AuthenticatedNavbar = ({ title }: TAuthenticatedNavbarProps) => {
         >
           <UserAvatar>
             <img
-              src={userProfile?.avatarPath}
+              src={me?.avatarPath}
               alt="Avatar"
             />
             <ChevronIcon></ChevronIcon>

@@ -1,5 +1,5 @@
 import { useContext, useMemo, useRef, useState } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { authApi } from "src/apis/auth.apis";
 import EditAvatarIcon from "src/components/Icon/EditAvatarIcon";
@@ -127,6 +127,7 @@ const EditProfilePage = () => {
     },
     resolver: yupResolver(profileSchema),
   });
+  const queryClient = useQueryClient();
   const fullNameFormValue = watch("fullName");
   const bioFormValue = watch("bio");
   const addressFormValue = watch("address");
@@ -205,7 +206,6 @@ const EditProfilePage = () => {
     }
     setPreviewAvatarFile(fileFromLocal);
   };
-  console.log(previewAvatarURL);
   const handleEditProfile = handleSubmit(async (data) => {
     let yourNewAvatar = avatarFormValue;
     let yourNewCoverImage = coverImageFormValue;
@@ -236,6 +236,7 @@ const EditProfilePage = () => {
       {
         onSuccess: (data, variable) => {
           localStorage.setItem("user", JSON.stringify(variable));
+          queryClient.invalidateQueries({ queryKey: ["me"] });
           toast.success("Edit profile successfully", {
             icon: <SuccessToastIcon></SuccessToastIcon>,
           });
