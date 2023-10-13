@@ -17,6 +17,10 @@ import { TProfileSchema, profileSchema } from "src/schemas/profile.schema";
 import Textarea from "src/components/Textarea";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "src/components/Button";
+import EmailIcon from "src/components/Icon/UserProfileIcon/EmailIcon";
+import PhoneNumberIcon from "src/components/Icon/UserProfileIcon/PhoneNumberIcon";
+import AddressIcon from "src/components/Icon/UserProfileIcon/AddressIcon";
+import DateOfBirthIcon from "src/components/Icon/UserProfileIcon/DateOfBirthIcon";
 const ProfileLeft = styled.div`
   width: calc(65% - 24px);
 `;
@@ -311,8 +315,9 @@ const EditProfilePage = () => {
                   onChange={(date) => setStartDate(date as Date)}
                   wrapperClassName="w-full h-[48px] bg-[#e7ecf3] rounded-md overflow-hidden"
                   className="p-[10px_46px_10px_10px] text-sm font-medium w-full h-[48px] bg-[#e7ecf3] rounded-md border-2"
-                  showYearDropdown
                   dropdownMode="select"
+                  showYearDropdown
+                  showIcon
                   shouldCloseOnSelect={false}
                 ></ReactDatePicker>
               </div>
@@ -362,23 +367,51 @@ const EditProfilePage = () => {
           )}
           {me?.email && (
             <>
-              <h5 className="mt-4 font-semibold">Email 📨</h5>
+              <h5 className="mt-4 flex items-center gap-1 font-semibold">
+                <EmailIcon
+                  width={20}
+                  height={20}
+                  color="#6b6b6b"
+                ></EmailIcon>
+                <span>Email</span>
+              </h5>
               <div className="mt-1 font-medium break-words">{me?.email}</div>
             </>
           )}
-          <h5 className="mt-3 font-semibold">Phone Number 📞</h5>
+          <h5 className="mt-3 flex items-center gap-1 font-semibold">
+            <PhoneNumberIcon
+              width={18}
+              height={18}
+              color="#6b6b6b"
+            ></PhoneNumberIcon>
+            <span>Phone Number</span>
+          </h5>
           {phoneNumberFormValue ? (
             <div className="mt-1 font-medium break-words">{phoneNumberFormValue}</div>
           ) : (
             <div className="mt-1 font-light break-words">Not updated yet</div>
           )}
-          <h5 className="mt-3 font-semibold">Address 🏠</h5>
+          <h5 className="mt-3 flex items-center gap-1 font-semibold">
+            <AddressIcon
+              width={20}
+              height={20}
+              color="#6b6b6b"
+            ></AddressIcon>
+            <span>Address</span>
+          </h5>
           {addressFormValue ? (
             <div className="mt-1 font-medium break-words">{addressFormValue}</div>
           ) : (
             <div className="mt-1 font-light break-words">Not updated yet</div>
           )}
-          <h5 className="mt-3 font-semibold">Date of birth 📅</h5>
+          <h5 className="mt-3 flex items-center gap-1 font-semibold">
+            <DateOfBirthIcon
+              width={20}
+              height={20}
+              color="#6b6b6b"
+            ></DateOfBirthIcon>
+            <span>Date of birth</span>
+          </h5>
           {me?.birthday ? (
             <div className="mt-1 font-medium break-words">{me?.birthday}</div>
           ) : (

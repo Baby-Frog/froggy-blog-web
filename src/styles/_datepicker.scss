@@ -21,3 +21,9 @@
   border-bottom: unset !important;
   padding: 15px 10px !important;
 }
+
+.react-datepicker__input-container .react-datepicker__calendar-icon {
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.6;
+}
