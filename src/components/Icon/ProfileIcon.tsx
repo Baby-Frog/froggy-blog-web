@@ -1,5 +1,3 @@
-import React from "react";
-
 const ProfileIcon = (props: JSX.IntrinsicElements["svg"]) => {
   return (
     <svg
@@ -8,6 +6,7 @@ const ProfileIcon = (props: JSX.IntrinsicElements["svg"]) => {
       viewBox="0 0 24 24"
       fill="none"
       aria-label="Profile"
+      {...props}
     >
       <circle
         cx={12}

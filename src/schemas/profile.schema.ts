@@ -1,6 +1,8 @@
 import * as yup from "yup";
 
 export const profileSchema = yup.object({
+  id: yup.string().required(),
+  email: yup.string(),
   fullName: yup.string().required("Full name is required").min(6, "Full name must be at least 6 characters long"),
   avatarPath: yup.string(),
   coverImgPath: yup.string(),

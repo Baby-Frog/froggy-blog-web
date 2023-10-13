@@ -4,7 +4,7 @@ export type TUserProfile = {
   email: string;
   avatarPath: string;
   address?: string;
-  birthday?: string;
+  birthDay?: string;
   phoneNumber?: string;
   coverImgPath?: string;
   bio?: string;

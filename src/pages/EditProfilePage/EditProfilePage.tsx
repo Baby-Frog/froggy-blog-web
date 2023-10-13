@@ -21,6 +21,8 @@ import EmailIcon from "src/components/Icon/UserProfileIcon/EmailIcon";
 import PhoneNumberIcon from "src/components/Icon/UserProfileIcon/PhoneNumberIcon";
 import AddressIcon from "src/components/Icon/UserProfileIcon/AddressIcon";
 import DateOfBirthIcon from "src/components/Icon/UserProfileIcon/DateOfBirthIcon";
+import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
+import { imageApi } from "src/apis/image.apis";
 const ProfileLeft = styled.div`
   width: calc(65% - 24px);
 `;
@@ -95,7 +97,7 @@ const EditProfilePage = () => {
     return previewCoverImageFile ? URL.createObjectURL(previewCoverImageFile) : userProfile?.coverImgPath;
   }, [previewCoverImageFile, userProfile?.coverImgPath]);
   const previewAvatarURL = useMemo(() => {
-    return previewAvatarFile ? URL.createObjectURL(previewAvatarFile) : userProfile?.coverImgPath;
+    return previewAvatarFile ? URL.createObjectURL(previewAvatarFile) : userProfile?.avatarPath;
   }, [previewAvatarFile, userProfile?.coverImgPath]);
   const avatarInputFileRef = useRef<HTMLInputElement>(null);
   const coverImageInputFileRef = useRef<HTMLInputElement>(null);
@@ -109,23 +111,33 @@ const EditProfilePage = () => {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<TProfileSchema>({
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
-      fullName: me?.fullName,
-      phoneNumber: me?.phoneNumber,
-      address: me?.address,
-      bio: me?.bio,
+      id: userProfile?.id || "",
+      fullName: userProfile?.fullName || "",
+      phoneNumber: userProfile?.phoneNumber || "",
+      address: userProfile?.address || "",
+      bio: userProfile?.bio || "",
+      avatarPath: userProfile?.avatarPath || "",
+      coverImgPath: userProfile?.coverImgPath || "",
     },
     resolver: yupResolver(profileSchema),
   });
+  const fullNameFormValue = watch("fullName");
   const bioFormValue = watch("bio");
   const addressFormValue = watch("address");
   const phoneNumberFormValue = watch("phoneNumber");
+  const avatarFormValue = watch("avatarPath");
+  const coverImageFormValue = watch("coverImgPath");
   const editProfileMutation = useMutation({
     mutationFn: authApi.updateMe,
+  });
+  const uploadImage = useMutation({
+    mutationFn: imageApi.uploadImage,
   });
   const handleClickOnAvatarInput = () => {
     avatarInputFileRef.current?.click();
@@ -193,15 +205,51 @@ const EditProfilePage = () => {
     }
     setPreviewAvatarFile(fileFromLocal);
   };
-  const handleEditProfile = handleSubmit((data) => {
-    console.log({
-      ...data,
-    });
+  console.log(previewAvatarURL);
+  const handleEditProfile = handleSubmit(async (data) => {
+    let yourNewAvatar = avatarFormValue;
+    let yourNewCoverImage = coverImageFormValue;
+    if (previewAvatarFile) {
+      const formData = new FormData();
+      formData.append("file", previewAvatarFile);
+      const uploadRes = await uploadImage.mutateAsync(formData);
+      yourNewAvatar = uploadRes.data.data.urlImage;
+      setValue("avatarPath", yourNewAvatar);
+    }
+    if (previewCoverImageFile) {
+      const formData = new FormData();
+      formData.append("file", previewCoverImageFile);
+      const uploadRes = await uploadImage.mutateAsync(formData);
+      yourNewCoverImage = uploadRes.data.data.urlImage;
+      setValue("coverImgPath", yourNewCoverImage);
+    }
+
+    editProfileMutation.mutate(
+      {
+        ...data,
+        birthDay: startDate.toISOString(),
+        avatarPath: yourNewAvatar,
+        coverImgPath: yourNewCoverImage,
+        id: userProfile?.id as string,
+        email: "",
+      },
+      {
+        onSuccess: (data, variable) => {
+          localStorage.setItem("user", JSON.stringify(variable));
+          toast.success("Edit profile successfully", {
+            icon: <SuccessToastIcon></SuccessToastIcon>,
+          });
+        },
+      },
+    );
   });
 
   return (
     <>
-      <div className="flex mt-10 gap-12 justify-between">
+      <form
+        onSubmit={handleEditProfile}
+        className="flex mt-10 gap-12 justify-between"
+      >
         <ProfileLeft>
           {!me?.coverImgPath ? (
             <InputFile
@@ -237,7 +285,7 @@ const EditProfilePage = () => {
             >
               <CoverImageWrapper>
                 <img
-                  src={previewCoverImageURL || me.coverImgPath}
+                  src={previewCoverImageURL || me?.coverImgPath}
                   alt=""
                   className="w-full h-[150px] object-cover object-center"
                 />
@@ -254,89 +302,88 @@ const EditProfilePage = () => {
           <h1 className="text-3xl font-bold mt-4">
             <span>Edit your profile 📝</span>
           </h1>
-          <form onSubmit={handleEditProfile}>
-            <InputGroup>
-              <div>
-                <Label
-                  htmlFor="fullName"
-                  className="font-medium"
-                >
-                  Full Name
-                </Label>
-                <Input
-                  name="fullName"
-                  id="fullName"
-                  placeholder="Enter your full name"
-                  register={register}
-                  errorMsg={errors.fullName?.message}
-                ></Input>
-              </div>
-              <div>
-                <Label
-                  htmlFor="phoneNumber"
-                  className="font-medium"
-                >
-                  Phone Number
-                </Label>
-                <Input
-                  name="phoneNumber"
-                  id="phoneNumber"
-                  placeholder="Enter your phone number"
-                  register={register}
-                  errorMsg={errors.phoneNumber?.message}
-                ></Input>
-              </div>
-            </InputGroup>
-            <InputGroup>
-              <div>
-                <Label
-                  htmlFor="address"
-                  className="font-medium"
-                >
-                  Address
-                </Label>
-                <Input
-                  name="address"
-                  id="address"
-                  placeholder="Enter your address"
-                  register={register}
-                  errorMsg={errors.address?.message}
-                ></Input>
-              </div>
-              <div>
-                <Label
-                  htmlFor="address"
-                  className="font-medium"
-                >
-                  Date Of Birth
-                </Label>
-                <ReactDatePicker
-                  selected={startDate}
-                  onChange={(date) => setStartDate(date as Date)}
-                  wrapperClassName="w-full h-[48px] bg-[#e7ecf3] rounded-md overflow-hidden"
-                  className="p-[10px_46px_10px_10px] text-sm font-medium w-full h-[48px] bg-[#e7ecf3] rounded-md border-2"
-                  dropdownMode="select"
-                  showYearDropdown
-                  showIcon
-                  shouldCloseOnSelect={false}
-                ></ReactDatePicker>
-              </div>
-            </InputGroup>
-            <InputBlock>
-              <Textarea
-                name="bio"
+
+          <InputGroup>
+            <div>
+              <Label
+                htmlFor="fullName"
+                className="font-medium"
+              >
+                Full Name
+              </Label>
+              <Input
+                name="fullName"
+                id="fullName"
+                placeholder="Enter your full name"
                 register={register}
-                placeholder="Enter your bio"
-                errorMsg={errors.bio?.message}
-              ></Textarea>
-            </InputBlock>
-            <Button
-              type="submit"
-              className="mb-10"
-            >
-              Submit
-            </Button>
-          </form>
+                errorMsg={errors.fullName?.message}
+              ></Input>
+            </div>
+            <div>
+              <Label
+                htmlFor="phoneNumber"
+                className="font-medium"
+              >
+                Phone Number
+              </Label>
+              <Input
+                name="phoneNumber"
+                id="phoneNumber"
+                placeholder="Enter your phone number"
+                register={register}
+                errorMsg={errors.phoneNumber?.message}
+              ></Input>
+            </div>
+          </InputGroup>
+          <InputGroup>
+            <div>
+              <Label
+                htmlFor="address"
+                className="font-medium"
+              >
+                Address
+              </Label>
+              <Input
+                name="address"
+                id="address"
+                placeholder="Enter your address"
+                register={register}
+                errorMsg={errors.address?.message}
+              ></Input>
+            </div>
+            <div>
+              <Label
+                htmlFor="address"
+                className="font-medium"
+              >
+                Date Of Birth
+              </Label>
+              <ReactDatePicker
+                selected={startDate}
+                onChange={(date) => setStartDate(date as Date)}
+                wrapperClassName="w-full h-[48px] bg-[#e7ecf3] rounded-md overflow-hidden"
+                className="p-[10px_46px_10px_10px] text-sm font-medium w-full h-[48px] bg-[#e7ecf3] rounded-md border-2"
+                dropdownMode="select"
+                showYearDropdown
+                showIcon
+                shouldCloseOnSelect={false}
+              ></ReactDatePicker>
+            </div>
+          </InputGroup>
+          <InputBlock>
+            <Textarea
+              name="bio"
+              register={register}
+              placeholder="Enter your bio"
+              errorMsg={errors.bio?.message}
+            ></Textarea>
+          </InputBlock>
+          <Button
+            type="submit"
+            className="mb-10"
+          >
+            Submit
+          </Button>
         </ProfileLeft>
         <ProfileRight>
           <InputFile
@@ -359,9 +406,9 @@ const EditProfilePage = () => {
               </div>
             </AvatarWrapper>
           </InputFile>
-          <div className="mt-4 font-semibold">{me?.fullName}</div>
+          <div className="mt-4 font-semibold">{fullNameFormValue || me?.fullName}</div>
           {bioFormValue ? (
-            <div className="mt-1 font-medium break-words">{bioFormValue}</div>
+            <div className="mt-1 font-normal break-words">{bioFormValue}</div>
           ) : (
             <div className="mt-1 font-light break-words">No bio</div>
           )}
@@ -375,7 +422,7 @@ const EditProfilePage = () => {
                 ></EmailIcon>
                 <span>Email</span>
               </h5>
-              <div className="mt-1 font-medium break-words">{me?.email}</div>
+              <div className="mt-1 font-normal break-words">{me?.email}</div>
             </>
           )}
           <h5 className="mt-3 flex items-center gap-1 font-semibold">
@@ -387,7 +434,7 @@ const EditProfilePage = () => {
             <span>Phone Number</span>
           </h5>
           {phoneNumberFormValue ? (
-            <div className="mt-1 font-medium break-words">{phoneNumberFormValue}</div>
+            <div className="mt-1 font-normal break-words">{phoneNumberFormValue}</div>
           ) : (
             <div className="mt-1 font-light break-words">Not updated yet</div>
           )}
@@ -400,7 +447,7 @@ const EditProfilePage = () => {
             <span>Address</span>
           </h5>
           {addressFormValue ? (
-            <div className="mt-1 font-medium break-words">{addressFormValue}</div>
+            <div className="mt-1 font-normal break-words">{addressFormValue}</div>
           ) : (
             <div className="mt-1 font-light break-words">Not updated yet</div>
           )}
@@ -412,13 +459,13 @@ const EditProfilePage = () => {
             ></DateOfBirthIcon>
             <span>Date of birth</span>
           </h5>
-          {me?.birthday ? (
-            <div className="mt-1 font-medium break-words">{me?.birthday}</div>
+          {me?.birthDay ? (
+            <div className="mt-1 font-normal break-words">{me?.birthDay}</div>
           ) : (
             <div className="mt-1 font-light break-words">Not updated yet</div>
           )}
         </ProfileRight>
-      </div>
+      </form>
     </>
   );
 };
