@@ -87,7 +87,7 @@ const InputBlock = styled.div`
 `;
 
 const THREE_MEGABYTE_TO_BYTES = 3 * 1024 * 1024;
-
+const disabledYears = [2022, 2023];
 const EditProfilePage = () => {
   const { userProfile } = useContext(AuthContext);
   const [startDate, setStartDate] = useState<Date>(new Date());
@@ -244,7 +244,21 @@ const EditProfilePage = () => {
       },
     );
   });
-
+  const isYearDisabled = (year: number) => {
+    return disabledYears.includes(year);
+  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const renderYearDropdownItem = (option: any, props: any) => {
+    return (
+      <option
+        key={option}
+        {...props}
+        disabled={isYearDisabled(option)}
+      >
+        {option}
+      </option>
+    );
+  };
   return (
     <>
       <form
@@ -365,6 +379,7 @@ const EditProfilePage = () => {
                 wrapperClassName="w-full h-[48px] bg-[#e7ecf3] rounded-md overflow-hidden"
                 className="p-[10px_46px_10px_10px] text-sm font-medium w-full h-[48px] bg-[#e7ecf3] rounded-md border-2"
                 dropdownMode="select"
+                maxDate={new Date()}
                 showYearDropdown
                 showIcon
                 shouldCloseOnSelect={false}

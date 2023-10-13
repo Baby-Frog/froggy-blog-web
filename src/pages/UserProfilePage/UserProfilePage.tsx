@@ -99,40 +99,6 @@ const UserProfilePage = () => {
       ),
     },
   ];
-  const handleClickOnInput = () => {
-    inputFileRef.current?.click();
-  };
-  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fileFromLocal = e.target.files?.[0];
-    if (fileFromLocal && !fileFromLocal.type.includes("image") && fileFromLocal?.type.includes("gif")) {
-      toast.error(<div className="text-sm">Wrong file format, we only accept .JPEG, .PNG, .JPG file format</div>, {
-        icon: (
-          <ErrorToastIcon
-            width={40}
-            height={40}
-          />
-        ),
-      });
-      // Set lại value để có thể hiển thị lại lỗi đề phòng có chuyện gì xảy ra
-      e.target.value = "";
-      return;
-    }
-    if (fileFromLocal && fileFromLocal.size >= THREE_MEGABYTE_TO_BYTES) {
-      toast.error("Your image size is too big, we only accept image size under 3MB", {
-        icon: (
-          <ErrorToastIcon
-            width={40}
-            height={40}
-          />
-        ),
-      });
-      // Set lại value để có thể chọn lại bức ảnh trước một lần nữa đề phòng có chuyện gì xảy ra
-      e.target.value = "";
-      return;
-    }
-
-    setPreviewImageFile(fileFromLocal);
-  };
   return (
     <>
       <div className="flex mt-10 gap-12 justify-between">

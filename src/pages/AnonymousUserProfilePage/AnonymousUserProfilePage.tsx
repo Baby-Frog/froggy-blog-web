@@ -12,6 +12,7 @@ const AnonymousUserProfilePage = () => {
     queryKey: ["user", userId],
     queryFn: () => authApi.getAnonymousProfile(userId as string),
   });
+  const user = userData?.data.data;
   return <div></div>;
 };
 
