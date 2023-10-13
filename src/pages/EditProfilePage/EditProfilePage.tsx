@@ -98,7 +98,7 @@ const EditProfilePage = () => {
   }, [previewCoverImageFile, userProfile?.coverImgPath]);
   const previewAvatarURL = useMemo(() => {
     return previewAvatarFile ? URL.createObjectURL(previewAvatarFile) : userProfile?.avatarPath;
-  }, [previewAvatarFile, userProfile?.coverImgPath]);
+  }, [previewAvatarFile, userProfile?.avatarPath]);
   const avatarInputFileRef = useRef<HTMLInputElement>(null);
   const coverImageInputFileRef = useRef<HTMLInputElement>(null);
   const { data: meData } = useQuery({
