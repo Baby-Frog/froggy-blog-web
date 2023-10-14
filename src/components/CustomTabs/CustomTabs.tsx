@@ -3,12 +3,13 @@ import type { TabsProps } from "antd";
 
 type TTabsProps = {
   items: TabsProps["items"];
-};
+} & TabsProps;
 
-const CustomTabs = ({ items }: TTabsProps) => {
+const CustomTabs = ({ items, ...props }: TTabsProps) => {
   return (
     <Tabs
-      defaultActiveKey="1"
+      defaultActiveKey={props.defaultActiveKey}
+      activeKey={props.activeKey}
       items={items}
       color="#242424"
     />
