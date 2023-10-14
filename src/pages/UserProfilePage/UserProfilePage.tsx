@@ -1,26 +1,23 @@
 import { TabsProps } from "antd";
-import { useContext, useRef, useState } from "react";
+import { useContext } from "react";
 import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
 import { authApi } from "src/apis/auth.apis";
 import { storyApi } from "src/apis/story.apis";
-import { toast } from "react-toastify";
 import CustomTabs from "src/components/CustomTabs";
-import EllipsisIcon from "src/components/Icon/EllipsisIcon";
-import { AuthContext } from "src/contexts/auth.contexts";
-import { styled } from "styled-components";
-import HomepageRecentPost from "../Homepage/components/HomepageRecentPost";
-import PopoverDismiss from "src/components/PopoverDismiss";
-import useShareLink from "src/hooks/useShareLink";
 import CopyIcon from "src/components/Icon/CopyIcon";
 import EditAvatarIcon from "src/components/Icon/EditAvatarIcon";
-import InputFile from "src/components/InputFile";
-import ErrorToastIcon from "src/components/Icon/ToastIcon/ErrorToastIcon";
-import { Link } from "react-router-dom";
-import { path } from "src/constants/path";
-import EmailIcon from "src/components/Icon/UserProfileIcon/EmailIcon";
-import PhoneNumberIcon from "src/components/Icon/UserProfileIcon/PhoneNumberIcon";
+import EllipsisIcon from "src/components/Icon/EllipsisIcon";
 import AddressIcon from "src/components/Icon/UserProfileIcon/AddressIcon";
 import DateOfBirthIcon from "src/components/Icon/UserProfileIcon/DateOfBirthIcon";
+import EmailIcon from "src/components/Icon/UserProfileIcon/EmailIcon";
+import PhoneNumberIcon from "src/components/Icon/UserProfileIcon/PhoneNumberIcon";
+import PopoverDismiss from "src/components/PopoverDismiss";
+import { path } from "src/constants/path";
+import { AuthContext } from "src/contexts/auth.contexts";
+import useShareLink from "src/hooks/useShareLink";
+import { styled } from "styled-components";
+import HomepageRecentPost from "../Homepage/components/HomepageRecentPost";
 
 const ProfileLeft = styled.div`
   width: calc(65% - 24px);
@@ -51,12 +48,8 @@ const AvatarWrapper = styled(Link)`
   }
 `;
 
-const THREE_MEGABYTE_TO_BYTES = 3 * 1024 * 1024;
-
 const UserProfilePage = () => {
   const { userProfile } = useContext(AuthContext);
-  const [previewImageFile, setPreviewImageFile] = useState<Blob>();
-  const inputFileRef = useRef<HTMLInputElement>(null);
 
   const { handleCopyCurrentLink } = useShareLink({});
   const profileLink = `${window.location.origin}/user/profile/${userProfile?.id as string}`;

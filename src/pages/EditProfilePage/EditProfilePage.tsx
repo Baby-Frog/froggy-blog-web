@@ -1,28 +1,28 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext, useMemo, useRef, useState } from "react";
+import ReactDatePicker from "react-datepicker";
+import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { authApi } from "src/apis/auth.apis";
-import EditAvatarIcon from "src/components/Icon/EditAvatarIcon";
-import ErrorToastIcon from "src/components/Icon/ToastIcon/ErrorToastIcon";
-import InputFile from "src/components/InputFile";
-import { AuthContext } from "src/contexts/auth.contexts";
-import ReactDatePicker from "react-datepicker";
-import { styled } from "styled-components";
+import { imageApi } from "src/apis/image.apis";
 import DefaultCoverImage from "src/assets/linkedin-default.png";
-import ImageIcon from "src/components/Icon/ImageIcon";
-import Label from "src/components/Label";
-import Input from "src/components/Input";
-import { useForm } from "react-hook-form";
-import { TProfileSchema, profileSchema } from "src/schemas/profile.schema";
-import Textarea from "src/components/Textarea";
-import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "src/components/Button";
-import EmailIcon from "src/components/Icon/UserProfileIcon/EmailIcon";
-import PhoneNumberIcon from "src/components/Icon/UserProfileIcon/PhoneNumberIcon";
+import EditAvatarIcon from "src/components/Icon/EditAvatarIcon";
+import ImageIcon from "src/components/Icon/ImageIcon";
+import ErrorToastIcon from "src/components/Icon/ToastIcon/ErrorToastIcon";
+import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
 import AddressIcon from "src/components/Icon/UserProfileIcon/AddressIcon";
 import DateOfBirthIcon from "src/components/Icon/UserProfileIcon/DateOfBirthIcon";
-import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
-import { imageApi } from "src/apis/image.apis";
+import EmailIcon from "src/components/Icon/UserProfileIcon/EmailIcon";
+import PhoneNumberIcon from "src/components/Icon/UserProfileIcon/PhoneNumberIcon";
+import Input from "src/components/Input";
+import InputFile from "src/components/InputFile";
+import Label from "src/components/Label";
+import Textarea from "src/components/Textarea";
+import { AuthContext } from "src/contexts/auth.contexts";
+import { TProfileSchema, profileSchema } from "src/schemas/profile.schema";
+import { styled } from "styled-components";
 const ProfileLeft = styled.div`
   width: calc(65% - 24px);
 `;
@@ -87,10 +87,9 @@ const InputBlock = styled.div`
 `;
 
 const THREE_MEGABYTE_TO_BYTES = 3 * 1024 * 1024;
-const disabledYears = [2022, 2023];
 const EditProfilePage = () => {
-  const { userProfile } = useContext(AuthContext);
-  const [startDate, setStartDate] = useState<Date>(new Date());
+  const { userProfile, setUserProfile } = useContext(AuthContext);
+  const [startDate, setStartDate] = useState<Date>(new Date(userProfile?.birthDay as string));
   const [previewAvatarFile, setPreviewAvatarFile] = useState<Blob>();
   const [previewCoverImageFile, setPreviewCoverImageFile] = useState<Blob>();
   const previewCoverImageURL = useMemo(() => {
@@ -148,7 +147,7 @@ const EditProfilePage = () => {
   };
   const handleChangeCoverImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileFromLocal = e.target.files?.[0];
-    if (fileFromLocal && !fileFromLocal.type.includes("image") && fileFromLocal?.type.includes("gif")) {
+    if (fileFromLocal && !fileFromLocal.type.includes("image/jpeg" || "image/png" || "image/jpg")) {
       toast.error(<div className="text-sm">Wrong file format, we only accept .JPEG, .PNG, .JPG file format</div>, {
         icon: (
           <ErrorToastIcon
@@ -178,7 +177,7 @@ const EditProfilePage = () => {
   };
   const handleChangeAvatarFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileFromLocal = e.target.files?.[0];
-    if (fileFromLocal && !fileFromLocal.type.includes("image") && fileFromLocal?.type.includes("gif")) {
+    if (fileFromLocal && !fileFromLocal.type.includes("image/jpeg" || "image/png" || "image/jpg")) {
       toast.error(<div className="text-sm">Wrong file format, we only accept .JPEG, .PNG, .JPG file format</div>, {
         icon: (
           <ErrorToastIcon
@@ -235,7 +234,27 @@ const EditProfilePage = () => {
       },
       {
         onSuccess: (data, variable) => {
-          localStorage.setItem("user", JSON.stringify(variable));
+          setUserProfile({
+            ...variable,
+            fullName: variable.fullName as string,
+            birthDay: startDate.toISOString(),
+            avatarPath: variable.avatarPath as string,
+            coverImgPath: yourNewCoverImage,
+            id: userProfile?.id as string,
+            email: "",
+          });
+          localStorage.setItem(
+            "user",
+            JSON.stringify({
+              ...variable,
+              fullName: variable.fullName as string,
+              birthDay: startDate.toISOString(),
+              avatarPath: variable.avatarPath as string,
+              coverImgPath: yourNewCoverImage,
+              id: userProfile?.id as string,
+              email: "",
+            }),
+          );
           queryClient.invalidateQueries({ queryKey: ["me"] });
           toast.success("Edit profile successfully", {
             icon: <SuccessToastIcon></SuccessToastIcon>,
@@ -244,21 +263,7 @@ const EditProfilePage = () => {
       },
     );
   });
-  const isYearDisabled = (year: number) => {
-    return disabledYears.includes(year);
-  };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const renderYearDropdownItem = (option: any, props: any) => {
-    return (
-      <option
-        key={option}
-        {...props}
-        disabled={isYearDisabled(option)}
-      >
-        {option}
-      </option>
-    );
-  };
+
   return (
     <>
       <form
@@ -375,6 +380,7 @@ const EditProfilePage = () => {
               </Label>
               <ReactDatePicker
                 selected={startDate}
+                dateFormat={"dd/MM/yyyy"}
                 onChange={(date) => setStartDate(date as Date)}
                 wrapperClassName="w-full h-[48px] bg-[#e7ecf3] rounded-md overflow-hidden"
                 className="p-[10px_46px_10px_10px] text-sm font-medium w-full h-[48px] bg-[#e7ecf3] rounded-md border-2"
