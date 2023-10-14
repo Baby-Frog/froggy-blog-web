@@ -7,4 +7,6 @@ export const path = {
   NEWSTORY: "/new-story",
   STORY_DETAIL: "/:storyId",
   EDIT_PROFILE: "/user/profile/edit",
+  EXPORE_TOPICS: "/explore-topics",
+  SEARCH: "/search",
 } as const;

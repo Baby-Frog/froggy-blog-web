@@ -2,7 +2,7 @@ import { AUTH_ENDPOINTS } from "src/constants/endpoints";
 import { TProfileSchema } from "src/schemas/profile.schema";
 import { TAuthResponse } from "src/types/auth-response.types";
 import { TSuccessApiResponse } from "src/types/response.types";
-import { TUserProfile } from "src/types/user.types";
+import { TAnonymousProfile, TUserProfile } from "src/types/user.types";
 import http from "src/utils/http";
 
 export const authApi = {
@@ -14,5 +14,5 @@ export const authApi = {
   getMe: () => http.get<TSuccessApiResponse<TUserProfile>>(AUTH_ENDPOINTS.GET_ME),
   updateMe: (body: TProfileSchema) => http.post<TSuccessApiResponse<TUserProfile>>(AUTH_ENDPOINTS.UPDATE_ME, body),
   getAnonymousProfile: (userId: string) =>
-    http.get<TSuccessApiResponse<TUserProfile>>(`${AUTH_ENDPOINTS.GET_ANONYMOUS_PROFILE}/${userId}`),
+    http.get<TSuccessApiResponse<TAnonymousProfile>>(`${AUTH_ENDPOINTS.GET_ANONYMOUS_PROFILE}/${userId}`),
 };

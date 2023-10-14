@@ -12,6 +12,8 @@ import SettingPage from "src/pages/SettingPage";
 import StoryDetailPage from "src/pages/StoryDetailPage";
 import UserProfilePage from "src/pages/UserProfilePage";
 import ProtectedRoute from "src/routes/ProtectedRoute";
+import ExploreLayout from "src/layouts/ExploreLayout";
+import ExplorePage from "src/pages/ExplorePage";
 
 export default function useRouteElement() {
   const routeElements = useRoutes([
@@ -36,9 +38,17 @@ export default function useRouteElement() {
     {
       path: path.ANONYMOUS_PROFILE,
       element: (
-        <StoryDetailLayout>
+        <MainLayout>
           <AnonymousUserProfilePage></AnonymousUserProfilePage>
-        </StoryDetailLayout>
+        </MainLayout>
+      ),
+    },
+    {
+      path: path.EXPORE_TOPICS,
+      element: (
+        <ExploreLayout>
+          <ExplorePage></ExplorePage>
+        </ExploreLayout>
       ),
     },
     {
