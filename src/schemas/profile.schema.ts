@@ -7,7 +7,7 @@ export const profileSchema = yup.object({
   avatarPath: yup.string(),
   coverImgPath: yup.string(),
   address: yup.string().max(160, "Address must be at most 160 characters long"),
-  birthDay: yup.string(),
+  birthDay: yup.string().required("Date of birth is required"),
   phoneNumber: yup.string().max(20, "Phone number must be at most 20 characters long"),
   bio: yup.string().max(160, "Bio must be at most 160 characters long"),
 });

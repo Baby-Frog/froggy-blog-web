@@ -10,3 +10,15 @@ export type TUserProfile = {
   bio?: string;
   // more will be applied later
 };
+
+export type TAnonymousProfile = {
+  id: string;
+  fullName: string;
+  avatarPath: string;
+  address?: string;
+  birthDay?: string;
+  phoneNumber?: string;
+  coverImgPath?: string;
+  bio?: string;
+  // more will be applied later
+};

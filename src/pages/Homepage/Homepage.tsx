@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import { storyApi } from "src/apis/story.apis";
 import TrendingIcon from "src/components/Icon/TrendingIcon";
@@ -35,6 +35,7 @@ const MainStuffsWrapper = styled.div`
   gap: 32px;
   flex: 6;
   flex-shrink: 0;
+  height: 100vh;
 `;
 
 const SideStuffsWrapper = styled.div`
@@ -47,14 +48,17 @@ const SideStuffsWrapper = styled.div`
 `;
 
 const TopicsWrapper = styled.div`
-  display: flex;
-  gap: 8px;
   margin-block: 16px;
-  flex-wrap: wrap;
   max-width: 330px;
   width: 100%;
-  padding-bottom: 24px;
+  padding-bottom: 18px;
   border-bottom: 2px solid #f2f2f2;
+`;
+
+const TopicList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 `;
 
 const SideStuffsFooter = styled.div`
@@ -73,6 +77,7 @@ const SideStuffsFooter = styled.div`
 
 const Homepage = () => {
   const { isAuthenticated, userProfile } = useContext(AuthContext);
+
   const { data: recentStories, isLoading: recentStoriesIsLoading } = useQuery({
     queryKey: ["stories"],
     queryFn: () => storyApi.getRecentStories({ keyword: "", pageSize: 5 }),
@@ -126,6 +131,7 @@ const Homepage = () => {
       children: <div>2</div>,
     },
   ];
+
   // const [recentStories, setRecentStories] = useState<TStory[]>([]);
   const { data: storiesData, isLoading: storiesIsLoading } = useQuery({
     queryKey: ["stories"],
@@ -162,15 +168,23 @@ const Homepage = () => {
             <SideStuffsWrapper>
               <p className="font-semibold text-lg tracking-tight">Discover more of what matters to you</p>
               <TopicsWrapper>
-                {topics?.data.data.data.map((topic) => (
-                  <Link
-                    key={topic.id}
-                    className="px-2 py-3 bg-[#f2f2f2] text-sm rounded-2xl"
-                    to={path.HOMEPAGE}
-                  >
-                    {topic.topicName}
-                  </Link>
-                ))}
+                <TopicList>
+                  {topics?.data.data.data.map((topic) => (
+                    <Link
+                      key={topic.id}
+                      className="px-2 py-3 bg-[#f2f2f2] text-sm rounded-2xl"
+                      to={path.HOMEPAGE}
+                    >
+                      {topic.topicName}
+                    </Link>
+                  ))}
+                </TopicList>
+                <Link
+                  to={path.EXPORE_TOPICS}
+                  className="text-sm mt-4 block text-normalGreen hover:text-normalGreenHover "
+                >
+                  See more topics
+                </Link>
               </TopicsWrapper>
               <SideStuffsFooter>
                 <span>Help</span>
@@ -188,20 +202,31 @@ const Homepage = () => {
       ) : (
         <MainContentWrapper>
           <MainStuffsWrapper>
-            <CustomTabs items={items}></CustomTabs>
+            <CustomTabs
+              defaultActiveKey="1"
+              items={items}
+            ></CustomTabs>
           </MainStuffsWrapper>
           <SideStuffsWrapper>
             <p className="font-semibold text-lg tracking-tight">Discover more of what matters to you</p>
             <TopicsWrapper>
-              {topics?.data.data.data.map((topic) => (
-                <Link
-                  key={topic.id}
-                  className="px-2 py-3 bg-[#f2f2f2] text-sm rounded-2xl"
-                  to={path.HOMEPAGE}
-                >
-                  {topic.topicName}
-                </Link>
-              ))}
+              <TopicList>
+                {topics?.data.data.data.map((topic) => (
+                  <Link
+                    key={topic.id}
+                    className="px-2 py-3 bg-[#f2f2f2] text-sm rounded-2xl"
+                    to={path.HOMEPAGE}
+                  >
+                    {topic.topicName}
+                  </Link>
+                ))}
+              </TopicList>
+              <Link
+                to={path.EXPORE_TOPICS}
+                className="text-sm mt-4 block text-normalGreen hover:text-normalGreenHover "
+              >
+                See more topics
+              </Link>
             </TopicsWrapper>
             <SideStuffsFooter>
               <span>Help</span>
