@@ -68,8 +68,8 @@ const AuthenticatedNavbarLeft = styled.div`
       padding: 12px 12px 12px 40px;
       height: 100%;
       width: 100%;
-      background-color: #f0f0f0;
-      border-radius: 16px;
+      background-color: #f9f9f9;
+      border-radius: 32px;
       &::placeholder {
         color: ${(props) => props.theme.colors.normalGrey};
       }
@@ -171,7 +171,7 @@ const AuthenticatedNavbar = ({ title }: TAuthenticatedNavbarProps) => {
 
             <input
               type="text"
-              placeholder="Search Froggy Blog"
+              placeholder="Search"
               className="navbar-search-input"
             />
           </form>
