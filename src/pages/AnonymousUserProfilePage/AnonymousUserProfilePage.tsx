@@ -1,6 +1,6 @@
 import { TabsProps } from "antd";
 import { useQuery } from "react-query";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { authApi } from "src/apis/auth.apis";
 import { storyApi } from "src/apis/story.apis";
 import CustomTabs from "src/components/CustomTabs";
@@ -14,6 +14,8 @@ import { path } from "src/constants/path";
 import PhoneNumberIcon from "src/components/Icon/UserProfileIcon/PhoneNumberIcon";
 import AddressIcon from "src/components/Icon/UserProfileIcon/AddressIcon";
 import DateOfBirthIcon from "src/components/Icon/UserProfileIcon/DateOfBirthIcon";
+import { useContext, useEffect, useLayoutEffect } from "react";
+import { AuthContext } from "src/contexts/auth.contexts";
 const ProfileLeft = styled.div`
   width: calc(65% - 24px);
 `;
@@ -44,6 +46,8 @@ const AvatarWrapper = styled.div`
 `;
 const AnonymousUserProfilePage = () => {
   const { userId } = useParams();
+  const { userProfile } = useContext(AuthContext);
+  const navigate = useNavigate();
   const profileLink = `${window.location.origin}/user/profile/${userId}`;
   const { handleCopyCurrentLink } = useShareLink({});
   const { data: userData } = useQuery({
@@ -69,6 +73,11 @@ const AnonymousUserProfilePage = () => {
       ),
     },
   ];
+  useLayoutEffect(() => {
+    if (userProfile?.id === userId) {
+      navigate(path.PROFILE);
+    }
+  }, [navigate, userId, userProfile?.id]);
   return (
     <div className="flex mt-10 gap-12 justify-between">
       <ProfileLeft>

@@ -3,7 +3,6 @@ import React, { useContext } from "react";
 import AuthenticatedNavbar from "src/components/AuthenticatedNavbar";
 import ExploreNavbar from "src/components/ExploreNavbar";
 import PageTransition from "src/components/PageTransition";
-import UnauthenticatedNavbar from "src/components/UnauthenticatedNavbar";
 import { AuthContext } from "src/contexts/auth.contexts";
 import { styled } from "styled-components";
 
