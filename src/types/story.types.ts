@@ -14,3 +14,7 @@ export type TStory = {
   listTopic: TTopics[];
   author: TAuthor;
 };
+
+export type TStoryConfig = {
+  q: string;
+};
