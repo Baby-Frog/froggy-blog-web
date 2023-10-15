@@ -9,6 +9,7 @@ export const AUTH_ENDPOINTS = {
   REFRESH_TOKEN: "/refreshToken",
   GET_ME: "/api/user/me",
   UPDATE_ME: "/api/user/profile/update",
+  SEARCH_USERS: "/api/user/search",
   GET_ANONYMOUS_PROFILE: "/api/user/findById",
 } as const;
 
@@ -22,6 +23,7 @@ export const STORY_ENDPOINTS = {
   CREATE_NEW_STORY: "/api/post/save",
   GET_STORY_BY_ID: "/api/post/findById",
   GET_STORIES_BY_USER_ID: "/api/post/findPostByUserId",
+  SEARCH_STORIES: "/api/post/search",
   GET_FAVORITE_STORIES: "/api/post/findPostUserSaved",
   SAVE_STORY_TO_FAVORITES: "/api/user/savePost",
 } as const;

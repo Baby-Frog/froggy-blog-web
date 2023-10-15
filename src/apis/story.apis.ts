@@ -1,5 +1,6 @@
 import { STORY_ENDPOINTS } from "src/constants/endpoints";
 import { TStorySchema } from "src/schemas/story.schemas";
+import { TApiQueryParams } from "src/types/query.types";
 import { TQueryResponse, TSuccessApiResponse } from "src/types/response.types";
 import { TStory } from "src/types/story.types";
 import http from "src/utils/http";
@@ -11,6 +12,16 @@ export const storyApi = {
     http.get<TSuccessApiResponse<TStory>>(`${STORY_ENDPOINTS.GET_STORY_BY_ID}/${storyId}`),
   getStoriesByUserId: (userId: string) =>
     http.get<TQueryResponse<TStory[]>>(`${STORY_ENDPOINTS.GET_STORIES_BY_USER_ID}/${userId}`),
+  searchStories: ({ keyword, pageSize, column, orderBy, pageNumber }: TApiQueryParams) =>
+    http.get<TQueryResponse<TStory[]>>(`${STORY_ENDPOINTS.SEARCH_STORIES}`, {
+      params: {
+        keyword: keyword || "",
+        pageSize: pageSize || 7,
+        column: column || "createdAt",
+        orderBy: orderBy || "desc",
+        pageNumber: pageNumber || 1,
+      },
+    }),
   createStory: (body: Omit<TStorySchema, "id">) =>
     http.post<TSuccessApiResponse<TStory>>(STORY_ENDPOINTS.CREATE_NEW_STORY, body),
   updateStory: (body: TStorySchema) => http.post(STORY_ENDPOINTS.CREATE_NEW_STORY, body),
