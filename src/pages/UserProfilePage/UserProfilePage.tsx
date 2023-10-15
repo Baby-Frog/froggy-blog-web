@@ -215,7 +215,7 @@ const UserProfilePage = () => {
             <span>Date of birth</span>
           </h5>
           {me?.birthDay ? (
-            <div className="mt-1 font-normal break-words">{me?.birthDay}</div>
+            <div className="mt-1 font-normal break-words">{new Date(me?.birthDay).toLocaleDateString("en-GB")}</div>
           ) : (
             <div className="mt-1 font-light break-words">Not updated yet</div>
           )}

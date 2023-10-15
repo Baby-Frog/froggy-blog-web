@@ -21,7 +21,7 @@ const ProfileRight = styled.div`
   width: calc(35% - 24px);
 `;
 
-const AvatarWrapper = styled(Link)`
+const AvatarWrapper = styled.div`
   position: relative;
   .edit-overlay {
     cursor: pointer;
@@ -108,10 +108,7 @@ const AnonymousUserProfilePage = () => {
         </div>
       </ProfileLeft>
       <ProfileRight>
-        <AvatarWrapper
-          to={path.EDIT_PROFILE}
-          className="rounded-full object-cover block w-[90px] h-[90px]"
-        >
+        <AvatarWrapper className="rounded-full object-cover block w-[90px] h-[90px]">
           <img
             src={user?.avatarPath}
             alt=""
@@ -161,7 +158,7 @@ const AnonymousUserProfilePage = () => {
           <span>Date of birth</span>
         </h5>
         {user?.birthDay ? (
-          <div className="mt-1 font-normal break-words">{user?.birthDay}</div>
+          <div className="mt-1 font-normal break-words">{new Date(user?.birthDay).toLocaleDateString("en-GB")}</div>
         ) : (
           <div className="mt-1 font-light break-words">Not updated yet</div>
         )}

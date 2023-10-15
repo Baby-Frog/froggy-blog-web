@@ -384,6 +384,7 @@ const EditProfilePage = () => {
                 onChange={(date) => setStartDate(date as Date)}
                 wrapperClassName="w-full h-[48px] bg-[#e7ecf3] rounded-md overflow-hidden"
                 className="p-[10px_46px_10px_10px] text-sm font-medium w-full h-[48px] bg-[#e7ecf3] rounded-md border-2"
+                required
                 dropdownMode="select"
                 maxDate={new Date()}
                 showYearDropdown
@@ -482,7 +483,7 @@ const EditProfilePage = () => {
             <span>Date of birth</span>
           </h5>
           {me?.birthDay ? (
-            <div className="mt-1 font-normal break-words">{me?.birthDay}</div>
+            <div className="mt-1 font-normal break-words">{new Date(me?.birthDay).toLocaleDateString("en-GB")}</div>
           ) : (
             <div className="mt-1 font-light break-words">Not updated yet</div>
           )}
