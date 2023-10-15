@@ -29,9 +29,6 @@ const MainContentWrapper = styled.div`
 `;
 
 const MainStuffsWrapper = styled.div`
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
   gap: 32px;
   flex: 6;
   flex-shrink: 0;

@@ -1,7 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import ExploreIcon from "src/components/Icon/ExploreIcon";
 import SearchIcon from "src/components/Icon/SearchIcon";
+import { path } from "src/constants/path";
 import { styled } from "styled-components";
 
 type TExplorePageProps = {
@@ -83,9 +85,19 @@ const ExploreInputWrapper = styled.form`
   width: 624px;
 `;
 
-const ExploreInputElemet = styled.input`
+const ExploreInputElemet = styled.input<{ $hasErrors?: boolean }>`
   padding: 12px 16px 12px 32px;
+  width: 100%;
   background-color: inherit;
+  &::placeholder {
+    color: ${(props) => (props.$hasErrors ? "rgb(255, 49, 49)" : "#9ca3be")};
+  }
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px ${(props) => (props.$hasErrors ? "rgb(255, 215, 215)" : "#e7ecf3")} inset !important;
+  }
 `;
 
 const ExploreInputIcon = styled.div`
@@ -99,19 +111,31 @@ const ExploreInputIcon = styled.div`
 `;
 
 const ExplorePage = () => {
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm({
+  } = useForm<{ search: string }>({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
   });
-  // const something = useMemo(() => {
-  //   if (window.location.pathname === path.HOMEPAGE) {
-  //     return "3";
-  //   }
-  // }, []);
+
+  const handleQueryTopics = handleSubmit((data) => {
+    navigate(
+      {
+        pathname: path.SEARCH,
+        search: createSearchParams({
+          q: data.search,
+        }).toString(),
+      },
+      {
+        state: {
+          from: path.EXPORE_TOPICS,
+        },
+      },
+    );
+  });
   return (
     <>
       <ExploreSelection>
@@ -134,10 +158,11 @@ const ExplorePage = () => {
         </ExploreSelectionList>
       </ExploreSelection>
       <ExploreHeading>Explore topics</ExploreHeading>
-      <ExploreInputWrapper>
+      <ExploreInputWrapper onSubmit={handleQueryTopics}>
         <ExploreInputElemet
-          placeholder="Search for topics"
-          {...register}
+          $hasErrors={Boolean(errors.search)}
+          placeholder="Search all topics"
+          {...register("search")}
         ></ExploreInputElemet>
         <ExploreInputIcon>
           <SearchIcon
