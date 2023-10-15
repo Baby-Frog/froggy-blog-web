@@ -10,6 +10,7 @@ import { path } from "src/constants/path";
 import useQueryConfig from "src/hooks/useQueryConfig";
 import { styled } from "styled-components";
 import PeopleItem from "./components/PeopleItem";
+import HomepageRecentPost from "../Homepage/components/HomepageRecentPost";
 
 type TSearchResultsPageProps = {
   something: string;
@@ -28,6 +29,15 @@ const MainStuffsWrapper = styled.div`
   width: calc(60% - 16px);
   flex-shrink: 0;
   height: 100vh;
+`;
+
+const MainStuffsHeading = styled.h2`
+  font-size: 42px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  span:first-of-type {
+    color: #7c7c7c;
+  }
 `;
 
 const SideStuffsWrapper = styled.div`
@@ -128,7 +138,12 @@ const SearchResultsPage = () => {
     {
       key: "1",
       label: "Stories",
-      children: <>1</>,
+      children: (
+        <div className="flex flex-col gap-2">
+          {stories?.map((story) => <HomepageRecentPost story={story}></HomepageRecentPost>)}
+          {stories?.length === 0 && <div className="text-base">No stories matching {queryConfig.q}</div>}
+        </div>
+      ),
     },
     {
       key: "2",
@@ -158,16 +173,20 @@ const SearchResultsPage = () => {
   return (
     <MainContentWrapper>
       <MainStuffsWrapper>
+        <MainStuffsHeading>
+          <span>Results for </span>
+          <span>{queryConfig.q}</span>
+        </MainStuffsHeading>
         <CustomTabs
           defaultActiveKey={activeKeyAfterExplorePage}
           items={items}
         ></CustomTabs>
       </MainStuffsWrapper>
       <SideStuffsWrapper>
-        <p className="font-semibold text-lg tracking-tight">Discover more of what matters to you</p>
+        <p className="font-semibold text-lg tracking-tight">Topics matching {queryConfig.q}</p>
         <TopicsWrapper>
           <TopicList>
-            {sideStuffTopics?.map((topic) => (
+            {topics?.map((topic) => (
               <Link
                 key={topic.id}
                 className="px-2 py-3 bg-[#f2f2f2] text-sm rounded-2xl"
