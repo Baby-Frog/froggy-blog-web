@@ -14,6 +14,7 @@ import UserProfilePage from "src/pages/UserProfilePage";
 import ProtectedRoute from "src/routes/ProtectedRoute";
 import ExploreLayout from "src/layouts/ExploreLayout";
 import ExplorePage from "src/pages/ExplorePage";
+import SearchResultsPage from "src/pages/SearchResultsPage";
 
 export default function useRouteElement() {
   const routeElements = useRoutes([
@@ -48,6 +49,14 @@ export default function useRouteElement() {
       element: (
         <ExploreLayout>
           <ExplorePage></ExplorePage>
+        </ExploreLayout>
+      ),
+    },
+    {
+      path: path.SEARCH,
+      element: (
+        <ExploreLayout>
+          <SearchResultsPage></SearchResultsPage>
         </ExploreLayout>
       ),
     },
