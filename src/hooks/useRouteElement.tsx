@@ -39,9 +39,9 @@ export default function useRouteElement() {
     {
       path: path.ANONYMOUS_PROFILE,
       element: (
-        <MainLayout>
+        <ExploreLayout>
           <AnonymousUserProfilePage></AnonymousUserProfilePage>
-        </MainLayout>
+        </ExploreLayout>
       ),
     },
     {
