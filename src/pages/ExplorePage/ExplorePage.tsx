@@ -1,5 +1,7 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 import ExploreIcon from "src/components/Icon/ExploreIcon";
+import SearchIcon from "src/components/Icon/SearchIcon";
 import { styled } from "styled-components";
 
 type TExplorePageProps = {
@@ -72,7 +74,39 @@ const ExploreHeading = styled.h1`
   margin-top: 48px;
 `;
 
+const ExploreInputWrapper = styled.form`
+  background-color: #f9f9f9;
+  position: relative;
+  padding: 12px 16px;
+  border-radius: 36px;
+  margin: 32px auto 0;
+  width: 624px;
+`;
+
+const ExploreInputElemet = styled.input`
+  padding: 12px 16px 12px 32px;
+  background-color: inherit;
+`;
+
+const ExploreInputIcon = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const ExplorePage = () => {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm({
+    mode: "onSubmit",
+    reValidateMode: "onSubmit",
+  });
   // const something = useMemo(() => {
   //   if (window.location.pathname === path.HOMEPAGE) {
   //     return "3";
@@ -100,6 +134,19 @@ const ExplorePage = () => {
         </ExploreSelectionList>
       </ExploreSelection>
       <ExploreHeading>Explore topics</ExploreHeading>
+      <ExploreInputWrapper>
+        <ExploreInputElemet
+          placeholder="Search for topics"
+          {...register}
+        ></ExploreInputElemet>
+        <ExploreInputIcon>
+          <SearchIcon
+            width={24}
+            height={24}
+            color="#6b6b6b"
+          ></SearchIcon>
+        </ExploreInputIcon>
+      </ExploreInputWrapper>
     </>
   );
 };
