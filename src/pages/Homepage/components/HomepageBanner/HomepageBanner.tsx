@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { AuthContext } from "src/contexts/auth.contexts";
 import { styled } from "styled-components";
 import Typewriter from "typewriter-effect";
 
@@ -100,6 +102,7 @@ const HomepageBannerButton = styled.button`
 `;
 
 const HomepageBanner = () => {
+  const { isAuthenticated } = useContext(AuthContext);
   return (
     <HomepageBannerContainer>
       <HomepageBannerMain>
@@ -143,7 +146,9 @@ const HomepageBanner = () => {
                     "<span>Every time you post something online, you have a choice. You can either make it something that adds to the happiness levels in the world—or you can make it something that takes away.</span>",
                   )
                   .callFunction(() => {
-                    document.getElementsByClassName("Typewriter__cursor")[2].remove();
+                    if (!isAuthenticated) {
+                      document.getElementsByClassName("Typewriter__cursor")[2]?.remove();
+                    }
                   })
                   .start();
               }}

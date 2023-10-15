@@ -1,9 +1,10 @@
 import { useIsPresent } from "framer-motion";
-import React from "react";
+import React, { useContext } from "react";
 import AuthenticatedNavbar from "src/components/AuthenticatedNavbar";
 import ExploreNavbar from "src/components/ExploreNavbar";
 import PageTransition from "src/components/PageTransition";
 import UnauthenticatedNavbar from "src/components/UnauthenticatedNavbar";
+import { AuthContext } from "src/contexts/auth.contexts";
 import { styled } from "styled-components";
 
 type TExploreLayoutProps = {
@@ -24,12 +25,22 @@ const MainLayoutWrapper = styled.div`
 
 const ExploreLayout = ({ children }: TExploreLayoutProps) => {
   const isPresent = useIsPresent();
-
+  const { isAuthenticated } = useContext(AuthContext);
   return (
     <>
-      <ExploreNavbar></ExploreNavbar>
-      <MainLayoutWrapper>{children}</MainLayoutWrapper>
-      <PageTransition isPresent={isPresent}></PageTransition>
+      {!isAuthenticated ? (
+        <>
+          <ExploreNavbar></ExploreNavbar>
+          <MainLayoutWrapper>{children}</MainLayoutWrapper>
+          <PageTransition isPresent={isPresent}></PageTransition>
+        </>
+      ) : (
+        <>
+          <AuthenticatedNavbar></AuthenticatedNavbar>
+          <MainLayoutWrapper>{children}</MainLayoutWrapper>
+          <PageTransition isPresent={isPresent}></PageTransition>
+        </>
+      )}
     </>
   );
 };

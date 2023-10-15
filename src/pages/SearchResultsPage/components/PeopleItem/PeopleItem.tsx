@@ -11,7 +11,7 @@ const PeopleItemWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 150px;
+  height: 90px;
   padding: 32px 16px;
   border-bottom: 1px solid ${(props) => props.theme.colors.whiteF2};
 `;
@@ -35,9 +35,20 @@ const PeopleItemAvatar = styled.div`
   }
 `;
 
+const PeopleItemMeta = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const PeopleItemFullName = styled.div`
   font-size: 16px;
   font-weight: 500;
+`;
+
+const PeopleItemBio = styled.div`
+  font-size: 14px;
+  font-weight: 400;
+  color: ${(props) => props.theme.colors.lightGrey};
 `;
 
 const GoToProfileButton = styled(Link)`
@@ -67,9 +78,12 @@ const PeopleItem = ({ user }: TPeopleItemProps) => {
             alt={user.fullName}
           />
         </PeopleItemAvatar>
-        <PeopleItemFullName>{user.fullName}</PeopleItemFullName>
+        <PeopleItemMeta>
+          <PeopleItemFullName>{user.fullName}</PeopleItemFullName>
+          <PeopleItemBio>{user.bio || "No bio yet"}</PeopleItemBio>
+        </PeopleItemMeta>
       </PeopleItemLeft>
-      <GoToProfileButton to={"/"}>Go to profile</GoToProfileButton>
+      <GoToProfileButton to={`/user/profile/${user.id}`}>Go to profile</GoToProfileButton>
     </PeopleItemWrapper>
   );
 };
