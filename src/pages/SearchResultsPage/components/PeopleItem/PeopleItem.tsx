@@ -21,7 +21,6 @@ const PeopleItemLeft = styled.div`
   display: flex;
   align-items: center;
   gap: 24px;
-  flex-shrink: 0;
 `;
 
 const PeopleItemAvatar = styled.div`
@@ -29,6 +28,7 @@ const PeopleItemAvatar = styled.div`
   height: 48px;
   border-radius: 100rem;
   overflow: hidden;
+  flex-shrink: 0;
   img {
     width: 100%;
     height: 100%;
