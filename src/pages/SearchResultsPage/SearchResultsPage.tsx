@@ -139,7 +139,7 @@ const SearchResultsPage = () => {
     queryKey: ["users", { q: queryConfig.q }],
     queryFn: () =>
       authApi.searchUsers({
-        pageSize: 5,
+        pageSize: 7,
         keyword: queryConfig.q as string,
         pageNumber: 1,
         column: "fullName",

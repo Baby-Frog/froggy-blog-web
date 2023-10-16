@@ -1,5 +1,6 @@
-import { useContext, useEffect, useLayoutEffect, useMemo, useState } from "react";
-import { useQuery } from "react-query";
+// @
+import { Fragment, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useInfiniteQuery, useQuery } from "react-query";
 import { storyApi } from "src/apis/story.apis";
 import TrendingIcon from "src/components/Icon/TrendingIcon";
 import { AuthContext } from "src/contexts/auth.contexts";
@@ -32,14 +33,13 @@ const MainStuffsWrapper = styled.div`
   gap: 32px;
   width: calc(65% - 16px);
   flex-shrink: 0;
-  height: 100vh;
 `;
 
 const SideStuffsWrapper = styled.div`
   flex-shrink: 1;
   width: calc(35% - 16px);
   position: sticky;
-  top: 0;
+  top: 85px;
   right: 0;
 `;
 
@@ -129,13 +129,56 @@ const Homepage = () => {
   ];
 
   // const [recentStories, setRecentStories] = useState<TStory[]>([]);
-  const { data: storiesData, isLoading: storiesIsLoading } = useQuery({
-    queryKey: ["stories"],
-    queryFn: () => storyApi.getRecentStories({ keyword: "", pageSize: 5 }),
-    staleTime: 1000 * 60 * 5,
-    keepPreviousData: true,
+  // const { data: storiesData, isLoading: storiesIsLoading } = useQuery({
+  //   queryKey: ["stories"],
+  //   queryFn: () => storyApi.getRecentStories({ keyword: "", pageSize: 5 }),
+  //   staleTime: 1000 * 60 * 5,
+  //   keepPreviousData: true,
+  //   refetchOnMount: true,
+  // });
+  const {
+    data: storiesData,
+    fetchNextPage: storiesFetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["infiniteStories"],
+    queryFn: ({ pageParam = 1 }) => storyApi.getRecentStories({ keyword: "", pageSize: 5, pageNumber: pageParam }),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.data.data.data.length === 0) {
+        return undefined;
+      }
+      // @ts-ignore
+      console.log(lastPage.data.data?.pageNumber);
+      // @ts-ignore
+      return lastPage.data.data?.pageNumber + 1;
+    },
     refetchOnMount: true,
   });
+  const loadMoreRef = useRef<HTMLDivElement>(null);
+  const handleLoadMore = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      const target = entries[0];
+      if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        storiesFetchNextPage();
+      }
+    },
+    [hasNextPage, storiesFetchNextPage],
+  );
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleLoadMore, {
+      rootMargin: "0px 0px 0px 0px",
+    });
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [handleLoadMore]);
   return (
     <>
       {!isAuthenticated ? (
@@ -155,13 +198,18 @@ const Homepage = () => {
           <MainContentWrapper>
             <MainStuffsWrapper>
               <div className="flex flex-col gap-2">
-                {storiesData?.data.data.data.map((story) => (
-                  <HomepageRecentPost
-                    key={story.id}
-                    story={story}
-                  ></HomepageRecentPost>
+                {storiesData?.pages.map((storyGroup, index) => (
+                  <Fragment key={index}>
+                    {storyGroup.data.data.data.map((story) => (
+                      <HomepageRecentPost
+                        key={story.id}
+                        story={story}
+                      ></HomepageRecentPost>
+                    ))}
+                  </Fragment>
                 ))}
               </div>
+              {hasNextPage && <div ref={loadMoreRef}>Loading more stories...</div>}
             </MainStuffsWrapper>
             <SideStuffsWrapper>
               <p className="font-semibold text-lg tracking-tight">Discover more of what matters to you</p>

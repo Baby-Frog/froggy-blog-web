@@ -181,7 +181,7 @@ const NewStoryPage = () => {
 
   const handleCreateNewStory = handleSubmit(async (data) => {
     recaptchaRef?.current?.reset();
-
+    setCaptchaToken("");
     try {
       Swal.fire({
         title: "Are you sure you want to submit this story 🤔?",
@@ -229,6 +229,7 @@ const NewStoryPage = () => {
           );
         } else if (result.isDenied) {
           Swal.fire("You're safe to go", "", "success");
+          setCaptchaToken("");
         }
       });
     } catch (err) {

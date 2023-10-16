@@ -6,6 +6,7 @@ import { imageApi } from "src/apis/image.apis";
 import { Editor as TinyMCEEditor } from "tinymce";
 import ErrorToastIcon from "../Icon/ToastIcon/ErrorToastIcon";
 import "./TextEditor.scss";
+import { blob } from "stream/consumers";
 
 type TTextEditorProps = {
   value: string;
