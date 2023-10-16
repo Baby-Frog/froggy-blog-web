@@ -1,6 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useQuery } from "react-query";
 import { createSearchParams, useNavigate } from "react-router-dom";
+import { topicApi } from "src/apis/topic.apis";
 import ExploreIcon from "src/components/Icon/ExploreIcon";
 import SearchIcon from "src/components/Icon/SearchIcon";
 import { path } from "src/constants/path";
@@ -120,7 +122,11 @@ const ExplorePage = () => {
     mode: "onSubmit",
     reValidateMode: "onSubmit",
   });
-
+  const { data: exploreTopicsData } = useQuery({
+    queryKey: ["explore-topics"],
+    queryFn: () => topicApi.getTopics(),
+  });
+  const exploreTopics = exploreTopicsData?.data.data.data;
   const handleQueryTopics = handleSubmit((data) => {
     navigate(
       {
@@ -136,6 +142,22 @@ const ExplorePage = () => {
       },
     );
   });
+  const handleNavigateToTopic = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const topicName = e.currentTarget.innerText;
+    navigate(
+      {
+        pathname: path.SEARCH,
+        search: createSearchParams({
+          q: topicName,
+        }).toString(),
+      },
+      {
+        state: {
+          from: path.EXPORE_TOPICS,
+        },
+      },
+    );
+  };
   return (
     <>
       <ExploreSelection>
@@ -144,17 +166,9 @@ const ExplorePage = () => {
           <span>Explore topics</span>
         </ExploreTopicsButton>
         <ExploreSelectionList>
-          <ExploreSelectionItem>Life</ExploreSelectionItem>
-          <ExploreSelectionItem>Software Engineering</ExploreSelectionItem>
-          <ExploreSelectionItem>Adoption</ExploreSelectionItem>
-          <ExploreSelectionItem>UX</ExploreSelectionItem>
-          <ExploreSelectionItem>Storytelling</ExploreSelectionItem>
-          <ExploreSelectionItem>Hierachy</ExploreSelectionItem>
-          <ExploreSelectionItem>Programming</ExploreSelectionItem>
-          <ExploreSelectionItem>Esport</ExploreSelectionItem>
-          <ExploreSelectionItem>League Of Legends</ExploreSelectionItem>
-          <ExploreSelectionItem>Tips and Tricks</ExploreSelectionItem>
-          <ExploreSelectionItem>Dota 2</ExploreSelectionItem>
+          {exploreTopics?.map((topic) => (
+            <ExploreSelectionItem onClick={(e) => handleNavigateToTopic(e)}>{topic.topicName}</ExploreSelectionItem>
+          ))}
         </ExploreSelectionList>
       </ExploreSelection>
       <ExploreHeading>Explore topics</ExploreHeading>

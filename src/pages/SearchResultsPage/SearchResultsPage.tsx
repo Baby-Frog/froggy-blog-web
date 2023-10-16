@@ -186,7 +186,7 @@ const SearchResultsPage = () => {
       <MainStuffsWrapper>
         <MainStuffsHeading>
           <span>Results for </span>
-          <span>{queryConfig.q}</span>
+          <span> {queryConfig.q || "nothing 🤔"}</span>
         </MainStuffsHeading>
         <CustomTabs
           defaultActiveKey={activeKeyAfterExplorePage}
@@ -197,7 +197,7 @@ const SearchResultsPage = () => {
         ></CustomTabs>
       </MainStuffsWrapper>
       <SideStuffsWrapper>
-        <p className="font-semibold text-lg tracking-tight">Topics matching {queryConfig.q}</p>
+        <p className="font-semibold text-lg tracking-tight">Topics matching {queryConfig.q || "nothing 🤔"}</p>
         <TopicsWrapper>
           <TopicList>
             {sideStuffTopics?.map((topic) => (
@@ -217,13 +217,13 @@ const SearchResultsPage = () => {
             See all
           </Link>
         </TopicsWrapper>
-        <p className="font-semibold text-lg tracking-tight">People matching {queryConfig.q}</p>
+        <p className="font-semibold text-lg tracking-tight">People matching {queryConfig.q || "nothing 🤔"}</p>
         <TopicsWrapper>
           <TopicList>
             {sideStuffsUsers?.map((user) => (
               <div
                 key={user.id}
-                className="flex items-center justify-between gap-3"
+                className="flex w-full items-center justify-between gap-3"
               >
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 flex-shrink-0 rounded-full overflow-hidden">
