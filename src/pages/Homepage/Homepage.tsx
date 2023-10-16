@@ -154,12 +154,14 @@ const Homepage = () => {
           </div>
           <MainContentWrapper>
             <MainStuffsWrapper>
-              {storiesData?.data.data.data.map((story) => (
-                <HomepageRecentPost
-                  key={story.id}
-                  story={story}
-                ></HomepageRecentPost>
-              ))}
+              <div className="flex flex-col gap-2">
+                {storiesData?.data.data.data.map((story) => (
+                  <HomepageRecentPost
+                    key={story.id}
+                    story={story}
+                  ></HomepageRecentPost>
+                ))}
+              </div>
             </MainStuffsWrapper>
             <SideStuffsWrapper>
               <p className="font-semibold text-lg tracking-tight">Discover more of what matters to you</p>
