@@ -1,5 +1,5 @@
 import { TabsProps } from "antd";
-import React, { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import { Link, useLocation } from "react-router-dom";
 import { authApi } from "src/apis/auth.apis";
@@ -20,7 +20,7 @@ const MainContentWrapper = styled.div`
   margin-top: 48px;
   display: flex;
   align-items: flex-start;
-  gap: 32px;
+  gap: 64px;
   justify-content: space-between;
 `;
 
@@ -43,7 +43,6 @@ const MainStuffsHeading = styled.h2`
 const SideStuffsWrapper = styled.div`
   flex-shrink: 1;
   width: calc(40% - 16px);
-  transform: translateX(70px);
   position: sticky;
   top: 0px;
   right: 0;
@@ -80,6 +79,7 @@ const SideStuffsFooter = styled.div`
 const SearchResultsPage = () => {
   const queryConfig = useQueryConfig();
   const location = useLocation();
+  const [currentActiveKey, setCurrentActiveKey] = useState<string>("1");
   const activeKeyAfterExplorePage = useMemo(() => {
     if (location?.state?.from && location.state.from === path.EXPORE_TOPICS) {
       return "3";
@@ -90,7 +90,7 @@ const SearchResultsPage = () => {
     queryKey: ["topics", { q: queryConfig.q }],
     queryFn: () =>
       topicApi.getTopicsByKeyword({
-        pageSize: 15,
+        pageSize: 40,
         keyword: queryConfig.q as string,
         pageNumber: 1,
         column: "topicName",
@@ -103,7 +103,7 @@ const SearchResultsPage = () => {
     queryFn: () =>
       topicApi.getTopicsByKeyword({
         pageSize: 9,
-        keyword: "",
+        keyword: queryConfig.q as string,
         pageNumber: 1,
         column: "topicName",
         orderBy: "asc",
@@ -134,6 +134,17 @@ const SearchResultsPage = () => {
       }),
   });
   const users = usersData?.data.data.data;
+  const { data: sideStuffsUsersData } = useQuery({
+    queryKey: ["users"],
+    queryFn: () =>
+      authApi.searchUsers({
+        keyword: queryConfig.q as string,
+        pageSize: 3,
+        column: "fullName",
+        orderBy: "asc",
+      }),
+  });
+  const sideStuffsUsers = sideStuffsUsersData?.data.data.data;
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -180,13 +191,16 @@ const SearchResultsPage = () => {
         <CustomTabs
           defaultActiveKey={activeKeyAfterExplorePage}
           items={items}
+          onChange={(activeKey) => {
+            setCurrentActiveKey(activeKey);
+          }}
         ></CustomTabs>
       </MainStuffsWrapper>
       <SideStuffsWrapper>
         <p className="font-semibold text-lg tracking-tight">Topics matching {queryConfig.q}</p>
         <TopicsWrapper>
           <TopicList>
-            {topics?.map((topic) => (
+            {sideStuffTopics?.map((topic) => (
               <Link
                 key={topic.id}
                 className="px-2 py-3 bg-[#f2f2f2] text-sm rounded-2xl"
@@ -200,7 +214,44 @@ const SearchResultsPage = () => {
             to={path.EXPORE_TOPICS}
             className="text-sm mt-4 block text-normalGreen hover:text-normalGreenHover "
           >
-            See more topics
+            See all
+          </Link>
+        </TopicsWrapper>
+        <p className="font-semibold text-lg tracking-tight">People matching {queryConfig.q}</p>
+        <TopicsWrapper>
+          <TopicList>
+            {sideStuffsUsers?.map((user) => (
+              <div
+                key={user.id}
+                className="flex items-center justify-between gap-3"
+              >
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 flex-shrink-0 rounded-full overflow-hidden">
+                    <img
+                      src={user.avatarPath}
+                      alt={user.fullName}
+                      className="w-full h-full rounded-full object-cover"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <div className="font-semibold">{user.fullName}</div>
+                    <div className="text-sm text-normalGrey line-clamp-2">{user.bio}</div>
+                  </div>
+                </div>
+                <Link
+                  to={`/user/profile/${user.id}`}
+                  className="text-sm text-darkGrey flex-shrink-0 p-[5px_12px] w-[66px] h-[32px] flex items-center justify-center transition-all bg-white border border-darkGrey rounded-2xl hover:bg-darkGrey hover:!text-white"
+                >
+                  Go
+                </Link>
+              </div>
+            ))}
+          </TopicList>
+          <Link
+            to={path.EXPORE_TOPICS}
+            className="text-sm mt-4 block text-normalGreen hover:text-normalGreenHover "
+          >
+            See all
           </Link>
         </TopicsWrapper>
         <SideStuffsFooter>
