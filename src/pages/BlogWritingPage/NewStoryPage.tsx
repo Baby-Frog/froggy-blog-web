@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, createRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { styled } from "styled-components";
@@ -122,6 +122,7 @@ const NewStoryPage = () => {
   });
   const isTablet = useMedia("(max-width: 1024px)");
   const queryClient = useQueryClient();
+  const recaptchaRef = createRef<ReCAPTCHA>();
   const [topicValues, setTopicValues] = useState<ValueType[]>([]);
   const [textEditorValue, setTextEditorValue] = useState<string>("");
   const [rawText, setRawText] = useState<string>("");
@@ -179,6 +180,8 @@ const NewStoryPage = () => {
   };
 
   const handleCreateNewStory = handleSubmit(async (data) => {
+    recaptchaRef?.current?.reset();
+
     try {
       Swal.fire({
         title: "Are you sure you want to submit this story 🤔?",
@@ -437,7 +440,8 @@ const NewStoryPage = () => {
               <ReCAPTCHA
                 sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
                 id="captcha"
-                hl="en"
+                ref={recaptchaRef}
+                onError={(error) => recaptchaRef.current?.reset()}
                 onChange={handleVerifyCaptcha}
                 style={{
                   marginTop: "12px",

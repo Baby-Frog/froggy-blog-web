@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 // eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from "react-google-recaptcha";
 import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
-import { useState } from "react";
+import { useState, createRef } from "react";
 
 type THomepageRegisterModalProps = {
   isOpen?: boolean;
@@ -51,11 +51,13 @@ const HomepageRegisterModal = ({
     resolver: yupResolver(registerSchema),
   });
   const [captchaToken, setCaptchaToken] = useState<string>("");
+  const recaptchaRef = createRef<ReCAPTCHA>();
   const registerAccountMutation = useMutation({
     mutationFn: authApi.register,
   });
 
   const handleRegister = handleSubmit((data) => {
+    recaptchaRef?.current?.reset();
     registerAccountMutation.mutate(
       { ...data, captcha: captchaToken },
       {
@@ -65,7 +67,7 @@ const HomepageRegisterModal = ({
             icon: <SuccessToastIcon></SuccessToastIcon>,
           });
         },
-        onError: (error) => {
+        onError: async (error) => {
           if (
             isAxiosError<TErrorApiResponse<Record<keyof TRegisterForm, { message: string }>>>(error) &&
             isUnprocessableEntityError<TErrorApiResponse<Record<keyof TRegisterForm, { message: string }>>>(error)
@@ -157,6 +159,9 @@ const HomepageRegisterModal = ({
           ></Input>
           <ReCAPTCHA
             sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+            ref={recaptchaRef}
+            type="image"
+            onError={(error) => recaptchaRef.current?.reset()}
             id="captcha"
             hl="en"
             onChange={handleVerifyCaptcha}
