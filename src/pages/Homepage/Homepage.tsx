@@ -149,7 +149,6 @@ const Homepage = () => {
         return undefined;
       }
       // @ts-ignore
-      console.log(lastPage.data.data?.pageNumber);
       // @ts-ignore
       return lastPage.data.data?.pageNumber + 1;
     },
