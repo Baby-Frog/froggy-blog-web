@@ -30,17 +30,16 @@ const MainContentWrapper = styled.div`
 
 const MainStuffsWrapper = styled.div`
   gap: 32px;
-  flex: 6;
+  width: calc(65% - 16px);
   flex-shrink: 0;
   height: 100vh;
 `;
 
 const SideStuffsWrapper = styled.div`
   flex-shrink: 1;
-  flex: 4;
-  transform: translateX(70px);
+  width: calc(35% - 16px);
   position: sticky;
-  top: 85px;
+  top: 0;
   right: 0;
 `;
 
@@ -93,28 +92,28 @@ const Homepage = () => {
       key: "1",
       label: "Recent",
       children: (
-        <MainStuffsWrapper>
+        <div className="flex flex-col gap-2">
           {recentStories?.data.data.data.map((story) => (
             <HomepageRecentPost
               key={story.id}
               story={story}
             ></HomepageRecentPost>
           ))}
-        </MainStuffsWrapper>
+        </div>
       ),
     },
     {
       key: "2",
       label: "Your stories",
       children: (
-        <MainStuffsWrapper>
+        <div className="flex flex-col gap-2">
           {yourStoriesData?.data.data.data.map((story) => (
             <HomepageRecentPost
               key={story.id}
               story={story}
             ></HomepageRecentPost>
           ))}
-        </MainStuffsWrapper>
+        </div>
       ),
     },
     {
