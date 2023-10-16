@@ -13,6 +13,7 @@ const PeopleItemWrapper = styled.div`
   align-items: center;
   height: 90px;
   padding: 32px 16px;
+  gap: 12px;
   border-bottom: 1px solid ${(props) => props.theme.colors.whiteF2};
 `;
 
@@ -56,7 +57,7 @@ const GoToProfileButton = styled(Link)`
   justify-content: center;
   align-items: center;
   width: 120px;
-  padding: 8px 16px;
+  padding: 6px 12px;
   background-color: ${(props) => props.theme.colors.normalGreen};
   font-weight: 500;
   border-radius: 24px;
@@ -80,7 +81,7 @@ const PeopleItem = ({ user }: TPeopleItemProps) => {
         </PeopleItemAvatar>
         <PeopleItemMeta>
           <PeopleItemFullName>{user.fullName}</PeopleItemFullName>
-          <PeopleItemBio>{user.bio || "No bio yet"}</PeopleItemBio>
+          <PeopleItemBio className="line-clamp-3">{user.bio || "No bio yet"}</PeopleItemBio>
         </PeopleItemMeta>
       </PeopleItemLeft>
       <GoToProfileButton to={`/user/profile/${user.id}`}>Go to profile</GoToProfileButton>

@@ -73,11 +73,11 @@ const AnonymousUserProfilePage = () => {
       ),
     },
   ];
-  useLayoutEffect(() => {
-    if (userProfile?.id === userId) {
-      navigate(path.PROFILE);
-    }
-  }, [navigate, userId, userProfile?.id]);
+  // useLayoutEffect(() => {
+  //   if (userProfile?.id === userId) {
+  //     navigate(path.PROFILE);
+  //   }
+  // }, [navigate, userId, userProfile?.id]);
   return (
     <div className="flex mt-10 gap-12 justify-between">
       <ProfileLeft>
@@ -127,7 +127,7 @@ const AnonymousUserProfilePage = () => {
 
         <div className="mt-4 font-semibold">{user?.fullName}</div>
         {user?.bio ? (
-          <div className="mt-1 font-medium break-words">{user.bio}</div>
+          <div className="mt-1 break-words">{user.bio}</div>
         ) : (
           <div className="mt-1 font-light break-words">No bio</div>
         )}

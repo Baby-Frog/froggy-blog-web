@@ -163,7 +163,7 @@ const UserProfilePage = () => {
 
           <div className="mt-4 font-semibold">{me?.fullName}</div>
           {me?.bio ? (
-            <div className="mt-1 font-medium break-words">{me.bio}</div>
+            <div className="mt-1 break-words">{me.bio}</div>
           ) : (
             <div className="mt-1 font-light break-words">No bio</div>
           )}
