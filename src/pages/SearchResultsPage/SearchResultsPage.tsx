@@ -204,6 +204,7 @@ const SearchResultsPage = () => {
         </MainStuffsHeading>
         <CustomTabs
           defaultActiveKey={activeKeyAfterExplorePage}
+          activeKey={currentActiveKey}
           items={items}
           onChange={(activeKey) => {
             setCurrentActiveKey(activeKey);
@@ -241,12 +242,13 @@ const SearchResultsPage = () => {
                   </Link>
                 ))}
               </TopicList>
-              <Link
-                to={path.EXPORE_TOPICS}
-                className="text-sm mt-4 block text-normalGreen hover:text-normalGreenHover "
+              <span
+                onClick={() => setCurrentActiveKey("1")}
+                className="text-sm mt-4 block cursor-pointer text-normalGreen hover:text-normalGreenHover "
+                aria-hidden
               >
                 See all
-              </Link>
+              </span>
             </TopicsWrapper>
           </>
         )}
@@ -265,12 +267,13 @@ const SearchResultsPage = () => {
                   </Link>
                 ))}
               </TopicList>
-              <Link
-                to={path.EXPORE_TOPICS}
-                className="text-sm mt-4 block text-normalGreen hover:text-normalGreenHover "
+              <span
+                onClick={() => setCurrentActiveKey("3")}
+                className="text-sm mt-4 block cursor-pointer text-normalGreen hover:text-normalGreenHover "
+                aria-hidden
               >
                 See all
-              </Link>
+              </span>
             </TopicsWrapper>
           </>
         )}
@@ -307,12 +310,13 @@ const SearchResultsPage = () => {
                   </div>
                 ))}
               </TopicList>
-              <Link
-                to={path.EXPORE_TOPICS}
-                className="text-sm mt-4 block text-normalGreen hover:text-normalGreenHover "
+              <span
+                onClick={() => setCurrentActiveKey("2")}
+                className="text-sm mt-4 block cursor-pointer text-normalGreen hover:text-normalGreenHover "
+                aria-hidden
               >
                 See all
-              </Link>
+              </span>
             </TopicsWrapper>
           </>
         )}
