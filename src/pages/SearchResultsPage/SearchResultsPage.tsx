@@ -26,7 +26,7 @@ const MainContentWrapper = styled.div`
 
 const MainStuffsWrapper = styled.div`
   gap: 32px;
-  width: calc(60% - 16px);
+  width: calc(65% - 16px);
   flex-shrink: 0;
   height: 100vh;
 `;
@@ -42,7 +42,7 @@ const MainStuffsHeading = styled.h2`
 
 const SideStuffsWrapper = styled.div`
   flex-shrink: 1;
-  width: calc(40% - 16px);
+  width: calc(35% - 16px);
   position: sticky;
   top: 0px;
   right: 0;
