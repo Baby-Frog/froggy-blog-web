@@ -4,8 +4,8 @@ const ErrorToastIcon = (props: JSX.IntrinsicElements["svg"]) => {
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      width={512}
-      height={512}
+      width={36}
+      height={36}
       x={0}
       y={0}
       viewBox="0 0 682.667 682.667"
