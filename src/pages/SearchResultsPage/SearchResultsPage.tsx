@@ -199,7 +199,7 @@ const SearchResultsPage = () => {
       <MainStuffsWrapper>
         <MainStuffsHeading>
           <span>Results for </span>
-          <span> {queryConfig.q || "nothing 🤔"}</span>
+          <span> {queryConfig.q || "everything 🤔"}</span>
         </MainStuffsHeading>
         <CustomTabs
           defaultActiveKey={activeKeyAfterExplorePage}
@@ -210,98 +210,112 @@ const SearchResultsPage = () => {
         ></CustomTabs>
       </MainStuffsWrapper>
       <SideStuffsWrapper>
-        <p className="font-semibold text-lg tracking-tight">Stories matching {queryConfig.q || "nothing 🤔"}</p>
-        <TopicsWrapper>
-          <TopicList>
-            {sideStuffsStories?.map((story) => (
+        {currentActiveKey !== "1" && (
+          <>
+            <p className="font-semibold text-lg tracking-tight">Stories matching {queryConfig.q || "everything 🤔"}</p>
+            <TopicsWrapper>
+              <TopicList>
+                {sideStuffsStories?.map((story) => (
+                  <Link
+                    key={story.id}
+                    className="block"
+                    to={`/${generateSlug({ name: story.title, id: story.id })}`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-5 h-5 rounded-full overflow-hidden">
+                        <img
+                          src={story.author.avatarPath}
+                          alt={story.author.fullName}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <span className="text-xs font-semibold">{story.author.fullName}</span>
+                    </div>
+                    <h5 className="font-bold mt-1 text-[16px] leading-5 tracking-tighter">{story.title}</h5>
+                    <span className="flex text-xs mt-[6px] items-center gap-2">
+                      <span>{getCustomDate(new Date(story.publishDate))}</span>
+                      <span>•</span>
+                      <span>{story.timeRead} read</span>
+                    </span>
+                  </Link>
+                ))}
+              </TopicList>
               <Link
-                key={story.id}
-                className="block"
-                to={`/${generateSlug({ name: story.title, id: story.id })}`}
+                to={path.EXPORE_TOPICS}
+                className="text-sm mt-4 block text-normalGreen hover:text-normalGreenHover "
               >
-                <div className="flex items-center gap-2">
-                  <div className="w-5 h-5 rounded-full overflow-hidden">
-                    <img
-                      src={story.author.avatarPath}
-                      alt={story.author.fullName}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <span className="text-xs font-semibold">{story.author.fullName}</span>
-                </div>
-                <h5 className="font-bold mt-1 text-[16px] leading-5 tracking-tighter">{story.title}</h5>
-                <span className="flex text-xs mt-[6px] items-center gap-2">
-                  <span>{getCustomDate(new Date(story.publishDate))}</span>
-                  <span>•</span>
-                  <span>{story.timeRead} read</span>
-                </span>
+                See all
               </Link>
-            ))}
-          </TopicList>
-          <Link
-            to={path.EXPORE_TOPICS}
-            className="text-sm mt-4 block text-normalGreen hover:text-normalGreenHover "
-          >
-            See all
-          </Link>
-        </TopicsWrapper>
-        <p className="font-semibold text-lg tracking-tight">Topics matching {queryConfig.q || "nothing 🤔"}</p>
-        <TopicsWrapper>
-          <TopicList>
-            {sideStuffTopics?.map((topic) => (
+            </TopicsWrapper>
+          </>
+        )}
+        {currentActiveKey !== "3" && (
+          <>
+            <p className="font-semibold text-lg tracking-tight">Topics matching {queryConfig.q || "everything 🤔"}</p>
+            <TopicsWrapper>
+              <TopicList>
+                {sideStuffTopics?.map((topic) => (
+                  <Link
+                    key={topic.id}
+                    className="px-2 py-3 bg-[#f2f2f2] text-sm rounded-2xl"
+                    to={path.HOMEPAGE}
+                  >
+                    {topic.topicName}
+                  </Link>
+                ))}
+              </TopicList>
               <Link
-                key={topic.id}
-                className="px-2 py-3 bg-[#f2f2f2] text-sm rounded-2xl"
-                to={path.HOMEPAGE}
+                to={path.EXPORE_TOPICS}
+                className="text-sm mt-4 block text-normalGreen hover:text-normalGreenHover "
               >
-                {topic.topicName}
+                See all
               </Link>
-            ))}
-          </TopicList>
-          <Link
-            to={path.EXPORE_TOPICS}
-            className="text-sm mt-4 block text-normalGreen hover:text-normalGreenHover "
-          >
-            See all
-          </Link>
-        </TopicsWrapper>
-        <p className="font-semibold text-lg tracking-tight">People matching {queryConfig.q || "nothing 🤔"}</p>
-        <TopicsWrapper>
-          <TopicList>
-            {sideStuffsUsers?.map((user) => (
-              <div
-                key={user.id}
-                className="flex w-full items-center justify-between gap-3"
+            </TopicsWrapper>
+          </>
+        )}
+
+        {currentActiveKey !== "2" && (
+          <>
+            <p className="font-semibold text-lg tracking-tight">People matching {queryConfig.q || "everything 🤔"}</p>
+            <TopicsWrapper>
+              <TopicList>
+                {sideStuffsUsers?.map((user) => (
+                  <div
+                    key={user.id}
+                    className="flex w-full items-center justify-between gap-3"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 flex-shrink-0 rounded-full overflow-hidden">
+                        <img
+                          src={user.avatarPath}
+                          alt={user.fullName}
+                          className="w-full h-full rounded-full object-cover"
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <div className="font-semibold">{user.fullName}</div>
+                        <div className="text-sm text-normalGrey line-clamp-2">{user.bio}</div>
+                      </div>
+                    </div>
+                    <Link
+                      to={`/user/profile/${user.id}`}
+                      className="text-sm text-darkGrey flex-shrink-0 p-[5px_12px] w-[66px] h-[32px] flex items-center justify-center transition-all bg-white border border-darkGrey rounded-2xl hover:bg-darkGrey hover:!text-white"
+                    >
+                      Go
+                    </Link>
+                  </div>
+                ))}
+              </TopicList>
+              <Link
+                to={path.EXPORE_TOPICS}
+                className="text-sm mt-4 block text-normalGreen hover:text-normalGreenHover "
               >
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 flex-shrink-0 rounded-full overflow-hidden">
-                    <img
-                      src={user.avatarPath}
-                      alt={user.fullName}
-                      className="w-full h-full rounded-full object-cover"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <div className="font-semibold">{user.fullName}</div>
-                    <div className="text-sm text-normalGrey line-clamp-2">{user.bio}</div>
-                  </div>
-                </div>
-                <Link
-                  to={`/user/profile/${user.id}`}
-                  className="text-sm text-darkGrey flex-shrink-0 p-[5px_12px] w-[66px] h-[32px] flex items-center justify-center transition-all bg-white border border-darkGrey rounded-2xl hover:bg-darkGrey hover:!text-white"
-                >
-                  Go
-                </Link>
-              </div>
-            ))}
-          </TopicList>
-          <Link
-            to={path.EXPORE_TOPICS}
-            className="text-sm mt-4 block text-normalGreen hover:text-normalGreenHover "
-          >
-            See all
-          </Link>
-        </TopicsWrapper>
+                See all
+              </Link>
+            </TopicsWrapper>
+          </>
+        )}
+
         <SideStuffsFooter>
           <span>Help</span>
           <span>Status</span>
