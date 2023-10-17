@@ -81,6 +81,7 @@ const SideStuffsFooter = styled.div`
 
 const SearchResultsPage = () => {
   const queryConfig = useQueryConfig();
+  console.log(queryConfig.q);
   const location = useLocation();
   const [currentActiveKey, setCurrentActiveKey] = useState<string>("1");
   const activeKeyAfterExplorePage = useMemo(() => {
@@ -102,7 +103,7 @@ const SearchResultsPage = () => {
   });
   const topics = topicsData?.data.data.data;
   const { data: sideStuffTopicsData } = useQuery({
-    queryKey: ["topics"],
+    queryKey: ["sideStufftopics", { q: queryConfig.q }],
     queryFn: () =>
       topicApi.getTopicsByKeyword({
         pageSize: 9,
@@ -148,7 +149,7 @@ const SearchResultsPage = () => {
   });
   const users = usersData?.data.data.data;
   const { data: sideStuffsUsersData } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["sideStuffUsers", { q: queryConfig.q }],
     queryFn: () =>
       authApi.searchUsers({
         keyword: queryConfig.q as string,
