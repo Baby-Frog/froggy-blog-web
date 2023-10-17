@@ -25,6 +25,7 @@ import MultipleSelectV2 from "src/components/MultipleSelect/MultipleSelectV2";
 import TextEditor from "src/components/TextEditor";
 import { TStorySchema, storySchema } from "src/schemas/story.schemas";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { IMAGE_FORMAT } from "src/constants/image_format";
 
 type ValueType = { key?: string; label: React.ReactNode; value: string | number };
 
@@ -241,7 +242,7 @@ const NewStoryPage = () => {
   };
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileFromLocal = e.target.files?.[0];
-    if (fileFromLocal && !fileFromLocal.type.includes("image") && fileFromLocal?.type.includes("gif")) {
+    if (fileFromLocal && !IMAGE_FORMAT.includes(fileFromLocal.type)) {
       toast.error(<div className="text-sm">Wrong file format, we only accept .JPEG, .PNG, .JPG file format</div>, {
         icon: (
           <ErrorToastIcon

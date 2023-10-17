@@ -20,6 +20,7 @@ import Input from "src/components/Input";
 import InputFile from "src/components/InputFile";
 import Label from "src/components/Label";
 import Textarea from "src/components/Textarea";
+import { IMAGE_FORMAT } from "src/constants/image_format";
 import { AuthContext } from "src/contexts/auth.contexts";
 import { TProfileSchema, profileSchema } from "src/schemas/profile.schema";
 import { styled } from "styled-components";
@@ -147,7 +148,7 @@ const EditProfilePage = () => {
   };
   const handleChangeCoverImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileFromLocal = e.target.files?.[0];
-    if (fileFromLocal && !fileFromLocal.type.includes("image/jpeg" || "image/png" || "image/jpg")) {
+    if (fileFromLocal && !IMAGE_FORMAT.includes(fileFromLocal.type)) {
       toast.error(<div className="text-sm">Wrong file format, we only accept .JPEG, .PNG, .JPG file format</div>, {
         icon: (
           <ErrorToastIcon
@@ -177,7 +178,7 @@ const EditProfilePage = () => {
   };
   const handleChangeAvatarFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileFromLocal = e.target.files?.[0];
-    if (fileFromLocal && !fileFromLocal.type.includes("image/jpeg" || "image/png" || "image/jpg")) {
+    if (fileFromLocal && !IMAGE_FORMAT.includes(fileFromLocal.type)) {
       toast.error(<div className="text-sm">Wrong file format, we only accept .JPEG, .PNG, .JPG file format</div>, {
         icon: (
           <ErrorToastIcon

@@ -84,7 +84,8 @@ const Homepage = () => {
 
   const { data: topics, isLoading: topicsIsLoading } = useQuery({
     queryKey: ["topics"],
-    queryFn: () => topicApi.getTopicsByKeyword({ keyword: "", pageNumber: 1, pageSize: 9 }),
+    queryFn: () =>
+      topicApi.getTopicsByKeyword({ keyword: "", pageNumber: 1, pageSize: 9, column: "createDate", orderBy: "desc" }),
   });
   const {
     data: storiesData,
@@ -95,6 +96,7 @@ const Homepage = () => {
     queryKey: ["infiniteStories"],
     queryFn: ({ pageParam = 1 }) => storyApi.getRecentStories({ keyword: "", pageSize: 5, pageNumber: pageParam }),
     getNextPageParam: (lastPage) => {
+      if (lastPage.data.data.data.length === 0) return undefined;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return (lastPage.data.data as any).pageNumber + 1;
     },

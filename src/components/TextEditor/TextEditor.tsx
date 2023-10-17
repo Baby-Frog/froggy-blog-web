@@ -7,6 +7,7 @@ import { Editor as TinyMCEEditor } from "tinymce";
 import ErrorToastIcon from "../Icon/ToastIcon/ErrorToastIcon";
 import "./TextEditor.scss";
 import { blob } from "stream/consumers";
+import { IMAGE_FORMAT } from "src/constants/image_format";
 
 type TTextEditorProps = {
   value: string;
@@ -18,7 +19,6 @@ type TTextEditorProps = {
 };
 
 const THREE_MEGABYTE_TO_BYTES = 3 * 1024 * 1024;
-
 const TextEditor = forwardRef<TinyMCEEditor, TTextEditorProps>(function TextEditorInner(
   { value, setRawText, onChange, onBlur },
   ref,
@@ -43,7 +43,8 @@ const TextEditor = forwardRef<TinyMCEEditor, TTextEditorProps>(function TextEdit
         reject({ message: "Your image size is too big, we only accept image size under 3MB", remove: true });
         return;
       }
-      if (blobInfo.blob() && !blobInfo.blob().type.includes("image/jpeg" || "image/png" || "image/jpg")) {
+      // Check if blobInfo.blob() is png, jpg and jpeg
+      if (blobInfo.blob() && !IMAGE_FORMAT.includes(blobInfo.blob().type)) {
         toast.error(<div className="text-sm">Wrong file format, we only accept .JPEG, .PNG, .JPG file format</div>, {
           icon: (
             <ErrorToastIcon
