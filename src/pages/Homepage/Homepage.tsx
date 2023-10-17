@@ -12,6 +12,9 @@ import { TabsProps } from "antd";
 import { topicApi } from "src/apis/topic.apis";
 import { Link } from "react-router-dom";
 import { path } from "src/constants/path";
+import { AxiosResponse } from "axios";
+import { TStory } from "src/types/story.types";
+import { TQueryResponse } from "src/types/response.types";
 
 const HomepageHeading = styled.h2`
   font-size: 16px;
@@ -145,12 +148,8 @@ const Homepage = () => {
     queryKey: ["infiniteStories"],
     queryFn: ({ pageParam = 1 }) => storyApi.getRecentStories({ keyword: "", pageSize: 5, pageNumber: pageParam }),
     getNextPageParam: (lastPage) => {
-      if (lastPage.data.data.data.length === 0) {
-        return undefined;
-      }
-      // @ts-ignore
-      // @ts-ignore
-      return lastPage.data.data?.pageNumber + 1;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return (lastPage.data.data as any).pageNumber + 1;
     },
     refetchOnMount: true,
   });
@@ -162,7 +161,7 @@ const Homepage = () => {
         storiesFetchNextPage();
       }
     },
-    [hasNextPage, storiesFetchNextPage],
+    [hasNextPage, isFetchingNextPage, storiesFetchNextPage],
   );
 
   useEffect(() => {
