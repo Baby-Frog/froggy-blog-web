@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { likeApi } from "src/apis/like.apis";
 import { storyApi } from "src/apis/story.apis";
 import ClapIcon from "src/components/Icon/ClapIcon";
 import CommentIcon from "src/components/Icon/CommentIcon";
@@ -11,6 +12,7 @@ import RemoveIcon from "src/components/Icon/RemoveIcon";
 import SaveToFavoritesIcon from "src/components/Icon/SaveToFavoritesIcon";
 import ShareStoryIcon from "src/components/Icon/ShareStoryIcon";
 import TwitterIcon from "src/components/Icon/SocialIcon/TwitterIcon";
+import ErrorToastIcon from "src/components/Icon/ToastIcon/ErrorToastIcon";
 import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
 import Popover from "src/components/Popover";
 import PopoverDismiss from "src/components/PopoverDismiss";
@@ -31,6 +33,19 @@ const StoryDetailPage = () => {
   const { data: savedStoriesData } = useQuery({
     queryKey: ["savedStories"],
     queryFn: () => storyApi.getFavoriteStories(),
+    enabled: isAuthenticated,
+  });
+  const { data: likesCountData } = useQuery({
+    queryKey: ["likesCount", storyId],
+    queryFn: () => likeApi.getLikesCount(idFromSlug as string),
+  });
+  const likesCount = likesCountData?.data.data;
+  console.log(likesCount);
+  const likeStoryMutation = useMutation({
+    mutationFn: likeApi.toggleLike,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["likesCount", storyId] });
+    },
   });
   const saveToFavoritesMutation = useMutation({
     mutationFn: storyApi.saveStoryToFavorites,
@@ -59,10 +74,21 @@ const StoryDetailPage = () => {
       },
     });
   };
+
+  const handleLikeStory = () => {
+    if (!isAuthenticated) {
+      toast.error("You must login to like this story", {
+        icon: <ErrorToastIcon></ErrorToastIcon>,
+      });
+      return;
+    }
+    likeStoryMutation.mutate(idFromSlug as string);
+  };
+
   return (
     <div className="mt-8">
       <h1 className="text-[40px] font-bold">{storyDetailData?.data.data.title}</h1>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 flex-wrap">
         {storyDetailData?.data.data.listTopic.map((topic) => (
           <div className="rounded-2xl text-black bg-[#f2f2f2] px-4 text-xs py-1 flex-shrink-0">{topic.topicName}</div>
         ))}
@@ -95,16 +121,19 @@ const StoryDetailPage = () => {
       </div>
       <div className="mt-4 mb-7 px-2 py-3 border-t-2 border-b-2 border-[#F2F2F2] flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <span className="flex items-center gap-1 cursor-pointer hover:text-softBlack">
+          <button
+            className="flex items-center gap-1 cursor-pointer hover:text-softBlack"
+            onClick={handleLikeStory}
+          >
             <ClapIcon
               color="#6b6b6b"
               width={28}
               height={28}
               className="hover:text-softBlack"
             ></ClapIcon>
-            <span className="translate-y-[1px]">0</span>
-          </span>
-          <span className="flex items-center gap-1 cursor-pointer hover:text-softBlack">
+            <span className="translate-y-[1px]">{likesCount || "0"}</span>
+          </button>
+          <button className="flex items-center gap-1 cursor-pointer hover:text-softBlack">
             <CommentIcon
               color="#6b6b6b"
               width={24}
@@ -112,7 +141,7 @@ const StoryDetailPage = () => {
               className="hover:text-softBlack"
             ></CommentIcon>
             <span className="translate-y-[1px]">0</span>
-          </span>
+          </button>
         </div>
         <div className="flex items-center gap-6">
           {isAuthenticated && (

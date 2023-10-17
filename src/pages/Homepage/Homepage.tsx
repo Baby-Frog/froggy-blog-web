@@ -12,9 +12,6 @@ import { TabsProps } from "antd";
 import { topicApi } from "src/apis/topic.apis";
 import { Link } from "react-router-dom";
 import { path } from "src/constants/path";
-import { AxiosResponse } from "axios";
-import { TStory } from "src/types/story.types";
-import { TQueryResponse } from "src/types/response.types";
 
 const HomepageHeading = styled.h2`
   font-size: 16px;
@@ -43,6 +40,14 @@ const SideStuffsWrapper = styled.div`
   width: calc(35% - 16px);
   position: sticky;
   top: 85px;
+  right: 0;
+`;
+
+const AuthenticatedSideStuffWrapper = styled.div`
+  flex-shrink: 1;
+  width: calc(35% - 16px);
+  position: sticky;
+  top: 0;
   right: 0;
 `;
 
@@ -77,68 +82,10 @@ const SideStuffsFooter = styled.div`
 const Homepage = () => {
   const { isAuthenticated, userProfile } = useContext(AuthContext);
 
-  const { data: recentStories, isLoading: recentStoriesIsLoading } = useQuery({
-    queryKey: ["stories"],
-    queryFn: () => storyApi.getRecentStories({ keyword: "", pageSize: 5 }),
-    refetchOnMount: true,
-  });
-  const { data: yourStoriesData, isLoading: yourStoriesIsLoading } = useQuery({
-    queryKey: ["yourStories"],
-    queryFn: () => storyApi.getStoriesByUserId(userProfile?.id as string),
-  });
   const { data: topics, isLoading: topicsIsLoading } = useQuery({
     queryKey: ["topics"],
     queryFn: () => topicApi.getTopicsByKeyword({ keyword: "", pageNumber: 1, pageSize: 9 }),
   });
-  const items: TabsProps["items"] = [
-    {
-      key: "1",
-      label: "Recent",
-      children: (
-        <div className="flex flex-col gap-2">
-          {recentStories?.data.data.data.map((story) => (
-            <HomepageRecentPost
-              key={story.id}
-              story={story}
-            ></HomepageRecentPost>
-          ))}
-        </div>
-      ),
-    },
-    {
-      key: "2",
-      label: "Your stories",
-      children: (
-        <div className="flex flex-col gap-2">
-          {yourStoriesData?.data.data.data.map((story) => (
-            <HomepageRecentPost
-              key={story.id}
-              story={story}
-            ></HomepageRecentPost>
-          ))}
-        </div>
-      ),
-    },
-    {
-      key: "3",
-      label: "Trending",
-      children: <div>1</div>,
-    },
-    {
-      key: "4",
-      label: "Saved",
-      children: <div>2</div>,
-    },
-  ];
-
-  // const [recentStories, setRecentStories] = useState<TStory[]>([]);
-  // const { data: storiesData, isLoading: storiesIsLoading } = useQuery({
-  //   queryKey: ["stories"],
-  //   queryFn: () => storyApi.getRecentStories({ keyword: "", pageSize: 5 }),
-  //   staleTime: 1000 * 60 * 5,
-  //   keepPreviousData: true,
-  //   refetchOnMount: true,
-  // });
   const {
     data: storiesData,
     fetchNextPage: storiesFetchNextPage,
@@ -177,6 +124,42 @@ const Homepage = () => {
       observer.disconnect();
     };
   }, [handleLoadMore]);
+  const items: TabsProps["items"] = [
+    {
+      key: "1",
+      label: "Recent",
+      children: (
+        <div className="flex flex-col gap-2">
+          {storiesData?.pages.map((storyGroup, index) => (
+            <Fragment key={index}>
+              {storyGroup.data.data.data.map((story) => (
+                <HomepageRecentPost
+                  key={story.id}
+                  story={story}
+                ></HomepageRecentPost>
+              ))}
+            </Fragment>
+          ))}
+          {hasNextPage && <div ref={loadMoreRef}>Loading more stories...</div>}
+        </div>
+      ),
+    },
+    {
+      key: "2",
+      label: "Trending",
+      children: <div>1</div>,
+    },
+  ];
+
+  // const [recentStories, setRecentStories] = useState<TStory[]>([]);
+  // const { data: storiesData, isLoading: storiesIsLoading } = useQuery({
+  //   queryKey: ["stories"],
+  //   queryFn: () => storyApi.getRecentStories({ keyword: "", pageSize: 5 }),
+  //   staleTime: 1000 * 60 * 5,
+  //   keepPreviousData: true,
+  //   refetchOnMount: true,
+  // });
+
   return (
     <>
       {!isAuthenticated ? (
@@ -251,7 +234,7 @@ const Homepage = () => {
               items={items}
             ></CustomTabs>
           </MainStuffsWrapper>
-          <SideStuffsWrapper>
+          <AuthenticatedSideStuffWrapper>
             <p className="font-semibold text-lg tracking-tight">Discover more of what matters to you</p>
             <TopicsWrapper>
               <TopicList>
@@ -282,7 +265,7 @@ const Homepage = () => {
               <span>About</span>
               <span>Teams</span>
             </SideStuffsFooter>
-          </SideStuffsWrapper>
+          </AuthenticatedSideStuffWrapper>
         </MainContentWrapper>
       )}
     </>
