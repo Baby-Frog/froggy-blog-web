@@ -6,7 +6,7 @@ import { TStory } from "src/types/story.types";
 import http from "src/utils/http";
 
 export const storyApi = {
-  getRecentStories: (params: { keyword?: string; pageSize?: number }) =>
+  getRecentStories: (params: { keyword?: string; pageSize?: number; pageNumber?: number }) =>
     http.get<TQueryResponse<TStory[]>>(STORY_ENDPOINTS.GET_RECENT_STORIES, { params }),
   getStoryById: (storyId: string) =>
     http.get<TSuccessApiResponse<TStory>>(`${STORY_ENDPOINTS.GET_STORY_BY_ID}/${storyId}`),

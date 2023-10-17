@@ -53,7 +53,6 @@ const HomepageLoginModal = ({
     loginAccountMutation.mutate(data, {
       onSuccess: (data) => {
         setIsAuthenticated(true);
-        navigate(path.HOMEPAGE);
         setUserProfile(data.data.data.profile);
       },
       onError: (error) => {

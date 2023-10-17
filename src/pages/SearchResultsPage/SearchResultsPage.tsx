@@ -11,6 +11,8 @@ import useQueryConfig from "src/hooks/useQueryConfig";
 import { styled } from "styled-components";
 import PeopleItem from "./components/PeopleItem";
 import HomepageRecentPost from "../Homepage/components/HomepageRecentPost";
+import { getCustomDate } from "src/utils/formatDate";
+import { generateSlug } from "src/utils/slugify";
 
 type TSearchResultsPageProps = {
   something: string;
@@ -22,6 +24,7 @@ const MainContentWrapper = styled.div`
   align-items: flex-start;
   gap: 64px;
   justify-content: space-between;
+  height: 200vh;
 `;
 
 const MainStuffsWrapper = styled.div`
@@ -122,11 +125,21 @@ const SearchResultsPage = () => {
       }),
   });
   const stories = storiesData?.data.data.data;
+  const { data: sideStuffsStoriesData } = useQuery({
+    queryKey: ["sideStuffsStories"],
+    queryFn: () =>
+      storyApi.searchStories({
+        pageSize: 3,
+        keyword: queryConfig.q as string,
+        pageNumber: 1,
+      }),
+  });
+  const sideStuffsStories = sideStuffsStoriesData?.data.data.data;
   const { data: usersData } = useQuery({
     queryKey: ["users", { q: queryConfig.q }],
     queryFn: () =>
       authApi.searchUsers({
-        pageSize: 5,
+        pageSize: 7,
         keyword: queryConfig.q as string,
         pageNumber: 1,
         column: "fullName",
@@ -197,6 +210,41 @@ const SearchResultsPage = () => {
         ></CustomTabs>
       </MainStuffsWrapper>
       <SideStuffsWrapper>
+        <p className="font-semibold text-lg tracking-tight">Stories matching {queryConfig.q || "nothing 🤔"}</p>
+        <TopicsWrapper>
+          <TopicList>
+            {sideStuffsStories?.map((story) => (
+              <Link
+                key={story.id}
+                className="block"
+                to={`/${generateSlug({ name: story.title, id: story.id })}`}
+              >
+                <div className="flex items-center gap-2">
+                  <div className="w-5 h-5 rounded-full overflow-hidden">
+                    <img
+                      src={story.author.avatarPath}
+                      alt={story.author.fullName}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="text-xs font-semibold">{story.author.fullName}</span>
+                </div>
+                <h5 className="font-bold mt-1 text-[16px] leading-5 tracking-tighter">{story.title}</h5>
+                <span className="flex text-xs mt-[6px] items-center gap-2">
+                  <span>{getCustomDate(new Date(story.publishDate))}</span>
+                  <span>•</span>
+                  <span>{story.timeRead} read</span>
+                </span>
+              </Link>
+            ))}
+          </TopicList>
+          <Link
+            to={path.EXPORE_TOPICS}
+            className="text-sm mt-4 block text-normalGreen hover:text-normalGreenHover "
+          >
+            See all
+          </Link>
+        </TopicsWrapper>
         <p className="font-semibold text-lg tracking-tight">Topics matching {queryConfig.q || "nothing 🤔"}</p>
         <TopicsWrapper>
           <TopicList>
