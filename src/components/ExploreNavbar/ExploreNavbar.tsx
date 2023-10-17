@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "react-query";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, createSearchParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useMedia from "react-use/lib/useMedia";
 import { authApi } from "src/apis/auth.apis";
@@ -149,6 +149,14 @@ const ExploreNavbar = ({ title }: TAuthenticatedNavbarProps) => {
   const handleLogout = () => {
     logoutMutation.mutate({ refreshToken: getRefreshTokenFromLS() as string });
   };
+  const handleSearch = handleSubmit((data) => {
+    navigate({
+      pathname: path.SEARCH,
+      search: createSearchParams({
+        q: data.search,
+      }).toString(),
+    });
+  });
   return (
     <AuthenticatedNavbarContainer>
       <AuthenticatedNavbarLeft>
@@ -162,12 +170,16 @@ const ExploreNavbar = ({ title }: TAuthenticatedNavbarProps) => {
           />
         </Link>
         {!isMobile && !title && (
-          <form className="navbar-search">
+          <form
+            className="navbar-search"
+            onSubmit={handleSearch}
+          >
             <SearchIcon className="navbar-search-icon"></SearchIcon>
             <input
               type="text"
               placeholder="Search"
               className="navbar-search-input"
+              {...register("search")}
             />
           </form>
         )}
