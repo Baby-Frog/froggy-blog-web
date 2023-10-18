@@ -164,7 +164,7 @@ const SearchResultsPage = () => {
       key: "1",
       label: "Stories",
       children: (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-6">
           {stories?.map((story) => <HomepageRecentPost story={story}></HomepageRecentPost>)}
           {stories?.length === 0 && <div className="text-base">No stories matching {queryConfig.q}</div>}
         </div>

@@ -131,7 +131,7 @@ const Homepage = () => {
       key: "1",
       label: "Recent",
       children: (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-6">
           {storiesData?.pages.map((storyGroup, index) => (
             <Fragment key={index}>
               {storyGroup.data.data.data.map((story) => (
@@ -180,7 +180,7 @@ const Homepage = () => {
           </div>
           <MainContentWrapper>
             <MainStuffsWrapper>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-6">
                 {storiesData?.pages.map((storyGroup, index) => (
                   <Fragment key={index}>
                     {storyGroup.data.data.data.map((story) => (

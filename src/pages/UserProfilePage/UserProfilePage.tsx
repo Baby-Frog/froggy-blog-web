@@ -75,7 +75,7 @@ const UserProfilePage = () => {
       key: "1",
       label: "Your stories",
       children: (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-6">
           {userStories && userStories.map((story) => <HomepageRecentPost story={story}></HomepageRecentPost>)}
           {userStories?.length === 0 && <div className="text-base">You haven't written any stories yet</div>}
         </div>
@@ -85,7 +85,7 @@ const UserProfilePage = () => {
       key: "2",
       label: "Saved",
       children: (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-6">
           {userSavedStories?.map((story) => <HomepageRecentPost story={story}></HomepageRecentPost>)}
           {userSavedStories?.length === 0 && <div className="text-base">No saved stories yet</div>}
         </div>

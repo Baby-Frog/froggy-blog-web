@@ -66,7 +66,7 @@ const AnonymousUserProfilePage = () => {
       key: "1",
       label: "Stories",
       children: (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-6">
           {userStories && userStories.map((story) => <HomepageRecentPost story={story}></HomepageRecentPost>)}
           {userStories?.length === 0 && <div className="text-base">No stories yet</div>}
         </div>

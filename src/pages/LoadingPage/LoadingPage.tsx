@@ -15,7 +15,7 @@ const LoadingPage = ({ children }: TLoadingPageProps) => {
         if (prev.length === 3) return ".";
         return prev + ".";
       });
-    }, 400);
+    }, 300);
     return () => clearInterval(interval);
   }, []);
   return (
