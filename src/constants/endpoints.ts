@@ -28,7 +28,9 @@ export const STORY_ENDPOINTS = {
   SAVE_STORY_TO_FAVORITES: "/api/user/savePost",
 } as const;
 
-export const COMMENT_ENDPOINTS = {};
+export const COMMENT_ENDPOINTS = {
+  COMMENT: "/api/comment/save",
+};
 export const LIKE_ENDPOINTS = {
   GET_LIKES_COUNT: "/api/like/count",
   TOGGLE_LIKE: "/api/like",
