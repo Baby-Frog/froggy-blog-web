@@ -31,13 +31,13 @@ const StoryDetailLayout = ({ children }: TMainLayoutProps) => {
       {!isAuthenticated ? (
         <>
           <UnauthenticatedNavbar></UnauthenticatedNavbar>
-          <MainLayoutWrapper>{children}</MainLayoutWrapper>
+          <>{children}</>
           <PageTransition isPresent={isPresent}></PageTransition>
         </>
       ) : (
         <>
           <AuthenticatedNavbar></AuthenticatedNavbar>
-          <MainLayoutWrapper>{children}</MainLayoutWrapper>
+          <>{children}</>
           <PageTransition isPresent={isPresent}></PageTransition>
         </>
       )}

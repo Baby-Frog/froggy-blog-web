@@ -1,8 +1,12 @@
 import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
-import styled from "styled-components";
+import CloseButtonIcon from "src/components/Icon/CloseButtonIcon";
+import { TComment } from "src/types/comment.types";
+import { styled } from "styled-components";
 
 type TCommentSectionProps = {
+  comments?: TComment[];
+  commentsCount?: number | string;
   showCommentSection: boolean;
   setShowCommentSection: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -29,6 +33,7 @@ const CommentSectionBody = styled.div<{ $isShown?: boolean }>`
   width: 390px;
   height: 100%;
   background-color: #fff;
+  padding: 12px 24px;
   bottom: 0;
   right: 0;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px;
@@ -36,7 +41,29 @@ const CommentSectionBody = styled.div<{ $isShown?: boolean }>`
   transform: ${(props) => (props.$isShown ? "translateX(0)" : "translateX(100%)")};
 `;
 
-const CommentSection = ({ setShowCommentSection, showCommentSection }: TCommentSectionProps) => {
+const CommentSectionHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  h2 {
+    font-size: 24px;
+    font-weight: 600;
+  }
+`;
+
+const CommentSectionCloseIcon = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const CommentSection = ({
+  setShowCommentSection,
+  showCommentSection,
+  comments,
+  commentsCount,
+}: TCommentSectionProps) => {
   useEffect(() => {
     if (showCommentSection) {
       document.body.classList.add("modal-open");
@@ -54,7 +81,15 @@ const CommentSection = ({ setShowCommentSection, showCommentSection }: TCommentS
         $isShown={showCommentSection}
         onClick={() => setShowCommentSection(false)}
       />
-      <CommentSectionBody $isShown={showCommentSection}></CommentSectionBody>
+      <CommentSectionBody $isShown={showCommentSection}>
+        <CommentSectionHeader>
+          <h2>Responses ({commentsCount})</h2>
+          <CommentSectionCloseIcon onClick={() => setShowCommentSection(false)}>
+            <CloseButtonIcon></CloseButtonIcon>
+          </CommentSectionCloseIcon>
+        </CommentSectionHeader>
+        <div>{comments?.map((comment) => <>{comment.content}</>)}</div>
+      </CommentSectionBody>
     </CommentSectionWrapper>,
     document.body,
   );
