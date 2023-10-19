@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link, createSearchParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useMedia from "react-use/lib/useMedia";
@@ -123,7 +123,7 @@ const StyledDropdownLink = styled(Link)<{ $displayColumn?: boolean }>`
 `;
 
 const AuthenticatedNavbar = ({ title }: TAuthenticatedNavbarProps) => {
-  const { userProfile } = useContext(AuthContext);
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const isMobile = useMedia("(max-width: 767px)");
   const { data: meData } = useQuery({
@@ -146,6 +146,7 @@ const AuthenticatedNavbar = ({ title }: TAuthenticatedNavbarProps) => {
         icon: <SuccessToastIcon></SuccessToastIcon>,
       });
       navigate(path.HOMEPAGE);
+      queryClient.resetQueries({ queryKey: ["infiniteStories"] });
     },
     onError: () => {
       toast.error("Oops! Something went wrong. Please try again later");
