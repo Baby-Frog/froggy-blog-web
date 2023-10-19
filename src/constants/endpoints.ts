@@ -30,6 +30,8 @@ export const STORY_ENDPOINTS = {
 
 export const COMMENT_ENDPOINTS = {
   COMMENT: "/api/comment/save",
+  GET_COMMENTS_BY_POST_ID: "/api/comment/search",
+  GET_COMMENTS_COUNT: "/api/comment/count",
 };
 export const LIKE_ENDPOINTS = {
   GET_LIKES_COUNT: "/api/like/count",
