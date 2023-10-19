@@ -50,6 +50,10 @@ const PeopleItemBio = styled.div`
   font-size: 14px;
   font-weight: 400;
   color: ${(props) => props.theme.colors.lightGrey};
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 `;
 
 const GoToProfileButton = styled(Link)`

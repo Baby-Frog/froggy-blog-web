@@ -35,7 +35,7 @@ const HomepageLoginModal = ({
   handleToggleBetweenLoginAndRegister,
 }: THomepageAuthenModalProps) => {
   const { setIsAuthenticated, setUserProfile } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const {
     handleSubmit,
     register,
@@ -54,6 +54,7 @@ const HomepageLoginModal = ({
       onSuccess: (data) => {
         setIsAuthenticated(true);
         setUserProfile(data.data.data.profile);
+        queryClient.resetQueries({ queryKey: ["infiniteStories"] });
       },
       onError: (error) => {
         if (

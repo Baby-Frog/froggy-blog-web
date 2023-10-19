@@ -1,6 +1,6 @@
 import { TabsProps } from "antd";
-import { useMemo, useState } from "react";
-import { useQuery } from "react-query";
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useInfiniteQuery, useQuery } from "react-query";
 import { Link, useLocation } from "react-router-dom";
 import { authApi } from "src/apis/auth.apis";
 import { storyApi } from "src/apis/story.apis";
@@ -24,14 +24,12 @@ const MainContentWrapper = styled.div`
   align-items: flex-start;
   gap: 64px;
   justify-content: space-between;
-  height: 200vh;
 `;
 
 const MainStuffsWrapper = styled.div`
   gap: 32px;
   width: calc(65% - 16px);
   flex-shrink: 0;
-  height: 100vh;
 `;
 
 const MainStuffsHeading = styled.h2`
@@ -114,18 +112,55 @@ const SearchResultsPage = () => {
       }),
   });
   const sideStuffTopics = sideStuffTopicsData?.data.data.data;
-  const { data: storiesData, isLoading: isStoriesLoading } = useQuery({
+
+  const {
+    data: storiesData,
+    isLoading: isStoriesLoading,
+    fetchNextPage: storiesFetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
     queryKey: ["stories", { q: queryConfig.q }],
-    queryFn: () =>
+    queryFn: ({ pageParam = 1 }) =>
       storyApi.searchStories({
         pageSize: 5,
         keyword: queryConfig.q as string,
-        pageNumber: 1,
+        pageNumber: pageParam,
         column: "title",
         orderBy: "asc",
       }),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.data.data.data.length === 0) return undefined;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return (lastPage.data.data as any).pageNumber + 1;
+    },
+    refetchOnMount: true,
   });
-  const stories = storiesData?.data.data.data;
+  const loadMoreRef = useRef<HTMLDivElement>(null);
+  const handleLoadMore = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      const target = entries[0];
+      if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        storiesFetchNextPage();
+      }
+    },
+    [hasNextPage, isFetchingNextPage, storiesFetchNextPage],
+  );
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleLoadMore, {
+      rootMargin: "0px 0px 0px 0px",
+    });
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [handleLoadMore]);
+  // const stories = storiesData?.data.data.data;
   const { data: sideStuffsStoriesData } = useQuery({
     queryKey: ["sideStuffsStories"],
     queryFn: () =>
@@ -165,8 +200,20 @@ const SearchResultsPage = () => {
       label: "Stories",
       children: (
         <div className="flex flex-col gap-6">
-          {stories?.map((story) => <HomepageRecentPost story={story}></HomepageRecentPost>)}
-          {stories?.length === 0 && <div className="text-base">No stories matching {queryConfig.q}</div>}
+          <div className="flex flex-col gap-6">
+            {storiesData?.pages.map((storyGroup, index) => (
+              <Fragment key={index}>
+                {storyGroup.data.data.data.map((story) => (
+                  <HomepageRecentPost
+                    key={story.id}
+                    story={story}
+                  ></HomepageRecentPost>
+                ))}
+              </Fragment>
+            ))}
+          </div>
+          {hasNextPage && <div ref={loadMoreRef}>Loading more stories...</div>}
+          {!storiesData?.pages && <div className="text-base">No stories matching {queryConfig.q}</div>}
         </div>
       ),
     },
