@@ -124,7 +124,7 @@ const ExplorePage = () => {
   });
   const { data: exploreTopicsData } = useQuery({
     queryKey: ["explore-topics"],
-    queryFn: () => topicApi.getTopics(),
+    queryFn: () => topicApi.getTopicsByKeyword({ keyword: "", pageSize: 20, column: "id", orderBy: "asc" }),
   });
   const exploreTopics = exploreTopicsData?.data.data.data;
   const handleQueryTopics = handleSubmit((data) => {
