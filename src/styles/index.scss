@@ -3,6 +3,9 @@
 @tailwind utilities;
 @import "story";
 @import "datepicker";
+body.modal-open {
+  overflow: hidden;
+}
 .default-row {
   display: flex;
   align-items: center;

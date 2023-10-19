@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
 import { styled } from "styled-components";
 import CloseButtonIcon from "../Icon/CloseButtonIcon";
@@ -58,6 +58,17 @@ const ModalCloseButton = styled.button`
 `;
 
 const Modal = ({ isOpen = false, handleClose, maxWidth, children }: TModalProps) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add("modal-open");
+    } else {
+      document.body.classList.remove("modal-open");
+    }
+
+    return () => {
+      document.body.classList.remove("modal-open");
+    };
+  }, [isOpen]);
   if (typeof document === "undefined") return <div className="modal"></div>;
   return createPortal(
     <ModalAlign $isOpen={isOpen}>
