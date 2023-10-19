@@ -116,8 +116,8 @@ const SearchResultsPage = () => {
     data: storiesData,
     isLoading: isStoriesLoading,
     fetchNextPage: storiesFetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
+    hasNextPage: storiesHasNextPage,
+    isFetchingNextPage: storiesIsFetchingNextPage,
   } = useInfiniteQuery({
     queryKey: ["stories", { q: queryConfig.q }],
     queryFn: ({ pageParam = 1 }) =>
@@ -139,11 +139,11 @@ const SearchResultsPage = () => {
   const handleLoadMore = useCallback(
     (entries: IntersectionObserverEntry[]) => {
       const target = entries[0];
-      if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
+      if (target.isIntersecting && storiesHasNextPage && !storiesIsFetchingNextPage) {
         storiesFetchNextPage();
       }
     },
-    [hasNextPage, isFetchingNextPage, storiesFetchNextPage],
+    [storiesHasNextPage, storiesIsFetchingNextPage, storiesFetchNextPage],
   );
 
   useEffect(() => {
@@ -211,7 +211,7 @@ const SearchResultsPage = () => {
               </Fragment>
             ))}
           </div>
-          {hasNextPage && <div ref={loadMoreRef}>Loading more stories...</div>}
+          {storiesHasNextPage && <div ref={loadMoreRef}>Loading more stories...</div>}
           {!storiesData?.pages && <div className="text-base">No stories matching {queryConfig.q}</div>}
         </div>
       ),
