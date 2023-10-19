@@ -79,7 +79,6 @@ const SideStuffsFooter = styled.div`
 
 const SearchResultsPage = () => {
   const queryConfig = useQueryConfig();
-  console.log(queryConfig.q);
   const location = useLocation();
   const [currentActiveKey, setCurrentActiveKey] = useState<string>("1");
   const activeKeyAfterExplorePage = useMemo(() => {

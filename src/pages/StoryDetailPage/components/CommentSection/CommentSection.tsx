@@ -21,7 +21,6 @@ const CommentSectionOverlay = styled.div<{ $isShown: boolean }>`
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0);
-  transition: all 550ms cubic-bezier(0.075, 0.82, 0.165, 1);
   opacity: ${(props) => (props.$isShown ? "0.4" : "0")};
 `;
 

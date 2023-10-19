@@ -23,6 +23,7 @@ import useShareLink from "src/hooks/useShareLink";
 import { getCustomDate } from "src/utils/formatDate";
 import { getIdFromSlug } from "src/utils/slugify";
 import CommentSection from "./components/CommentSection";
+import { commentApi } from "src/apis/comments.api";
 
 const StoryDetailPage = () => {
   const { storyId } = useParams();
@@ -42,7 +43,17 @@ const StoryDetailPage = () => {
     queryFn: () => likeApi.getLikesCount(idFromSlug as string),
   });
   const likesCount = likesCountData?.data.data;
-  console.log(likesCount);
+  const { data: commentsCountData } = useQuery({
+    queryKey: ["commentsCount", storyId],
+    queryFn: () => commentApi.getCommentsCount(idFromSlug as string),
+  });
+  const commentsCount = commentsCountData?.data.data;
+  const { data: commentsData } = useQuery({
+    queryKey: ["comments", storyId],
+    queryFn: () => commentApi.getCommentsByPostId(idFromSlug as string, {}),
+  });
+  const comments = commentsData?.data.data.data;
+  console.log(comments);
   const likeStoryMutation = useMutation({
     mutationFn: likeApi.toggleLike,
     onSuccess: (data) => {
@@ -99,7 +110,12 @@ const StoryDetailPage = () => {
         <h1 className="text-[40px] font-bold">{storyDetailData?.data.data.title}</h1>
         <div className="flex items-center gap-2 flex-wrap">
           {storyDetailData?.data.data.listTopic.map((topic) => (
-            <div className="rounded-2xl text-black bg-[#f2f2f2] px-4 text-xs py-1 flex-shrink-0">{topic.topicName}</div>
+            <div
+              key={topic.id}
+              className="rounded-2xl text-black bg-[#f2f2f2] px-4 text-xs py-1 flex-shrink-0"
+            >
+              {topic.topicName}
+            </div>
           ))}
         </div>
         <div className="flex items-center gap-2 mt-4">
@@ -152,7 +168,7 @@ const StoryDetailPage = () => {
                 height={24}
                 className="hover:text-softBlack"
               ></CommentIcon>
-              <span className="translate-y-[1px]">0</span>
+              <span className="translate-y-[1px]">{commentsCount}</span>
             </button>
           </div>
           <div className="flex items-center gap-6">
