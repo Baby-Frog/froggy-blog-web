@@ -1,3 +1,5 @@
+import { TUserProfile } from "./user.types";
+
 export type TCommentReqBody = {
   content: string;
   userId: string;
@@ -8,7 +10,9 @@ export type TCommentReqBody = {
 export type TComment = {
   id: string;
   content: string;
-  userId: string;
+  profileDto: TUserProfile;
   postId: string;
   parentId?: string;
+  createDate: string;
+  updateDate?: string;
 };
