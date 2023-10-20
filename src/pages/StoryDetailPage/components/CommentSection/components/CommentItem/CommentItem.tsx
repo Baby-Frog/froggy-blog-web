@@ -10,7 +10,7 @@ type TCommentItemProps = {
 
 const CommentItem = ({ comment }: TCommentItemProps) => {
   return (
-    <>
+    <div>
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center gap-2">
           <div className="rounded-full w-8 h-8 overflow-hidden">
@@ -53,7 +53,7 @@ const CommentItem = ({ comment }: TCommentItemProps) => {
         </div>
         <div className="text-sm font-medium cursor-pointer">Reply</div>
       </div>
-    </>
+    </div>
   );
 };
 

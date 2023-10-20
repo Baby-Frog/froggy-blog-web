@@ -10,11 +10,15 @@ import { commentSchema } from "src/schemas/comment.schemas";
 import { TComment } from "src/types/comment.types";
 import { styled } from "styled-components";
 import CommentItem from "./components/CommentItem";
+import { useMutation, useQueryClient } from "react-query";
+import { commentApi } from "src/apis/comments.api";
 
 type TCommentSectionProps = {
   comments?: TComment[];
   commentsCount?: number | string;
   showCommentSection: boolean;
+  postId: string;
+
   setShowCommentSection: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -81,18 +85,23 @@ const CommentSection = ({
   showCommentSection,
   comments,
   commentsCount,
+  postId,
 }: TCommentSectionProps) => {
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     mode: "onSubmit",
     reValidateMode: "onChange",
     resolver: yupResolver(commentSchema),
   });
-  const { userProfile } = useContext(AuthContext);
-
+  const { userProfile, isAuthenticated } = useContext(AuthContext);
+  const commentMutation = useMutation({
+    mutationFn: commentApi.comment,
+  });
   useEffect(() => {
     if (showCommentSection) {
       document.body.classList.add("modal-open");
@@ -106,7 +115,22 @@ const CommentSection = ({
   }, [showCommentSection]);
 
   const handleComment = handleSubmit((data) => {
-    console.log(data);
+    commentMutation.mutate(
+      {
+        content: data.comment,
+        postId,
+        userId: userProfile?.id as string,
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["comments"] });
+          queryClient.invalidateQueries({ queryKey: ["commentsCount"] });
+          reset({
+            comment: "",
+          });
+        },
+      },
+    );
   });
   return createPortal(
     <CommentSectionWrapper $isShown={showCommentSection}>
@@ -121,40 +145,48 @@ const CommentSection = ({
             <CloseButtonIcon></CloseButtonIcon>
           </CommentSectionCloseIcon>
         </CommentSectionHeader>
-        <YourCommentWrapper>
-          <div className="flex items-center gap-2">
-            <div className="rounded-full w-8 h-8 overflow-hidden">
-              <img
-                src={userProfile?.avatarPath}
-                alt={userProfile?.fullName}
-              />
-            </div>
-            <span className="font-medium">{userProfile?.fullName}</span>
-          </div>
-          <form onSubmit={handleComment}>
-            <AutoResizeTextarea
-              name="comment"
-              placeholder="What are your thoughts?"
-              register={register}
-            ></AutoResizeTextarea>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-red-500">{errors.comment?.message}</span>
-              <button
-                className="bg-normalGreen ml-auto rounded-3xl text-sm px-3 py-2 flex items-center justify-center text-white"
-                type="submit"
-              >
-                Comment
-              </button>
-            </div>
-          </form>
-        </YourCommentWrapper>
+        {!isAuthenticated ? (
+          <></>
+        ) : (
+          <YourCommentWrapper>
+            <>
+              <div className="flex items-center gap-2">
+                <div className="rounded-full w-8 h-8 overflow-hidden">
+                  <img
+                    src={userProfile?.avatarPath || ""}
+                    alt={userProfile?.fullName || ""}
+                  />
+                </div>
+                <span className="font-medium">{userProfile?.fullName || ""}</span>
+              </div>
+              <form onSubmit={handleComment}>
+                <AutoResizeTextarea
+                  name="comment"
+                  placeholder="What are your thoughts?"
+                  register={register}
+                ></AutoResizeTextarea>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-red-500">{errors.comment?.message}</span>
+                  <button
+                    className="bg-normalGreen ml-auto rounded-3xl text-sm px-3 py-2 flex items-center justify-center text-white"
+                    type="submit"
+                  >
+                    Comment
+                  </button>
+                </div>
+              </form>
+            </>
+          </YourCommentWrapper>
+        )}
         <CommentSectionContent>
-          {comments?.map((comment) => (
-            <CommentItem
-              key={comment.id}
-              comment={comment}
-            ></CommentItem>
-          ))}
+          <div className="flex flex-col gap-6">
+            {comments?.map((comment) => (
+              <CommentItem
+                key={comment.id}
+                comment={comment}
+              ></CommentItem>
+            ))}
+          </div>
         </CommentSectionContent>
       </CommentSectionBody>
     </CommentSectionWrapper>,

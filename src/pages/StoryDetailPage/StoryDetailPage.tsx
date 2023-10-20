@@ -126,6 +126,7 @@ const StoryDetailPage = () => {
     <>
       <MainLayoutWrapper>
         <CommentSection
+          postId={idFromSlug}
           comments={comments}
           commentsCount={commentsCount}
           showCommentSection={showCommentSection}
