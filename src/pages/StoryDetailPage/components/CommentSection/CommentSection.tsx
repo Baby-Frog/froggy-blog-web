@@ -92,7 +92,7 @@ const CommentSection = ({
     resolver: yupResolver(commentSchema),
   });
   const { userProfile } = useContext(AuthContext);
-  const textareaRef = useRef(null);
+
   useEffect(() => {
     if (showCommentSection) {
       document.body.classList.add("modal-open");
@@ -137,12 +137,15 @@ const CommentSection = ({
               placeholder="What are your thoughts?"
               register={register}
             ></AutoResizeTextarea>
-            <button
-              className="bg-normalGreen ml-auto rounded-3xl text-sm px-3 py-2 flex items-center justify-center text-white"
-              type="submit"
-            >
-              Comment
-            </button>
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-red-500">{errors.comment?.message}</span>
+              <button
+                className="bg-normalGreen ml-auto rounded-3xl text-sm px-3 py-2 flex items-center justify-center text-white"
+                type="submit"
+              >
+                Comment
+              </button>
+            </div>
           </form>
         </YourCommentWrapper>
         <CommentSectionContent>
