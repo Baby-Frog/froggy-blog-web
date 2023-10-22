@@ -32,7 +32,7 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
       to={`/${generateSlug({ name: story.title, id: story.id })}`}
       className="flex items-center gap-2 justify-between"
     >
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 w-full">
         <div className="flex items-center gap-2">
           <img
             src={story.author.avatarPath}

@@ -102,6 +102,11 @@ const Homepage = () => {
     },
     refetchOnMount: true,
   });
+  const { data: trendingStoriesData } = useQuery({
+    queryKey: ["trendingStories"],
+    queryFn: () => storyApi.getTrendingStories(),
+  });
+  const trendingStories = trendingStoriesData?.data.data;
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const handleLoadMore = useCallback(
     (entries: IntersectionObserverEntry[]) => {
@@ -153,15 +158,6 @@ const Homepage = () => {
     },
   ];
 
-  // const [recentStories, setRecentStories] = useState<TStory[]>([]);
-  // const { data: storiesData, isLoading: storiesIsLoading } = useQuery({
-  //   queryKey: ["stories"],
-  //   queryFn: () => storyApi.getRecentStories({ keyword: "", pageSize: 5 }),
-  //   staleTime: 1000 * 60 * 5,
-  //   keepPreviousData: true,
-  //   refetchOnMount: true,
-  // });
-
   return (
     <>
       {!isAuthenticated ? (
@@ -171,12 +167,7 @@ const Homepage = () => {
             <HomepageHeading>Trending on Froggy Blog</HomepageHeading>
           </div>
           <div className="grid grid-cols-3 gap-4 mt-8">
-            <HomepageTrendingPost></HomepageTrendingPost>
-            <HomepageTrendingPost></HomepageTrendingPost>
-            <HomepageTrendingPost></HomepageTrendingPost>
-            <HomepageTrendingPost></HomepageTrendingPost>
-            <HomepageTrendingPost></HomepageTrendingPost>
-            <HomepageTrendingPost></HomepageTrendingPost>
+            {trendingStories?.map((story) => <HomepageTrendingPost story={story}></HomepageTrendingPost>)}
           </div>
           <MainContentWrapper>
             <MainStuffsWrapper>

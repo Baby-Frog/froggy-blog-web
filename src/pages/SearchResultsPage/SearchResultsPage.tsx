@@ -80,7 +80,7 @@ const SideStuffsFooter = styled.div`
 const SearchResultsPage = () => {
   const queryConfig = useQueryConfig();
   const location = useLocation();
-  const [currentActiveKey, setCurrentActiveKey] = useState<string>("1");
+  const [currentActiveKey, setCurrentActiveKey] = useState<string>("");
   const activeKeyAfterExplorePage = useMemo(() => {
     if (location?.state?.from && location.state.from === path.EXPORE_TOPICS) {
       return "3";
@@ -161,7 +161,7 @@ const SearchResultsPage = () => {
   }, [handleLoadMore]);
   // const stories = storiesData?.data.data.data;
   const { data: sideStuffsStoriesData } = useQuery({
-    queryKey: ["sideStuffsStories"],
+    queryKey: ["sideStuffsStories", { q: queryConfig.q }],
     queryFn: () =>
       storyApi.searchStories({
         pageSize: 3,
@@ -250,7 +250,7 @@ const SearchResultsPage = () => {
         </MainStuffsHeading>
         <CustomTabs
           defaultActiveKey={activeKeyAfterExplorePage}
-          activeKey={currentActiveKey}
+          activeKey={currentActiveKey || activeKeyAfterExplorePage}
           items={items}
           onChange={(activeKey) => {
             setCurrentActiveKey(activeKey);
