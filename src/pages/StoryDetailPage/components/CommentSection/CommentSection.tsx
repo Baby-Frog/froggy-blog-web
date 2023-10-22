@@ -155,6 +155,7 @@ const CommentSection = ({
                   <img
                     src={userProfile?.avatarPath || ""}
                     alt={userProfile?.fullName || ""}
+                    className="w-full h-full object-cover"
                   />
                 </div>
                 <span className="font-medium">{userProfile?.fullName || ""}</span>

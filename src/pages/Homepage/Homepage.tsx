@@ -12,6 +12,8 @@ import { AuthContext } from "src/contexts/auth.contexts";
 import { styled } from "styled-components";
 import HomepageRecentPost from "./components/HomepageRecentPost";
 import HomepageTrendingPost from "./components/HomepageTrendingPost";
+import { generateSlug } from "src/utils/slugify";
+import { getCustomDate } from "src/utils/formatDate";
 
 const HomepageHeading = styled.h2`
   font-size: 16px;
@@ -107,6 +109,7 @@ const Homepage = () => {
     queryFn: () => storyApi.getTrendingStories(),
   });
   const trendingStories = trendingStoriesData?.data.data;
+  const lessTrendingStories = trendingStories?.slice(0, 3);
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const handleLoadMore = useCallback(
     (entries: IntersectionObserverEntry[]) => {
@@ -150,11 +153,6 @@ const Homepage = () => {
           {hasNextPage && <div ref={loadMoreRef}>Loading more stories...</div>}
         </div>
       ),
-    },
-    {
-      key: "2",
-      label: "Trending",
-      children: <div>1</div>,
     },
   ];
 
@@ -228,6 +226,35 @@ const Homepage = () => {
             ></CustomTabs>
           </MainStuffsWrapper>
           <AuthenticatedSideStuffWrapper>
+            <p className="font-semibold text-lg tracking-tight">Staff picks ⭐</p>
+            <TopicsWrapper>
+              <TopicList>
+                {lessTrendingStories?.map((story) => (
+                  <Link
+                    key={story.id}
+                    className="block"
+                    to={`/${generateSlug({ name: story.title, id: story.id })}`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-5 h-5 rounded-full overflow-hidden">
+                        <img
+                          src={story.author.avatarPath}
+                          alt={story.author.fullName}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <span className="text-xs font-semibold">{story.author.fullName}</span>
+                    </div>
+                    <h5 className="font-bold mt-1 text-[16px] leading-5 tracking-tighter">{story.title}</h5>
+                    <span className="flex text-xs mt-[6px] items-center gap-2">
+                      <span>{getCustomDate(new Date(story.publishDate))}</span>
+                      <span>•</span>
+                      <span>{story.timeRead} read</span>
+                    </span>
+                  </Link>
+                ))}
+              </TopicList>
+            </TopicsWrapper>
             <p className="font-semibold text-lg tracking-tight">Discover more of what matters to you</p>
             <TopicsWrapper>
               <TopicList>
