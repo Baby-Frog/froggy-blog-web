@@ -6,9 +6,10 @@ import { TComment } from "src/types/comment.types";
 
 type TCommentItemProps = {
   comment: TComment;
+  authorId: string;
 };
 
-const CommentItem = ({ comment }: TCommentItemProps) => {
+const CommentItem = ({ comment, authorId }: TCommentItemProps) => {
   return (
     <div>
       <div className="flex items-center justify-between w-full">
@@ -20,7 +21,14 @@ const CommentItem = ({ comment }: TCommentItemProps) => {
             />
           </div>
           <div className="flex flex-col">
-            <span className="font-medium">{comment.profileDto.fullName}</span>
+            <div className="flex items-center gap-1">
+              <span className="font-medium">{comment.profileDto.fullName}</span>
+              {comment.profileDto.id === authorId && (
+                <span className="min-w-[52px] flex items-center justify-center text-[11px] uppercase p-[2px] bg-normalGreen !text-white">
+                  Author
+                </span>
+              )}
+            </div>
             <span className="text-xs text-lightGrey">{new Date(comment.createDate).toLocaleDateString("en-GB")}</span>
           </div>
         </div>

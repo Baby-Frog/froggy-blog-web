@@ -128,6 +128,7 @@ const StoryDetailPage = () => {
         <CommentSection
           postId={idFromSlug}
           comments={comments}
+          authorId={storyDetailData?.data.data.author.id}
           commentsCount={commentsCount}
           showCommentSection={showCommentSection}
           setShowCommentSection={setShowCommentSection}
@@ -293,7 +294,7 @@ const StoryDetailPage = () => {
                 <img
                   src={storyDetailData?.data.data.author.avatarPath}
                   alt=""
-                  className="rounded-full w-full h-full"
+                  className="rounded-full w-full h-full object-cover"
                 />
               </div>
               <span className="block mt-4 font-semibold text-2xl tracking-tighter">

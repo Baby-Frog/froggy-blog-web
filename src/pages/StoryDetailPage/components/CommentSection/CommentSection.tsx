@@ -3,7 +3,6 @@ import { useEffect, useContext, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
 import AutoResizeTextarea from "src/components/AutoResizeTextarea";
-import Button from "src/components/Button";
 import CloseButtonIcon from "src/components/Icon/CloseButtonIcon";
 import { AuthContext } from "src/contexts/auth.contexts";
 import { commentSchema } from "src/schemas/comment.schemas";
@@ -18,7 +17,7 @@ type TCommentSectionProps = {
   commentsCount?: number | string;
   showCommentSection: boolean;
   postId: string;
-
+  authorId?: string;
   setShowCommentSection: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -85,6 +84,7 @@ const CommentSection = ({
   showCommentSection,
   comments,
   commentsCount,
+  authorId,
   postId,
 }: TCommentSectionProps) => {
   const queryClient = useQueryClient();
@@ -183,6 +183,7 @@ const CommentSection = ({
           <div className="flex flex-col gap-6">
             {comments?.map((comment) => (
               <CommentItem
+                authorId={authorId as string}
                 key={comment.id}
                 comment={comment}
               ></CommentItem>
