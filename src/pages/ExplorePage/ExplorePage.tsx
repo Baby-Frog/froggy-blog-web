@@ -6,7 +6,7 @@ import { topicApi } from "src/apis/topic.apis";
 import ArrowRightIcon from "src/components/Icon/ArrowRightIcon";
 import ExploreIcon from "src/components/Icon/ExploreIcon";
 import SearchIcon from "src/components/Icon/SearchIcon";
-import ArrowLeftIcon from "src/components/Icon/const ArrowLeftIcon";
+import ArrowLeftIcon from "src/components/Icon/ArrowLeftIcon";
 import { path } from "src/constants/path";
 import { styled } from "styled-components";
 

@@ -5,7 +5,7 @@ import { createSearchParams, useNavigate, useParams } from "react-router-dom";
 import { topicApi } from "src/apis/topic.apis";
 import ArrowRightIcon from "src/components/Icon/ArrowRightIcon";
 import ExploreIcon from "src/components/Icon/ExploreIcon";
-import ArrowLeftIcon from "src/components/Icon/const ArrowLeftIcon";
+import ArrowLeftIcon from "src/components/Icon/ArrowLeftIcon";
 import { path } from "src/constants/path";
 import { getIdFromSlug } from "src/utils/slugify";
 import { styled } from "styled-components";
