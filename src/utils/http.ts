@@ -66,6 +66,7 @@ class Http {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const data: any | undefined = error?.response?.data;
           const message = data?.message || error.message;
+          toast.dismiss();
           toast.error(message);
         }
         if (isUnauthorizedError<TErrorApiResponse<{ message: string }>>(error)) {
@@ -95,6 +96,7 @@ class Http {
           clearAllAuthenticationInfoFromLS();
           this.accessToken = "";
           this.refreshToken = "";
+          toast.dismiss();
           toast.error(error.response?.data.data?.message);
         }
         return Promise.reject(error);

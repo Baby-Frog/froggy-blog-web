@@ -18,6 +18,7 @@ const CommentItem = ({ comment, authorId }: TCommentItemProps) => {
             <img
               src={comment.profileDto.avatarPath}
               alt={comment.profileDto.fullName}
+              className="w-full h-full object-cover"
             />
           </div>
           <div className="flex flex-col">
