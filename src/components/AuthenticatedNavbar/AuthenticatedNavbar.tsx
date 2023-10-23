@@ -20,6 +20,8 @@ import SearchIcon from "../Icon/SearchIcon";
 import SettingIcon from "../Icon/SettingIcon";
 import SuccessToastIcon from "../Icon/ToastIcon/SuccessToastIcon";
 import PopoverDismiss from "../PopoverDismiss";
+import StatsIcon from "../Icon/StatsIcon";
+import DashboardIcon from "../Icon/DashboardIcon";
 
 type TAuthenticatedNavbarProps = {
   title?: string;
@@ -116,6 +118,20 @@ const StyledDropdownLink = styled(Link)<{ $displayColumn?: boolean }>`
   flex-direction: ${(props) => (props.$displayColumn ? "column" : "row")};
   gap: ${(props) => (props.$displayColumn ? "0px" : "12px")};
   padding: 8px 24px;
+  color: ${(props) => props.theme.colors.lightGrey};
+  &:hover {
+    color: ${(props) => props.theme.colors.darkGrey};
+  }
+`;
+
+const StyledDropdownLogout = styled(Link)<{ $displayColumn?: boolean }>`
+  font-size: 14px;
+  font-weight: 400;
+  display: flex;
+  align-items: ${(props) => (props.$displayColumn ? "flex-start" : "center")};
+  flex-direction: ${(props) => (props.$displayColumn ? "column" : "row")};
+  gap: ${(props) => (props.$displayColumn ? "0px" : "12px")};
+  padding: 0px 24px 8px 24px;
   color: ${(props) => props.theme.colors.lightGrey};
   &:hover {
     color: ${(props) => props.theme.colors.darkGrey};
@@ -229,35 +245,34 @@ const AuthenticatedNavbar = ({ title }: TAuthenticatedNavbarProps) => {
                 <span>Profile</span>
               </StyledDropdownLink>
               <StyledDropdownLink to={path.SETTING}>
-                <SettingIcon
+                <StatsIcon
                   width={24}
                   height={24}
-                ></SettingIcon>
-                <span>Settings</span>
+                ></StatsIcon>
+                <span>Stats</span>
               </StyledDropdownLink>
-              <StyledDropdownLink to={path.SETTING}>
-                <SettingIcon
+              <StyledDropdownLink to={path.DASHBOARD}>
+                <DashboardIcon
                   width={24}
                   height={24}
-                ></SettingIcon>
-                <span>Settings</span>
-              </StyledDropdownLink>
-              <StyledDropdownLink to={path.SETTING}>
-                <SettingIcon
-                  width={24}
-                  height={24}
-                ></SettingIcon>
-                <span>Settings</span>
+                ></DashboardIcon>
+                <span>Dashboard</span>
               </StyledDropdownLink>
               <Divider></Divider>
               <StyledDropdownLink
+                to={path.SETTING}
+                $displayColumn
+              >
+                <div>Settings</div>
+              </StyledDropdownLink>
+              <StyledDropdownLogout
                 to={path.HOMEPAGE}
                 onClick={handleLogout}
                 $displayColumn
               >
                 <div>Sign out</div>
                 <div>{hideEmail(me?.email)}</div>
-              </StyledDropdownLink>
+              </StyledDropdownLogout>
             </UserDropdown>
           }
           placement="bottom-start"
