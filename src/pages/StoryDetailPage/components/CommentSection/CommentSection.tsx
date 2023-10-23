@@ -172,7 +172,7 @@ const CommentSection = ({
                     className="bg-normalGreen ml-auto rounded-3xl text-sm px-3 py-2 flex items-center justify-center text-white"
                     type="submit"
                   >
-                    Comment
+                    Respond
                   </button>
                 </div>
               </form>
