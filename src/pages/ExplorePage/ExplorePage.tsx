@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { topicApi } from "src/apis/topic.apis";
+import ArrowRightIcon from "src/components/Icon/ArrowRightIcon";
 import ExploreIcon from "src/components/Icon/ExploreIcon";
 import SearchIcon from "src/components/Icon/SearchIcon";
+import ArrowLeftIcon from "src/components/Icon/const ArrowLeftIcon";
 import { path } from "src/constants/path";
 import { styled } from "styled-components";
 
@@ -12,28 +14,19 @@ type TExplorePageProps = {
   something: string;
 };
 
+const ExploreSectionWrapper = styled.div`
+  position: relative;
+`;
+
 const ExploreSelection = styled.div`
   display: flex;
   align-items: center;
   gap: 24px;
   margin-top: 16px;
-  overflow: hidden;
-  position: relative;
-  &::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-    width: 120px;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.75) 25%,
-      rgba(255, 255, 255, 0.9) 50%,
-      rgba(255, 255, 255, 1) 75%
-    );
+  overflow-x: scroll;
+  overflow-y: hidden;
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 
@@ -58,6 +51,7 @@ const ExploreSelectionList = styled.div`
   align-items: center;
   gap: 8px;
   flex-shrink: 0;
+  width: 100%;
 `;
 
 const ExploreSelectionItem = styled.button`
@@ -67,6 +61,7 @@ const ExploreSelectionItem = styled.button`
   justify-content: center;
   align-items: center;
   height: 38px;
+  flex-shrink: 0;
   border-radius: 24px;
   cursor: pointer;
 `;
@@ -112,8 +107,51 @@ const ExploreInputIcon = styled.div`
   align-items: center;
 `;
 
+const ExploreScrollRight = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1;
+  width: 120px;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.75) 25%,
+    rgba(255, 255, 255, 0.9) 50%,
+    rgba(255, 255, 255, 1) 75%
+  );
+`;
+
+const ExploreScrollLeft = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 0px;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1;
+  width: 120px;
+  height: 100%;
+  background: linear-gradient(
+    270deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.75) 25%,
+    rgba(255, 255, 255, 0.9) 50%,
+    rgba(255, 255, 255, 1) 75%
+  );
+`;
+
 const ExplorePage = () => {
   const navigate = useNavigate();
+  const [showLeftArrow, setShowLeftArrow] = useState<boolean>(false);
   const {
     handleSubmit,
     register,
@@ -124,8 +162,9 @@ const ExplorePage = () => {
   });
   const { data: exploreTopicsData } = useQuery({
     queryKey: ["explore-topics"],
-    queryFn: () => topicApi.getTopicsByKeyword({ keyword: "", pageSize: 20, column: "id", orderBy: "asc" }),
+    queryFn: () => topicApi.getTopicsByKeyword({ keyword: "", pageSize: 30, column: "id", orderBy: "asc" }),
   });
+  const exploreTopicsSectionRef = React.useRef<HTMLDivElement>(null);
   const exploreTopics = exploreTopicsData?.data.data.data;
   const handleQueryTopics = handleSubmit((data) => {
     navigate(
@@ -158,20 +197,59 @@ const ExplorePage = () => {
       },
     );
   };
+  const handleScrollRight = () => {
+    exploreTopicsSectionRef?.current?.scrollBy({
+      top: 0,
+      left: 150,
+    });
+  };
+  const handleScrollLeft = () => {
+    exploreTopicsSectionRef?.current?.scrollBy({
+      top: 0,
+      left: -150,
+    });
+  };
+  useEffect(() => {
+    const handleScroll = () => {
+      if (exploreTopicsSectionRef?.current?.scrollLeft && exploreTopicsSectionRef.current.scrollLeft > 0) {
+        setShowLeftArrow(true);
+      } else {
+        setShowLeftArrow(false);
+      }
+    };
+
+    const currentRef = exploreTopicsSectionRef.current;
+    currentRef?.addEventListener("scroll", handleScroll);
+    return () => {
+      currentRef?.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <>
-      <ExploreSelection>
-        <ExploreTopicsButton>
-          <ExploreIcon></ExploreIcon>
-          <span>Explore topics</span>
-        </ExploreTopicsButton>
-        <ExploreSelectionList>
-          {exploreTopics?.map((topic) => (
-            <ExploreSelectionItem onClick={(e) => handleNavigateToTopic(e)}>{topic.topicName}</ExploreSelectionItem>
-          ))}
-        </ExploreSelectionList>
-      </ExploreSelection>
+      <ExploreSectionWrapper>
+        <ExploreSelection ref={exploreTopicsSectionRef}>
+          {showLeftArrow && (
+            <ExploreScrollLeft onClick={handleScrollLeft}>
+              <ArrowLeftIcon></ArrowLeftIcon>
+            </ExploreScrollLeft>
+          )}
+          <ExploreTopicsButton>
+            <ExploreIcon></ExploreIcon>
+            <span>Explore topics</span>
+          </ExploreTopicsButton>
+          <ExploreSelectionList>
+            {exploreTopics?.map((topic) => (
+              <ExploreSelectionItem onClick={(e) => handleNavigateToTopic(e)}>{topic.topicName}</ExploreSelectionItem>
+            ))}
+          </ExploreSelectionList>
+          <ExploreScrollRight onClick={handleScrollRight}>
+            <ArrowRightIcon></ArrowRightIcon>
+          </ExploreScrollRight>
+        </ExploreSelection>
+      </ExploreSectionWrapper>
+
       <ExploreHeading>Explore topics</ExploreHeading>
+
       <ExploreInputWrapper onSubmit={handleQueryTopics}>
         <ExploreInputElemet
           $hasErrors={Boolean(errors.search)}
