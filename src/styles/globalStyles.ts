@@ -11,6 +11,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     font-size:14px;
     font-family: "DM Sans", "Lora", Helvetica, Sans-Serif;
+    min-height: 100vh;
   }
 
   input {
