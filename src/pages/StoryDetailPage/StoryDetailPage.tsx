@@ -173,30 +173,48 @@ const StoryDetailPage = () => {
           </div>
           <div className="mt-4 mb-7 px-2 py-3 border-t-2 border-b-2 border-[#F2F2F2] flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <button
-                className="flex items-center gap-1 cursor-pointer hover:text-softBlack"
-                onClick={handleLikeStory}
+              <Popover
+                backgroundColor="#000000a8"
+                sameWidthWithChildren={false}
+                placement="top"
+                enableArrow={false}
+                offsetPx={0}
+                renderPopover={<div className="text-white p-1">Clap</div>}
               >
-                <ClapIcon
-                  color="#6b6b6b"
-                  width={28}
-                  height={28}
-                  className="hover:text-softBlack"
-                ></ClapIcon>
-                <span className="translate-y-[1px]">{likesCount || "0"}</span>
-              </button>
-              <button
-                className="flex items-center gap-1 cursor-pointer hover:text-softBlack"
-                onClick={handleShowCommentSection}
+                <button
+                  className="flex items-center gap-1 cursor-pointer hover:text-softBlack"
+                  onClick={handleLikeStory}
+                >
+                  <ClapIcon
+                    color="#6b6b6b"
+                    width={28}
+                    height={28}
+                    className="hover:text-softBlack"
+                  ></ClapIcon>
+                  <span className="translate-y-[1px]">{likesCount || "0"}</span>
+                </button>
+              </Popover>
+              <Popover
+                backgroundColor="#000000a8"
+                sameWidthWithChildren={false}
+                placement="top"
+                enableArrow={false}
+                offsetPx={5}
+                renderPopover={<div className="text-white p-1">Respond</div>}
               >
-                <CommentIcon
-                  color="#6b6b6b"
-                  width={24}
-                  height={24}
-                  className="hover:text-softBlack"
-                ></CommentIcon>
-                <span className="translate-y-[1px]">{commentsCount}</span>
-              </button>
+                <button
+                  className="flex items-center gap-1 cursor-pointer hover:text-softBlack"
+                  onClick={handleShowCommentSection}
+                >
+                  <CommentIcon
+                    color="#6b6b6b"
+                    width={24}
+                    height={24}
+                    className="hover:text-softBlack"
+                  ></CommentIcon>
+                  <span className="translate-y-[1px]">{commentsCount}</span>
+                </button>
+              </Popover>
             </div>
             <div className="flex items-center gap-6">
               {isAuthenticated && (
