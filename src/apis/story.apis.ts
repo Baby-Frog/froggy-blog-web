@@ -13,6 +13,8 @@ export const storyApi = {
     http.get<TSuccessApiResponse<TStory>>(`${STORY_ENDPOINTS.GET_STORY_BY_ID}/${storyId}`),
   getStoriesByUserId: (userId: string) =>
     http.get<TQueryResponse<TStory[]>>(`${STORY_ENDPOINTS.GET_STORIES_BY_USER_ID}/${userId}`),
+  getStoriesByTopicId: (topicId: string) =>
+    http.get<TQueryResponse<TStory[]>>(`${STORY_ENDPOINTS.GET_STORIES_BY_TOPIC_ID}/${topicId}`),
   searchStories: ({ keyword, pageSize, column, orderBy, pageNumber }: TApiQueryParams) =>
     http.get<TQueryResponse<TStory[]>>(`${STORY_ENDPOINTS.SEARCH_STORIES}`, {
       params: {

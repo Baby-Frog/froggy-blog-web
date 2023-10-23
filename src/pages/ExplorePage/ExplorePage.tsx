@@ -181,21 +181,9 @@ const ExplorePage = () => {
       },
     );
   });
-  const handleNavigateToTopic = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleNavigateToTopic = (topicId: string) => (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const topicName = e.currentTarget.innerText;
-    navigate(
-      {
-        pathname: path.SEARCH,
-        search: createSearchParams({
-          q: topicName,
-        }).toString(),
-      },
-      {
-        state: {
-          from: path.EXPORE_TOPICS,
-        },
-      },
-    );
+    navigate(`/tag/${topicName}-${topicId}`);
   };
   const handleScrollRight = () => {
     exploreTopicsSectionRef?.current?.scrollBy({
@@ -239,7 +227,7 @@ const ExplorePage = () => {
           </ExploreTopicsButton>
           <ExploreSelectionList>
             {exploreTopics?.map((topic) => (
-              <ExploreSelectionItem onClick={(e) => handleNavigateToTopic(e)}>{topic.topicName}</ExploreSelectionItem>
+              <ExploreSelectionItem onClick={handleNavigateToTopic(topic.id)}>{topic.topicName}</ExploreSelectionItem>
             ))}
           </ExploreSelectionList>
           <ExploreScrollRight onClick={handleScrollRight}>
