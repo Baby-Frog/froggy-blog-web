@@ -1,12 +1,10 @@
-import { useEffect, useState, useRef } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useRef, useState } from "react";
 import { useInfiniteQuery, useQuery } from "react-query";
-import { createSearchParams, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { topicApi } from "src/apis/topic.apis";
+import ArrowLeftIcon from "src/components/Icon/ArrowLeftIcon";
 import ArrowRightIcon from "src/components/Icon/ArrowRightIcon";
 import ExploreIcon from "src/components/Icon/ExploreIcon";
-import ArrowLeftIcon from "src/components/Icon/ArrowLeftIcon";
-import { path } from "src/constants/path";
 import { getFirstSegmentFromSlug, getIdFromSlug } from "src/utils/slugify";
 import { styled } from "styled-components";
 

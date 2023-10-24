@@ -10,7 +10,7 @@ import {
   useInteractions,
 } from "@floating-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 type PopoverDismissProps = {
   children?: React.ReactNode;
@@ -18,6 +18,7 @@ type PopoverDismissProps = {
   className?: string;
   as?: React.ElementType;
   initialOpen?: boolean;
+  referencePressEnable?: boolean;
   placement?: Placement;
   offsetPx?: number;
   sameWidthWithChildren?: boolean;
@@ -34,6 +35,7 @@ const PopoverDismiss = ({
   enableArrow = true,
   sameWidthWithChildren = true,
   placement = "bottom-start",
+  referencePressEnable = true,
   as: Element = "div",
 }: PopoverDismissProps) => {
   const arrowRef = useRef<HTMLElement>(null);
@@ -57,9 +59,7 @@ const PopoverDismiss = ({
     open: isOpen,
     onOpenChange: setIsOpen,
   });
-  const dismiss = useDismiss(context, {
-    referencePress: true,
-  });
+  const dismiss = useDismiss(context);
   const { getReferenceProps, getFloatingProps } = useInteractions([dismiss]);
   return (
     <Element
@@ -77,6 +77,7 @@ const PopoverDismiss = ({
         <AnimatePresence>
           {isOpen && (
             <motion.div
+              onClick={() => (referencePressEnable ? setIsOpen(!isOpen) : null)}
               ref={refs.setFloating}
               style={{
                 position: strategy,
@@ -93,7 +94,6 @@ const PopoverDismiss = ({
               transition={{ duration: 0.1 }}
               {...getFloatingProps()}
             >
-              <div className="absolute top-0 left-0 h-5 w-full -translate-y-full"></div>
               {enableArrow && (
                 <span
                   className="absolute -translate-y-[98%] border-[11px] border-x-transparent border-t-transparent border-b-white"

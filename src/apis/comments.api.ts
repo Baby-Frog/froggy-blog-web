@@ -10,4 +10,5 @@ export const commentApi = {
     params: { pageSize?: number; pageNumber?: number; column?: string; orderBy?: string },
   ) => http.get<TQueryResponse<TComment[]>>(`${COMMENT_ENDPOINTS.GET_COMMENTS_BY_POST_ID}/${postId}`, { params }),
   getCommentsCount: (postId: string) => http.get(`${COMMENT_ENDPOINTS.GET_COMMENTS_COUNT}/${postId}`),
+  deleteComment: (commentId: string) => http.delete(`${COMMENT_ENDPOINTS.DELETE_COMMENT}/${commentId}`),
 };

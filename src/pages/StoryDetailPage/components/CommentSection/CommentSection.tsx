@@ -28,7 +28,7 @@ const CommentSectionWrapper = styled.div<{ $isShown: boolean }>`
   opacity: ${(props) => (props.$isShown ? "1" : "0")};
   visibility: ${(props) => (props.$isShown ? "visible" : "hidden")};
   transition: all 150ms ease-in-out;
-  z-index: 999;
+  z-index: 3;
 `;
 
 const CommentSectionOverlay = styled.div<{ $isShown: boolean }>`
@@ -40,7 +40,7 @@ const CommentSectionOverlay = styled.div<{ $isShown: boolean }>`
 
 const CommentSectionBody = styled.div<{ $isShown?: boolean }>`
   position: fixed;
-  width: 390px;
+  width: 410px;
   height: 100%;
   background-color: #fff;
   padding: 12px 18px;
@@ -166,7 +166,7 @@ const CommentSection = ({
                   placeholder="What are your thoughts?"
                   register={register}
                 ></AutoResizeTextarea>
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between pt-2 border-t-2 border-t-whiteF2">
                   <span className="text-sm text-red-500">{errors.comment?.message}</span>
                   <button
                     className="bg-normalGreen ml-auto rounded-3xl text-sm px-3 py-2 flex items-center justify-center text-white"
