@@ -25,6 +25,8 @@ import { getIdFromSlug } from "src/utils/slugify";
 import CommentSection from "./components/CommentSection";
 import { commentApi } from "src/apis/comments.api";
 import { styled } from "styled-components";
+import MoreFromAuthorSection from "./components/MoreFromAuthorSection";
+import { TStory } from "src/types/story.types";
 
 const MainLayoutWrapper = styled.div`
   max-width: 720px;
@@ -341,11 +343,189 @@ const StoryDetailPage = () => {
           {storyDetailData?.data.data.content && (
             <div className="entry-content">{parse(storyDetailData.data.data.content as string)}</div>
           )}
+          <div className="text-center lg:text-3xl tracking-widest text-2xl">. . .</div>
+          <div className="flex items-center gap-2 flex-wrap mt-4">
+            {storyDetailData?.data.data.listTopic.map((topic) => (
+              <div
+                key={topic.id}
+                className="rounded-2xl text-black bg-[#f2f2f2] px-4 font-medium text-sm py-2 flex-shrink-0"
+              >
+                {topic.topicName}
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 mb-7 px-2 py-3 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              {isAuthenticated ? (
+                <Popover
+                  backgroundColor="#000000a8"
+                  sameWidthWithChildren={false}
+                  placement="top"
+                  enableArrow={false}
+                  offsetPx={0}
+                  renderPopover={<div className="text-white p-1">Clap</div>}
+                >
+                  <button
+                    className="flex items-center gap-1 cursor-pointer hover:text-softBlack"
+                    onClick={handleLikeStory}
+                  >
+                    <ClapIcon
+                      color="#6b6b6b"
+                      width={28}
+                      height={28}
+                      className="hover:text-softBlack"
+                    ></ClapIcon>
+                    <span className="translate-y-[1px]">{likesCount || "0"}</span>
+                  </button>
+                </Popover>
+              ) : (
+                <Popover
+                  backgroundColor="#000000a8"
+                  sameWidthWithChildren={false}
+                  placement="top"
+                  enableArrow={false}
+                  offsetPx={0}
+                  renderPopover={<div className="text-white p-1">You must login to like this story</div>}
+                >
+                  <button
+                    className="flex items-center gap-1 cursor-default hover:text-softBlack"
+                    onClick={handleLikeStory}
+                  >
+                    <ClapIcon
+                      color="#bdbdbd"
+                      width={28}
+                      height={28}
+                    ></ClapIcon>
+                    <span className="translate-y-[1px]">{likesCount || "0"}</span>
+                  </button>
+                </Popover>
+              )}
+              <Popover
+                backgroundColor="#000000a8"
+                sameWidthWithChildren={false}
+                placement="top"
+                enableArrow={false}
+                offsetPx={5}
+                renderPopover={<div className="text-white p-1">Respond</div>}
+              >
+                <button
+                  className="flex items-center gap-1 cursor-pointer hover:text-softBlack"
+                  onClick={handleShowCommentSection}
+                >
+                  <CommentIcon
+                    color="#6b6b6b"
+                    width={24}
+                    height={24}
+                    className="hover:text-softBlack"
+                  ></CommentIcon>
+                  <span className="translate-y-[1px]">{commentsCount}</span>
+                </button>
+              </Popover>
+            </div>
+            <div className="flex items-center gap-6">
+              {isAuthenticated ? (
+                <Popover
+                  backgroundColor="#000000a8"
+                  sameWidthWithChildren={false}
+                  placement="top"
+                  offsetPx={5}
+                  renderPopover={
+                    <div className="text-white p-1">
+                      {storyIsAlreadyInSavedList ? "Remove from Saved List" : "Add to Saved List"}
+                    </div>
+                  }
+                >
+                  {storyIsAlreadyInSavedList ? (
+                    <RemoveIcon
+                      color="#6b6b6b"
+                      width={24}
+                      height={24}
+                      className="cursor-pointer hover:text-softBlack"
+                      onClick={handleSaveToFavorites}
+                    ></RemoveIcon>
+                  ) : (
+                    <SaveToFavoritesIcon
+                      color="#6b6b6b"
+                      width={24}
+                      height={24}
+                      className="cursor-pointer hover:text-softBlack"
+                      onClick={handleSaveToFavorites}
+                    ></SaveToFavoritesIcon>
+                  )}
+                </Popover>
+              ) : (
+                <Popover
+                  backgroundColor="#000000a8"
+                  sameWidthWithChildren={false}
+                  placement="top"
+                  offsetPx={5}
+                  renderPopover={<div className="text-white p-1">You must login to save this story</div>}
+                >
+                  <SaveToFavoritesIcon
+                    color="#bdbdbd"
+                    width={24}
+                    height={24}
+                    className="cursor-default"
+                    onClick={handleSaveToFavorites}
+                  ></SaveToFavoritesIcon>
+                </Popover>
+              )}
+              <Popover
+                backgroundColor="#000000a8"
+                sameWidthWithChildren={false}
+                placement="top"
+                offsetPx={5}
+                className="w-6 h-6"
+                renderPopover={<div className="text-white p-1">Hear this story</div>}
+              >
+                <TextToSpeech
+                  text={storyDetailData?.data.data.raw as string}
+                  onClick={() => setIsPlaying(!isPlaying)}
+                ></TextToSpeech>
+              </Popover>
+              <PopoverDismiss
+                sameWidthWithChildren={false}
+                placement="bottom"
+                renderPopover={
+                  <div className="shadow-niceShadowSpread">
+                    <div
+                      className="p-2 text-normalGrey  hover:bg-black hover:bg-opacity-10 cursor-pointer flex items-center gap-2"
+                      onClick={() => handleCopyCurrentLink(currentStoryUrl)}
+                      aria-hidden
+                    >
+                      <CopyIcon color="#6b6b6b"></CopyIcon>
+                      <span>Copy link</span>
+                    </div>
+                    <a
+                      href={shareOnTwitter({
+                        title: storyDetailData?.data.data.title as string,
+                        author: storyDetailData?.data.data.author.fullName as string,
+                        url: currentStoryUrl,
+                      })}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="p-2 text-normalGrey  hover:bg-black hover:bg-opacity-10 cursor-pointer flex items-center gap-2"
+                    >
+                      <TwitterIcon color="#6b6b6b"></TwitterIcon>
+                      <span>Share on Twitter</span>
+                    </a>
+                  </div>
+                }
+              >
+                <ShareStoryIcon
+                  color="#6b6b6b"
+                  width={24}
+                  height={24}
+                  className="cursor-pointer hover:text-softBlack"
+                ></ShareStoryIcon>
+              </PopoverDismiss>
+            </div>
+          </div>
         </div>
       </MainLayoutWrapper>
       <div className="pt-[64px] mt-12 pb-12 bg-[#f9f9f9]">
         <MainLayoutWrapper>
-          <div className="lg:flex block items-center justify-between">
+          <div className="lg:flex block items-center justify-between pb-8 border-b-2 border-whiteF2">
             <div>
               <div className="rounded-full w-20 h-20 overflow-hidden">
                 <img
@@ -366,6 +546,15 @@ const StoryDetailPage = () => {
               Check profile
             </Link>
           </div>
+          <h3 className="pt-8 text-lg">
+            <span>More from</span>
+            <span className="font-semibold"> {storyDetailData?.data.data.author.fullName}</span>
+          </h3>
+          <MoreFromAuthorSection
+            story={storyDetailData?.data.data as TStory}
+            currentAuthorStories={currentAuthorStories as TStory[]}
+            storiesLength={currentAuthorStories?.length}
+          ></MoreFromAuthorSection>
         </MainLayoutWrapper>
       </div>
     </>

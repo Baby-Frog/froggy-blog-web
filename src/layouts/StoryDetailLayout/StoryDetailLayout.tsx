@@ -1,6 +1,7 @@
 import { useIsPresent } from "framer-motion";
 import { useContext } from "react";
 import AuthenticatedNavbar from "src/components/AuthenticatedNavbar";
+import ExploreNavbar from "src/components/ExploreNavbar";
 import PageTransition from "src/components/PageTransition";
 import UnauthenticatedNavbar from "src/components/UnauthenticatedNavbar";
 import { AuthContext } from "src/contexts/auth.contexts";
@@ -30,7 +31,7 @@ const StoryDetailLayout = ({ children }: TMainLayoutProps) => {
     <>
       {!isAuthenticated ? (
         <>
-          <UnauthenticatedNavbar></UnauthenticatedNavbar>
+          <ExploreNavbar></ExploreNavbar>
           <>{children}</>
           <PageTransition isPresent={isPresent}></PageTransition>
         </>
