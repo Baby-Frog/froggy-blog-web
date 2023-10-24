@@ -152,6 +152,7 @@ const ExploreScrollLeft = styled.div`
 const ExplorePage = () => {
   const navigate = useNavigate();
   const [showLeftArrow, setShowLeftArrow] = useState<boolean>(false);
+  const [showRightArrow, setShowRightArrow] = useState<boolean>(true);
   const {
     handleSubmit,
     register,
@@ -204,6 +205,15 @@ const ExplorePage = () => {
       } else {
         setShowLeftArrow(false);
       }
+      if (
+        exploreTopicsSectionRef?.current?.scrollLeft &&
+        exploreTopicsSectionRef.current.scrollLeft >=
+          exploreTopicsSectionRef.current.scrollWidth - exploreTopicsSectionRef.current.clientWidth - 1
+      ) {
+        setShowRightArrow(false);
+      } else {
+        setShowRightArrow(true);
+      }
     };
 
     const currentRef = exploreTopicsSectionRef.current;
@@ -230,12 +240,13 @@ const ExplorePage = () => {
               <ExploreSelectionItem onClick={handleNavigateToTopic(topic.id)}>{topic.topicName}</ExploreSelectionItem>
             ))}
           </ExploreSelectionList>
-          <ExploreScrollRight onClick={handleScrollRight}>
-            <ArrowRightIcon></ArrowRightIcon>
-          </ExploreScrollRight>
+          {showRightArrow && (
+            <ExploreScrollRight onClick={handleScrollRight}>
+              <ArrowRightIcon></ArrowRightIcon>
+            </ExploreScrollRight>
+          )}
         </ExploreSelection>
       </ExploreSectionWrapper>
-
       <ExploreHeading>Explore topics</ExploreHeading>
 
       <ExploreInputWrapper onSubmit={handleQueryTopics}>
