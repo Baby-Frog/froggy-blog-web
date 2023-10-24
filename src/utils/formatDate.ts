@@ -7,6 +7,6 @@ export const getMonthName = (date: Date) => {
 export const getCustomDate = (date: Date) => {
   const month = getMonthName(date);
   const day = date.getDate();
-
-  return `${month} ${day}`;
+  const year = date.getFullYear() === new Date().getFullYear() ? "" : date.getFullYear();
+  return `${month} ${day} ${year}`;
 };
