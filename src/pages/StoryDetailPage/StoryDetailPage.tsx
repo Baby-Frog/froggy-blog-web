@@ -184,7 +184,7 @@ const StoryDetailPage = () => {
                   sameWidthWithChildren={false}
                   placement="top"
                   enableArrow={false}
-                  offsetPx={0}
+                  offsetPx={5}
                   renderPopover={<div className="text-white p-1">Clap</div>}
                 >
                   <button
@@ -206,7 +206,7 @@ const StoryDetailPage = () => {
                   sameWidthWithChildren={false}
                   placement="top"
                   enableArrow={false}
-                  offsetPx={0}
+                  offsetPx={5}
                   renderPopover={<div className="text-white p-1">You must login to like this story</div>}
                 >
                   <button
@@ -365,7 +365,7 @@ const StoryDetailPage = () => {
                   sameWidthWithChildren={false}
                   placement="top"
                   enableArrow={false}
-                  offsetPx={0}
+                  offsetPx={5}
                   renderPopover={<div className="text-white p-1">Clap</div>}
                 >
                   <button
@@ -387,7 +387,7 @@ const StoryDetailPage = () => {
                   sameWidthWithChildren={false}
                   placement="top"
                   enableArrow={false}
-                  offsetPx={0}
+                  offsetPx={5}
                   renderPopover={<div className="text-white p-1">You must login to like this story</div>}
                 >
                   <button
