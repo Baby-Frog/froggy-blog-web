@@ -173,27 +173,50 @@ const StoryDetailPage = () => {
           </div>
           <div className="mt-4 mb-7 px-2 py-3 border-t-2 border-b-2 border-[#F2F2F2] flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Popover
-                backgroundColor="#000000a8"
-                sameWidthWithChildren={false}
-                placement="top"
-                enableArrow={false}
-                offsetPx={0}
-                renderPopover={<div className="text-white p-1">Clap</div>}
-              >
-                <button
-                  className="flex items-center gap-1 cursor-pointer hover:text-softBlack"
-                  onClick={handleLikeStory}
+              {isAuthenticated ? (
+                <Popover
+                  backgroundColor="#000000a8"
+                  sameWidthWithChildren={false}
+                  placement="top"
+                  enableArrow={false}
+                  offsetPx={0}
+                  renderPopover={<div className="text-white p-1">Clap</div>}
                 >
-                  <ClapIcon
-                    color="#6b6b6b"
-                    width={28}
-                    height={28}
-                    className="hover:text-softBlack"
-                  ></ClapIcon>
-                  <span className="translate-y-[1px]">{likesCount || "0"}</span>
-                </button>
-              </Popover>
+                  <button
+                    className="flex items-center gap-1 cursor-pointer hover:text-softBlack"
+                    onClick={handleLikeStory}
+                  >
+                    <ClapIcon
+                      color="#6b6b6b"
+                      width={28}
+                      height={28}
+                      className="hover:text-softBlack"
+                    ></ClapIcon>
+                    <span className="translate-y-[1px]">{likesCount || "0"}</span>
+                  </button>
+                </Popover>
+              ) : (
+                <Popover
+                  backgroundColor="#000000a8"
+                  sameWidthWithChildren={false}
+                  placement="top"
+                  enableArrow={false}
+                  offsetPx={0}
+                  renderPopover={<div className="text-white p-1">You must login to like this story</div>}
+                >
+                  <button
+                    className="flex items-center gap-1 cursor-default hover:text-softBlack"
+                    onClick={handleLikeStory}
+                  >
+                    <ClapIcon
+                      color="#bdbdbd"
+                      width={28}
+                      height={28}
+                    ></ClapIcon>
+                    <span className="translate-y-[1px]">{likesCount || "0"}</span>
+                  </button>
+                </Popover>
+              )}
               <Popover
                 backgroundColor="#000000a8"
                 sameWidthWithChildren={false}
@@ -217,7 +240,7 @@ const StoryDetailPage = () => {
               </Popover>
             </div>
             <div className="flex items-center gap-6">
-              {isAuthenticated && (
+              {isAuthenticated ? (
                 <Popover
                   backgroundColor="#000000a8"
                   sameWidthWithChildren={false}
@@ -246,6 +269,22 @@ const StoryDetailPage = () => {
                       onClick={handleSaveToFavorites}
                     ></SaveToFavoritesIcon>
                   )}
+                </Popover>
+              ) : (
+                <Popover
+                  backgroundColor="#000000a8"
+                  sameWidthWithChildren={false}
+                  placement="top"
+                  offsetPx={5}
+                  renderPopover={<div className="text-white p-1">You must login to save this story</div>}
+                >
+                  <SaveToFavoritesIcon
+                    color="#bdbdbd"
+                    width={24}
+                    height={24}
+                    className="cursor-default"
+                    onClick={handleSaveToFavorites}
+                  ></SaveToFavoritesIcon>
                 </Popover>
               )}
               <Popover

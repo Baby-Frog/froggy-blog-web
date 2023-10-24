@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useInfiniteQuery, useQuery } from "react-query";
 import { createSearchParams, useNavigate, useParams } from "react-router-dom";
@@ -7,7 +7,7 @@ import ArrowRightIcon from "src/components/Icon/ArrowRightIcon";
 import ExploreIcon from "src/components/Icon/ExploreIcon";
 import ArrowLeftIcon from "src/components/Icon/ArrowLeftIcon";
 import { path } from "src/constants/path";
-import { getIdFromSlug } from "src/utils/slugify";
+import { getFirstSegmentFromSlug, getIdFromSlug } from "src/utils/slugify";
 import { styled } from "styled-components";
 
 type TTagPageProps = {
@@ -142,10 +142,12 @@ const TagMeta = styled.div`
 const TagPage = () => {
   const navigate = useNavigate();
   const [showLeftArrow, setShowLeftArrow] = useState<boolean>(false);
-  const exploreTopicsSectionRef = React.useRef<HTMLDivElement>(null);
+  const [showRightArrow, setShowRightArrow] = useState<boolean>(true);
+  const exploreTopicsSectionRef = useRef<HTMLDivElement>(null);
   const { slug } = useParams();
   const idFromSlug = getIdFromSlug(slug as string);
-
+  const topicName = getFirstSegmentFromSlug(slug as string);
+  console.log(topicName);
   const { data: exploreTopicsData } = useQuery({
     queryKey: ["explore-topics"],
     queryFn: () => topicApi.getTopicsByKeyword({ keyword: "", pageSize: 20, column: "id", orderBy: "asc" }),
@@ -176,6 +178,15 @@ const TagPage = () => {
         setShowLeftArrow(true);
       } else {
         setShowLeftArrow(false);
+      }
+      if (
+        exploreTopicsSectionRef?.current?.scrollLeft &&
+        exploreTopicsSectionRef.current.scrollLeft >=
+          exploreTopicsSectionRef.current.scrollWidth - exploreTopicsSectionRef.current.clientWidth - 1
+      ) {
+        setShowRightArrow(false);
+      } else {
+        setShowRightArrow(true);
       }
     };
 
@@ -208,7 +219,7 @@ const TagPage = () => {
           </ExploreScrollRight>
         </ExploreSelection>
       </ExploreSectionWrapper>
-      <TagHeading>Technology</TagHeading>
+      <TagHeading>{topicName}</TagHeading>
     </>
   );
 };

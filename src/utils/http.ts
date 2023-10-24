@@ -12,6 +12,7 @@ import { AUTH_ENDPOINTS } from "src/constants/endpoints";
 import { toast } from "react-toastify";
 import { isExpiredTokenError, isUnauthorizedError } from "./isAxiosError";
 import { TErrorApiResponse } from "src/types/response.types";
+import { useLocation, useNavigate } from "react-router-dom";
 class Http {
   instance: AxiosInstance;
   private accessToken: string;
@@ -74,6 +75,7 @@ class Http {
           const { url } = config;
           // Lỗi 401 có 2 trường hợp
           // TH1: Lỗi 401 do access_token hết hạn => ta sẽ phải refresh token
+
           if (isExpiredTokenError(error) && url !== AUTH_ENDPOINTS.REFRESH_TOKEN) {
             this.refreshTokenRequest = this.refreshTokenRequest
               ? this.refreshTokenRequest

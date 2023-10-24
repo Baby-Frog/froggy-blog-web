@@ -87,6 +87,7 @@ const SearchResultsPage = () => {
     }
     return "1";
   }, [location?.state?.from]);
+  console.log(currentActiveKey);
   const { data: topicsData, isLoading: isTopicsLoading } = useQuery({
     queryKey: ["topics", { q: queryConfig.q }],
     queryFn: () =>
@@ -159,7 +160,6 @@ const SearchResultsPage = () => {
       observer.disconnect();
     };
   }, [handleLoadMore]);
-  // const stories = storiesData?.data.data.data;
   const { data: sideStuffsStoriesData } = useQuery({
     queryKey: ["sideStuffsStories", { q: queryConfig.q }],
     queryFn: () =>
