@@ -1,9 +1,9 @@
 import { useIsPresent } from "framer-motion";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useScroll } from "react-use";
 import AuthenticatedNavbar from "src/components/AuthenticatedNavbar";
 import ExploreNavbar from "src/components/ExploreNavbar";
 import PageTransition from "src/components/PageTransition";
-import UnauthenticatedNavbar from "src/components/UnauthenticatedNavbar";
 import { AuthContext } from "src/contexts/auth.contexts";
 import { styled } from "styled-components";
 
@@ -25,20 +25,36 @@ type TMainLayoutProps = {
 
 const StoryDetailLayout = ({ children }: TMainLayoutProps) => {
   const { isAuthenticated } = useContext(AuthContext);
-
   const isPresent = useIsPresent();
+  const [showNavbar, setShowNavbar] = useState(true);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.scrollY;
+      const isScrollingUp = currentScrollPos < prevScrollPos;
+      setShowNavbar(isScrollingUp);
+      setPrevScrollPos(currentScrollPos);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [prevScrollPos]);
   return (
     <>
       {!isAuthenticated ? (
         <>
-          <ExploreNavbar></ExploreNavbar>
-          <>{children}</>
+          {showNavbar && <ExploreNavbar></ExploreNavbar>}
+          <div className="pt-[60px]">{children}</div>
           <PageTransition isPresent={isPresent}></PageTransition>
         </>
       ) : (
         <>
-          <AuthenticatedNavbar></AuthenticatedNavbar>
-          <>{children}</>
+          {showNavbar && <AuthenticatedNavbar></AuthenticatedNavbar>}
+          <div className="pt-[60px]">{children}</div>
           <PageTransition isPresent={isPresent}></PageTransition>
         </>
       )}

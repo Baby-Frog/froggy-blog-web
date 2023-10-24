@@ -31,8 +31,14 @@ const AuthenticatedNavbarContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
   padding: 24px;
   height: 60px;
+  z-index: 1;
 `;
 
 const AuthenticatedNavbarLeft = styled.div`

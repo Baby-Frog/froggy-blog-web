@@ -92,6 +92,9 @@ const StoryDetailPage = () => {
     enabled: Boolean(currentAuthorId),
   });
   const currentAuthorStories = currentAuthorStoriesData?.data.data.data;
+  const filteredCurrentAuthorStories = currentAuthorStories?.filter((story) => {
+    return story.id !== idFromSlug;
+  });
   const { handleCopyCurrentLink, shareOnTwitter } = useShareLink({
     title: storyDetailData?.data.data.title,
     author: storyDetailData?.data.data.author.fullName,
@@ -552,8 +555,8 @@ const StoryDetailPage = () => {
           </h3>
           <MoreFromAuthorSection
             story={storyDetailData?.data.data as TStory}
-            currentAuthorStories={currentAuthorStories as TStory[]}
-            storiesLength={currentAuthorStories?.length}
+            currentAuthorStories={filteredCurrentAuthorStories as TStory[]}
+            storiesLength={filteredCurrentAuthorStories?.length}
           ></MoreFromAuthorSection>
         </MainLayoutWrapper>
       </div>

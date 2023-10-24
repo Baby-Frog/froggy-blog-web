@@ -1,4 +1,9 @@
+import { useContext } from "react";
+import SaveToFavoritesIcon from "src/components/Icon/SaveToFavoritesIcon";
+import Popover from "src/components/Popover";
+import { AuthContext } from "src/contexts/auth.contexts";
 import { TStory } from "src/types/story.types";
+import { getCustomDate } from "src/utils/formatDate";
 
 type TMoreFromAuthorSectionProps = {
   storiesLength?: number;
@@ -7,11 +12,11 @@ type TMoreFromAuthorSectionProps = {
 };
 
 const MoreFromAuthorSection = ({ storiesLength, story, currentAuthorStories }: TMoreFromAuthorSectionProps) => {
-  console.log(story);
+  const { isAuthenticated } = useContext(AuthContext);
   if (storiesLength === 0) {
     return <></>;
   }
-  if (storiesLength === 2) {
+  if (storiesLength === 1) {
     return (
       <div className="mt-4">
         <>
@@ -39,7 +44,45 @@ const MoreFromAuthorSection = ({ storiesLength, story, currentAuthorStories }: T
                 </div>
               </div>
               <div className="mt-2 text-xl font-semibold">{currentAuthorStories[0].title}</div>
-              <p className="mt-2 text-sm font-medium line-clamp-3 text-lightGrey">{currentAuthorStories[0].raw}</p>
+              <p className="mt-2 text-sm font-medium line-clamp-4 text-lightGrey">{currentAuthorStories[0].raw}</p>
+              <div className="flex items-center justify-between">
+                <span className="mt-2 flex items-center gap-2">
+                  <span>{getCustomDate(new Date(story.publishDate))}</span>
+                  <span>•</span>
+                  <span>{story.timeRead} read</span>
+                </span>
+                {isAuthenticated ? (
+                  <Popover
+                    backgroundColor="#000000a8"
+                    sameWidthWithChildren={false}
+                    placement="top"
+                    offsetPx={5}
+                    renderPopover={<div className="text-white p-1">Add to Saved List</div>}
+                  >
+                    <SaveToFavoritesIcon
+                      color="#6b6b6b"
+                      width={24}
+                      height={24}
+                      className="cursor-pointer hover:text-softBlack"
+                    ></SaveToFavoritesIcon>
+                  </Popover>
+                ) : (
+                  <Popover
+                    backgroundColor="#000000a8"
+                    sameWidthWithChildren={false}
+                    placement="top"
+                    offsetPx={5}
+                    renderPopover={<div className="text-white p-1">You must login to save this story</div>}
+                  >
+                    <SaveToFavoritesIcon
+                      color="#bdbdbd"
+                      width={24}
+                      height={24}
+                      className="cursor-default"
+                    ></SaveToFavoritesIcon>
+                  </Popover>
+                )}
+              </div>
             </>
           )}
         </>

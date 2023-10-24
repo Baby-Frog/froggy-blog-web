@@ -147,7 +147,6 @@ const TagPage = () => {
   const { slug } = useParams();
   const idFromSlug = getIdFromSlug(slug as string);
   const topicName = getFirstSegmentFromSlug(slug as string);
-  console.log(topicName);
   const { data: exploreTopicsData } = useQuery({
     queryKey: ["explore-topics"],
     queryFn: () => topicApi.getTopicsByKeyword({ keyword: "", pageSize: 20, column: "id", orderBy: "asc" }),

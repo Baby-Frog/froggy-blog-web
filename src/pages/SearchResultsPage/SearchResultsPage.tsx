@@ -87,7 +87,6 @@ const SearchResultsPage = () => {
     }
     return "1";
   }, [location?.state?.from]);
-  console.log(currentActiveKey);
   const { data: topicsData, isLoading: isTopicsLoading } = useQuery({
     queryKey: ["topics", { q: queryConfig.q }],
     queryFn: () =>

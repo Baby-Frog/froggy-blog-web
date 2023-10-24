@@ -27,15 +27,20 @@ type TAuthenticatedNavbarProps = {
   title?: string;
 };
 
-const AuthenticatedNavbarContainer = styled.div`
+const ExploreNavbarContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   padding: 24px;
   height: 60px;
+  z-index: 1;
 `;
 
-const AuthenticatedNavbarLeft = styled.div`
+const ExploreNavbarLeft = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
@@ -79,7 +84,7 @@ const AuthenticatedNavbarLeft = styled.div`
   }
 `;
 
-const AuthenticatedNavbarRight = styled.div`
+const ExploreNavbarRight = styled.div`
   display: flex;
   align-items: center;
 `;
@@ -107,20 +112,6 @@ const UserDropdown = styled.div`
   box-shadow:
     rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-`;
-
-const StyledDropdownLink = styled(Link)<{ $displayColumn?: boolean }>`
-  font-size: 14px;
-  font-weight: 400;
-  display: flex;
-  align-items: ${(props) => (props.$displayColumn ? "flex-start" : "center")};
-  flex-direction: ${(props) => (props.$displayColumn ? "column" : "row")};
-  gap: ${(props) => (props.$displayColumn ? "0px" : "12px")};
-  padding: 8px 24px;
-  color: ${(props) => props.theme.colors.lightGrey};
-  &:hover {
-    color: ${(props) => props.theme.colors.darkGrey};
-  }
 `;
 
 const ExploreNavbar = ({ title }: TAuthenticatedNavbarProps) => {
@@ -158,8 +149,8 @@ const ExploreNavbar = ({ title }: TAuthenticatedNavbarProps) => {
     });
   });
   return (
-    <AuthenticatedNavbarContainer>
-      <AuthenticatedNavbarLeft>
+    <ExploreNavbarContainer>
+      <ExploreNavbarLeft>
         <Link
           to={path.HOMEPAGE}
           className="logo-wrapper"
@@ -184,8 +175,8 @@ const ExploreNavbar = ({ title }: TAuthenticatedNavbarProps) => {
           </form>
         )}
         {!isMobile && title && <div className="text-[24px] font-[Pacifico] font-medium tracking-wide">{title}</div>}
-      </AuthenticatedNavbarLeft>
-      <AuthenticatedNavbarRight>
+      </ExploreNavbarLeft>
+      <ExploreNavbarRight>
         <button
           onClick={() => setModalIsOpen(true)}
           className="cursor-pointer text-sm text-normalGreen hover:text-normalGreenHover"
@@ -206,12 +197,12 @@ const ExploreNavbar = ({ title }: TAuthenticatedNavbarProps) => {
             />
           </UserAvatar>
         </PopoverDismiss>
-      </AuthenticatedNavbarRight>
+      </ExploreNavbarRight>
       <HomepageAuthenModal
         handleClose={() => setModalIsOpen(false)}
         isOpen={modalIsOpen}
       ></HomepageAuthenModal>
-    </AuthenticatedNavbarContainer>
+    </ExploreNavbarContainer>
   );
 };
 
