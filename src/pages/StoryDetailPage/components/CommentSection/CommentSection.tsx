@@ -166,8 +166,8 @@ const CommentSection = ({
                   placeholder="What are your thoughts?"
                   register={register}
                 ></AutoResizeTextarea>
-                <div className="flex items-center justify-between pt-2 border-t-2 border-t-whiteF2">
-                  <span className="text-sm text-red-500">{errors.comment?.message}</span>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-failure">{errors.comment?.message}</span>
                   <button
                     className="bg-normalGreen ml-auto rounded-3xl text-sm px-3 py-2 flex items-center justify-center text-white"
                     type="submit"

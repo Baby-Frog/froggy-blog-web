@@ -13,6 +13,7 @@ const NewStoryLayoutWrapper = styled.div`
   max-width: 1320px;
   width: 100%;
   margin: 0 auto;
+  padding-top: 60px;
   @media screen and (max-width: 1320px) {
     padding-inline: 16px;
   }

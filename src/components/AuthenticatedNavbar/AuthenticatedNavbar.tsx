@@ -27,11 +27,11 @@ type TAuthenticatedNavbarProps = {
   title?: string;
 };
 
-const AuthenticatedNavbarContainer = styled.div`
+const AuthenticatedNavbarContainer = styled.div<{ $hasTitle?: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: fixed;
+  position: ${(props) => (props.$hasTitle ? "static" : "fixed")};
   top: 0;
   left: 0;
   width: 100%;
@@ -186,7 +186,7 @@ const AuthenticatedNavbar = ({ title }: TAuthenticatedNavbarProps) => {
     });
   });
   return (
-    <AuthenticatedNavbarContainer>
+    <AuthenticatedNavbarContainer $hasTitle={title}>
       <AuthenticatedNavbarLeft>
         <Link
           to={path.HOMEPAGE}

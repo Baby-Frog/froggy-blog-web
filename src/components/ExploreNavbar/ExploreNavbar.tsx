@@ -35,6 +35,7 @@ const ExploreNavbarContainer = styled.div`
   top: 0;
   left: 0;
   width: 100%;
+  background: white;
   padding: 24px;
   height: 60px;
   z-index: 1;
