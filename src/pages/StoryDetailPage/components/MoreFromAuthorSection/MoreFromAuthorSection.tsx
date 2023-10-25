@@ -135,6 +135,9 @@ const MoreFromAuthorSection = ({ storiesLength, story, currentAuthorStories }: T
       </div>
     );
   }
+  if (storiesLength === 3) {
+    return <>hoho</>;
+  }
 };
 
 export default MoreFromAuthorSection;

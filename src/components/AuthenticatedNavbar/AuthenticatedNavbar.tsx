@@ -186,7 +186,7 @@ const AuthenticatedNavbar = ({ title }: TAuthenticatedNavbarProps) => {
     });
   });
   return (
-    <AuthenticatedNavbarContainer $hasTitle={title}>
+    <AuthenticatedNavbarContainer $hasTitle={Boolean(title)}>
       <AuthenticatedNavbarLeft>
         <Link
           to={path.HOMEPAGE}
