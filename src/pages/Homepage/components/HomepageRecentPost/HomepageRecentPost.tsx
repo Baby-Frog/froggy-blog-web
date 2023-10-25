@@ -10,6 +10,7 @@ import { getCustomDate } from "src/utils/formatDate";
 import DefaultErrorImage from "src/assets/no-img-avaliable.png";
 import { generateSlug } from "src/utils/slugify";
 import useShareLink from "src/hooks/useShareLink";
+import EllipsisIcon from "src/components/Icon/EllipsisIcon";
 type THomepageRecentPostProps = {
   story: TStory;
 };
@@ -58,21 +59,31 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
             onClick={(e) => e.preventDefault()}
             aria-hidden
           >
-            <Popover
-              backgroundColor="#000000a8"
+            <PopoverDismiss
+              className="text-sm z-10 text-lightGrey"
+              as="button"
+              enableArrow={false}
+              placement="bottom-end"
               sameWidthWithChildren={false}
-              placement="top"
-              offsetPx={5}
-              renderPopover={<div className="text-white p-1">Save to favorites</div>}
+              renderPopover={
+                <div className="w-max text-left font-medium z-10 bg-white shadow-softShadowSpread text-black">
+                  <div className="p-2 text-normalGrey hover:bg-black hover:bg-opacity-10 cursor-pointer">
+                    Edit story
+                  </div>
+                  <div
+                    className="p-2 text-failure font-medium hover:bg-black hover:bg-opacity-10 cursor-pointer"
+                    aria-hidden
+                  >
+                    Delete story
+                  </div>
+                </div>
+              }
             >
-              <SaveToFavoritesIcon
-                color="#6b6b6b"
+              <EllipsisIcon
                 width={24}
                 height={24}
-                className="cursor-pointer hover:text-softBlack"
-                aria-hidden
-              ></SaveToFavoritesIcon>
-            </Popover>
+              ></EllipsisIcon>
+            </PopoverDismiss>
             <PopoverDismiss
               sameWidthWithChildren={false}
               placement="bottom"

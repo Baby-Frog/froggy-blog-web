@@ -1,9 +1,11 @@
+import { useContext, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { commentApi } from "src/apis/comments.api";
 import CommentIcon from "src/components/Icon/CommentIcon";
 import EllipsisIcon from "src/components/Icon/EllipsisIcon";
 import LongText from "src/components/LongText";
 import PopoverDismiss from "src/components/PopoverDismiss";
+import { AuthContext } from "src/contexts/auth.contexts";
 import { TComment } from "src/types/comment.types";
 
 type TCommentItemProps = {
@@ -12,12 +14,15 @@ type TCommentItemProps = {
 };
 
 const CommentItem = ({ comment, authorId }: TCommentItemProps) => {
+  const { userProfile, isAuthenticated } = useContext(AuthContext);
+  const [isResponseHidden, setIsResponseHidden] = useState<boolean>(false);
   const deleteMutation = useMutation(commentApi.deleteComment);
   const queryClient = useQueryClient();
   const handleDeleteComment = () => {
     deleteMutation.mutate(comment.id, {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["comments"] });
+        queryClient.invalidateQueries({ queryKey: ["commentsCount"] });
       },
     });
   };
@@ -52,15 +57,31 @@ const CommentItem = ({ comment, authorId }: TCommentItemProps) => {
           sameWidthWithChildren={false}
           renderPopover={
             <div className="w-max text-left z-10 bg-white shadow-softShadowSpread text-black">
-              <div className="p-2 text-normalGrey hover:bg-black hover:bg-opacity-10 cursor-pointer">
-                Edit this response
-              </div>
+              {isAuthenticated && comment.profileDto.id === userProfile?.id && (
+                <>
+                  <div className="p-2 text-normalGrey font-medium hover:bg-black hover:bg-opacity-10 cursor-pointer">
+                    Edit response
+                  </div>
+                  <div
+                    onClick={handleDeleteComment}
+                    className="p-2 text-failure font-medium hover:bg-black hover:bg-opacity-10 cursor-pointer"
+                    aria-hidden
+                  >
+                    Delete response
+                  </div>
+                </>
+              )}
+              {isAuthenticated && comment.profileDto.id !== userProfile?.id && (
+                <div className="p-2 text-normalGrey font-medium hover:bg-black hover:bg-opacity-10 cursor-pointer">
+                  Report response
+                </div>
+              )}
               <div
-                onClick={handleDeleteComment}
-                className="p-2 text-failure hover:bg-black hover:bg-opacity-10 cursor-pointer"
+                className="p-2 text-normalGrey font-medium hover:bg-black hover:bg-opacity-10 cursor-pointer"
+                onClick={() => setIsResponseHidden(!isResponseHidden)}
                 aria-hidden
               >
-                Delete
+                {!isResponseHidden ? "Hide response" : "Show response"}
               </div>
             </div>
           }
@@ -71,7 +92,9 @@ const CommentItem = ({ comment, authorId }: TCommentItemProps) => {
           ></EllipsisIcon>
         </PopoverDismiss>
       </div>
-      <LongText className="text-sm mt-1">{comment.content}</LongText>
+      <LongText className={`text-sm mt-1 ${isResponseHidden && "italic font-light"}`}>
+        {!isResponseHidden ? comment.content : "This response has been hidden"}
+      </LongText>
       <div className="flex items-center justify-between mt-2">
         <div className="flex items-center">
           <CommentIcon

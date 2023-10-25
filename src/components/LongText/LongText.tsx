@@ -32,12 +32,14 @@ const LongText = ({ children, className }: TLongText) => {
         <p className={className}>
           {children.slice(0, MAX_LENGTH)}
           {children.length > MAX_LENGTH && "..."}
-          <button
-            className="block text-normalGreen hover:text-normalGreenHover"
-            onClick={handleShowFullText}
-          >
-            Read more
-          </button>
+          {children.length >= MAX_LENGTH && (
+            <button
+              className="block text-normalGreen hover:text-normalGreenHover"
+              onClick={handleShowFullText}
+            >
+              Read more
+            </button>
+          )}
         </p>
       )}
     </div>
