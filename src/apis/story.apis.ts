@@ -20,7 +20,7 @@ export const storyApi = {
       params: {
         keyword: keyword || "",
         pageSize: pageSize || 7,
-        column: column || "createdAt",
+        column: column || "publishDate",
         orderBy: orderBy || "desc",
         pageNumber: pageNumber || 1,
       },

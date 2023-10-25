@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useScroll } from "react-use";
 import AuthenticatedNavbar from "src/components/AuthenticatedNavbar";
 import ExploreNavbar from "src/components/ExploreNavbar";
+import Footer from "src/components/Footer";
 import PageTransition from "src/components/PageTransition";
 import { AuthContext } from "src/contexts/auth.contexts";
 import { styled } from "styled-components";
@@ -49,12 +50,15 @@ const StoryDetailLayout = ({ children }: TMainLayoutProps) => {
         <>
           {showNavbar && <ExploreNavbar></ExploreNavbar>}
           <div className="pt-[60px]">{children}</div>
+          <Footer></Footer>
           <PageTransition isPresent={isPresent}></PageTransition>
         </>
       ) : (
         <>
           {showNavbar && <AuthenticatedNavbar></AuthenticatedNavbar>}
           <div className="pt-[60px]">{children}</div>
+          <Footer></Footer>
+
           <PageTransition isPresent={isPresent}></PageTransition>
         </>
       )}

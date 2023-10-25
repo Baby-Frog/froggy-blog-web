@@ -49,7 +49,7 @@ const AuthenticatedSideStuffWrapper = styled.div`
   flex-shrink: 1;
   width: calc(35% - 16px);
   position: sticky;
-  top: 0;
+  top: 60px;
   right: 0;
 `;
 

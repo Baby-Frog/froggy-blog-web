@@ -87,18 +87,29 @@ const SearchResultsPage = () => {
     }
     return "1";
   }, [location?.state?.from]);
-  const { data: topicsData, isLoading: isTopicsLoading } = useQuery({
+  const {
+    data: topicsData,
+    isLoading: isTopicsLoading,
+    fetchNextPage: topicsFetchNextPage,
+    hasNextPage: topicsHasNextPage,
+    isFetchingNextPage: topicsIsFetchingNextPage,
+  } = useInfiniteQuery({
     queryKey: ["topics", { q: queryConfig.q }],
-    queryFn: () =>
+    queryFn: ({ pageParam = 1 }) =>
       topicApi.getTopicsByKeyword({
         pageSize: 40,
         keyword: queryConfig.q as string,
-        pageNumber: 1,
+        pageNumber: pageParam,
         column: "topicName",
         orderBy: "asc",
       }),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.data.data.data.length === 0) return undefined;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return (lastPage.data.data as any).pageNumber + 1;
+    },
   });
-  const topics = topicsData?.data.data.data;
+
   const { data: sideStuffTopicsData } = useQuery({
     queryKey: ["sideStufftopics", { q: queryConfig.q }],
     queryFn: () =>
@@ -135,8 +146,8 @@ const SearchResultsPage = () => {
     },
     refetchOnMount: true,
   });
-  const loadMoreRef = useRef<HTMLDivElement>(null);
-  const handleLoadMore = useCallback(
+  const storiesLoadMoreRef = useRef<HTMLDivElement>(null);
+  const handleLoadMoreStories = useCallback(
     (entries: IntersectionObserverEntry[]) => {
       const target = entries[0];
       if (target.isIntersecting && storiesHasNextPage && !storiesIsFetchingNextPage) {
@@ -147,18 +158,18 @@ const SearchResultsPage = () => {
   );
 
   useEffect(() => {
-    const observer = new IntersectionObserver(handleLoadMore, {
+    const observer = new IntersectionObserver(handleLoadMoreStories, {
       rootMargin: "0px 0px 0px 0px",
     });
 
-    if (loadMoreRef.current) {
-      observer.observe(loadMoreRef.current);
+    if (storiesLoadMoreRef.current) {
+      observer.observe(storiesLoadMoreRef.current);
     }
 
     return () => {
       observer.disconnect();
     };
-  }, [handleLoadMore]);
+  }, [handleLoadMoreStories]);
   const { data: sideStuffsStoriesData } = useQuery({
     queryKey: ["sideStuffsStories", { q: queryConfig.q }],
     queryFn: () =>
@@ -169,18 +180,29 @@ const SearchResultsPage = () => {
       }),
   });
   const sideStuffsStories = sideStuffsStoriesData?.data.data.data;
-  const { data: usersData } = useQuery({
+  const {
+    data: usersData,
+    isLoading: isUsersLoading,
+    fetchNextPage: usersFetchNextPage,
+    hasNextPage: usersHasNextPage,
+    isFetchingNextPage: usersIsFetchingNextPage,
+  } = useInfiniteQuery({
     queryKey: ["users", { q: queryConfig.q }],
-    queryFn: () =>
+    queryFn: ({ pageParam = 1 }) =>
       authApi.searchUsers({
-        pageSize: 7,
+        pageSize: 6,
         keyword: queryConfig.q as string,
-        pageNumber: 1,
+        pageNumber: pageParam,
         column: "fullName",
         orderBy: "asc",
       }),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.data.data.data.length === 0) return undefined;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return (lastPage.data.data as any).pageNumber + 1;
+    },
   });
-  const users = usersData?.data.data.data;
+
   const { data: sideStuffsUsersData } = useQuery({
     queryKey: ["sideStuffUsers", { q: queryConfig.q }],
     queryFn: () =>
@@ -210,7 +232,7 @@ const SearchResultsPage = () => {
               </Fragment>
             ))}
           </div>
-          {storiesHasNextPage && <div ref={loadMoreRef}>Loading more stories...</div>}
+          {storiesHasNextPage && <div ref={storiesLoadMoreRef}>Loading more stories...</div>}
           {!storiesData?.pages && <div className="text-base">No stories matching {queryConfig.q}</div>}
         </div>
       ),
@@ -219,24 +241,56 @@ const SearchResultsPage = () => {
       key: "2",
       label: "People",
       children: (
-        <div className="flex flex-col w-full">{users?.map((user) => <PeopleItem user={user}></PeopleItem>)}</div>
+        // <div className="flex flex-col w-full">{users?.map((user) => <PeopleItem user={user}></PeopleItem>)}</div>
+        <div className="flex flex-col w-full">
+          {usersData?.pages.map((userGroup, index) => (
+            <Fragment key={index}>
+              {userGroup.data.data.data.map((user) => (
+                <PeopleItem
+                  key={user.id}
+                  user={user}
+                ></PeopleItem>
+              ))}
+            </Fragment>
+          ))}
+          <button
+            onClick={() => usersFetchNextPage()}
+            className="text-normalGreen my-4 cursor-pointer"
+            disabled={!usersHasNextPage || usersIsFetchingNextPage}
+          >
+            {usersIsFetchingNextPage ? "Loading more..." : usersHasNextPage ? "Load More" : "Nothing more to load"}
+          </button>
+        </div>
       ),
     },
     {
       key: "3",
       label: "Topics",
       children: (
-        <TopicList>
-          {topics?.map((topic) => (
-            <Link
-              key={topic.id}
-              className="min-w-[53px] flex items-center justify-center px-4 py-2 bg-[#f2f2f2] text-sm rounded-3xl"
-              to={path.HOMEPAGE}
-            >
-              {topic.topicName}
-            </Link>
-          ))}
-        </TopicList>
+        <>
+          <TopicList>
+            {topicsData?.pages.map((topicGroup, index) => (
+              <Fragment key={index}>
+                {topicGroup.data.data.data.map((topic) => (
+                  <Link
+                    key={topic.id}
+                    className="min-w-[53px] flex items-center justify-center px-4 py-2 bg-[#f2f2f2] text-sm rounded-3xl"
+                    to={path.HOMEPAGE}
+                  >
+                    {topic.topicName}
+                  </Link>
+                ))}
+              </Fragment>
+            ))}
+          </TopicList>
+          <button
+            onClick={() => topicsFetchNextPage()}
+            className="text-normalGreen my-4 mx-auto block cursor-pointer"
+            disabled={!topicsHasNextPage || topicsIsFetchingNextPage}
+          >
+            {topicsIsFetchingNextPage ? "Loading more..." : topicsHasNextPage ? "Load More" : "Nothing more to load"}
+          </button>
+        </>
       ),
     },
   ];
