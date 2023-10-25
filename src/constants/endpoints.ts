@@ -34,6 +34,7 @@ export const COMMENT_ENDPOINTS = {
   COMMENT: "/api/comment/save",
   GET_COMMENTS_BY_POST_ID: "/api/comment/search",
   GET_COMMENTS_COUNT: "/api/comment/count",
+  REPORT_COMMENT: "/api/report/saveOrUpdate",
   DELETE_COMMENT: "api/comment/delete",
 };
 export const LIKE_ENDPOINTS = {

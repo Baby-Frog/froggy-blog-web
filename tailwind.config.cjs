@@ -3,6 +3,10 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        niceItalic: ["Roboto", "sans-serif"],
+      },
+
       colors: {
         primary: "#ffc017",
         secondary: "#FFC947",

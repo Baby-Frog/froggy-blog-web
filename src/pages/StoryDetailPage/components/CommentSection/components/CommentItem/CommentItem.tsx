@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { useForm } from "react-hook-form";
 import { commentApi } from "src/apis/comments.api";
 import CommentIcon from "src/components/Icon/CommentIcon";
 import EllipsisIcon from "src/components/Icon/EllipsisIcon";
@@ -7,6 +8,7 @@ import LongText from "src/components/LongText";
 import PopoverDismiss from "src/components/PopoverDismiss";
 import { AuthContext } from "src/contexts/auth.contexts";
 import { TComment } from "src/types/comment.types";
+import Swal from "sweetalert2";
 
 type TCommentItemProps = {
   comment: TComment;
@@ -17,6 +19,15 @@ const CommentItem = ({ comment, authorId }: TCommentItemProps) => {
   const { userProfile, isAuthenticated } = useContext(AuthContext);
   const [isResponseHidden, setIsResponseHidden] = useState<boolean>(false);
   const deleteMutation = useMutation(commentApi.deleteComment);
+  const reportMutation = useMutation(commentApi.reportComment);
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm({
+    reValidateMode: "onChange",
+    mode: "onSubmit",
+  });
   const queryClient = useQueryClient();
   const handleDeleteComment = () => {
     deleteMutation.mutate(comment.id, {
@@ -25,6 +36,48 @@ const CommentItem = ({ comment, authorId }: TCommentItemProps) => {
         queryClient.invalidateQueries({ queryKey: ["commentsCount"] });
       },
     });
+  };
+  const handleReportcomment = () => {
+    Swal.fire({
+      title: "Submit your Github username",
+      input: "text",
+      inputAttributes: {
+        autocapitalize: "off",
+      },
+      showCancelButton: true,
+      confirmButtonText: "Look up",
+      showLoaderOnConfirm: true,
+      preConfirm: (login) => {
+        return reportMutation
+          .mutateAsync(login)
+          .then((response) => {
+            if (response.status !== 200) {
+              throw new Error(response.statusText);
+            }
+            return response.data;
+          })
+          .catch((error) => {
+            Swal.showValidationMessage(`Request failed: ${error}`);
+          });
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({});
+      }
+    });
+    reportMutation.mutate(
+      {
+        commentId: comment.id,
+        reason: "",
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["comments"] });
+          queryClient.invalidateQueries({ queryKey: ["commentsCount"] });
+        },
+      },
+    );
   };
   return (
     <div>

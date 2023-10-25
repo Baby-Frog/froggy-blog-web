@@ -90,7 +90,7 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
               renderPopover={
                 <div className="shadow-niceShadowSpread">
                   <div
-                    className="p-2 text-normalGrey  hover:bg-black hover:bg-opacity-10 cursor-pointer flex items-center gap-2"
+                    className="p-2 text-normalGrey hover:bg-black hover:bg-opacity-10 cursor-pointer flex items-center gap-2"
                     onClick={() => handleCopyCurrentLink(currentStoryUrl)}
                     aria-hidden
                   >
