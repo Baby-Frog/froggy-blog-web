@@ -11,11 +11,11 @@ export type TErrorApiResponse<Data> = {
 };
 
 export type TQueryResponse<Data> = {
-  pageNumber: number;
-  pageSize: number;
-  totalRecord: number;
-  totalPage: number;
   data: {
+    pageNumber: number;
+    pageSize: number;
+    totalRecord: number;
+    totalPage: number;
     data: Data;
   };
 };
