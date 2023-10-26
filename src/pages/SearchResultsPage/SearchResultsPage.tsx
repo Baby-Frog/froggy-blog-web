@@ -1,5 +1,5 @@
 import { TabsProps } from "antd";
-import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useInfiniteQuery, useQuery } from "react-query";
 import { Link, useLocation } from "react-router-dom";
 import { authApi } from "src/apis/auth.apis";
@@ -81,11 +81,12 @@ const SearchResultsPage = () => {
   const queryConfig = useQueryConfig();
   const location = useLocation();
   const [currentActiveKey, setCurrentActiveKey] = useState<string>("");
-  const activeKeyAfterExplorePage = useMemo(() => {
+  useLayoutEffect(() => {
     if (location?.state?.from && location.state.from === path.EXPORE_TOPICS) {
-      return "3";
+      setCurrentActiveKey("3");
+    } else {
+      setCurrentActiveKey("1");
     }
-    return "1";
   }, [location?.state?.from]);
   const {
     data: topicsData,
@@ -136,8 +137,8 @@ const SearchResultsPage = () => {
         pageSize: 5,
         keyword: queryConfig.q as string,
         pageNumber: pageParam,
-        column: "title",
-        orderBy: "asc",
+        column: "publishDate",
+        orderBy: "desc",
       }),
     getNextPageParam: (lastPage) => {
       if (lastPage.data.data.data.length === 0) return undefined;
@@ -220,6 +221,9 @@ const SearchResultsPage = () => {
       label: "Stories",
       children: (
         <div className="flex flex-col gap-6">
+          {storiesData?.pages[0].data.data.data.length === 0 && (
+            <div className="text-base">No stories matching {queryConfig.q}</div>
+          )}
           <div className="flex flex-col gap-6">
             {storiesData?.pages.map((storyGroup, index) => (
               <Fragment key={index}>
@@ -243,6 +247,9 @@ const SearchResultsPage = () => {
       children: (
         // <div className="flex flex-col w-full">{users?.map((user) => <PeopleItem user={user}></PeopleItem>)}</div>
         <div className="flex flex-col w-full">
+          {usersData?.pages[0].data.data.data.length === 0 && (
+            <div className="text-base">No people matching {queryConfig.q}</div>
+          )}
           {usersData?.pages.map((userGroup, index) => (
             <Fragment key={index}>
               {userGroup.data.data.data.map((user) => (
@@ -258,7 +265,7 @@ const SearchResultsPage = () => {
             className="text-normalGreen my-4 cursor-pointer"
             disabled={!usersHasNextPage || usersIsFetchingNextPage}
           >
-            {usersIsFetchingNextPage ? "Loading more..." : usersHasNextPage ? "Load More" : "Nothing more to load"}
+            {usersIsFetchingNextPage ? "Loading more..." : usersHasNextPage ? "Load More" : ""}
           </button>
         </div>
       ),
@@ -269,6 +276,9 @@ const SearchResultsPage = () => {
       children: (
         <>
           <TopicList>
+            {topicsData?.pages[0].data.data.data.length === 0 && (
+              <div className="text-base">No stories matching {queryConfig.q}</div>
+            )}
             {topicsData?.pages.map((topicGroup, index) => (
               <Fragment key={index}>
                 {topicGroup.data.data.data.map((topic) => (
@@ -288,7 +298,7 @@ const SearchResultsPage = () => {
             className="text-normalGreen my-4 mx-auto block cursor-pointer"
             disabled={!topicsHasNextPage || topicsIsFetchingNextPage}
           >
-            {topicsIsFetchingNextPage ? "Loading more..." : topicsHasNextPage ? "Load More" : "Nothing more to load"}
+            {topicsIsFetchingNextPage ? "Loading more..." : topicsHasNextPage ? "Load More" : ""}
           </button>
         </>
       ),
@@ -302,8 +312,7 @@ const SearchResultsPage = () => {
           <span> {queryConfig.q || "everything 🤔"}</span>
         </MainStuffsHeading>
         <CustomTabs
-          defaultActiveKey={activeKeyAfterExplorePage}
-          activeKey={currentActiveKey || activeKeyAfterExplorePage}
+          activeKey={currentActiveKey}
           items={items}
           onChange={(activeKey) => {
             setCurrentActiveKey(activeKey);

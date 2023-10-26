@@ -67,9 +67,12 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
               sameWidthWithChildren={false}
               renderPopover={
                 <div className="w-max text-left font-medium z-10 bg-white shadow-softShadowSpread text-black">
-                  <div className="p-2 text-normalGrey hover:bg-black hover:bg-opacity-10 cursor-pointer">
+                  <Link
+                    to={`/edit-story/${generateSlug({ name: story.title, id: story.id })}`}
+                    className="p-2 text-normalGrey block hover:bg-black hover:bg-opacity-10 cursor-pointer"
+                  >
                     Edit story
-                  </div>
+                  </Link>
                   <div
                     className="p-2 text-failure font-medium hover:bg-black hover:bg-opacity-10 cursor-pointer"
                     aria-hidden

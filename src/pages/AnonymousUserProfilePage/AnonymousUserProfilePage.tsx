@@ -46,8 +46,6 @@ const AvatarWrapper = styled.div`
 `;
 const AnonymousUserProfilePage = () => {
   const { userId } = useParams();
-  const { userProfile } = useContext(AuthContext);
-  const navigate = useNavigate();
   const profileLink = `${window.location.origin}/user/profile/${userId}`;
   const { handleCopyCurrentLink } = useShareLink({});
   const { data: userData } = useQuery({
@@ -56,7 +54,12 @@ const AnonymousUserProfilePage = () => {
   });
   const { data: userStoriesData } = useQuery({
     queryKey: ["yourStories", { userId: userId as string }],
-    queryFn: () => storyApi.getStoriesByUserId(userId as string),
+    queryFn: () =>
+      storyApi.getStoriesByUserId(userId as string, {
+        pageSize: 5,
+        column: "publishDate",
+        orderBy: "desc",
+      }),
     refetchOnMount: true,
   });
   const userStories = userStoriesData?.data.data.data;
@@ -73,11 +76,7 @@ const AnonymousUserProfilePage = () => {
       ),
     },
   ];
-  // useLayoutEffect(() => {
-  //   if (userProfile?.id === userId) {
-  //     navigate(path.PROFILE);
-  //   }
-  // }, [navigate, userId, userProfile?.id]);
+
   return (
     <div className="flex mt-10 gap-12 justify-between">
       <ProfileLeft>

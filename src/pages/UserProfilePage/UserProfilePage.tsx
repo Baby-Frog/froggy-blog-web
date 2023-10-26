@@ -61,7 +61,12 @@ const UserProfilePage = () => {
   const me = meData?.data.data;
   const { data: userStoriesData } = useQuery({
     queryKey: ["yourStories", { userId: userProfile?.id as string }],
-    queryFn: () => storyApi.getStoriesByUserId(userProfile?.id as string),
+    queryFn: () =>
+      storyApi.getStoriesByUserId(userProfile?.id as string, {
+        pageSize: 5,
+        column: "publishDate",
+        orderBy: "desc",
+      }),
     refetchOnMount: true,
   });
   const userStories = userStoriesData?.data.data.data;

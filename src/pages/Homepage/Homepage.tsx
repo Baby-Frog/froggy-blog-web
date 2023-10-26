@@ -96,7 +96,14 @@ const Homepage = () => {
     hasNextPage,
   } = useInfiniteQuery({
     queryKey: ["infiniteStories"],
-    queryFn: ({ pageParam = 1 }) => storyApi.getRecentStories({ keyword: "", pageSize: 5, pageNumber: pageParam }),
+    queryFn: ({ pageParam = 1 }) =>
+      storyApi.getRecentStories({
+        keyword: "",
+        pageSize: 5,
+        pageNumber: pageParam,
+        column: "publishDate",
+        orderBy: "desc",
+      }),
     getNextPageParam: (lastPage) => {
       if (lastPage.data.data.data.length === 0) return undefined;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
