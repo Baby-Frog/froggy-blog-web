@@ -16,6 +16,7 @@ import ExploreLayout from "src/layouts/ExploreLayout";
 import ExplorePage from "src/pages/ExplorePage";
 import SearchResultsPage from "src/pages/SearchResultsPage";
 import TagPage from "src/pages/TagPage";
+import EditStoryPage from "src/pages/EditStoryPage";
 
 export default function useRouteElement() {
   const routeElements = useRoutes([
@@ -94,6 +95,14 @@ export default function useRouteElement() {
           element: (
             <TitleLayout title="Create your story">
               <NewStoryPage></NewStoryPage>
+            </TitleLayout>
+          ),
+        },
+        {
+          path: path.EDIT_STORY,
+          element: (
+            <TitleLayout title="Edit your story">
+              <EditStoryPage></EditStoryPage>
             </TitleLayout>
           ),
         },

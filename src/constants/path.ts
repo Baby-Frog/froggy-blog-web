@@ -5,6 +5,7 @@ export const path = {
   ANONYMOUS_PROFILE: "/user/profile/:userId",
   SETTING: "/user/setting",
   NEWSTORY: "/new-story",
+  EDIT_STORY: "/edit-story/:storyId",
   STORY_DETAIL: "/:storyId",
   EDIT_PROFILE: "/user/profile/edit",
   EXPORE_TOPICS: "/explore-topics",

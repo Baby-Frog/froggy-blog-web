@@ -6,13 +6,26 @@ import { TStory } from "src/types/story.types";
 import http from "src/utils/http";
 
 export const storyApi = {
-  getRecentStories: (params: { keyword?: string; pageSize?: number; pageNumber?: number }) =>
-    http.get<TQueryResponse<TStory[]>>(STORY_ENDPOINTS.GET_RECENT_STORIES, { params }),
+  getRecentStories: (params: {
+    keyword?: string;
+    pageSize?: number;
+    pageNumber?: number;
+    column?: string;
+    orderBy?: "desc" | "asc";
+  }) => http.get<TQueryResponse<TStory[]>>(STORY_ENDPOINTS.GET_RECENT_STORIES, { params }),
   getTrendingStories: () => http.get<TSuccessApiResponse<TStory[]>>(STORY_ENDPOINTS.GET_TRENDING_STORIES),
   getStoryById: (storyId: string) =>
     http.get<TSuccessApiResponse<TStory>>(`${STORY_ENDPOINTS.GET_STORY_BY_ID}/${storyId}`),
-  getStoriesByUserId: (userId: string) =>
-    http.get<TQueryResponse<TStory[]>>(`${STORY_ENDPOINTS.GET_STORIES_BY_USER_ID}/${userId}`),
+  getStoriesByUserId: (
+    userId: string,
+    params: {
+      keyword?: string;
+      pageSize?: number;
+      pageNumber?: number;
+      column?: string;
+      orderBy?: "desc" | "asc";
+    },
+  ) => http.get<TQueryResponse<TStory[]>>(`${STORY_ENDPOINTS.GET_STORIES_BY_USER_ID}/${userId}`, { params }),
   getStoriesByTopicId: (topicId: string) =>
     http.get<TQueryResponse<TStory[]>>(`${STORY_ENDPOINTS.GET_STORIES_BY_TOPIC_ID}/${topicId}`),
   searchStories: ({ keyword, pageSize, column, orderBy, pageNumber }: TApiQueryParams) =>
