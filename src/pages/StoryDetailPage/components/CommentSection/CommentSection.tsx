@@ -132,6 +132,12 @@ const CommentSection = ({
       },
     );
   });
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleComment();
+    }
+  };
   return createPortal(
     <CommentSectionWrapper $isShown={showCommentSection}>
       <CommentSectionOverlay
@@ -163,6 +169,7 @@ const CommentSection = ({
               <form onSubmit={handleComment}>
                 <AutoResizeTextarea
                   name="comment"
+                  onKeyDown={handleKeyDown}
                   placeholder="What are your thoughts?"
                   register={register}
                 ></AutoResizeTextarea>

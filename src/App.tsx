@@ -5,6 +5,7 @@ import { AuthContext } from "./contexts/auth.contexts";
 import useRouteElement from "./hooks/useRouteElement";
 import { LocalStorageEventTarget } from "./utils/auth";
 import Logo from "./assets/logo-4.png";
+import AutomaticallyScrollToTop from "./components/AutomaticallyScrollToTop";
 function App() {
   const routeElements = useRouteElement();
   const location = useLocation();
@@ -26,6 +27,7 @@ function App() {
           {React.cloneElement(routeElements as ReactElement<unknown, string | JSXElementConstructor<unknown>>, {
             key: location.pathname || "/user/profile",
           })}
+          <AutomaticallyScrollToTop></AutomaticallyScrollToTop>
         </AnimatePresence>
       ) : (
         <div className="p-2 flex gap-4 items-center flex-col justify-center h-screen text-lg font-medium">

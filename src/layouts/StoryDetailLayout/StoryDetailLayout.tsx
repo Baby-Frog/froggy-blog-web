@@ -33,7 +33,7 @@ const StoryDetailLayout = ({ children }: TMainLayoutProps) => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
-      const isScrollingUp = currentScrollPos < prevScrollPos;
+      const isScrollingUp = currentScrollPos < prevScrollPos || currentScrollPos === 0;
       setShowNavbar(isScrollingUp);
       setPrevScrollPos(currentScrollPos);
     };
