@@ -147,7 +147,7 @@ const MoreFromAuthorSection = ({ storiesLength, story, currentAuthorStories }: T
           <>
             <div className="grid grid-cols-2 gap-4">
               {currentAuthorStories.slice(0, 2).map((story) => (
-                <div>
+                <Link to={`/${generateSlug({ name: story.title, id: story.id })}`}>
                   <div className="w-full h-52">
                     <img
                       src={story.thumbnail}
@@ -178,10 +178,13 @@ const MoreFromAuthorSection = ({ storiesLength, story, currentAuthorStories }: T
                       <span>{story.timeRead} read</span>
                     </span>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
-            <div className="mt-4">
+            <Link
+              to={`/${generateSlug({ name: currentAuthorStories[2].title, id: currentAuthorStories[2].id })}`}
+              className="mt-4"
+            >
               <>
                 {currentAuthorStories && (
                   <>
@@ -220,9 +223,49 @@ const MoreFromAuthorSection = ({ storiesLength, story, currentAuthorStories }: T
                   </>
                 )}
               </>
-            </div>
+            </Link>
           </>
         )}
+      </div>
+    );
+  }
+  if (storiesLength && storiesLength >= 4) {
+    return (
+      <div className="mt-4 grid grid-cols-2">
+        {currentAuthorStories.map((story) => (
+          <Link to={`/${generateSlug({ name: story.title, id: story.id })}`}>
+            <div className="w-full h-52">
+              <img
+                src={story.thumbnail}
+                alt={story.title}
+                className="object-cover w-full h-full"
+              />
+            </div>
+            <div className="mt-4 flex items-center gap-2 text-sm font-semibold">
+              <span className="rounded-full w-5 h-5 overflow-hidden">
+                <img
+                  src={story.author.avatarPath}
+                  alt={story.author.fullName}
+                  className="w-full h-full object-cover"
+                />
+              </span>
+              <div className="flex items-center gap-1">
+                <span>{story.author.fullName}</span>
+                <span className="font-medium"> in</span>
+                <span> Froggy Blog</span>
+              </div>
+            </div>
+            <div className="mt-5">
+              <div className="text-2xl font-bold tracking-tight">{story.title}</div>
+              <p className="mt-2 text-sm font-medium line-clamp-3 text-lightGrey">{story.raw}</p>
+              <span className="mt-2 flex items-center gap-2">
+                <span>{getCustomDate(new Date(story.publishDate))}</span>
+                <span>•</span>
+                <span>{story.timeRead} read</span>
+              </span>
+            </div>
+          </Link>
+        ))}
       </div>
     );
   }
