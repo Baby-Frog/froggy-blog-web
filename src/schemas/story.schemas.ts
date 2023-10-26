@@ -1,6 +1,7 @@
 import * as yup from "yup";
 
 export const storySchema = yup.object({
+  id: yup.string(),
   title: yup
     .string()
     .required("Please enter a title")

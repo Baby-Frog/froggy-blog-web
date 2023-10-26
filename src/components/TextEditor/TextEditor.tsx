@@ -1,12 +1,12 @@
 import { Editor } from "@tinymce/tinymce-react";
-import { forwardRef } from "react";
+import { forwardRef, useEffect } from "react";
 import { useMutation } from "react-query";
 import { toast } from "react-toastify";
 import { imageApi } from "src/apis/image.apis";
 import { Editor as TinyMCEEditor } from "tinymce";
 import ErrorToastIcon from "../Icon/ToastIcon/ErrorToastIcon";
 import "./TextEditor.scss";
-import { blob } from "stream/consumers";
+
 import { IMAGE_FORMAT } from "src/constants/image_format";
 
 type TTextEditorProps = {
@@ -59,9 +59,10 @@ const TextEditor = forwardRef<TinyMCEEditor, TTextEditorProps>(function TextEdit
       const bodyFormData = new FormData();
       bodyFormData.append("file", blobInfo.blob());
       uploadImageMutation.mutateAsync(bodyFormData).then((result) => {
-        return result.data.data.urlImage;
+        resolve(result.data.data.urlImage);
       });
     });
+
   return (
     <>
       <Editor
@@ -69,7 +70,6 @@ const TextEditor = forwardRef<TinyMCEEditor, TTextEditorProps>(function TextEdit
           setRawText(editor.getContent({ format: "text" }));
           return ((ref as React.MutableRefObject<TinyMCEEditor>).current = editor);
         }}
-        initialValue=""
         value={value}
         onBlur={onBlur as undefined}
         onEditorChange={onChange}
