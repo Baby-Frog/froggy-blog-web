@@ -24,6 +24,9 @@ const ProfileLeft = styled.div`
 `;
 const ProfileRight = styled.div`
   width: calc(35% - 24px);
+  position: sticky;
+  top: 60px;
+  right: 0;
 `;
 
 const AvatarWrapper = styled(Link)`

@@ -9,10 +9,10 @@ import { styled } from "styled-components/";
 type TNewStorySidebarProps = {
   captchaToken?: string;
   handleResetForm: () => void;
-  handleCreateNewStory: (e?: React.BaseSyntheticEvent<object, unknown, unknown> | undefined) => Promise<void>;
+  handleEditStory: (e?: React.BaseSyntheticEvent<object, unknown, unknown> | undefined) => Promise<void>;
 };
 
-const NewStorySidebarWrapper = styled.div<{ $isScrolledDown?: boolean }>`
+const EditStorySidebarWrapper = styled.div<{ $isScrolledDown?: boolean }>`
   height: max-content;
   width: 62px;
   padding: 32px 14px;
@@ -37,7 +37,7 @@ const NewStorySidebarWrapper = styled.div<{ $isScrolledDown?: boolean }>`
   }
 `;
 
-const NewStorySidebarItem = styled.button<{ $isActive?: boolean; $backgroundColor?: string; $color?: string }>`
+const EditStorySidebarItem = styled.button<{ $isActive?: boolean; $backgroundColor?: string; $color?: string }>`
   width: 47px;
   height: 47px;
   padding: 10px;
@@ -63,7 +63,7 @@ const NewStorySidebarItem = styled.button<{ $isActive?: boolean; $backgroundColo
   }
 `;
 
-const NewStorySidebar = ({ handleResetForm, handleCreateNewStory, captchaToken }: TNewStorySidebarProps) => {
+const EditStorySidebar = ({ handleResetForm, handleEditStory, captchaToken }: TNewStorySidebarProps) => {
   const [scrollY, setScrollY] = useState(0);
   useEffect(() => {
     const handleScroll = () => {
@@ -87,8 +87,8 @@ const NewStorySidebar = ({ handleResetForm, handleCreateNewStory, captchaToken }
   };
 
   return (
-    <NewStorySidebarWrapper $isScrolledDown={progress.get() >= 0.1}>
-      <NewStorySidebarItem
+    <EditStorySidebarWrapper $isScrolledDown={progress.get() >= 0.1}>
+      <EditStorySidebarItem
         title="Scroll to top"
         onClick={handleScrollUp}
       >
@@ -97,12 +97,12 @@ const NewStorySidebar = ({ handleResetForm, handleCreateNewStory, captchaToken }
           width={24}
           height={24}
         ></PointUpIcon>
-      </NewStorySidebarItem>
+      </EditStorySidebarItem>
       {captchaToken ? (
-        <NewStorySidebarItem
+        <EditStorySidebarItem
           $color="#fff"
           $backgroundColor="#1DC071"
-          onClick={handleCreateNewStory}
+          onClick={handleEditStory}
           title="Submit your story"
         >
           <TickIcon
@@ -110,9 +110,9 @@ const NewStorySidebar = ({ handleResetForm, handleCreateNewStory, captchaToken }
             width={24}
             height={24}
           ></TickIcon>
-        </NewStorySidebarItem>
+        </EditStorySidebarItem>
       ) : (
-        <NewStorySidebarItem
+        <EditStorySidebarItem
           $color="#fff"
           $backgroundColor="#B1B5C3"
           style={{
@@ -125,9 +125,9 @@ const NewStorySidebar = ({ handleResetForm, handleCreateNewStory, captchaToken }
             width={24}
             height={24}
           ></TickIcon>
-        </NewStorySidebarItem>
+        </EditStorySidebarItem>
       )}
-      <NewStorySidebarItem
+      <EditStorySidebarItem
         $color="#fff"
         $backgroundColor="#EB5757"
         onClick={handleResetForm}
@@ -138,9 +138,9 @@ const NewStorySidebar = ({ handleResetForm, handleCreateNewStory, captchaToken }
           height={24}
           color="currentColor"
         ></RewindIcon>
-      </NewStorySidebarItem>
-    </NewStorySidebarWrapper>
+      </EditStorySidebarItem>
+    </EditStorySidebarWrapper>
   );
 };
 
-export default NewStorySidebar;
+export default EditStorySidebar;

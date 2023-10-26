@@ -5,7 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { styled } from "styled-components";
 import Swal from "sweetalert2";
-import NewStorySidebar from "./components/NewStorySidebar";
+import EditStorySidebar from "./components/EditStorySidebar";
 // eslint-disable-next-line import/no-named-as-default
 import ReCAPTCHA from "react-google-recaptcha";
 import { useMutation, useQueryClient } from "react-query";
@@ -114,7 +114,6 @@ const EditStoryPage = () => {
     control,
     reset,
     watch,
-    getValues,
     setError,
     formState: { errors },
   } = useForm<TStorySchema>({
@@ -140,6 +139,7 @@ const EditStoryPage = () => {
       );
       setValue("thumbnail", res.data.data.thumbnail);
       setValue("credit", res.data.data.credit);
+      setValue("content", res.data.data.content);
       setTextEditorValue(res.data.data.content);
     };
     fetchStory();
@@ -312,11 +312,11 @@ const EditStoryPage = () => {
   };
   return (
     <NewStoryPageWrapper>
-      <NewStorySidebar
+      <EditStorySidebar
         captchaToken={captchaToken}
         handleResetForm={handleResetForm}
-        handleCreateNewStory={handleCreateNewStory}
-      ></NewStorySidebar>
+        handleEditStory={handleCreateNewStory}
+      ></EditStorySidebar>
       <NewStoryMain>
         <NewStoryHeading>Write your new story 🚀</NewStoryHeading>
         <NewStorySubheading>Share your story with us ^o^</NewStorySubheading>
