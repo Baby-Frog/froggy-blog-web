@@ -9,7 +9,6 @@ export default {
       screens: {
         ipad: { max: "1023px" },
       },
-
       colors: {
         primary: "#ffc017",
         secondary: "#FFC947",

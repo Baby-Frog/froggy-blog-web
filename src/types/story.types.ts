@@ -13,6 +13,8 @@ export type TStory = {
   publishDate: string;
   listTopic: TTopics[];
   author: TAuthor;
+  likes: string | number;
+  comments: string | number;
 };
 
 export type TStoryConfig = {
