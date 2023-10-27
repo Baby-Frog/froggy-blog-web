@@ -6,6 +6,9 @@ export default {
       fontFamily: {
         niceItalic: ["Roboto", "sans-serif"],
       },
+      screens: {
+        ipad: { max: "1023px" },
+      },
 
       colors: {
         primary: "#ffc017",
