@@ -1,21 +1,19 @@
 import { TabsProps } from "antd";
 import { useQuery } from "react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { authApi } from "src/apis/auth.apis";
 import { storyApi } from "src/apis/story.apis";
 import CustomTabs from "src/components/CustomTabs";
 import CopyIcon from "src/components/Icon/CopyIcon";
 import EllipsisIcon from "src/components/Icon/EllipsisIcon";
+import AddressIcon from "src/components/Icon/UserProfileIcon/AddressIcon";
+import DateOfBirthIcon from "src/components/Icon/UserProfileIcon/DateOfBirthIcon";
+import PhoneNumberIcon from "src/components/Icon/UserProfileIcon/PhoneNumberIcon";
 import PopoverDismiss from "src/components/PopoverDismiss";
 import useShareLink from "src/hooks/useShareLink";
 import { styled } from "styled-components";
 import HomepageRecentPost from "../Homepage/components/HomepageRecentPost";
-import { path } from "src/constants/path";
-import PhoneNumberIcon from "src/components/Icon/UserProfileIcon/PhoneNumberIcon";
-import AddressIcon from "src/components/Icon/UserProfileIcon/AddressIcon";
-import DateOfBirthIcon from "src/components/Icon/UserProfileIcon/DateOfBirthIcon";
-import { useContext, useEffect, useLayoutEffect } from "react";
-import { AuthContext } from "src/contexts/auth.contexts";
+import HandledImage from "src/components/HandledImage";
 const ProfileLeft = styled.div`
   width: calc(65% - 24px);
 `;
@@ -81,7 +79,7 @@ const AnonymousUserProfilePage = () => {
     <div className="flex mt-10 gap-12 justify-between">
       <ProfileLeft>
         {user?.coverImgPath ? (
-          <img
+          <HandledImage
             src={user.coverImgPath}
             alt=""
             className="w-full h-[150px] mb-10 object-cover"
@@ -117,7 +115,7 @@ const AnonymousUserProfilePage = () => {
       </ProfileLeft>
       <ProfileRight>
         <AvatarWrapper className="rounded-full object-cover block w-[90px] h-[90px]">
-          <img
+          <HandledImage
             src={user?.avatarPath}
             alt=""
             className="rounded-full object-cover w-full h-full"

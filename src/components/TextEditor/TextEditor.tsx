@@ -104,7 +104,7 @@ const TextEditor = forwardRef<TinyMCEEditor, TTextEditorProps>(function TextEdit
           toolbar_mode: "wrap",
           spellchecker_ignore_list: ["Ephox", "Moxiecode"],
           content_style:
-            "* { color: #242424; word-break: break-word; } mark { background-color: yellowgreen; } figcaption { text-align: center; margin-bottom: 8px; color: #6b6b6b; } p { line-height: 32px; font-size: 20px; font-weight: 400; margin-bottom: 16px; } h1 { font-size: 24px; font-weight: 600; letter-spacing: -0.3px; line-height: 30px; margin-top: 16px; } h2 { line-height: 24px; font-size: 20px; font-weight: 600; margin-top: 12px; } h3 { line-height: 24px; font-size: 18px; font-weight: 600; margin-top: 12px; } ol { list-style: decimal; font-size: 20px; } ul { list-style: disc; font-size: 20px; } img {max-width: 820px; margin: 0 auto;}",
+            "* { color: #242424; word-break: break-word; } mark { background-color: yellowgreen; } figcaption { text-align: center; margin-bottom: 8px; color: #6b6b6b; } p { line-height: 32px; font-size: 20px; font-weight: 400; margin-bottom: 16px; } h1 { font-size: 24px; font-weight: 600; letter-spacing: -0.3px; line-height: 30px; margin-top: 16px; } h2 { line-height: 24px; font-size: 20px; font-weight: 600; margin-top: 12px; } h3 { line-height: 24px; font-size: 18px; font-weight: 600; margin-top: 12px; } ol { list-style: decimal; font-size: 20px; } ul { list-style: disc; font-size: 20px; } img {max-width: 820px; margin: 0 auto;} iframe {max-width: 720px;}",
           contextmenu: "link image table",
           a11y_advanced_options: true,
           _selector: "textarea",

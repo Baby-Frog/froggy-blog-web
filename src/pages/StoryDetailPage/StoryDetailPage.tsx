@@ -27,6 +27,7 @@ import { commentApi } from "src/apis/comments.api";
 import { styled } from "styled-components";
 import MoreFromAuthorSection from "./components/MoreFromAuthorSection";
 import { TStory } from "src/types/story.types";
+import HandledImage from "src/components/HandledImage";
 
 const MainLayoutWrapper = styled.div`
   max-width: 720px;
@@ -158,7 +159,7 @@ const StoryDetailPage = () => {
           </div>
           <div className="flex items-center gap-2 mt-4">
             <div className="rounded-full w-11 h-11">
-              <img
+              <HandledImage
                 src={storyDetailData?.data.data.author.avatarPath}
                 alt="Avatar"
                 className="rounded-full w-full h-full object-cover"
@@ -537,7 +538,7 @@ const StoryDetailPage = () => {
           <div className="lg:flex block items-center justify-between pb-8 border-b-2 border-whiteF2">
             <div>
               <div className="rounded-full w-20 h-20 overflow-hidden">
-                <img
+                <HandledImage
                   src={storyDetailData?.data.data.author.avatarPath}
                   alt=""
                   className="rounded-full w-full h-full object-cover"

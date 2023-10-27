@@ -8,6 +8,7 @@ import { authApi } from "src/apis/auth.apis";
 import { imageApi } from "src/apis/image.apis";
 import DefaultCoverImage from "src/assets/linkedin-default.png";
 import Button from "src/components/Button";
+import HandledImage from "src/components/HandledImage";
 import EditAvatarIcon from "src/components/Icon/EditAvatarIcon";
 import ImageIcon from "src/components/Icon/ImageIcon";
 import ErrorToastIcon from "src/components/Icon/ToastIcon/ErrorToastIcon";
@@ -281,7 +282,7 @@ const EditProfilePage = () => {
               className="w-full"
             >
               <CoverImageWrapper>
-                <img
+                <HandledImage
                   src={previewCoverImageURL || DefaultCoverImage}
                   alt=""
                   className="w-full h-[150px] object-cover object-center"
@@ -305,7 +306,7 @@ const EditProfilePage = () => {
               className="w-full"
             >
               <CoverImageWrapper>
-                <img
+                <HandledImage
                   src={previewCoverImageURL || me?.coverImgPath}
                   alt=""
                   className="w-full h-[150px] object-cover object-center"
@@ -416,7 +417,7 @@ const EditProfilePage = () => {
             inputFileRef={avatarInputFileRef}
           >
             <AvatarWrapper className="rounded-full object-cover w-[90px] h-[90px]">
-              <img
+              <HandledImage
                 src={previewAvatarURL || me?.avatarPath}
                 alt=""
                 className="rounded-full object-cover w-full h-full"

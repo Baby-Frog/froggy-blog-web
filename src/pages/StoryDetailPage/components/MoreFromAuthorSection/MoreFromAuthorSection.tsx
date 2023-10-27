@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import SaveToFavoritesIcon from "src/components/Icon/SaveToFavoritesIcon";
-import Popover from "src/components/Popover";
+import HandledImage from "src/components/HandledImage";
+
 import { AuthContext } from "src/contexts/auth.contexts";
 import { TStory } from "src/types/story.types";
 import { getCustomDate } from "src/utils/formatDate";
@@ -28,7 +28,7 @@ const MoreFromAuthorSection = ({ storiesLength, story, currentAuthorStories }: T
           {currentAuthorStories && (
             <>
               <div className="w-full h-72">
-                <img
+                <HandledImage
                   src={currentAuthorStories[0].thumbnail}
                   alt=""
                   className="w-full h-full object-cover"
@@ -36,7 +36,7 @@ const MoreFromAuthorSection = ({ storiesLength, story, currentAuthorStories }: T
               </div>
               <div className="mt-4 flex items-center gap-2 text-sm font-semibold">
                 <span className="rounded-full w-5 h-5 overflow-hidden">
-                  <img
+                  <HandledImage
                     src={currentAuthorStories[0].author.avatarPath}
                     alt={currentAuthorStories[0].author.fullName}
                     className="w-full h-full object-cover"
@@ -56,37 +56,6 @@ const MoreFromAuthorSection = ({ storiesLength, story, currentAuthorStories }: T
                   <span>•</span>
                   <span>{story.timeRead} read</span>
                 </span>
-                {isAuthenticated ? (
-                  <Popover
-                    backgroundColor="#000000a8"
-                    sameWidthWithChildren={false}
-                    placement="top"
-                    offsetPx={5}
-                    renderPopover={<div className="text-white p-1">Add to Saved List</div>}
-                  >
-                    <SaveToFavoritesIcon
-                      color="#6b6b6b"
-                      width={24}
-                      height={24}
-                      className="cursor-pointer hover:text-softBlack"
-                    ></SaveToFavoritesIcon>
-                  </Popover>
-                ) : (
-                  <Popover
-                    backgroundColor="#000000a8"
-                    sameWidthWithChildren={false}
-                    placement="top"
-                    offsetPx={5}
-                    renderPopover={<div className="text-white p-1">You must login to save this story</div>}
-                  >
-                    <SaveToFavoritesIcon
-                      color="#bdbdbd"
-                      width={24}
-                      height={24}
-                      className="cursor-default"
-                    ></SaveToFavoritesIcon>
-                  </Popover>
-                )}
               </div>
             </>
           )}
@@ -103,7 +72,7 @@ const MoreFromAuthorSection = ({ storiesLength, story, currentAuthorStories }: T
               {currentAuthorStories.map((story) => (
                 <Link to={`/${generateSlug({ name: story.title, id: story.id })}`}>
                   <div className="w-full h-52">
-                    <img
+                    <HandledImage
                       src={story.thumbnail}
                       alt={story.title}
                       className="object-cover w-full h-full"
@@ -111,7 +80,7 @@ const MoreFromAuthorSection = ({ storiesLength, story, currentAuthorStories }: T
                   </div>
                   <div className="mt-4 flex items-center gap-2 text-sm font-semibold">
                     <span className="rounded-full w-5 h-5 overflow-hidden">
-                      <img
+                      <HandledImage
                         src={story.author.avatarPath}
                         alt={story.author.fullName}
                         className="w-full h-full object-cover"
@@ -149,7 +118,7 @@ const MoreFromAuthorSection = ({ storiesLength, story, currentAuthorStories }: T
               {currentAuthorStories.slice(0, 2).map((story) => (
                 <Link to={`/${generateSlug({ name: story.title, id: story.id })}`}>
                   <div className="w-full h-52">
-                    <img
+                    <HandledImage
                       src={story.thumbnail}
                       alt={story.title}
                       className="object-cover w-full h-full"
@@ -157,7 +126,7 @@ const MoreFromAuthorSection = ({ storiesLength, story, currentAuthorStories }: T
                   </div>
                   <div className="mt-4 flex items-center gap-2 text-sm font-semibold">
                     <span className="rounded-full w-5 h-5 overflow-hidden">
-                      <img
+                      <HandledImage
                         src={story.author.avatarPath}
                         alt={story.author.fullName}
                         className="w-full h-full object-cover"
@@ -189,7 +158,7 @@ const MoreFromAuthorSection = ({ storiesLength, story, currentAuthorStories }: T
                 {currentAuthorStories && (
                   <>
                     <div className="w-full h-72">
-                      <img
+                      <HandledImage
                         src={currentAuthorStories[2].thumbnail}
                         alt=""
                         className="w-full h-full object-cover"
@@ -197,7 +166,7 @@ const MoreFromAuthorSection = ({ storiesLength, story, currentAuthorStories }: T
                     </div>
                     <div className="mt-4 flex items-center gap-2 text-sm font-semibold">
                       <span className="rounded-full w-5 h-5 overflow-hidden">
-                        <img
+                        <HandledImage
                           src={currentAuthorStories[2].author.avatarPath}
                           alt={currentAuthorStories[2].author.fullName}
                           className="w-full h-full object-cover"
@@ -231,11 +200,11 @@ const MoreFromAuthorSection = ({ storiesLength, story, currentAuthorStories }: T
   }
   if (storiesLength && storiesLength >= 4) {
     return (
-      <div className="mt-4 grid grid-cols-2">
+      <div className="mt-4 grid grid-cols-2 gap-6">
         {currentAuthorStories.map((story) => (
           <Link to={`/${generateSlug({ name: story.title, id: story.id })}`}>
             <div className="w-full h-52">
-              <img
+              <HandledImage
                 src={story.thumbnail}
                 alt={story.title}
                 className="object-cover w-full h-full"
@@ -243,7 +212,7 @@ const MoreFromAuthorSection = ({ storiesLength, story, currentAuthorStories }: T
             </div>
             <div className="mt-4 flex items-center gap-2 text-sm font-semibold">
               <span className="rounded-full w-5 h-5 overflow-hidden">
-                <img
+                <HandledImage
                   src={story.author.avatarPath}
                   alt={story.author.fullName}
                   className="w-full h-full object-cover"

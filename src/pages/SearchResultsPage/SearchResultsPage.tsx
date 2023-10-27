@@ -13,6 +13,7 @@ import PeopleItem from "./components/PeopleItem";
 import HomepageRecentPost from "../Homepage/components/HomepageRecentPost";
 import { getCustomDate } from "src/utils/formatDate";
 import { generateSlug } from "src/utils/slugify";
+import HandledImage from "src/components/HandledImage";
 
 type TSearchResultsPageProps = {
   something: string;
@@ -282,7 +283,7 @@ const SearchResultsPage = () => {
                   <Link
                     key={topic.id}
                     className="min-w-[53px] flex items-center justify-center px-4 py-2 bg-[#f2f2f2] text-sm rounded-3xl"
-                    to={path.HOMEPAGE}
+                    to={`/tag/${topic.topicName}-${topic.id}`}
                   >
                     {topic.topicName}
                   </Link>
@@ -330,7 +331,7 @@ const SearchResultsPage = () => {
                   >
                     <div className="flex items-center gap-2">
                       <div className="w-5 h-5 rounded-full overflow-hidden">
-                        <img
+                        <HandledImage
                           src={story.author.avatarPath}
                           alt={story.author.fullName}
                           className="w-full h-full object-cover"
@@ -395,7 +396,7 @@ const SearchResultsPage = () => {
                   >
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 flex-shrink-0 rounded-full overflow-hidden">
-                        <img
+                        <HandledImage
                           src={user.avatarPath}
                           alt={user.fullName}
                           className="w-full h-full rounded-full object-cover"

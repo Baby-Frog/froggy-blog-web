@@ -18,6 +18,7 @@ import { AuthContext } from "src/contexts/auth.contexts";
 import useShareLink from "src/hooks/useShareLink";
 import { styled } from "styled-components";
 import HomepageRecentPost from "../Homepage/components/HomepageRecentPost";
+import HandledImage from "src/components/HandledImage";
 
 const ProfileLeft = styled.div`
   width: calc(65% - 24px);
@@ -54,7 +55,6 @@ const AvatarWrapper = styled(Link)`
 
 const UserProfilePage = () => {
   const { userProfile } = useContext(AuthContext);
-
   const { handleCopyCurrentLink } = useShareLink({});
   const profileLink = `${window.location.origin}/user/profile/${userProfile?.id as string}`;
   const { data: meData } = useQuery({
@@ -106,7 +106,7 @@ const UserProfilePage = () => {
       <div className="flex mt-10 gap-12 justify-between">
         <ProfileLeft>
           {me?.coverImgPath ? (
-            <img
+            <HandledImage
               src={me.coverImgPath}
               alt=""
               className="w-full h-[150px] mb-10 object-cover"
@@ -156,7 +156,7 @@ const UserProfilePage = () => {
             to={path.EDIT_PROFILE}
             className="rounded-full object-cover block w-[90px] h-[90px]"
           >
-            <img
+            <HandledImage
               src={me?.avatarPath}
               alt=""
               className="rounded-full object-cover w-full h-full"

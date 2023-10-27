@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import HandledImage from "src/components/HandledImage";
 import { TStory } from "src/types/story.types";
 import { getCustomDate } from "src/utils/formatDate";
 import { generateSlug } from "src/utils/slugify";
@@ -14,7 +15,7 @@ const HomepageTrendingPost = ({ story }: THomepageTrendingPostProps) => {
       className="flex flex-col gap-2"
     >
       <div className="flex items-center gap-x-3">
-        <img
+        <HandledImage
           src={story.author.avatarPath}
           alt="Avatar"
           className="rounded-full w-6 h-6 object-cover"

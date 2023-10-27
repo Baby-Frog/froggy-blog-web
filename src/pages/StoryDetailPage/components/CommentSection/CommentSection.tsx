@@ -11,6 +11,7 @@ import { styled } from "styled-components";
 import CommentItem from "./components/CommentItem";
 import { useMutation, useQueryClient } from "react-query";
 import { commentApi } from "src/apis/comments.api";
+import HandledImage from "src/components/HandledImage";
 
 type TCommentSectionProps = {
   comments?: TComment[];
@@ -158,7 +159,7 @@ const CommentSection = ({
             <>
               <div className="flex items-center gap-2">
                 <div className="rounded-full w-8 h-8 overflow-hidden">
-                  <img
+                  <HandledImage
                     src={userProfile?.avatarPath || ""}
                     alt={userProfile?.fullName || ""}
                     className="w-full h-full object-cover"

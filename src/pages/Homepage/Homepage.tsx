@@ -14,6 +14,7 @@ import HomepageRecentPost from "./components/HomepageRecentPost";
 import HomepageTrendingPost from "./components/HomepageTrendingPost";
 import { generateSlug } from "src/utils/slugify";
 import { getCustomDate } from "src/utils/formatDate";
+import HandledImage from "src/components/HandledImage";
 
 const HomepageHeading = styled.h2`
   font-size: 16px;
@@ -243,7 +244,7 @@ const Homepage = () => {
                   >
                     <div className="flex items-center gap-2">
                       <div className="w-5 h-5 rounded-full overflow-hidden">
-                        <img
+                        <HandledImage
                           src={story.author.avatarPath}
                           alt={story.author.fullName}
                           className="w-full h-full object-cover"

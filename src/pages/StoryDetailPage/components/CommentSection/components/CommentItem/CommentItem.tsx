@@ -9,6 +9,7 @@ import PopoverDismiss from "src/components/PopoverDismiss";
 import { AuthContext } from "src/contexts/auth.contexts";
 import { TComment } from "src/types/comment.types";
 import Swal from "sweetalert2";
+import HandledImage from "src/components/HandledImage";
 
 type TCommentItemProps = {
   comment: TComment;
@@ -84,7 +85,7 @@ const CommentItem = ({ comment, authorId }: TCommentItemProps) => {
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center gap-2">
           <div className="rounded-full w-8 h-8 overflow-hidden">
-            <img
+            <HandledImage
               src={comment.profileDto.avatarPath}
               alt={comment.profileDto.fullName}
               className="w-full h-full object-cover"

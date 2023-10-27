@@ -30,6 +30,7 @@ import { useParams } from "react-router-dom";
 import { getIdFromSlug } from "src/utils/slugify";
 import http from "src/utils/http";
 import { STORY_ENDPOINTS } from "src/constants/endpoints";
+import HandledImage from "src/components/HandledImage";
 
 type ValueType = { key?: string; label: React.ReactNode; value: string | number };
 
@@ -437,7 +438,7 @@ const EditStoryPage = () => {
                     </span>
                   </div>
                 ) : (
-                  <img
+                  <HandledImage
                     src={previewImageURL || thumbnailFormValue}
                     alt="Failed to load"
                     className="object-cover w-full h-full rounded-lg"
