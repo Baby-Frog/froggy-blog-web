@@ -6,6 +6,7 @@ import { topicApi } from "src/apis/topic.apis";
 import HandledImage from "src/components/HandledImage";
 import ArrowLeftIcon from "src/components/Icon/ArrowLeftIcon";
 import ArrowRightIcon from "src/components/Icon/ArrowRightIcon";
+import ClapIcon from "src/components/Icon/ClapIcon";
 import ExploreIcon from "src/components/Icon/ExploreIcon";
 import SaveToFavoritesIcon from "src/components/Icon/SaveToFavoritesIcon";
 import Popover from "src/components/Popover";
@@ -167,6 +168,8 @@ const TagMainStoryGrid = styled.div`
   padding-top: 16px;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: auto 1fr;
+
   gap: 36px;
   grid-template-areas:
     "g1 g1 g1 g2 g2 g2"
@@ -175,6 +178,13 @@ const TagMainStoryGrid = styled.div`
 `;
 
 const TagMainStoryItem = styled(Link)`
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  height: 100%;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "image image image image image image image image image image image image"
+    "content content content content content content content content content content content content";
   &:nth-of-type(1),
   &:nth-of-type(2) {
     .image-wrapper {
@@ -210,6 +220,12 @@ const TagMainStoryItem = styled(Link)`
   }
   &:nth-of-type(5) {
     grid-area: g5;
+  }
+  .image-wrapper {
+    grid-area: image / image / image / image;
+  }
+  .content-wrapper {
+    grid-area: content / content / content / content;
   }
 `;
 
@@ -329,59 +345,70 @@ const TagPage = () => {
                   alt={story.title}
                 />
               </div>
-              <div className="mt-4 flex items-center gap-2 text-sm font-semibold">
-                <span className="rounded-full w-5 h-5 overflow-hidden">
-                  <HandledImage
-                    src={story.author.avatarPath}
-                    alt={story.author.fullName}
-                    className="w-full h-full object-cover"
-                  />
-                </span>
-                <div className="flex items-center gap-1">
-                  <span>{story.author.fullName}</span>
-                  <span className="font-medium"> in</span>
-                  <span> Froggy Blog</span>
+              <div className="content-wrapper">
+                <div className="mt-4 flex items-center gap-2 text-sm font-semibold">
+                  <span className="rounded-full w-5 h-5 overflow-hidden">
+                    <HandledImage
+                      src={story.author.avatarPath}
+                      alt={story.author.fullName}
+                      className="w-full h-full object-cover"
+                    />
+                  </span>
+                  <div className="flex items-center gap-1">
+                    <span>{story.author.fullName}</span>
+                    <span className="font-medium"> in</span>
+                    <span> Froggy Blog</span>
+                  </div>
                 </div>
-              </div>
-              <h2 className="mt-2 text-xl font-semibold line-clamp-2">{story.title}</h2>
-              <p className="mt-2 text-base font-medium line-clamp-3 text-lightGrey">{story.raw}</p>
-              <div className="flex items-center justify-between">
+                <h2 className="mt-2 text-xl font-semibold line-clamp-2">{story.title}</h2>
+                <p className="mt-2 text-base font-medium line-clamp-3 text-lightGrey">{story.raw}</p>
                 <span className="mt-2 flex items-center gap-2">
                   <span>{getCustomDate(new Date(story.publishDate))}</span>
                   <span>•</span>
                   <span>{story.timeRead} read</span>
                 </span>
-                {isAuthenticated ? (
-                  <Popover
-                    backgroundColor="#000000a8"
-                    sameWidthWithChildren={false}
-                    placement="top"
-                    offsetPx={5}
-                    renderPopover={<div className="text-white p-1">Add to Saved List</div>}
-                  >
-                    <SaveToFavoritesIcon
+                <div className="flex items-center justify-between">
+                  <button className="flex items-center gap-1 cursor-pointer hover:text-softBlack">
+                    <ClapIcon
                       color="#6b6b6b"
-                      width={24}
-                      height={24}
-                      className="cursor-pointer hover:text-softBlack"
-                    ></SaveToFavoritesIcon>
-                  </Popover>
-                ) : (
-                  <Popover
-                    backgroundColor="#000000a8"
-                    sameWidthWithChildren={false}
-                    placement="top"
-                    offsetPx={5}
-                    renderPopover={<div className="text-white p-1">You must login to save this story</div>}
-                  >
-                    <SaveToFavoritesIcon
-                      color="#bdbdbd"
-                      width={24}
-                      height={24}
-                      className="cursor-default"
-                    ></SaveToFavoritesIcon>
-                  </Popover>
-                )}
+                      width={28}
+                      height={28}
+                      className="hover:text-softBlack"
+                    ></ClapIcon>
+                    <span className="translate-y-[1px]">{story.likes || "0"}</span>
+                  </button>
+                  {isAuthenticated ? (
+                    <Popover
+                      backgroundColor="#000000a8"
+                      sameWidthWithChildren={false}
+                      placement="top"
+                      offsetPx={5}
+                      renderPopover={<div className="text-white p-1">Add to Saved List</div>}
+                    >
+                      <SaveToFavoritesIcon
+                        color="#6b6b6b"
+                        width={24}
+                        height={24}
+                        className="cursor-pointer hover:text-softBlack"
+                      ></SaveToFavoritesIcon>
+                    </Popover>
+                  ) : (
+                    <Popover
+                      backgroundColor="#000000a8"
+                      sameWidthWithChildren={false}
+                      placement="top"
+                      offsetPx={5}
+                      renderPopover={<div className="text-white p-1">You must login to save this story</div>}
+                    >
+                      <SaveToFavoritesIcon
+                        color="#bdbdbd"
+                        width={24}
+                        height={24}
+                        className="cursor-default"
+                      ></SaveToFavoritesIcon>
+                    </Popover>
+                  )}
+                </div>
               </div>
             </TagMainStoryItem>
           ))}
