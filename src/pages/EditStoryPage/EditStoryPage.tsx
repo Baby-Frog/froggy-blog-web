@@ -141,12 +141,12 @@ const EditStoryPage = () => {
           label: topic.topicName,
         })),
       );
+      setRawText(res.data.data.raw);
+      setTextEditorValue(res.data.data.content);
       setValue("thumbnail", res.data.data.thumbnail);
       setValue("credit", res.data.data.credit);
       setValue("content", res.data.data.content);
       setValue("raw", res.data.data.raw);
-      setRawText(res.data.data.raw);
-      setTextEditorValue(res.data.data.content);
     };
     fetchStory();
   }, [idFromSlug, setValue]);

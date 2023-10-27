@@ -20,7 +20,7 @@ type TTextEditorProps = {
 
 const THREE_MEGABYTE_TO_BYTES = 3 * 1024 * 1024;
 const TextEditor = forwardRef<TinyMCEEditor, TTextEditorProps>(function TextEditorInner(
-  { value, setRawText, onChange, onBlur },
+  { value, rawText, setRawText, onChange, onBlur },
   ref,
 ) {
   const uploadImageMutation = useMutation({
@@ -67,7 +67,7 @@ const TextEditor = forwardRef<TinyMCEEditor, TTextEditorProps>(function TextEdit
     <>
       <Editor
         onInit={(evt, editor) => {
-          setRawText(editor.getContent({ format: "text" }));
+          setRawText(rawText);
           return ((ref as React.MutableRefObject<TinyMCEEditor>).current = editor);
         }}
         value={value}

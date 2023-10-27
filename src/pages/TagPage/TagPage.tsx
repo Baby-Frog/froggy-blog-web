@@ -3,10 +3,12 @@ import { useInfiniteQuery, useQuery } from "react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { storyApi } from "src/apis/story.apis";
 import { topicApi } from "src/apis/topic.apis";
+import Footer from "src/components/Footer";
 import HandledImage from "src/components/HandledImage";
 import ArrowLeftIcon from "src/components/Icon/ArrowLeftIcon";
 import ArrowRightIcon from "src/components/Icon/ArrowRightIcon";
 import ClapIcon from "src/components/Icon/ClapIcon";
+import CommentIcon from "src/components/Icon/CommentIcon";
 import ExploreIcon from "src/components/Icon/ExploreIcon";
 import SaveToFavoritesIcon from "src/components/Icon/SaveToFavoritesIcon";
 import Popover from "src/components/Popover";
@@ -355,15 +357,26 @@ const TagPage = () => {
                   <span>{story.timeRead} read</span>
                 </span>
                 <div className="flex items-center justify-between">
-                  <button className="flex items-center gap-1 cursor-pointer hover:text-softBlack">
-                    <ClapIcon
-                      color="#6b6b6b"
-                      width={28}
-                      height={28}
-                      className="hover:text-softBlack"
-                    ></ClapIcon>
-                    <span className="translate-y-[1px]">{story.likes || "0"}</span>
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button className="flex items-center gap-1 cursor-pointer hover:text-softBlack">
+                      <ClapIcon
+                        color="#6b6b6b"
+                        width={28}
+                        height={28}
+                        className="hover:text-softBlack"
+                      ></ClapIcon>
+                      <span className="translate-y-[1px]">{story.likes || "0"}</span>
+                    </button>
+                    <button className="flex items-center gap-1 cursor-pointer hover:text-softBlack">
+                      <CommentIcon
+                        color="#6b6b6b"
+                        width={24}
+                        height={24}
+                        className="hover:text-softBlack"
+                      ></CommentIcon>
+                      <span className="translate-y-[1px]">{story.comments || "0"}</span>
+                    </button>
+                  </div>
                   {isAuthenticated ? (
                     <Popover
                       backgroundColor="#000000a8"
@@ -400,7 +413,17 @@ const TagPage = () => {
             </TagMainStoryItem>
           ))}
         </TagMainStoryGrid>
+        <Link
+          className="mt-16 flex w-max justify-center items-center bg-white font-medium shrink-0 text-darkGrey border border-darkGrey px-3 py-2 rounded-3xl transition-all hover:!text-white hover:!bg-darkGrey"
+          to={"/"}
+        >
+          See more {topicName} stories
+        </Link>
       </TagMain>
+      <Footer
+        className="pt-12"
+        maxWidth="1200px"
+      ></Footer>
     </>
   );
 };
