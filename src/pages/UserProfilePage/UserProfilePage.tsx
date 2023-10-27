@@ -24,6 +24,7 @@ const ProfileLeft = styled.div`
 `;
 const ProfileRight = styled.div`
   width: calc(35% - 24px);
+  height: max-content;
   position: sticky;
   top: 60px;
   right: 0;

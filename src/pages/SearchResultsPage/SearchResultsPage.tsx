@@ -106,8 +106,7 @@ const SearchResultsPage = () => {
       }),
     getNextPageParam: (lastPage) => {
       if (lastPage.data.data.data.length === 0) return undefined;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return (lastPage.data.data as any).pageNumber + 1;
+      return lastPage.data.data.pageNumber + 1;
     },
   });
 
@@ -142,8 +141,7 @@ const SearchResultsPage = () => {
       }),
     getNextPageParam: (lastPage) => {
       if (lastPage.data.data.data.length === 0) return undefined;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return (lastPage.data.data as any).pageNumber + 1;
+      return lastPage.data.data.pageNumber + 1;
     },
     refetchOnMount: true,
   });
@@ -199,8 +197,7 @@ const SearchResultsPage = () => {
       }),
     getNextPageParam: (lastPage) => {
       if (lastPage.data.data.data.length === 0) return undefined;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return (lastPage.data.data as any).pageNumber + 1;
+      return lastPage.data.data.pageNumber + 1;
     },
   });
 
