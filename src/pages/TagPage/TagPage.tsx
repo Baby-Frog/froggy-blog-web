@@ -1,13 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useInfiniteQuery, useQuery } from "react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { storyApi } from "src/apis/story.apis";
 import { topicApi } from "src/apis/topic.apis";
+import HandledImage from "src/components/HandledImage";
 import ArrowLeftIcon from "src/components/Icon/ArrowLeftIcon";
 import ArrowRightIcon from "src/components/Icon/ArrowRightIcon";
 import ExploreIcon from "src/components/Icon/ExploreIcon";
+import SaveToFavoritesIcon from "src/components/Icon/SaveToFavoritesIcon";
+import Popover from "src/components/Popover";
+import { AuthContext } from "src/contexts/auth.contexts";
+import { getCustomDate } from "src/utils/formatDate";
 import http from "src/utils/http";
-import { getFirstSegmentFromSlug, getIdFromSlug } from "src/utils/slugify";
+import { generateSlug, getFirstSegmentFromSlug, getIdFromSlug } from "src/utils/slugify";
 import { styled } from "styled-components";
 
 type TTagPageProps = {
@@ -149,8 +154,68 @@ const TagInfo = styled.div`
   align-items: center;
 `;
 
+const TagMain = styled.div`
+  padding-top: 24px;
+`;
+
+const TagMainHeading = styled.h2`
+  font-size: 36px;
+  font-weight: 600;
+`;
+
+const TagMainStoryGrid = styled.div`
+  padding-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 36px;
+  grid-template-areas:
+    "g1 g1 g1 g2 g2 g2"
+    "g1 g1 g1 g2 g2 g2"
+    "g3 g3 g4 g4 g5 g5";
+`;
+
+const TagMainStoryItem = styled(Link)`
+  &:nth-of-type(1),
+  &:nth-of-type(2) {
+    .image-wrapper {
+      height: 400px;
+    }
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+    }
+  }
+  &:nth-of-type(3),
+  &:nth-of-type(4),
+  &:nth-of-type(5) {
+    .image-wrapper {
+      height: 200px;
+    }
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+    }
+  }
+  &:nth-of-type(1) {
+    grid-area: g1;
+  }
+  &:nth-of-type(2) {
+    grid-area: g2;
+  }
+  &:nth-of-type(3) {
+    grid-area: g3;
+  }
+  &:nth-of-type(4) {
+    grid-area: g4;
+  }
+  &:nth-of-type(5) {
+    grid-area: g5;
+  }
+`;
+
 const TagPage = () => {
   const navigate = useNavigate();
+  const { isAuthenticated, userProfile } = useContext(AuthContext);
   const [showLeftArrow, setShowLeftArrow] = useState<boolean>(false);
   const [showRightArrow, setShowRightArrow] = useState<boolean>(true);
   const exploreTopicsSectionRef = useRef<HTMLDivElement>(null);
@@ -252,6 +317,76 @@ const TagPage = () => {
           See more {topicName} stories
         </Link>
       </TagInfo>
+      <TagMain>
+        <TagMainHeading>Recent stories for {topicName}</TagMainHeading>
+        <TagMainStoryGrid>
+          {storiesByTag?.map((story) => (
+            <TagMainStoryItem to={`/${generateSlug({ name: story.title, id: story.id })}`}>
+              <div className="image-wrapper rounded-sm overflow-hidden">
+                <HandledImage
+                  className="w-full h-full object-cover"
+                  src={story.thumbnail}
+                  alt={story.title}
+                />
+              </div>
+              <div className="mt-4 flex items-center gap-2 text-sm font-semibold">
+                <span className="rounded-full w-5 h-5 overflow-hidden">
+                  <HandledImage
+                    src={story.author.avatarPath}
+                    alt={story.author.fullName}
+                    className="w-full h-full object-cover"
+                  />
+                </span>
+                <div className="flex items-center gap-1">
+                  <span>{story.author.fullName}</span>
+                  <span className="font-medium"> in</span>
+                  <span> Froggy Blog</span>
+                </div>
+              </div>
+              <h2 className="mt-2 text-xl font-semibold line-clamp-2">{story.title}</h2>
+              <p className="mt-2 text-base font-medium line-clamp-3 text-lightGrey">{story.raw}</p>
+              <div className="flex items-center justify-between">
+                <span className="mt-2 flex items-center gap-2">
+                  <span>{getCustomDate(new Date(story.publishDate))}</span>
+                  <span>•</span>
+                  <span>{story.timeRead} read</span>
+                </span>
+                {isAuthenticated ? (
+                  <Popover
+                    backgroundColor="#000000a8"
+                    sameWidthWithChildren={false}
+                    placement="top"
+                    offsetPx={5}
+                    renderPopover={<div className="text-white p-1">Add to Saved List</div>}
+                  >
+                    <SaveToFavoritesIcon
+                      color="#6b6b6b"
+                      width={24}
+                      height={24}
+                      className="cursor-pointer hover:text-softBlack"
+                    ></SaveToFavoritesIcon>
+                  </Popover>
+                ) : (
+                  <Popover
+                    backgroundColor="#000000a8"
+                    sameWidthWithChildren={false}
+                    placement="top"
+                    offsetPx={5}
+                    renderPopover={<div className="text-white p-1">You must login to save this story</div>}
+                  >
+                    <SaveToFavoritesIcon
+                      color="#bdbdbd"
+                      width={24}
+                      height={24}
+                      className="cursor-default"
+                    ></SaveToFavoritesIcon>
+                  </Popover>
+                )}
+              </div>
+            </TagMainStoryItem>
+          ))}
+        </TagMainStoryGrid>
+      </TagMain>
     </>
   );
 };
