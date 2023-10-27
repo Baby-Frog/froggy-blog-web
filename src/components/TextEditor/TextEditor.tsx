@@ -1,5 +1,5 @@
 import { Editor } from "@tinymce/tinymce-react";
-import { forwardRef, useEffect } from "react";
+import { forwardRef } from "react";
 import { useMutation } from "react-query";
 import { toast } from "react-toastify";
 import { imageApi } from "src/apis/image.apis";
@@ -53,7 +53,7 @@ const TextEditor = forwardRef<TinyMCEEditor, TTextEditorProps>(function TextEdit
             />
           ),
         });
-        reject({ message: "Wrong file format, we only accept .JPEG, .PNG, .JPG file format", remove: true });
+        reject({ messag1e: "Wrong file format, we only accept .JPEG, .PNG, .JPG file format", remove: true });
         return;
       }
       const bodyFormData = new FormData();

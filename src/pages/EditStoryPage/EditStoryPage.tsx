@@ -26,11 +26,12 @@ import TextEditor from "src/components/TextEditor";
 import { TStorySchema, storySchema } from "src/schemas/story.schemas";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { IMAGE_FORMAT } from "src/constants/image_format";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getIdFromSlug } from "src/utils/slugify";
 import http from "src/utils/http";
 import { STORY_ENDPOINTS } from "src/constants/endpoints";
 import HandledImage from "src/components/HandledImage";
+import { path } from "src/constants/path";
 
 type ValueType = { key?: string; label: React.ReactNode; value: string | number };
 
@@ -107,6 +108,7 @@ const THREE_MEGABYTE_TO_BYTES = 3 * 1024 * 1024;
 
 const EditStoryPage = () => {
   const { storyId } = useParams();
+  const navigate = useNavigate();
   const idFromSlug = getIdFromSlug(storyId as string);
   const {
     handleSubmit,
@@ -122,6 +124,7 @@ const EditStoryPage = () => {
     reValidateMode: "onBlur",
     resolver: yupResolver(storySchema),
   });
+
   const thumbnailFormValue = watch("thumbnail");
   const topicFormValue = watch("topicId");
   useEffect(() => {
@@ -141,6 +144,8 @@ const EditStoryPage = () => {
       setValue("thumbnail", res.data.data.thumbnail);
       setValue("credit", res.data.data.credit);
       setValue("content", res.data.data.content);
+      setValue("raw", res.data.data.raw);
+      setRawText(res.data.data.raw);
       setTextEditorValue(res.data.data.content);
     };
     fetchStory();
@@ -203,7 +208,7 @@ const EditStoryPage = () => {
     });
   };
 
-  const handleCreateNewStory = handleSubmit(async (data) => {
+  const handleEditStory = handleSubmit(async (data) => {
     recaptchaRef?.current?.reset();
     setCaptchaToken("");
     try {
@@ -235,18 +240,7 @@ const EditStoryPage = () => {
             {
               onSuccess: (data) => {
                 queryClient.invalidateQueries({ queryKey: ["stories"] });
-                reset({
-                  title: "",
-                  topicId: [],
-                  content: "",
-                  thumbnail: "",
-                  raw: "",
-                  credit: "",
-                });
-                setTopicValues([]);
-                setTextEditorValue("");
-                setRawText("");
-                setPreviewImageFile(undefined);
+                navigate(path.PROFILE);
                 toast.success(`Your story: "${data.data.data.title}" has been submitted, please wait for censhorship`, {
                   icon: <SuccessToastIcon></SuccessToastIcon>,
                 });
@@ -316,12 +310,12 @@ const EditStoryPage = () => {
       <EditStorySidebar
         captchaToken={captchaToken}
         handleResetForm={handleResetForm}
-        handleEditStory={handleCreateNewStory}
+        handleEditStory={handleEditStory}
       ></EditStorySidebar>
       <NewStoryMain>
         <NewStoryHeading>Write your new story 🚀</NewStoryHeading>
         <NewStorySubheading>Share your story with us ^o^</NewStorySubheading>
-        <form onSubmit={handleCreateNewStory}>
+        <form onSubmit={handleEditStory}>
           <GridRow>
             <FlexColumn>
               <Label

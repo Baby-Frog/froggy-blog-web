@@ -6,15 +6,15 @@ import { Link } from "react-router-dom";
 import { storyApi } from "src/apis/story.apis";
 import { topicApi } from "src/apis/topic.apis";
 import CustomTabs from "src/components/CustomTabs";
+import HandledImage from "src/components/HandledImage";
 import TrendingIcon from "src/components/Icon/TrendingIcon";
 import { path } from "src/constants/path";
 import { AuthContext } from "src/contexts/auth.contexts";
+import { getCustomDate } from "src/utils/formatDate";
+import { generateSlug } from "src/utils/slugify";
 import { styled } from "styled-components";
 import HomepageRecentPost from "./components/HomepageRecentPost";
 import HomepageTrendingPost from "./components/HomepageTrendingPost";
-import { generateSlug } from "src/utils/slugify";
-import { getCustomDate } from "src/utils/formatDate";
-import HandledImage from "src/components/HandledImage";
 
 const HomepageHeading = styled.h2`
   font-size: 16px;

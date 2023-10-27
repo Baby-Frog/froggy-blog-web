@@ -1,25 +1,23 @@
-import { Link } from "react-router-dom";
-import CopyIcon from "src/components/Icon/CopyIcon";
-import { toast } from "react-toastify";
 import { useContext, useMemo } from "react";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { storyApi } from "src/apis/story.apis";
+import HandledImage from "src/components/HandledImage";
+import CopyIcon from "src/components/Icon/CopyIcon";
+import EllipsisIcon from "src/components/Icon/EllipsisIcon";
+import RemoveIcon from "src/components/Icon/RemoveIcon";
 import SaveToFavoritesIcon from "src/components/Icon/SaveToFavoritesIcon";
 import ShareStoryIcon from "src/components/Icon/ShareStoryIcon";
 import TwitterIcon from "src/components/Icon/SocialIcon/TwitterIcon";
+import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
 import Popover from "src/components/Popover";
 import PopoverDismiss from "src/components/PopoverDismiss";
+import { AuthContext } from "src/contexts/auth.contexts";
+import useShareLink from "src/hooks/useShareLink";
 import { TStory } from "src/types/story.types";
 import { getCustomDate } from "src/utils/formatDate";
-import DefaultErrorImage from "src/assets/no-img-avaliable.png";
 import { generateSlug } from "src/utils/slugify";
-import useShareLink from "src/hooks/useShareLink";
-import EllipsisIcon from "src/components/Icon/EllipsisIcon";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { storyApi } from "src/apis/story.apis";
-import { AuthContext } from "src/contexts/auth.contexts";
-import RemoveIcon from "src/components/Icon/RemoveIcon";
-import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
-import { displayAlternativeImage } from "src/utils/displayAlternativeImage";
-import HandledImage from "src/components/HandledImage";
 type THomepageRecentPostProps = {
   story: TStory;
 };
@@ -139,36 +137,6 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
                   )}
                 </>
               )}
-              {isUserProfilePage && (
-                <PopoverDismiss
-                  className="text-sm z-10 text-lightGrey"
-                  as="button"
-                  enableArrow={false}
-                  placement="bottom-end"
-                  sameWidthWithChildren={false}
-                  renderPopover={
-                    <div className="w-max text-left font-medium z-10 bg-white shadow-softShadowSpread text-black">
-                      <Link
-                        to={`/edit-story/${generateSlug({ name: story.title, id: story.id })}`}
-                        className="p-2 text-normalGrey block hover:bg-black hover:bg-opacity-10 cursor-pointer"
-                      >
-                        Edit story
-                      </Link>
-                      <div
-                        className="p-2 text-failure font-medium hover:bg-black hover:bg-opacity-10 cursor-pointer"
-                        aria-hidden
-                      >
-                        Delete story
-                      </div>
-                    </div>
-                  }
-                >
-                  <EllipsisIcon
-                    width={24}
-                    height={24}
-                  ></EllipsisIcon>
-                </PopoverDismiss>
-              )}
               <PopoverDismiss
                 sameWidthWithChildren={false}
                 placement="bottom"
@@ -202,6 +170,37 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
                   className="cursor-pointer hover:text-softBlack"
                 ></ShareStoryIcon>
               </PopoverDismiss>
+
+              {isUserProfilePage && (
+                <PopoverDismiss
+                  className="text-sm z-10 text-lightGrey"
+                  as="button"
+                  enableArrow={false}
+                  placement="bottom-end"
+                  sameWidthWithChildren={false}
+                  renderPopover={
+                    <div className="w-max text-left font-medium z-10 bg-white shadow-softShadowSpread text-black">
+                      <Link
+                        to={`/edit-story/${generateSlug({ name: story.title, id: story.id })}`}
+                        className="p-2 text-normalGrey block hover:bg-black hover:bg-opacity-10 cursor-pointer"
+                      >
+                        Edit story
+                      </Link>
+                      <div
+                        className="p-2 text-failure font-medium hover:bg-black hover:bg-opacity-10 cursor-pointer"
+                        aria-hidden
+                      >
+                        Delete story
+                      </div>
+                    </div>
+                  }
+                >
+                  <EllipsisIcon
+                    width={24}
+                    height={24}
+                  ></EllipsisIcon>
+                </PopoverDismiss>
+              )}
             </div>
           </div>
         </div>

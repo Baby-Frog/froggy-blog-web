@@ -3,8 +3,10 @@ import { useContext, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { commentApi } from "src/apis/comments.api";
 import { likeApi } from "src/apis/like.apis";
 import { storyApi } from "src/apis/story.apis";
+import HandledImage from "src/components/HandledImage";
 import ClapIcon from "src/components/Icon/ClapIcon";
 import CommentIcon from "src/components/Icon/CommentIcon";
 import CopyIcon from "src/components/Icon/CopyIcon";
@@ -20,14 +22,12 @@ import TextToSpeech from "src/components/TextToSpeech";
 import { path } from "src/constants/path";
 import { AuthContext } from "src/contexts/auth.contexts";
 import useShareLink from "src/hooks/useShareLink";
+import { TStory } from "src/types/story.types";
 import { getCustomDate } from "src/utils/formatDate";
 import { getIdFromSlug } from "src/utils/slugify";
-import CommentSection from "./components/CommentSection";
-import { commentApi } from "src/apis/comments.api";
 import { styled } from "styled-components";
+import CommentSection from "./components/CommentSection";
 import MoreFromAuthorSection from "./components/MoreFromAuthorSection";
-import { TStory } from "src/types/story.types";
-import HandledImage from "src/components/HandledImage";
 
 const MainLayoutWrapper = styled.div`
   max-width: 720px;
