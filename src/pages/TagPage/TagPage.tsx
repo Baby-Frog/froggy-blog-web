@@ -168,8 +168,6 @@ const TagMainStoryGrid = styled.div`
   padding-top: 16px;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: auto 1fr;
-
   gap: 36px;
   grid-template-areas:
     "g1 g1 g1 g2 g2 g2"
@@ -178,13 +176,8 @@ const TagMainStoryGrid = styled.div`
 `;
 
 const TagMainStoryItem = styled(Link)`
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  height: 100%;
-  grid-template-rows: auto 1fr;
-  grid-template-areas:
-    "image image image image image image image image image image image image"
-    "content content content content content content content content content content content content";
+  display: flex;
+  flex-direction: column;
   &:nth-of-type(1),
   &:nth-of-type(2) {
     .image-wrapper {
@@ -220,12 +213,6 @@ const TagMainStoryItem = styled(Link)`
   }
   &:nth-of-type(5) {
     grid-area: g5;
-  }
-  .image-wrapper {
-    grid-area: image / image / image / image;
-  }
-  .content-wrapper {
-    grid-area: content / content / content / content;
   }
 `;
 
@@ -345,23 +332,23 @@ const TagPage = () => {
                   alt={story.title}
                 />
               </div>
-              <div className="content-wrapper">
-                <div className="mt-4 flex items-center gap-2 text-sm font-semibold">
-                  <span className="rounded-full w-5 h-5 overflow-hidden">
-                    <HandledImage
-                      src={story.author.avatarPath}
-                      alt={story.author.fullName}
-                      className="w-full h-full object-cover"
-                    />
-                  </span>
-                  <div className="flex items-center gap-1">
-                    <span>{story.author.fullName}</span>
-                    <span className="font-medium"> in</span>
-                    <span> Froggy Blog</span>
-                  </div>
+              <div className="mt-4 flex items-center gap-2 text-sm font-semibold">
+                <span className="rounded-full w-5 h-5 overflow-hidden">
+                  <HandledImage
+                    src={story.author.avatarPath}
+                    alt={story.author.fullName}
+                    className="w-full h-full object-cover"
+                  />
+                </span>
+                <div className="flex items-center gap-1">
+                  <span>{story.author.fullName}</span>
+                  <span className="font-medium"> in</span>
+                  <span> Froggy Blog</span>
                 </div>
-                <h2 className="mt-2 text-xl font-semibold line-clamp-2">{story.title}</h2>
-                <p className="mt-2 text-base font-medium line-clamp-3 text-lightGrey">{story.raw}</p>
+              </div>
+              <h2 className="mt-2 text-xl font-bold line-clamp-2 tracking-tighter">{story.title}</h2>
+              <p className="mt-2 text-base font-medium line-clamp-3 text-lightGrey">{story.raw}</p>
+              <div className="mt-auto flex flex-col gap-2">
                 <span className="mt-2 flex items-center gap-2">
                   <span>{getCustomDate(new Date(story.publishDate))}</span>
                   <span>•</span>
