@@ -88,7 +88,12 @@ const StoryDetailPage = () => {
   });
   const { data: currentAuthorStoriesData } = useQuery({
     queryKey: ["currentAuthorStories", idFromSlug],
-    queryFn: () => storyApi.getStoriesByUserId(currentAuthorId as string),
+    queryFn: () =>
+      storyApi.getStoriesByUserId(currentAuthorId as string, {
+        pageSize: 5,
+        column: "publishDate",
+        orderBy: "desc",
+      }),
     enabled: Boolean(currentAuthorId),
   });
   const currentAuthorStories = currentAuthorStoriesData?.data.data.data;
@@ -142,12 +147,13 @@ const StoryDetailPage = () => {
           <h1 className="text-[40px] font-bold">{storyDetailData?.data.data.title}</h1>
           <div className="flex items-center gap-2 flex-wrap">
             {storyDetailData?.data.data.listTopic.map((topic) => (
-              <div
+              <Link
+                to={`/tag/${topic.topicName}-${topic.id}`}
                 key={topic.id}
                 className="rounded-2xl text-black bg-[#f2f2f2] px-4 text-xs py-1 flex-shrink-0"
               >
                 {topic.topicName}
-              </div>
+              </Link>
             ))}
           </div>
           <div className="flex items-center gap-2 mt-4">

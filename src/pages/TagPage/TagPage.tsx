@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useInfiniteQuery, useQuery } from "react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { storyApi } from "src/apis/story.apis";
 import { topicApi } from "src/apis/topic.apis";
 import ArrowLeftIcon from "src/components/Icon/ArrowLeftIcon";
 import ArrowRightIcon from "src/components/Icon/ArrowRightIcon";
 import ExploreIcon from "src/components/Icon/ExploreIcon";
+import http from "src/utils/http";
 import { getFirstSegmentFromSlug, getIdFromSlug } from "src/utils/slugify";
 import { styled } from "styled-components";
 
@@ -133,8 +135,18 @@ const TagHeading = styled.h1`
 const TagMeta = styled.div`
   display: flex;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
+  gap: 12px;
   color: ${(props) => props.theme.colors.lightGrey};
+`;
+
+const TagInfo = styled.div`
+  padding-bottom: 48px;
+  border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const TagPage = () => {
@@ -149,9 +161,17 @@ const TagPage = () => {
     queryKey: ["explore-topics"],
     queryFn: () => topicApi.getTopicsByKeyword({ keyword: "", pageSize: 20, column: "id", orderBy: "asc" }),
   });
-  const { data } = useInfiniteQuery({
-    queryKey: ["postsByTag", { tagId: idFromSlug }],
+  const { data: storiesByTagData } = useQuery({
+    queryKey: ["storiesByTag", { tagId: idFromSlug }],
+    queryFn: () =>
+      storyApi.getStoriesByTopicId(idFromSlug, {
+        pageSize: 5,
+        pageNumber: 1,
+        column: "publishDate",
+        orderBy: "desc",
+      }),
   });
+  const storiesByTag = storiesByTagData?.data.data.data;
   const exploreTopics = exploreTopicsData?.data.data.data;
   const handleNavigateToTopic = (topicId: string) => (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const topicName = e.currentTarget.innerText;
@@ -211,12 +231,27 @@ const TagPage = () => {
               <ExploreSelectionItem onClick={handleNavigateToTopic(topic.id)}>{topic.topicName}</ExploreSelectionItem>
             ))}
           </ExploreSelectionList>
-          <ExploreScrollRight onClick={handleScrollRight}>
-            <ArrowRightIcon></ArrowRightIcon>
-          </ExploreScrollRight>
+          {showRightArrow && (
+            <ExploreScrollRight onClick={handleScrollRight}>
+              <ArrowRightIcon></ArrowRightIcon>
+            </ExploreScrollRight>
+          )}
         </ExploreSelection>
       </ExploreSectionWrapper>
       <TagHeading>{topicName}</TagHeading>
+      <TagInfo>
+        <TagMeta>
+          <span>Topic</span>
+          <span className="text-3xl">·</span>
+          <span>{storiesByTagData?.data.data.totalRecord} Stories</span>
+        </TagMeta>
+        <Link
+          className="mt-4 flex w-max justify-center items-center bg-darkGrey font-medium shrink-0 text-white border border-darkGrey px-3 py-2 rounded-3xl transition-all hover:!text-white hover:!bg-darkGrey"
+          to={"/"}
+        >
+          See more {topicName} stories
+        </Link>
+      </TagInfo>
     </>
   );
 };
