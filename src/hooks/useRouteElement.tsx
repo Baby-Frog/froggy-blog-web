@@ -17,6 +17,8 @@ import ExplorePage from "src/pages/ExplorePage";
 import SearchResultsPage from "src/pages/SearchResultsPage";
 import TagPage from "src/pages/TagPage";
 import EditStoryPage from "src/pages/EditStoryPage";
+import StatsLayout from "src/layouts/StatsLayout";
+import StatsPage from "src/pages/StatsPage";
 
 export default function useRouteElement() {
   const routeElements = useRoutes([
@@ -112,6 +114,14 @@ export default function useRouteElement() {
             <TitleLayout title="Edit profile">
               <EditProfilePage></EditProfilePage>
             </TitleLayout>
+          ),
+        },
+        {
+          path: path.STATISTICS,
+          element: (
+            <StatsLayout>
+              <StatsPage></StatsPage>
+            </StatsLayout>
           ),
         },
       ],
