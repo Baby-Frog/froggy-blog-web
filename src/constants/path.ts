@@ -1,6 +1,7 @@
 export const path = {
   HOMEPAGE: "/",
   PROFILE: "/user/profile",
+  STATISTICS: "/user/stats",
   DASHBOARD: "/dashboard",
   ANONYMOUS_PROFILE: "/user/profile/:userId",
   SETTING: "/user/setting",

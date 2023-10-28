@@ -5,6 +5,7 @@ import { TApiQueryParams } from "src/types/query.types";
 import { TQueryResponse, TSuccessApiResponse } from "src/types/response.types";
 import { TAnonymousProfile, TUserProfile } from "src/types/user.types";
 import http from "src/utils/http";
+import { TChartData } from "./chart.api";
 
 export const authApi = {
   register: (body: { fullName: string; email: string; password: string; rePassword: string; captcha: string }) =>
@@ -26,4 +27,6 @@ export const authApi = {
     }),
   getAnonymousProfile: (userId: string) =>
     http.get<TSuccessApiResponse<TAnonymousProfile>>(`${AUTH_ENDPOINTS.GET_ANONYMOUS_PROFILE}/${userId}`),
+  getChartData: (params: { period?: number }) =>
+    http.get<TSuccessApiResponse<TChartData[]>>(AUTH_ENDPOINTS.GET_CHART_DATA, { params }),
 };
