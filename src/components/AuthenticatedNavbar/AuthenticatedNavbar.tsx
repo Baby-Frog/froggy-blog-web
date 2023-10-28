@@ -250,7 +250,7 @@ const AuthenticatedNavbar = ({ title }: TAuthenticatedNavbarProps) => {
                 ></ProfileIcon>
                 <span>Profile</span>
               </StyledDropdownLink>
-              <StyledDropdownLink to={path.SETTING}>
+              <StyledDropdownLink to={path.STATISTICS}>
                 <StatsIcon
                   width={24}
                   height={24}
