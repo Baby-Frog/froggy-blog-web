@@ -81,10 +81,7 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
             <span className="flex items-center gap-2">
               <span>{getCustomDate(new Date(story.publishDate))}</span>
               <span>•</span>
-              <span>
-                {story.timeRead}
-                read
-              </span>
+              <span>{story.timeRead} read</span>
             </span>
             <div
               className="flex items-center gap-2"
