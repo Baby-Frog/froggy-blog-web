@@ -12,6 +12,7 @@ import {
   BarChart,
   CartesianGrid,
   ComposedChart,
+  Legend,
   Line,
   Rectangle,
   ResponsiveContainer,
@@ -234,9 +235,10 @@ const StatsPage = () => {
             itemStyle={{ color: "#1a8917" }}
             content={<CustomChartTooltip />}
           />
-
+          <Legend />
           <Bar
-            dataKey="likes"
+            dataKey="posts"
+            name="Stories"
             fill="#B5E5A4"
             stroke="#45B153"
             activeBar={
@@ -249,12 +251,14 @@ const StatsPage = () => {
           <Line
             type="monotone"
             dataKey="comments"
+            name="Comments"
             dot={false}
             stroke="#008AB3"
           />
           <Line
             type="monotone"
-            dataKey="posts"
+            dataKey="likes"
+            name="Likes"
             dot={false}
             stroke="#9999CC"
           />
