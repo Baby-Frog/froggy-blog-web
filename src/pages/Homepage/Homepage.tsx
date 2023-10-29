@@ -68,6 +68,12 @@ const TopicList = styled.div`
   gap: 8px;
 `;
 
+const StaffPickList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
 const SideStuffsFooter = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -235,7 +241,7 @@ const Homepage = () => {
           <AuthenticatedSideStuffWrapper>
             <p className="font-semibold text-lg tracking-tight">Staff picks ⭐</p>
             <TopicsWrapper>
-              <TopicList>
+              <StaffPickList>
                 {lessTrendingStories?.map((story) => (
                   <Link
                     key={story.id}
@@ -260,7 +266,7 @@ const Homepage = () => {
                     </span>
                   </Link>
                 ))}
-              </TopicList>
+              </StaffPickList>
             </TopicsWrapper>
             <p className="font-semibold text-lg tracking-tight">Discover more of what matters to you</p>
             <TopicsWrapper>
