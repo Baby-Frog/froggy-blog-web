@@ -203,67 +203,67 @@ const StatsPage = () => {
           </span>
         </div>
       </StatsOverview>
-      <ResponsiveContainer
-        width="100%"
-        height={300}
-        style={{ marginTop: "12px" }}
-      >
-        <ComposedChart
-          width={500}
-          height={200}
-          data={chart}
-          margin={{
-            left: -20,
-            top: 5,
-            bottom: 5,
-          }}
+      {chart && chart?.length > 0 && (
+        <ResponsiveContainer
+          width="100%"
+          height={300}
+          style={{ marginTop: "12px" }}
         >
-          <CartesianGrid
-            vertical={false}
-            strokeDasharray="3 3"
-          />
-          <XAxis
-            dataKey="date"
-            tickFormatter={getCustomDateByString}
-            tickLine={false}
-          />
-          <YAxis
-            width={45}
-            tickLine={false}
-          />
-          <Tooltip
-            itemStyle={{ color: "#1a8917" }}
-            content={<CustomChartTooltip />}
-          />
-          <Legend />
-          <Bar
-            dataKey="posts"
-            name="Stories"
-            fill="#B5E5A4"
-            stroke="#45B153"
-            activeBar={
-              <Rectangle
-                fill="#B5E5A4"
-                stroke="#45B153"
-              />
-            }
-          />
-          <Line
-            type="monotone"
-            dataKey="comments"
-            name="Comments"
-            dot={false}
-            stroke="#008AB3"
-          />
-          <Line
-            type="monotone"
-            dataKey="likes"
-            name="Likes"
-            dot={false}
-            stroke="#9999CC"
-          />
-        </ComposedChart>
-      </ResponsiveContainer>
+          <ComposedChart
+            data={chart}
+            margin={{
+              left: -20,
+              top: 5,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid
+              vertical={false}
+              strokeDasharray="3 3"
+            />
+            <XAxis
+              dataKey="date"
+              tickFormatter={getCustomDateByString}
+              tickLine={false}
+            />
+            <YAxis
+              width={45}
+              tickLine={false}
+            />
+            <Tooltip
+              itemStyle={{ color: "#1a8917" }}
+              content={<CustomChartTooltip />}
+            />
+            <Legend />
+            <Bar
+              dataKey="posts"
+              name="Stories"
+              fill="#B5E5A4"
+              stroke="#45B153"
+              activeBar={
+                <Rectangle
+                  fill="#B5E5A4"
+                  stroke="#45B153"
+                />
+              }
+            />
+            <Line
+              type="monotone"
+              dataKey="comments"
+              name="Comments"
+              dot={false}
+              stroke="#008AB3"
+            />
+            <Line
+              type="monotone"
+              dataKey="likes"
+              name="Likes"
+              dot={false}
+              stroke="#9999CC"
+            />
+          </ComposedChart>
+        </ResponsiveContainer>
+      )}
       <StatsActivities>
         <CustomTabs items={items}></CustomTabs>
       </StatsActivities>
