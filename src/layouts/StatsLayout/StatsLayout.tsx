@@ -17,6 +17,7 @@ const MainLayoutWrapper = styled.div`
   max-width: 1000px;
   width: 100%;
   margin: 0 auto;
+  min-height: 100vh;
   @media screen and (max-width: 999px) {
     padding-inline: 16px;
   }
@@ -31,6 +32,10 @@ const StatsLayout = ({ children }: TExploreLayoutProps) => {
     <>
       <StatsNavbar title="Statistics"></StatsNavbar>
       <MainLayoutWrapper>{children}</MainLayoutWrapper>
+      <Footer
+        maxWidth="1000px"
+        className="pt-12"
+      ></Footer>
       <PageTransition isPresent={isPresent}></PageTransition>
     </>
   );

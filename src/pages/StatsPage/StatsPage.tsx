@@ -5,7 +5,7 @@ import { authApi } from "src/apis/auth.apis";
 import ArrowLeftIcon from "src/components/Icon/ArrowLeftIcon";
 import { styled } from "styled-components";
 import { options } from "./statsConfig";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import CountUp from "react-countup";
 import {
   Bar,
@@ -24,6 +24,10 @@ import { getCustomDate, getCustomDateByString } from "src/utils/formatDate";
 import CustomChartTooltip from "./components/CustomChartTooltip";
 import { TabsProps } from "antd";
 import CustomTabs from "src/components/CustomTabs";
+import { storyApi } from "src/apis/story.apis";
+import { AuthContext } from "src/contexts/auth.contexts";
+import Footer from "src/components/Footer";
+import LongArrowDownIcon from "src/components/Icon/LongArrowDownIcon";
 
 type TChartValue = {
   date: string;
@@ -91,15 +95,28 @@ const StatsActivities = styled.div`
 `;
 
 const StatsPage = () => {
+  const { userProfile } = useContext(AuthContext);
   const [period, setPeriod] = useState<string>("30");
+  const [currentOrder, setCurrentOrder] = useState<"desc" | "asc">("desc");
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { data: chartData } = useQuery({
     queryKey: ["chart", { period }],
     queryFn: () => authApi.getChartData({ period }),
   });
-  const { data: userStoriesData } = useQuery({});
   const chart = chartData?.data.data;
+  const { data: userStoriesData, isLoading: userStoriesIsLoading } = useQuery({
+    queryKey: ["userStories", { orderBy: currentOrder }],
+    queryFn: () =>
+      storyApi.getStoriesByUserId(userProfile?.id as string, {
+        pageSize: 99,
+        pageNumber: 1,
+        column: "publishDate",
+        orderBy: currentOrder,
+      }),
+    staleTime: 1000 * 60 * 5,
+  });
+  const userStories = userStoriesData?.data.data.data;
   const totalLikes = useMemo(() => {
     const calculated = chart?.reduce((acc: number, cur: TChartValue) => {
       return acc + cur.likes;
@@ -112,6 +129,10 @@ const StatsPage = () => {
     }, 0);
     return calculated;
   }, [chart]);
+  const handleSortByDate = () => {
+    setCurrentOrder(currentOrder === "desc" ? "asc" : "desc");
+    queryClient.invalidateQueries({ queryKey: ["userStories", { orderBy: currentOrder }] });
+  };
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -121,6 +142,88 @@ const StatsPage = () => {
           <div className="py-3 px-6 bg-darkGrey text-white">
             Responses tab is temporarily disabled, but it will be released later in the nearest future
           </div>
+          <div className="mt-4 grid grid-cols-5">
+            <div
+              className="col-span-3 cursor-pointer flex items-center gap-1"
+              onClick={handleSortByDate}
+              aria-hidden
+            >
+              <span className="text-xl font-semibold">Date</span>
+              <span className="text-sm font-semibold">
+                {currentOrder === "desc" ? (
+                  <LongArrowDownIcon></LongArrowDownIcon>
+                ) : (
+                  <LongArrowDownIcon
+                    style={{
+                      transform: "rotate(180deg)",
+                    }}
+                  ></LongArrowDownIcon>
+                )}
+              </span>
+            </div>
+            <div className="col-span-1 text-center text-xl font-semibold">Claps</div>
+            <div className="col-span-1 text-center text-xl font-semibold">Responses</div>
+          </div>
+          {userStoriesIsLoading ? (
+            <div
+              role="status"
+              className="max-w-full p-4 space-y-4 border border-gray-200 divide-y divide-gray-200 rounded shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5" />
+                  <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700" />
+                </div>
+                <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12" />
+              </div>
+              <div className="flex items-center justify-between pt-4">
+                <div>
+                  <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5" />
+                  <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700" />
+                </div>
+                <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12" />
+              </div>
+              <div className="flex items-center justify-between pt-4">
+                <div>
+                  <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5" />
+                  <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700" />
+                </div>
+                <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12" />
+              </div>
+              <div className="flex items-center justify-between pt-4">
+                <div>
+                  <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5" />
+                  <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700" />
+                </div>
+                <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12" />
+              </div>
+              <div className="flex items-center justify-between pt-4">
+                <div>
+                  <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5" />
+                  <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700" />
+                </div>
+                <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12" />
+              </div>
+              <span className="sr-only">Loading...</span>
+            </div>
+          ) : (
+            <div className="mt-4 grid grid-cols-5 items-end">
+              {userStories?.map((story) => (
+                <>
+                  <div className="col-span-3 cursor-pointer flex flex-col">
+                    <span className="text-[18px] font-medium">{story.title}</span>
+                    <div className="flex items-center gap-1">
+                      <span className="text-sm text-lightGrey">{story.timeRead} read</span>
+                      <span>•</span>
+                      <span className="text-sm text-lightGrey">{getCustomDate(new Date(story.publishDate))}</span>
+                    </div>
+                  </div>
+                  <div className="col-span-1 text-center text-[18px] font-semibold">{story.likes}</div>
+                  <div className="col-span-1 text-center text-[18px] font-semibold">{story.comments}</div>
+                </>
+              ))}
+            </div>
+          )}
         </div>
       ),
     },
