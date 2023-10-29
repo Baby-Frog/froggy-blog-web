@@ -1,0 +1,42 @@
+.period-filter {
+  max-width: 150px;
+  width: 100%;
+}
+
+.period__menu-list {
+  padding: 0 !important;
+}
+
+.period__single-value {
+  font-size: 15px !important;
+}
+
+.period__control:focus {
+  border-color: #242424 !important;
+  box-shadow: 0 0 0 1px #242424 !important;
+}
+.period__control--menu-is-open {
+  border-color: #242424 !important;
+  box-shadow: 0 0 0 1px #242424 !important;
+}
+
+.period__control:hover {
+  border-color: #242424 !important;
+  box-shadow: 0 0 0 1px #242424 !important;
+}
+.period__control--is-focus {
+  border-color: #242424 !important;
+  box-shadow: 0 0 0 4px #545454 !important;
+}
+.period__option {
+  color: #6b6b6b !important;
+}
+.period__option.period__option--is-focused {
+  background-color: #f5f5f5 !important;
+  color: #242424 !important;
+}
+.period__option.period__option--is-selected {
+  background-color: #f5f5f5 !important;
+  color: #242424 !important;
+  font-weight: 500;
+}

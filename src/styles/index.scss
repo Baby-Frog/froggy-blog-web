@@ -3,6 +3,7 @@
 @tailwind utilities;
 @import "story";
 @import "datepicker";
+@import "select";
 body.modal-open {
   overflow: hidden;
 }
