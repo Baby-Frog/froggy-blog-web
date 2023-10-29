@@ -20,6 +20,7 @@ const Footer = ({ className, maxWidth }: TFooterProps) => {
           <span className="text-lightGrey text-[13px] leading-5">Blog</span>
           <span className="text-lightGrey text-[13px] leading-5">Privacy</span>
           <span className="text-lightGrey text-[13px] leading-5">Terms</span>
+          <span className="text-lightGrey text-[13px] leading-5">Text to speech</span>
           <span className="text-lightGrey text-[13px] leading-5">Teams</span>
         </div>
       </footer>

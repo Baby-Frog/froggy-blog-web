@@ -1,6 +1,6 @@
 import { TabsProps } from "antd";
-import { useContext } from "react";
-import { useQuery } from "react-query";
+import { Fragment, useContext, useRef } from "react";
+import { useInfiniteQuery, useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { authApi } from "src/apis/auth.apis";
 import { storyApi } from "src/apis/story.apis";
@@ -56,6 +56,7 @@ const AvatarWrapper = styled(Link)`
 const UserProfilePage = () => {
   const { userProfile } = useContext(AuthContext);
   const { handleCopyCurrentLink } = useShareLink({});
+  const userStoriesLoadMoreRef = useRef<HTMLDivElement>(null);
   const profileLink = `${window.location.origin}/user/profile/${userProfile?.id as string}`;
   const { data: meData } = useQuery({
     queryKey: ["me"],
@@ -63,17 +64,27 @@ const UserProfilePage = () => {
     refetchOnMount: true,
   });
   const me = meData?.data.data;
-  const { data: userStoriesData } = useQuery({
+  const {
+    data: userStoriesData,
+    isLoading: isUserStoriesLoading,
+    fetchNextPage: userStoriesFetchNextPage,
+    hasNextPage: userStoriesHasNextPage,
+    isFetchingNextPage: userStoriesIsFetchingNextPage,
+  } = useInfiniteQuery({
     queryKey: ["yourStories", { userId: userProfile?.id as string }],
-    queryFn: () =>
+    queryFn: ({ pageParam = 1 }) =>
       storyApi.getStoriesByUserId(userProfile?.id as string, {
         pageSize: 5,
+        pageNumber: pageParam,
         column: "publishDate",
         orderBy: "desc",
       }),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.data.data.data.length === 0) return undefined;
+      return lastPage.data.data.pageNumber + 1;
+    },
     refetchOnMount: true,
   });
-  const userStories = userStoriesData?.data.data.data;
   const { data: userSavedStoriesData } = useQuery({
     queryKey: ["savedStories"],
     queryFn: () => storyApi.getFavoriteStories(),
@@ -85,8 +96,27 @@ const UserProfilePage = () => {
       label: "Your stories",
       children: (
         <div className="flex flex-col gap-6">
-          {userStories && userStories.map((story) => <HomepageRecentPost story={story}></HomepageRecentPost>)}
-          {userStories?.length === 0 && <div className="text-base">You haven't written any stories yet</div>}
+          <div className="flex flex-col gap-6">
+            {userStoriesData?.pages.map((storyGroup, index) => (
+              <Fragment key={index}>
+                {storyGroup.data.data.data.map((story) => (
+                  <HomepageRecentPost
+                    key={story.id}
+                    story={story}
+                  ></HomepageRecentPost>
+                ))}
+              </Fragment>
+            ))}
+          </div>
+          <button
+            onClick={() => userStoriesFetchNextPage()}
+            className="text-normalGreen my-4 cursor-pointer"
+            disabled={!userStoriesHasNextPage || userStoriesIsFetchingNextPage}
+          >
+            {userStoriesIsFetchingNextPage ? "Loading more..." : userStoriesHasNextPage ? "Load More" : ""}
+          </button>
+          {/* {userStories && userStories.map((story) => <HomepageRecentPost story={story}></HomepageRecentPost>)} */}
+          {/* {userStories?.length === 0 && <div className="text-base">You haven't written any stories yet</div>} */}
         </div>
       ),
     },
@@ -228,6 +258,16 @@ const UserProfilePage = () => {
           ) : (
             <div className="mt-1 font-light break-words">Not updated yet</div>
           )}
+          <div className="flex flex-wrap gap-x-3 gap-y-1 fixed w-[300px] bottom-8 text-lightGrey text-xs">
+            <span>Help</span>
+            <span>Status</span>
+            <span>About</span>
+            <span>Blog</span>
+            <span>Privacy</span>
+            <span>Terms</span>
+            <span>Text to speech</span>
+            <span>Teams</span>
+          </div>
         </ProfileRight>
       </div>
     </>

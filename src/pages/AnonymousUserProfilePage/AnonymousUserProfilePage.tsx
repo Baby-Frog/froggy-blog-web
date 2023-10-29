@@ -1,5 +1,5 @@
 import { TabsProps } from "antd";
-import { useQuery } from "react-query";
+import { useInfiniteQuery, useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { authApi } from "src/apis/auth.apis";
 import { storyApi } from "src/apis/story.apis";
@@ -14,11 +14,16 @@ import useShareLink from "src/hooks/useShareLink";
 import { styled } from "styled-components";
 import HomepageRecentPost from "../Homepage/components/HomepageRecentPost";
 import HandledImage from "src/components/HandledImage";
+import { Fragment } from "react";
 const ProfileLeft = styled.div`
   width: calc(65% - 24px);
 `;
 const ProfileRight = styled.div`
   width: calc(35% - 24px);
+  height: max-content;
+  position: sticky;
+  top: 60px;
+  right: 0;
 `;
 
 const AvatarWrapper = styled.div`
@@ -50,17 +55,27 @@ const AnonymousUserProfilePage = () => {
     queryKey: ["user", userId],
     queryFn: () => authApi.getAnonymousProfile(userId as string),
   });
-  const { data: userStoriesData } = useQuery({
+  const {
+    data: userStoriesData,
+    isLoading: isUserStoriesLoading,
+    fetchNextPage: userStoriesFetchNextPage,
+    hasNextPage: userStoriesHasNextPage,
+    isFetchingNextPage: userStoriesIsFetchingNextPage,
+  } = useInfiniteQuery({
     queryKey: ["yourStories", { userId: userId as string }],
-    queryFn: () =>
+    queryFn: ({ pageParam = 1 }) =>
       storyApi.getStoriesByUserId(userId as string, {
         pageSize: 5,
+        pageNumber: pageParam,
         column: "publishDate",
         orderBy: "desc",
       }),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.data.data.data.length === 0) return undefined;
+      return lastPage.data.data.pageNumber + 1;
+    },
     refetchOnMount: true,
   });
-  const userStories = userStoriesData?.data.data.data;
   const user = userData?.data.data;
   const items: TabsProps["items"] = [
     {
@@ -68,8 +83,27 @@ const AnonymousUserProfilePage = () => {
       label: "Stories",
       children: (
         <div className="flex flex-col gap-6">
-          {userStories && userStories.map((story) => <HomepageRecentPost story={story}></HomepageRecentPost>)}
-          {userStories?.length === 0 && <div className="text-base">No stories yet</div>}
+          <div className="flex flex-col gap-6">
+            {userStoriesData?.pages.map((storyGroup, index) => (
+              <Fragment key={index}>
+                {storyGroup.data.data.data.map((story) => (
+                  <HomepageRecentPost
+                    key={story.id}
+                    story={story}
+                  ></HomepageRecentPost>
+                ))}
+              </Fragment>
+            ))}
+          </div>
+          <button
+            onClick={() => userStoriesFetchNextPage()}
+            className="text-normalGreen my-4 cursor-pointer"
+            disabled={!userStoriesHasNextPage || userStoriesIsFetchingNextPage}
+          >
+            {userStoriesIsFetchingNextPage ? "Loading more..." : userStoriesHasNextPage ? "Load More" : ""}
+          </button>
+          {/* {userStories && userStories.map((story) => <HomepageRecentPost story={story}></HomepageRecentPost>)} */}
+          {/* {userStories?.length === 0 && <div className="text-base">You haven't written any stories yet</div>} */}
         </div>
       ),
     },
@@ -168,6 +202,16 @@ const AnonymousUserProfilePage = () => {
         ) : (
           <div className="mt-1 font-light break-words">Not updated yet</div>
         )}
+        <div className="flex flex-wrap gap-x-3 gap-y-1 fixed w-[300px] bottom-8 text-lightGrey text-xs">
+          <span>Help</span>
+          <span>Status</span>
+          <span>About</span>
+          <span>Blog</span>
+          <span>Privacy</span>
+          <span>Terms</span>
+          <span>Text to speech</span>
+          <span>Teams</span>
+        </div>
       </ProfileRight>
     </div>
   );
