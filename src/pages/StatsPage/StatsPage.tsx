@@ -21,6 +21,8 @@ import {
 } from "recharts";
 import { getCustomDate, getCustomDateByString } from "src/utils/formatDate";
 import CustomChartTooltip from "./components/CustomChartTooltip";
+import { TabsProps } from "antd";
+import CustomTabs from "src/components/CustomTabs";
 
 type TChartValue = {
   date: string;
@@ -83,68 +85,9 @@ const StatsOverview = styled.div`
   align-items: center;
 `;
 
-const data = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
+const StatsActivities = styled.div`
+  padding-top: 28px;
+`;
 
 const StatsPage = () => {
   const [period, setPeriod] = useState<string>("30");
@@ -154,6 +97,7 @@ const StatsPage = () => {
     queryKey: ["chart", { period }],
     queryFn: () => authApi.getChartData({ period }),
   });
+  const { data: userStoriesData } = useQuery({});
   const chart = chartData?.data.data;
   const totalLikes = useMemo(() => {
     const calculated = chart?.reduce((acc: number, cur: TChartValue) => {
@@ -167,6 +111,25 @@ const StatsPage = () => {
     }, 0);
     return calculated;
   }, [chart]);
+  const items: TabsProps["items"] = [
+    {
+      key: "1",
+      label: "Stories",
+      children: (
+        <div>
+          <div className="py-3 px-6 bg-darkGrey text-white">
+            Responses tab is temporarily disabled, but it will be released later in the nearest future
+          </div>
+        </div>
+      ),
+    },
+    {
+      key: "2",
+      label: "Responses",
+      disabled: true,
+      children: <>HEY! How did you get here, get back now</>,
+    },
+  ];
   const totalComments = useMemo(() => {
     const calculated = chart?.reduce((acc: number, cur: TChartValue) => {
       return acc + cur.comments;
@@ -268,12 +231,6 @@ const StatsPage = () => {
             tickLine={false}
           />
           <Tooltip
-            contentStyle={{
-              borderRadius: "8px",
-              border: "none",
-              backgroundColor: "#fff",
-              boxShadow: "0 0 10px rgba(0,0,0,0.2)",
-            }}
             itemStyle={{ color: "#1a8917" }}
             content={<CustomChartTooltip />}
           />
@@ -303,6 +260,9 @@ const StatsPage = () => {
           />
         </ComposedChart>
       </ResponsiveContainer>
+      <StatsActivities>
+        <CustomTabs items={items}></CustomTabs>
+      </StatsActivities>
     </StatsPageWrapper>
   );
 };

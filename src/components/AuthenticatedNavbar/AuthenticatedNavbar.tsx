@@ -281,7 +281,7 @@ const AuthenticatedNavbar = ({ title }: TAuthenticatedNavbarProps) => {
               </StyledDropdownLogout>
             </UserDropdown>
           }
-          placement="bottom-start"
+          placement="bottom-end"
           sameWidthWithChildren={false}
         >
           <UserAvatar>

@@ -206,6 +206,7 @@ const StatsNavbar = ({ title }: TStatsNavbarProps) => {
           <BellIcon className="cursor-pointer"></BellIcon>
           <PopoverDismiss
             as="button"
+            offsetPx={20}
             renderPopover={
               <UserDropdown>
                 {isMobile && (
@@ -256,7 +257,7 @@ const StatsNavbar = ({ title }: TStatsNavbarProps) => {
                 </StyledDropdownLogout>
               </UserDropdown>
             }
-            placement="bottom-start"
+            placement="bottom-end"
             sameWidthWithChildren={false}
           >
             <UserAvatar>

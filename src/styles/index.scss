@@ -70,6 +70,9 @@ a:hover {
 .ant-tabs-tab-btn {
   color: #242424 !important;
   opacity: 0.8;
+  &[aria-disabled="true"] {
+    opacity: 0.35;
+  }
 }
 
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
