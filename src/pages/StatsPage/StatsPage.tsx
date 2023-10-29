@@ -249,6 +249,7 @@ const StatsPage = () => {
           height={200}
           data={chart}
           margin={{
+            left: -20,
             top: 5,
             bottom: 5,
           }}
