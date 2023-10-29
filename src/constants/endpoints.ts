@@ -1,5 +1,7 @@
 export const TOPIC_ENDPOINTS = {
   GET_TOPICS: "/api/topic/search",
+  ADD_NEW_TOPIC: "/api/topic/save",
+  DELETE_TOPIC: "/api/topic/delete",
 } as const;
 
 export const AUTH_ENDPOINTS = {
@@ -22,6 +24,7 @@ export const IMAGE_ENPOINTS = {
 export const STORY_ENDPOINTS = {
   GET_RECENT_STORIES: "/api/post/search",
   GET_TRENDING_STORIES: "/api/post/trending",
+  GET_PENDING_STORIES: "/api/post/me/postWaitApproval",
   GET_STORIES_BY_TOPIC_ID: "/api/post/findByTopicId",
   CREATE_NEW_STORY: "/api/post/save",
   UPDATE_STORY: "/api/post/save",

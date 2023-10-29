@@ -56,7 +56,6 @@ const AvatarWrapper = styled(Link)`
 const UserProfilePage = () => {
   const { userProfile } = useContext(AuthContext);
   const { handleCopyCurrentLink } = useShareLink({});
-  const userStoriesLoadMoreRef = useRef<HTMLDivElement>(null);
   const profileLink = `${window.location.origin}/user/profile/${userProfile?.id as string}`;
   const { data: meData } = useQuery({
     queryKey: ["me"],
@@ -90,6 +89,12 @@ const UserProfilePage = () => {
     queryFn: () => storyApi.getFavoriteStories(),
   });
   const userSavedStories = userSavedStoriesData?.data.data.data;
+  const { data: pendingStoriesData } = useQuery({
+    queryKey: ["pendingStories", { userId: userProfile?.id as string }],
+    queryFn: () => storyApi.getMyPendingStories(),
+  });
+  const pendingStories = pendingStoriesData?.data.data.data;
+  console.log(pendingStories);
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -127,6 +132,24 @@ const UserProfilePage = () => {
         <div className="flex flex-col gap-6">
           {userSavedStories?.map((story) => <HomepageRecentPost story={story}></HomepageRecentPost>)}
           {userSavedStories?.length === 0 && <div className="text-base">No saved stories yet</div>}
+        </div>
+      ),
+    },
+    {
+      key: "3",
+      label: pendingStories && pendingStories?.length <= 0 ? `Pending (0)` : `Pending (${pendingStories?.length})`,
+      disabled: Boolean(pendingStories && pendingStories?.length <= 0),
+      children: (
+        <div className="flex flex-col gap-6">
+          {pendingStories?.map((story) => (
+            <div className="relative">
+              <div className="absolute top-2 right-2 cursor-pointer bg-darkGrey bg-opacity-70 text-white rounded-full px-3 py-1 font-medium text-sm">
+                Pending
+              </div>
+              <HomepageRecentPost story={story}></HomepageRecentPost>
+            </div>
+          ))}
+          {pendingStories?.length === 0 && <div className="text-base">No pending stories yet</div>}
         </div>
       ),
     },
