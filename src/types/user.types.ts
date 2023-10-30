@@ -8,6 +8,7 @@ export type TUserProfile = {
   phoneNumber?: string;
   coverImgPath?: string;
   bio?: string;
+  roles: ("ADMINISTRATOR" | "USER" | "MODERATOR")[];
   // more will be applied later
 };
 
