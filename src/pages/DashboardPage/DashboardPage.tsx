@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { path } from "src/constants/path";
 import Sidebar from "./components/Sidebar";
 import OverviewCard from "./components/OverviewCard";
@@ -12,8 +12,10 @@ import DashboardUserIcon from "src/components/Icon/DashboardIcon/DashboardUserIc
 import DashboardWriteIcon from "src/components/Icon/DashboardIcon/DashboardWriteIcon";
 import DashboardAccountIcon from "src/components/Icon/DashboardIcon/DashboardAccountIcon";
 import { Bar, BarChart, CartesianGrid, Rectangle, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend } from "recharts";
-import { getCustomDateByString } from "src/utils/formatDate";
+import { getCustomDate, getCustomDateByString } from "src/utils/formatDate";
 import CustomChartTooltip from "./components/CustomChartTooltip";
+import { storyApi } from "src/apis/story.apis";
+import HandledImage from "src/components/HandledImage";
 
 type TDashboardPageProps = {
   something: string;
@@ -83,14 +85,16 @@ const DashboardPage = () => {
     queryFn: () => chartApi.getDashboardChartData({ period: "1" }),
   });
   const today = todayData?.data.data;
-  console.log(today);
-  // const dashboardChart = dashboardChartData?.data;
   const { data: dashboardTotalData } = useQuery({
     queryKey: ["dashboardTotal"],
     queryFn: () => adminApi.getDashboardOverview(),
   });
   const dashboardTotal = dashboardTotalData?.data.data;
-
+  const { data: trendingStoriesData } = useQuery({
+    queryKey: ["trendingStories"],
+    queryFn: () => storyApi.getTrendingStories(),
+  });
+  const trendingStories = trendingStoriesData?.data.data;
   return (
     <div className="flex">
       <Sidebar></Sidebar>
@@ -210,6 +214,32 @@ const DashboardPage = () => {
           </div>
           <div className="col-span-2">
             <h2 className="text-2xl font-bold">Trending stories</h2>
+            <div className="flex flex-col gap-2">
+              {trendingStories?.map((story) => (
+                <Link
+                  to={"/"}
+                  key={story.id}
+                  className="block"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="w-5 h-5 rounded-full overflow-hidden">
+                      <HandledImage
+                        src={story.author.avatarPath}
+                        alt={story.author.fullName}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <span className="text-xs font-semibold">{story.author.fullName}</span>
+                  </div>
+                  <h5 className="font-bold mt-1 text-[16px] leading-5 tracking-tighter">{story.title}</h5>
+                  <span className="flex text-xs mt-[6px] items-center gap-2">
+                    <span>{getCustomDate(new Date(story.publishDate))}</span>
+                    <span>•</span>
+                    <span>{story.timeRead} read</span>
+                  </span>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </div>
