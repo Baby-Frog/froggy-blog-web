@@ -13,8 +13,16 @@ export const AUTH_ENDPOINTS = {
   UPDATE_ME: "/api/user/profile/update",
   SEARCH_USERS: "/api/user/search",
   GET_ANONYMOUS_PROFILE: "/api/user/findById",
-  GET_CHART_DATA: "/api/user/chart",
 } as const;
+
+export const CHART_ENDPOINTS = {
+  GET_CHART_DATA: "/api/user/chart",
+  GET_DASHBOARD_CHART_DATA: "/api/dashboard",
+};
+
+export const ADMIN_ENDPOINTS = {
+  GET_OVERVIEW: "/api/dashboard/total",
+};
 
 export const IMAGE_ENPOINTS = {
   GET_IMAGE_DEFAULT: "/api/image/get/f581b622-adb3-40e1-b09b-1bd80a9697f7.jpg",

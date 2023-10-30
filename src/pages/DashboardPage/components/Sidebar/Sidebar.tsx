@@ -1,4 +1,9 @@
 import { NavLink } from "react-router-dom";
+import DashboardOverviewIcon from "src/components/Icon/DashboardIcon/DashboardOverviewIcon";
+import DashboardReportIcon from "src/components/Icon/DashboardIcon/DashboardReportIcon";
+import DashboardStoryIcon from "src/components/Icon/DashboardIcon/DashboardStoryIcon";
+import DashboardTopicIcon from "src/components/Icon/DashboardIcon/DashboardTopicIcon";
+import DashboardUserIcon from "src/components/Icon/DashboardIcon/DashboardUserIcon";
 import { path } from "src/constants/path";
 
 type TSidebarProps = {
@@ -7,50 +12,100 @@ type TSidebarProps = {
 
 const Sidebar = () => {
   return (
-    <div className="w-[294px] bg-white border-r-2 border-r-slate-300 h-screen">
-      <ul className="mt-4">
+    <div className="w-[15%] bg-white border-r-2 border-r-slate-300 h-screen">
+      <ul>
         <li>
           <NavLink
             to={path.DASHBOARD}
             className={({ isActive, isPending }) =>
-              `font-medium block px-4 py-2 hover:text-darkGrey ${
-                isPending ? "text-gray-600 font-medium block px-4 py-2" : isActive ? " text-gray-600" : ""
+              `font-medium p-4 hover:text-darkGrey flex items-center gap-2 ${
+                isPending
+                  ? "text-gray-600 font-medium block p-4"
+                  : isActive
+                  ? "text-normalGreen bg-normalGreen bg-opacity-20 hover:!text-normalGreenHover"
+                  : ""
               }`
             }
           >
-            Dashboard
+            <DashboardOverviewIcon
+              width={24}
+              height={24}
+            ></DashboardOverviewIcon>
+            <span>Dashboard</span>
           </NavLink>
         </li>
         <li>
           <NavLink
             to={path.DASHBOARD_TOPICS}
-            className="text-gray-600 hover:text-gray-900 font-medium block px-4 py-2"
+            className={({ isActive, isPending }) =>
+              `font-medium p-4 hover:text-darkGrey flex items-center gap-2 ${
+                isPending
+                  ? "text-gray-600 font-medium block p-4"
+                  : isActive
+                  ? "text-normalGreen bg-normalGreen bg-opacity-20 hover:!text-normalGreenHover"
+                  : ""
+              }`
+            }
           >
-            Topics
+            <DashboardTopicIcon
+              width={24}
+              height={24}
+            ></DashboardTopicIcon>
+            <span>Topics</span>
           </NavLink>
         </li>
         <li>
           <NavLink
             to={path.DASHBOARD_STORIES}
-            className="text-gray-600 hover:text-gray-900 font-medium block px-4 py-2"
+            className={({ isActive, isPending }) =>
+              `font-medium p-4 hover:text-darkGrey flex items-center gap-2 ${
+                isPending
+                  ? "text-gray-600 font-medium block p-4"
+                  : isActive
+                  ? "text-normalGreen bg-normalGreen bg-opacity-20 hover:!text-normalGreenHover"
+                  : ""
+              }`
+            }
           >
-            Stories
+            <DashboardStoryIcon
+              width={24}
+              height={24}
+            ></DashboardStoryIcon>
+            <span>Stories</span>
           </NavLink>
         </li>
         <li>
           <NavLink
             to={path.DASHBOARD_USERS}
-            className="text-gray-600 hover:text-gray-900 font-medium block px-4 py-2"
+            className={({ isActive, isPending }) =>
+              `font-medium p-4 hover:text-darkGrey flex items-center gap-2 ${
+                isPending
+                  ? "text-gray-600 font-medium block p-4"
+                  : isActive
+                  ? "text-normalGreen bg-normalGreen bg-opacity-20 hover:!text-normalGreenHover"
+                  : ""
+              }`
+            }
           >
-            Users
+            <DashboardUserIcon></DashboardUserIcon>
+            <span>Users</span>
           </NavLink>
         </li>
         <li>
           <NavLink
             to={path.DASHBOARD_REPORTS}
-            className="text-gray-600 hover:text-gray-900 font-medium block px-4 py-2"
+            className={({ isActive, isPending }) =>
+              `font-medium p-4 hover:text-darkGrey flex items-center gap-2 ${
+                isPending
+                  ? "text-gray-600 font-medium block p-4"
+                  : isActive
+                  ? "text-normalGreen bg-normalGreen bg-opacity-20 hover:!text-normalGreenHover"
+                  : ""
+              }`
+            }
           >
-            Reports
+            <DashboardReportIcon></DashboardReportIcon>
+            <span>Reports</span>
           </NavLink>
         </li>
       </ul>

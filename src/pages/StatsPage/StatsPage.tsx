@@ -28,6 +28,7 @@ import { storyApi } from "src/apis/story.apis";
 import { AuthContext } from "src/contexts/auth.contexts";
 import Footer from "src/components/Footer";
 import LongArrowDownIcon from "src/components/Icon/LongArrowDownIcon";
+import { chartApi } from "src/apis/chart.api";
 
 type TChartValue = {
   date: string;
@@ -102,7 +103,7 @@ const StatsPage = () => {
   const navigate = useNavigate();
   const { data: chartData } = useQuery({
     queryKey: ["chart", { period }],
-    queryFn: () => authApi.getChartData({ period }),
+    queryFn: () => chartApi.getChartData({ period }),
   });
   const chart = chartData?.data.data;
   const { data: userStoriesData, isLoading: userStoriesIsLoading } = useQuery({

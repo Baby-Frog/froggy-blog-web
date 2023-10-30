@@ -280,7 +280,7 @@ const AuthenticatedNavbar = ({ title }: TAuthenticatedNavbarProps) => {
                 $displayColumn
               >
                 <div>Sign out</div>
-                <div>{hideEmail(me?.email)}</div>
+                <div>{hideEmail(userProfile?.email)}</div>
               </StyledDropdownLogout>
             </UserDropdown>
           }
@@ -289,7 +289,7 @@ const AuthenticatedNavbar = ({ title }: TAuthenticatedNavbarProps) => {
         >
           <UserAvatar>
             <img
-              src={me?.avatarPath}
+              src={userProfile?.avatarPath}
               alt="Avatar"
             />
             <ChevronIcon></ChevronIcon>

@@ -27,6 +27,4 @@ export const authApi = {
     }),
   getAnonymousProfile: (userId: string) =>
     http.get<TSuccessApiResponse<TAnonymousProfile>>(`${AUTH_ENDPOINTS.GET_ANONYMOUS_PROFILE}/${userId}`),
-  getChartData: (params: { period?: string }) =>
-    http.get<TSuccessApiResponse<TChartData[]>>(AUTH_ENDPOINTS.GET_CHART_DATA, { params }),
 };

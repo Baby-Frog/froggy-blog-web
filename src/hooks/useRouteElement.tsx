@@ -141,6 +141,38 @@ export default function useRouteElement() {
             </DashboardLayout>
           ),
         },
+        {
+          path: path.DASHBOARD_TOPICS,
+          element: (
+            <DashboardLayout>
+              <DashboardPage></DashboardPage>
+            </DashboardLayout>
+          ),
+        },
+        {
+          path: path.DASHBOARD_STORIES,
+          element: (
+            <DashboardLayout>
+              <DashboardPage></DashboardPage>
+            </DashboardLayout>
+          ),
+        },
+        {
+          path: path.DASHBOARD_USERS,
+          element: (
+            <DashboardLayout>
+              <DashboardPage></DashboardPage>
+            </DashboardLayout>
+          ),
+        },
+        {
+          path: path.DASHBOARD_REPORTS,
+          element: (
+            <DashboardLayout>
+              <DashboardPage></DashboardPage>
+            </DashboardLayout>
+          ),
+        },
       ],
     },
   ]);
