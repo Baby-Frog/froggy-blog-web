@@ -332,6 +332,7 @@ const StatsPage = () => {
             />
             <YAxis
               width={45}
+              allowDecimals={false}
               tickLine={false}
             />
             <Tooltip
@@ -355,6 +356,7 @@ const StatsPage = () => {
               type="monotone"
               dataKey="comments"
               name="Comments"
+              strokeWidth={2}
               dot={false}
               stroke="#008AB3"
             />
@@ -362,6 +364,7 @@ const StatsPage = () => {
               type="monotone"
               dataKey="likes"
               name="Likes"
+              strokeWidth={2}
               dot={false}
               stroke="#9999CC"
             />

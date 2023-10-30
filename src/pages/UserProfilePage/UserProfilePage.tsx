@@ -54,7 +54,7 @@ const AvatarWrapper = styled(Link)`
 `;
 
 const UserProfilePage = () => {
-  const { userProfile } = useContext(AuthContext);
+  const { userProfile, isAuthenticated } = useContext(AuthContext);
   const { handleCopyCurrentLink } = useShareLink({});
   const profileLink = `${window.location.origin}/user/profile/${userProfile?.id as string}`;
   const { data: meData } = useQuery({
@@ -87,6 +87,7 @@ const UserProfilePage = () => {
   const { data: userSavedStoriesData } = useQuery({
     queryKey: ["savedStories"],
     queryFn: () => storyApi.getFavoriteStories(),
+    enabled: isAuthenticated,
   });
   const userSavedStories = userSavedStoriesData?.data.data.data;
   const { data: pendingStoriesData } = useQuery({

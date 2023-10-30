@@ -35,6 +35,7 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
     const { data } = useQuery({
       queryKey: ["savedStories"],
       queryFn: () => storyApi.getFavoriteStories(),
+      enabled: isAuthenticated,
     });
     const saveToFavoritesMutation = useMutation({
       mutationFn: storyApi.saveStoryToFavorites,

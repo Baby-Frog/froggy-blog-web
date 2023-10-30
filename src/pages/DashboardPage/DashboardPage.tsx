@@ -146,7 +146,7 @@ const DashboardPage = () => {
             }
           ></OverviewCard>
         </Overview>
-        <div className="grid grid-cols-5 mt-6">
+        <div className="grid grid-cols-5 mt-6 gap-6">
           <div className="col-span-3">
             <h3 className="text-2xl font-bold">Overview</h3>
             <ResponsiveContainer
@@ -214,8 +214,8 @@ const DashboardPage = () => {
           </div>
           <div className="col-span-2">
             <h2 className="text-2xl font-bold">Trending stories</h2>
-            <div className="flex flex-col gap-2">
-              {trendingStories?.map((story) => (
+            <div className="flex flex-col gap-2 mt-2">
+              {trendingStories?.slice(0, 4).map((story) => (
                 <Link
                   to={"/"}
                   key={story.id}

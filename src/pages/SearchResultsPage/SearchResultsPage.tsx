@@ -131,7 +131,7 @@ const SearchResultsPage = () => {
     hasNextPage: storiesHasNextPage,
     isFetchingNextPage: storiesIsFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ["stories", { q: queryConfig.q }],
+    queryKey: ["searchResults", { q: queryConfig.q }],
     queryFn: ({ pageParam = 1 }) =>
       storyApi.searchStories({
         pageSize: 5,

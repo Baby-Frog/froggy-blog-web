@@ -2,7 +2,7 @@
 import { TabsProps } from "antd";
 import { Fragment, useCallback, useContext, useEffect, useRef } from "react";
 import { useInfiniteQuery, useQuery } from "react-query";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { storyApi } from "src/apis/story.apis";
 import { topicApi } from "src/apis/topic.apis";
 import CustomTabs from "src/components/CustomTabs";
@@ -90,7 +90,7 @@ const SideStuffsFooter = styled.div`
 
 const Homepage = () => {
   const { isAuthenticated, userProfile } = useContext(AuthContext);
-
+  const navigate = useNavigate();
   const { data: topics, isLoading: topicsIsLoading } = useQuery({
     queryKey: ["topics"],
     queryFn: () =>
@@ -168,7 +168,10 @@ const Homepage = () => {
       ),
     },
   ];
-
+  const handleNavigateToTopic = (topicId: string) => (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const topicName = e.currentTarget.innerText;
+    navigate(`/tag/${topicName}-${topicId}`);
+  };
   return (
     <>
       {!isAuthenticated ? (
@@ -201,13 +204,13 @@ const Homepage = () => {
               <TopicsWrapper>
                 <TopicList>
                   {topics?.data.data.data.map((topic) => (
-                    <Link
+                    <button
                       key={topic.id}
                       className="px-2 py-3 bg-[#f2f2f2] text-sm rounded-2xl"
-                      to={path.HOMEPAGE}
+                      onClick={handleNavigateToTopic(topic.id)}
                     >
                       {topic.topicName}
-                    </Link>
+                    </button>
                   ))}
                 </TopicList>
                 <Link
