@@ -7,7 +7,7 @@ import { Editor as TinyMCEEditor } from "tinymce";
 import ErrorToastIcon from "../Icon/ToastIcon/ErrorToastIcon";
 import "./TextEditor.scss";
 
-import { IMAGE_FORMAT } from "src/constants/image_format";
+import { IMAGE_FORMAT } from "src/constants/constants";
 
 type TTextEditorProps = {
   value: string;

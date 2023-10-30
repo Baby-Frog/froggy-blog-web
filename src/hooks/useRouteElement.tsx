@@ -19,6 +19,9 @@ import TagPage from "src/pages/TagPage";
 import EditStoryPage from "src/pages/EditStoryPage";
 import StatsLayout from "src/layouts/StatsLayout";
 import StatsPage from "src/pages/StatsPage";
+import AdminRoute from "src/routes/AdminRoute";
+import DashboardLayout from "src/layouts/DashboardLayout";
+import DashboardPage from "src/pages/DashboardPage";
 
 export default function useRouteElement() {
   const routeElements = useRoutes([
@@ -122,6 +125,20 @@ export default function useRouteElement() {
             <StatsLayout>
               <StatsPage></StatsPage>
             </StatsLayout>
+          ),
+        },
+      ],
+    },
+    {
+      path: "",
+      element: <AdminRoute></AdminRoute>,
+      children: [
+        {
+          path: path.DASHBOARD,
+          element: (
+            <DashboardLayout>
+              <DashboardPage></DashboardPage>
+            </DashboardLayout>
           ),
         },
       ],

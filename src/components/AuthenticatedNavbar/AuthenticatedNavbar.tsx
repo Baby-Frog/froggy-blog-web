@@ -145,6 +145,7 @@ const StyledDropdownLogout = styled(Link)<{ $displayColumn?: boolean }>`
 `;
 
 const AuthenticatedNavbar = ({ title }: TAuthenticatedNavbarProps) => {
+  const { userProfile } = useContext(AuthContext);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const isMobile = useMedia("(max-width: 767px)");
@@ -257,13 +258,15 @@ const AuthenticatedNavbar = ({ title }: TAuthenticatedNavbarProps) => {
                 ></StatsIcon>
                 <span>Stats</span>
               </StyledDropdownLink>
-              <StyledDropdownLink to={path.DASHBOARD}>
-                <DashboardIcon
-                  width={24}
-                  height={24}
-                ></DashboardIcon>
-                <span>Dashboard</span>
-              </StyledDropdownLink>
+              {userProfile?.roles.includes("ADMINISTRATOR") && (
+                <StyledDropdownLink to={path.DASHBOARD}>
+                  <DashboardIcon
+                    width={24}
+                    height={24}
+                  ></DashboardIcon>
+                  <span>Dashboard</span>
+                </StyledDropdownLink>
+              )}
               <Divider></Divider>
               <StyledDropdownLink
                 to={path.SETTING}

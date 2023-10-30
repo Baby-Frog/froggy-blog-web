@@ -25,6 +25,7 @@ import DashboardIcon from "../Icon/DashboardIcon";
 
 type TStatsNavbarProps = {
   title?: string;
+  containerClassName?: string;
 };
 
 const StatsNavbarContainer = styled.div<{ $hasTitle?: boolean }>`
@@ -146,7 +147,7 @@ const StyledDropdownLogout = styled(Link)<{ $displayColumn?: boolean }>`
   }
 `;
 
-const StatsNavbar = ({ title }: TStatsNavbarProps) => {
+const StatsNavbar = ({ title, containerClassName }: TStatsNavbarProps) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const isMobile = useMedia("(max-width: 767px)");
@@ -189,7 +190,7 @@ const StatsNavbar = ({ title }: TStatsNavbarProps) => {
   });
   return (
     <StatsNavbarContainer $hasTitle={Boolean(title)}>
-      <div className="max-w-[1000px] w-full flex items-center justify-between">
+      <div className={`max-w-[1000px] w-full flex items-center justify-between ${containerClassName}`}>
         <StatsNavbarLeft>
           <Link
             to={path.HOMEPAGE}
