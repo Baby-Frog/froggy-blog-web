@@ -420,10 +420,6 @@ const TagPage = () => {
           See more {topicName} stories
         </Link>
       </TagMain>
-      <Footer
-        className="pt-12"
-        maxWidth="1200px"
-      ></Footer>
     </>
   );
 };

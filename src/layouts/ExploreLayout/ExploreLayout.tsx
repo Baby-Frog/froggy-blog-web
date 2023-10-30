@@ -16,6 +16,7 @@ const MainLayoutWrapper = styled.div`
   width: 100%;
   margin: 0 auto;
   padding-top: 60px;
+  min-height: 100vh;
   @media screen and (max-width: 1320px) {
     padding-inline: 16px;
   }
@@ -33,12 +34,20 @@ const ExploreLayout = ({ children }: TExploreLayoutProps) => {
         <>
           <ExploreNavbar></ExploreNavbar>
           <MainLayoutWrapper>{children}</MainLayoutWrapper>
+          <Footer
+            className="pt-12"
+            maxWidth="1200px"
+          ></Footer>
           <PageTransition isPresent={isPresent}></PageTransition>
         </>
       ) : (
         <>
           <AuthenticatedNavbar></AuthenticatedNavbar>
           <MainLayoutWrapper>{children}</MainLayoutWrapper>
+          <Footer
+            className="pt-12"
+            maxWidth="1200px"
+          ></Footer>
           <PageTransition isPresent={isPresent}></PageTransition>
         </>
       )}

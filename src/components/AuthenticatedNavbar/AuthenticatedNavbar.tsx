@@ -38,7 +38,7 @@ const AuthenticatedNavbarContainer = styled.div<{ $hasTitle?: boolean }>`
   background-color: #fff;
   padding: 24px;
   height: 60px;
-  z-index: 1;
+  z-index: 2;
 `;
 
 const AuthenticatedNavbarLeft = styled.div`
