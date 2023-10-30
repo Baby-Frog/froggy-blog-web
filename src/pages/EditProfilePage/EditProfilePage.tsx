@@ -21,7 +21,7 @@ import Input from "src/components/Input";
 import InputFile from "src/components/InputFile";
 import Label from "src/components/Label";
 import Textarea from "src/components/Textarea";
-import { IMAGE_FORMAT } from "src/constants/image_format";
+import { IMAGE_FORMAT } from "src/constants/constants";
 import { AuthContext } from "src/contexts/auth.contexts";
 import { TProfileSchema, profileSchema } from "src/schemas/profile.schema";
 import { styled } from "styled-components";

@@ -25,7 +25,7 @@ import MultipleSelectV2 from "src/components/MultipleSelect/MultipleSelectV2";
 import TextEditor from "src/components/TextEditor";
 import { TStorySchema, storySchema } from "src/schemas/story.schemas";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { IMAGE_FORMAT } from "src/constants/image_format";
+import { IMAGE_FORMAT } from "src/constants/constants";
 import HandledImage from "src/components/HandledImage";
 
 type ValueType = { key?: string; label: React.ReactNode; value: string | number };
