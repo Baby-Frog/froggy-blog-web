@@ -12,7 +12,7 @@ type TSidebarProps = {
 
 const Sidebar = () => {
   return (
-    <div className="w-[15%] bg-white border-r-2 border-r-slate-300 h-screen">
+    <div className="w-[15%] bg-white border-r-2 border-r-slate-300 min-h-screen">
       <ul>
         <li>
           <NavLink

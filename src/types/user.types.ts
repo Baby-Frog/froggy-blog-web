@@ -9,6 +9,7 @@ export type TUserProfile = {
   coverImgPath?: string;
   bio?: string;
   roles: ("ADMINISTRATOR" | "USER" | "MODERATOR")[];
+  updateDate: string;
   // more will be applied later
 };
 

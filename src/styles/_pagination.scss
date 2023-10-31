@@ -59,6 +59,10 @@
   .ant-pagination-item-ellipsis {
     color: #000 !important;
   }
+  .ant-pagination-options {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .ant-pagination-mini {

@@ -1,7 +1,7 @@
 import isUndefined from "lodash/isUndefined";
 import omitBy from "lodash/omitBy";
 import useQueryParams from "./useQueryParams";
-import { TAdminQueryConfig, TQueryConfig } from "src/types/query.types";
+import { TAdminQueryConfig } from "src/types/query.types";
 
 export default function useAdminQueryConfig() {
   const queryParams = useQueryParams();
@@ -9,8 +9,8 @@ export default function useAdminQueryConfig() {
     {
       keyword: queryParams.keyword || "", // add a default value for the q property
       orderBy: queryParams.orderBy || "desc",
-      column: queryParams.column || "id",
-      pageSize: queryParams.pageSize || "10",
+      column: queryParams.column || "updateDate",
+      pageSize: queryParams.pageSize || "7",
       pageNumber: queryParams.pageNumber || "1",
     },
     isUndefined,

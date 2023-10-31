@@ -12,7 +12,7 @@ const MainLayoutWrapper = styled.div`
   width: 85%;
   margin: 0 auto;
   min-height: 100vh;
-  background-color: white;
+  background-color: #fbfbfb;
   padding: 16px;
   @media screen and (max-width: 767px) {
     padding: 12px;
