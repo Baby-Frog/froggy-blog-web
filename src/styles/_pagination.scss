@@ -1,0 +1,125 @@
+.ant-pagination {
+  display: flex;
+  justify-content: flex-end;
+  font-family: "Roboto";
+  margin-top: 16px;
+  color: #000;
+
+  > li {
+    height: 40px !important;
+  }
+
+  * {
+    color: #000;
+  }
+  .ant-pagination-prev,
+  .ant-pagination-next {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ffffff1a;
+    border-radius: 8px;
+  }
+  .ant-pagination-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 8px 16px;
+    border: 1px solid #ffffff1a;
+    border-radius: 8px;
+    a {
+      color: #000 !important;
+      font-weight: 500;
+    }
+  }
+  .ant-pagination-item-active {
+    background-color: #000;
+    a {
+      color: #fff !important;
+    }
+  }
+  .ant-pagination-item-active:hover {
+    border-color: transparent;
+  }
+  .ant-pagination-jump-next,
+  .ant-pagination-jump-prev {
+    width: 40px !important;
+    height: 40px;
+    display: flex;
+    border: 1px solid #ffffff1a;
+    border-radius: 8px;
+    justify-content: center;
+    align-items: center;
+    line-height: unset;
+  }
+  .ant-pagination-item-ellipsis {
+    color: #000 !important;
+  }
+}
+
+.ant-pagination-mini {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+  color: #000;
+  gap: 8px;
+
+  > li {
+    height: 40px !important;
+  }
+
+  * {
+    color: #000;
+  }
+  .ant-pagination-prev,
+  .ant-pagination-next {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ffffff1a;
+    border-radius: 8px;
+  }
+  .ant-pagination-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 8px 16px;
+    border: 1px solid #ffffff1a !important;
+    border-radius: 8px;
+    a {
+      color: #000 !important;
+      font-weight: 500;
+    }
+  }
+  .ant-pagination-item-active {
+    background-color: #3bdeb7;
+    a {
+      color: #000 !important;
+    }
+  }
+  .ant-pagination-item-active:hover {
+    border-color: transparent;
+  }
+  .ant-pagination-jump-next,
+  .ant-pagination-jump-prev {
+    width: 40px !important;
+    height: 40px;
+    display: flex;
+    border: 1px solid #ffffff1a;
+    border-radius: 8px;
+    justify-content: center;
+    align-items: center;
+    line-height: unset;
+  }
+  .ant-pagination-item-ellipsis {
+    color: #fff !important;
+  }
+}

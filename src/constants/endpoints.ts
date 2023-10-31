@@ -22,6 +22,7 @@ export const CHART_ENDPOINTS = {
 
 export const ADMIN_ENDPOINTS = {
   GET_OVERVIEW: "/api/dashboard/total",
+  SEARCH_USER_ADMIN: "/api/user/searchAdmin",
 };
 
 export const IMAGE_ENPOINTS = {

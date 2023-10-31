@@ -22,6 +22,8 @@ import StatsPage from "src/pages/StatsPage";
 import AdminRoute from "src/routes/AdminRoute";
 import DashboardLayout from "src/layouts/DashboardLayout";
 import DashboardPage from "src/pages/DashboardPage";
+import DashboardTopicsPage from "src/pages/DashboardTopicsPage";
+import DashboardUsersPage from "src/pages/DashboardUsersPage";
 
 export default function useRouteElement() {
   const routeElements = useRoutes([
@@ -145,7 +147,7 @@ export default function useRouteElement() {
           path: path.DASHBOARD_TOPICS,
           element: (
             <DashboardLayout>
-              <DashboardPage></DashboardPage>
+              <DashboardTopicsPage></DashboardTopicsPage>
             </DashboardLayout>
           ),
         },
@@ -161,7 +163,7 @@ export default function useRouteElement() {
           path: path.DASHBOARD_USERS,
           element: (
             <DashboardLayout>
-              <DashboardPage></DashboardPage>
+              <DashboardUsersPage></DashboardUsersPage>
             </DashboardLayout>
           ),
         },

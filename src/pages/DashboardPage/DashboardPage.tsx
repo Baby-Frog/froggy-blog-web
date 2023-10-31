@@ -96,150 +96,158 @@ const DashboardPage = () => {
   });
   const trendingStories = trendingStoriesData?.data.data;
   return (
-    <div className="flex">
-      <Sidebar></Sidebar>
-      <div className="w-[85%] bg-white p-4">
-        <h1 className="text-3xl font-bold">Dashboard</h1>
-        <Overview>
-          <OverviewCard
-            title="Total stories"
-            value={dashboardTotal?.posts}
-            icon={
-              <DashboardTopicIcon
-                color="#475BE8"
-                width={50}
-                height={50}
-              ></DashboardTopicIcon>
-            }
-          ></OverviewCard>
-          <OverviewCard
-            title="Accounts created"
-            value={dashboardTotal?.accounts}
-            icon={
-              <DashboardUserIcon
-                width={50}
-                height={50}
-                color="#FD8539"
-              ></DashboardUserIcon>
-            }
-          ></OverviewCard>
-          <OverviewCard
-            title="Stories written today"
-            value={today?.[0]?.posts as number}
-            icon={
-              <DashboardWriteIcon
-                width={50}
-                height={50}
-                color="#2ED480"
-              ></DashboardWriteIcon>
-            }
-          ></OverviewCard>
-          <OverviewCard
-            title="Accounts created today"
-            value={today?.[0]?.accounts as number}
-            icon={
-              <DashboardAccountIcon
-                width={50}
-                height={50}
-                color="#FE6D8E"
-              ></DashboardAccountIcon>
-            }
-          ></OverviewCard>
-        </Overview>
-        <div className="grid grid-cols-5 mt-6 gap-6">
-          <div className="col-span-3">
-            <h3 className="text-2xl font-bold">Overview</h3>
-            <ResponsiveContainer
-              width="100%"
-              height={300}
-              style={{
-                marginTop: "24px",
+    <div className="">
+      <h1 className="text-3xl font-bold">Dashboard</h1>
+      <Overview>
+        <OverviewCard
+          title="Total stories"
+          value={dashboardTotal?.posts}
+          icon={
+            <DashboardTopicIcon
+              color="#475BE8"
+              width={50}
+              height={50}
+            ></DashboardTopicIcon>
+          }
+        ></OverviewCard>
+        <OverviewCard
+          title="Accounts created"
+          value={dashboardTotal?.accounts}
+          icon={
+            <DashboardUserIcon
+              width={50}
+              height={50}
+              color="#FD8539"
+            ></DashboardUserIcon>
+          }
+        ></OverviewCard>
+        <OverviewCard
+          title="Stories written today"
+          value={today?.[0]?.posts as number}
+          icon={
+            <DashboardWriteIcon
+              width={50}
+              height={50}
+              color="#2ED480"
+            ></DashboardWriteIcon>
+          }
+        ></OverviewCard>
+        <OverviewCard
+          title="Accounts created today"
+          value={today?.[0]?.accounts as number}
+          icon={
+            <DashboardAccountIcon
+              width={50}
+              height={50}
+              color="#FE6D8E"
+            ></DashboardAccountIcon>
+          }
+        ></OverviewCard>
+      </Overview>
+      <div className="grid grid-cols-5 mt-6 gap-6">
+        <div className="col-span-3">
+          <h3 className="text-2xl font-bold">Overview</h3>
+          <ResponsiveContainer
+            width="100%"
+            height={300}
+            style={{
+              marginTop: "24px",
+            }}
+          >
+            <BarChart
+              data={dashboardChart}
+              margin={{
+                left: -20,
+                top: 5,
+                bottom: -5,
               }}
             >
-              <BarChart
-                data={dashboardChart}
-                margin={{
-                  left: -20,
-                  top: 5,
-                  bottom: 5,
-                }}
+              <CartesianGrid
+                vertical={false}
+                strokeDasharray="3 3"
+              />
+              <XAxis
+                dataKey="date"
+                tickFormatter={getCustomDateByString}
+                tickLine={false}
+              />
+              <Legend />
+              <YAxis
+                width={45}
+                tickLine={false}
+                allowDecimals={false}
+              />
+              <Tooltip
+                itemStyle={{ color: "#1a8917" }}
+                content={<CustomChartTooltip />}
+              />
+              <Bar
+                dataKey="posts"
+                name="Stories"
+                fill="#B5E5A4"
+                stroke="#45B153"
+                minPointSize={10}
+                activeBar={
+                  <Rectangle
+                    fill="#B5E5A4"
+                    stroke="#45B153"
+                  />
+                }
+              />
+              <Bar
+                dataKey="accounts"
+                name="Accounts"
+                fill="#8fbbc8"
+                stroke="#008AB3"
+                minPointSize={10}
+                activeBar={
+                  <Rectangle
+                    fill="#B5E5A4"
+                    stroke="#45B153"
+                  />
+                }
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="col-span-2 bg-white shadow-niceShadowSpread py-4 px-2 rounded-2xl">
+          <h2 className="text-2xl font-bold">Trending stories</h2>
+          <div className="flex flex-col gap-2 mt-2">
+            {trendingStories?.slice(0, 4).map((story) => (
+              <Link
+                to={"/"}
+                key={story.id}
+                className="block"
               >
-                <CartesianGrid
-                  vertical={false}
-                  strokeDasharray="3 3"
-                />
-                <XAxis
-                  dataKey="date"
-                  tickFormatter={getCustomDateByString}
-                  tickLine={false}
-                />
-                <Legend />
-                <YAxis
-                  width={45}
-                  tickLine={false}
-                  allowDecimals={false}
-                />
-                <Tooltip
-                  itemStyle={{ color: "#1a8917" }}
-                  content={<CustomChartTooltip />}
-                />
-                <Bar
-                  dataKey="posts"
-                  name="Stories"
-                  fill="#B5E5A4"
-                  stroke="#45B153"
-                  minPointSize={10}
-                  activeBar={
-                    <Rectangle
-                      fill="#B5E5A4"
-                      stroke="#45B153"
+                <div className="flex items-center gap-2">
+                  <div className="rounded-md overflow-hidden w-20 h-20">
+                    <HandledImage
+                      src={story.thumbnail}
+                      alt={story.title}
+                      className="w-full h-full object-cover"
                     />
-                  }
-                />
-                <Bar
-                  dataKey="accounts"
-                  name="Accounts"
-                  fill="#8fbbc8"
-                  stroke="#008AB3"
-                  minPointSize={10}
-                  activeBar={
-                    <Rectangle
-                      fill="#B5E5A4"
-                      stroke="#45B153"
-                    />
-                  }
-                />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="col-span-2">
-            <h2 className="text-2xl font-bold">Trending stories</h2>
-            <div className="flex flex-col gap-2 mt-2">
-              {trendingStories?.slice(0, 4).map((story) => (
-                <Link
-                  to={"/"}
-                  key={story.id}
-                  className="block"
-                >
-                  <div className="flex items-center gap-2">
-                    <div className="w-5 h-5 rounded-full overflow-hidden">
-                      <HandledImage
-                        src={story.author.avatarPath}
-                        alt={story.author.fullName}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <span className="text-xs font-semibold">{story.author.fullName}</span>
                   </div>
-                  <h5 className="font-bold mt-1 text-[16px] leading-5 tracking-tighter">{story.title}</h5>
-                  <span className="flex text-xs mt-[6px] items-center gap-2">
-                    <span>{getCustomDate(new Date(story.publishDate))}</span>
-                    <span>•</span>
-                    <span>{story.timeRead} read</span>
-                  </span>
-                </Link>
-              ))}
-            </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-5 h-5 rounded-full overflow-hidden">
+                        <HandledImage
+                          src={story.author.avatarPath}
+                          alt={story.author.fullName}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <span className="text-xs font-semibold">{story.author.fullName}</span>
+                    </div>
+                    <h5 className="font-bold mt-1 text-[16px] leading-5 tracking-tighter">{story.title}</h5>
+                    <span className="flex text-xs mt-[6px] items-center gap-2">
+                      <span>{getCustomDate(new Date(story.publishDate))}</span>
+                      <span>•</span>
+                      <span>{story.timeRead} read</span>
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import Footer from "src/components/Footer";
 import StatsNavbar from "src/components/StatsNavbar";
+import Sidebar from "src/pages/DashboardPage/components/Sidebar";
 import { styled } from "styled-components";
 
 type TExploreLayoutProps = {
@@ -8,14 +9,13 @@ type TExploreLayoutProps = {
 };
 
 const MainLayoutWrapper = styled.div`
-  width: 100%;
+  width: 85%;
   margin: 0 auto;
   min-height: 100vh;
-  @media screen and (max-width: 999px) {
-    padding-inline: 16px;
-  }
+  background-color: white;
+  padding: 16px;
   @media screen and (max-width: 767px) {
-    padding-inline: 12px;
+    padding: 12px;
   }
 `;
 
@@ -26,7 +26,10 @@ const DashboardLayout = ({ children }: TExploreLayoutProps) => {
         title="Dashboard"
         containerClassName="!max-w-full !w-full"
       ></StatsNavbar>
-      <MainLayoutWrapper>{children}</MainLayoutWrapper>
+      <div className="flex">
+        <Sidebar></Sidebar>
+        <MainLayoutWrapper>{children}</MainLayoutWrapper>
+      </div>
       <Footer maxWidth="1000px"></Footer>
     </>
   );
