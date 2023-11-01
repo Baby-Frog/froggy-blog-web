@@ -1,5 +1,7 @@
+import { useIsPresent } from "framer-motion";
 import React from "react";
 import Footer from "src/components/Footer";
+import PageTransition from "src/components/PageTransition";
 import StatsNavbar from "src/components/StatsNavbar";
 import Sidebar from "src/pages/DashboardPage/components/Sidebar";
 import { styled } from "styled-components";
@@ -20,6 +22,7 @@ const MainLayoutWrapper = styled.div`
 `;
 
 const DashboardLayout = ({ children }: TExploreLayoutProps) => {
+  const isPresent = useIsPresent();
   return (
     <>
       <StatsNavbar
@@ -31,6 +34,7 @@ const DashboardLayout = ({ children }: TExploreLayoutProps) => {
         <MainLayoutWrapper>{children}</MainLayoutWrapper>
       </div>
       <Footer maxWidth="1000px"></Footer>
+      <PageTransition isPresent={isPresent}></PageTransition>
     </>
   );
 };

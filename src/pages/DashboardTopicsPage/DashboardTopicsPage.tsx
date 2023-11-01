@@ -35,7 +35,6 @@ const DashboardTopicsPage = () => {
     queryFn: () => adminApi.searchTopicsAdmin(queryConfig),
     staleTime: 1000 * 60 * 5,
     keepPreviousData: true,
-    refetchOnMount: false,
   });
   const deleteTopicMutation = useMutation({
     mutationFn: adminApi.deleteTopic,

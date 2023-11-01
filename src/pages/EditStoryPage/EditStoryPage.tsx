@@ -240,6 +240,7 @@ const EditStoryPage = () => {
             {
               onSuccess: (data) => {
                 queryClient.invalidateQueries({ queryKey: ["stories"] });
+                queryClient.invalidateQueries({ queryKey: ["dashboardPendingStories"] });
                 navigate(path.PROFILE);
                 toast.success(`Your story: "${data.data.data.title}" has been submitted, please wait for censhorship`, {
                   icon: <SuccessToastIcon></SuccessToastIcon>,

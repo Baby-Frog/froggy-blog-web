@@ -30,7 +30,6 @@ const DashboardUsersPage = () => {
     queryFn: () => adminApi.searchUserAdmin(queryConfig),
     staleTime: 1000 * 60 * 5,
     keepPreviousData: true,
-    refetchOnMount: false,
   });
   const userList = userListData?.data.data.data;
   const userListTotal = userListData?.data.data.totalRecord;

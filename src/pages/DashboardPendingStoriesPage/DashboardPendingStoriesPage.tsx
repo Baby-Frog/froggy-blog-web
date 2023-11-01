@@ -27,8 +27,6 @@ const DashboardPendingStoriesPage = () => {
   const { data: pendingStoriesData, isLoading: pendingStoriesIsLoading } = useQuery({
     queryKey: ["dashboardPendingStories", queryConfig],
     queryFn: () => adminApi.getPendingStoriesAdmin(queryConfig),
-    staleTime: 1000 * 60 * 5,
-    keepPreviousData: true,
   });
   const pendingStories = pendingStoriesData?.data.data.data;
   const pendingStoriesTotal = pendingStoriesData?.data.data.totalRecord;
@@ -63,7 +61,7 @@ const DashboardPendingStoriesPage = () => {
       showCancelButton: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        adminApi.changeStoryStatus({ postId, status: "PENDING" }).then(() => {
+        adminApi.changeStoryStatus({ postId, status: "BANNED" }).then(() => {
           queryClient.invalidateQueries({ queryKey: ["dashboardPendingStories", queryConfig] });
         });
       }
@@ -96,15 +94,15 @@ const DashboardPendingStoriesPage = () => {
                 <div>
                   <div className="text-[#475BE8] font-medium uppercase leading-[22px]">#{story.id.split("-")[0]}</div>
                   <div className="font-medium text-base">{story.title}</div>
-                  {/* <div className="text-sm text-lightGrey">{story.author.email}</div> */}
                   <div className="text-sm text-lightGrey">Story created on {getDateTime(story.publishDate)}</div>
                   <div className="text-sm text-lightGrey">at {getTime(story.publishDate)}</div>
                 </div>
               </div>
             </div>
             <div className="col-span-4">
-              <div className="flex flex-col">
-                <div className="text-sm font-medium flex items-center gap-1"></div>
+              <div className="flex flex-col"></div>
+              <div className="text-sm font-medium flex items-center gap-1">
+                {story.raw.length >= 540 ? story.raw.slice(0, 540) : story.raw}...
               </div>
             </div>
             <div className="col-span-2 self-center">
