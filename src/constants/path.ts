@@ -6,6 +6,7 @@ export const path = {
   DASHBOARD_TOPICS: "/dashboard/topics",
   DASHBOARD_CREATE_TOPIC: "/dashboard/topic/create",
   DASHBOARD_STORIES: "/dashboard/stories",
+  DASHBOARD_PENDING_STORIES: "/dashboard/stories/pending",
   DASHBOARD_USERS: "/dashboard/users",
   DASHBOARD_REPORTS: "/dashboard/reports",
   ANONYMOUS_PROFILE: "/user/profile/:userId",

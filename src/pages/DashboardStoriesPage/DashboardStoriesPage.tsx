@@ -99,6 +99,12 @@ const DashboardUsersPage = () => {
           <h2 className="text-xl font-medium text-lightGrey">Manage all of Froggy Blog stories</h2>
         </div>
         <div className="flex items-center gap-4">
+          <Link
+            to={path.DASHBOARD_PENDING_STORIES}
+            className="flex items-center justify-center px-3 py-2 bg-normalGreen hover:!bg-normalGreenHover text-white hover:!text-white"
+          >
+            Check pending stories
+          </Link>
           <input
             className="w-72 h-10 px-4 rounded-md border border-gray-200 focus:outline-none"
             placeholder="Search stories"

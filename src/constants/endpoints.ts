@@ -23,6 +23,8 @@ export const CHART_ENDPOINTS = {
 
 export const ADMIN_ENDPOINTS = {
   GET_OVERVIEW: "/api/dashboard/total",
+  GET_PENDING_STORIES: "/api/post/postWaitApproval",
+  CHANGE_STORY_STATUS: "api/post/changeStatus",
   SEARCH_USER_ADMIN: "/api/user/searchAdmin",
   GET_REPORTS: "/api/report/search",
   ACCEPT_REPORT: "/api/report/accept",

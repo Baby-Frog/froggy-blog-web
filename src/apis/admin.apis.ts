@@ -16,6 +16,10 @@ export const adminApi = {
     http.get<TQueryResponse<TTopics[]>>(TOPIC_ENDPOINTS.GET_TOPICS, { params }),
   searchStoriesAdmin: (params: TAdminQueryConfig) =>
     http.get<TQueryResponse<TStory[]>>(STORY_ENDPOINTS.GET_RECENT_STORIES, { params }),
+  getPendingStoriesAdmin: (params: TAdminQueryConfig) =>
+    http.get<TQueryResponse<TStory[]>>(ADMIN_ENDPOINTS.GET_PENDING_STORIES, { params }),
+  changeStoryStatus: (body: { postId: string; status: "PUBLISHED" | "PENDING" }) =>
+    http.post<TSuccessApiResponse<null>>(ADMIN_ENDPOINTS.CHANGE_STORY_STATUS, body),
   searchReports: () => http.get<TQueryResponse<TReport[]>>(ADMIN_ENDPOINTS.GET_REPORTS),
   acceptReport: (reportId: string) =>
     http.delete<TSuccessApiResponse<null>>(`${ADMIN_ENDPOINTS.ACCEPT_REPORT}/${reportId}`),
