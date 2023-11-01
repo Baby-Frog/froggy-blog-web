@@ -158,20 +158,6 @@ const DashboardUsersPage = () => {
                 color="#6b6b6b"
               ></ShowPasswordIcon>
             </Link>
-            <button className="flex items-center justify-center w-7 h-7 border border-gray-200 rounded cursor-pointe">
-              <EditIcon
-                width={20}
-                height={20}
-                color="#6b6b6b"
-              ></EditIcon>
-            </button>
-            <button className="flex items-center justify-center w-7 h-7 border border-gray-200 rounded cursor-pointe">
-              <TrashIcon
-                width={20}
-                height={20}
-                color="#6b6b6b"
-              ></TrashIcon>
-            </button>
           </div>
         </div>
       ))}

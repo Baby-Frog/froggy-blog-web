@@ -353,6 +353,12 @@ const StoryDetailPage = () => {
           {storyDetailData?.data.data.content && (
             <div className="entry-content">{parse(storyDetailData.data.data.content as string)}</div>
           )}
+          {storyDetailData?.data.data.credit && (
+            <div className="flex items-center justify-end gap-2">
+              <span className="text-base">Credits:</span>
+              <span className="text-base font-medium">{storyDetailData?.data.data.credit}</span>
+            </div>
+          )}
           <div className="text-center lg:text-3xl tracking-widest text-2xl">. . .</div>
           <div className="flex items-center gap-2 flex-wrap mt-4">
             {storyDetailData?.data.data.listTopic.map((topic) => (

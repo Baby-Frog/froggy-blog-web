@@ -21,6 +21,7 @@
     "framer-motion": "^10.15.0",
     "html-react-parser": "^4.2.0",
     "jquery": "^3.7.1",
+    "keyboardjs": "^2.7.0",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-countup": "^6.4.2",
@@ -44,6 +45,7 @@
   },
   "devDependencies": {
     "@types/jquery": "^3.5.19",
+    "@types/keyboardjs": "^2.5.2",
     "@types/lodash": "^4.14.197",
     "@types/node": "^20.4.8",
     "@types/react": "^18.2.15",

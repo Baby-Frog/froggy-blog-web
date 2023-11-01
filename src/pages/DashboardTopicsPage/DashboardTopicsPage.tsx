@@ -1,8 +1,10 @@
 import { Pagination, PaginationProps } from "antd";
 import { debounce } from "lodash";
 import React from "react";
-import { useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link, createSearchParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import useKeyboardJs from "react-use/lib/useKeyboardJs";
 import { adminApi } from "src/apis/admin.apis";
 import ArrowLeftIcon from "src/components/Icon/ArrowLeftIcon";
 import ArrowRightIcon from "src/components/Icon/ArrowRightIcon";
@@ -13,9 +15,11 @@ import LongArrowUpIcon from "src/components/Icon/LongArrowUpIcon";
 import SearchIcon from "src/components/Icon/SearchIcon";
 import ShowPasswordIcon from "src/components/Icon/ShowPasswordIcon";
 import TrashIcon from "src/components/Icon/TrashIcon";
+import Popover from "src/components/Popover";
 import SkeletonLoading from "src/components/SkeletonLoading";
 import { path } from "src/constants/path";
 import useAdminQueryConfig from "src/hooks/useAdminQueryConfig";
+import Swal from "sweetalert2";
 
 type TDashboardUsersPageProps = {
   something: string;
@@ -23,6 +27,7 @@ type TDashboardUsersPageProps = {
 
 const DashboardTopicsPage = () => {
   const navigate = useNavigate();
+  const [isPressed] = useKeyboardJs("c + f");
   const queryClient = useQueryClient();
   const queryConfig = useAdminQueryConfig();
   const { data: topicListData, isLoading: topicListIsLoading } = useQuery({
@@ -31,6 +36,9 @@ const DashboardTopicsPage = () => {
     staleTime: 1000 * 60 * 5,
     keepPreviousData: true,
     refetchOnMount: false,
+  });
+  const deleteTopicMutation = useMutation({
+    mutationFn: adminApi.deleteTopic,
   });
   const topicList = topicListData?.data.data.data;
   const topicListTotal = topicListData?.data.data.totalRecord;
@@ -73,6 +81,29 @@ const DashboardTopicsPage = () => {
       return <LongArrowDownIcon opacity={0.2} />;
     }
   };
+
+  const handleDeleteTopic = async (topicId: string) => {
+    const { isConfirmed } = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to delete this story?",
+      icon: "question",
+      cancelButtonColor: "#EB5757",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+    });
+    if (isConfirmed) {
+      deleteTopicMutation.mutate(topicId, {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["dashboardTopics", queryConfig] });
+          toast.success("Delete topic successfully");
+        },
+        onError: () => {
+          toast.error("Delete topic failed");
+        },
+      });
+    }
+  };
   return (
     <>
       <div className="flex items-center justify-between">
@@ -81,6 +112,12 @@ const DashboardTopicsPage = () => {
           <h2 className="text-xl font-medium text-lightGrey">Manage your topics</h2>
         </div>
         <div className="flex items-center gap-4">
+          <Link
+            to={path.DASHBOARD_CREATE_TOPIC}
+            className="flex items-center justify-center px-3 py-2 bg-normalGreen hover:!bg-normalGreenHover text-white hover:!text-white"
+          >
+            + Create topics
+          </Link>
           <input
             className="w-72 h-10 px-4 rounded-md border border-gray-200 focus:outline-none"
             placeholder="Search topics"
@@ -158,13 +195,43 @@ const DashboardTopicsPage = () => {
                 color="#6b6b6b"
               ></EditIcon>
             </button>
-            <button className="flex items-center justify-center w-7 h-7 border border-gray-200 rounded cursor-pointe">
-              <TrashIcon
-                width={20}
-                height={20}
-                color="#6b6b6b"
-              ></TrashIcon>
-            </button>
+            <Popover
+              sameWidthWithChildren={false}
+              placement="bottom"
+              renderPopover={
+                <div
+                  className={`bg-black bg-opacity-60 p-2 max-w-[200px] text-center flex items-center justify-center text-white ${
+                    isPressed && "opacity-0 hidden"
+                  }`}
+                >
+                  You must hold c + f in order to press this button
+                </div>
+              }
+            >
+              {isPressed ? (
+                <button
+                  className="flex items-center justify-center w-7 h-7 border border-gray-200 rounded cursor-pointer"
+                  onClick={() => handleDeleteTopic(topic.id)}
+                >
+                  <TrashIcon
+                    width={20}
+                    height={20}
+                    color="#6b6b6b"
+                  ></TrashIcon>
+                </button>
+              ) : (
+                <button
+                  className="flex items-center justify-center w-7 h-7 border border-gray-200 opacity-50 rounded cursor-pointer"
+                  disabled
+                >
+                  <TrashIcon
+                    width={20}
+                    height={20}
+                    color="#6b6b6b"
+                  ></TrashIcon>
+                </button>
+              )}
+            </Popover>
           </div>
         </div>
       ))}

@@ -18,12 +18,14 @@ import useShareLink from "src/hooks/useShareLink";
 import { TStory } from "src/types/story.types";
 import { getCustomDate } from "src/utils/formatDate";
 import { generateSlug } from "src/utils/slugify";
+import Swal from "sweetalert2";
 type THomepageRecentPostProps = {
   story: TStory;
 };
 
 const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
   const currentStoryUrl = `${window.location.origin}/${generateSlug({ name: story.title, id: story.id })}`;
+  const { userProfile } = useContext(AuthContext);
   const queryClient = useQueryClient();
   const { isAuthenticated } = useContext(AuthContext);
   const { handleCopyCurrentLink, shareOnTwitter } = useShareLink({
@@ -43,6 +45,9 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
         queryClient.invalidateQueries({ queryKey: ["savedStories"] });
       },
     });
+    const deleteStoryMutation = useMutation({
+      mutationFn: storyApi.deleteStory,
+    });
     const isUserProfilePage = useMemo(() => {
       return window.location.pathname.includes("/user/profile");
     }, []);
@@ -57,6 +62,26 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
           });
         },
       });
+    };
+    const handleDeleteStory = async (storyId: string) => {
+      const { isConfirmed } = await Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to delete this story?",
+        icon: "question",
+        cancelButtonColor: "#EB5757",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+      });
+      if (isConfirmed) {
+        deleteStoryMutation.mutate(storyId, {
+          onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["savedStories"] });
+            queryClient.invalidateQueries({ queryKey: ["yourStories", { userId: userProfile?.id as string }] });
+            toast.success("Delete story successfully!");
+          },
+        });
+      }
     };
     return (
       <Link
@@ -186,6 +211,7 @@ const HomepageRecentPost = ({ story }: THomepageRecentPostProps) => {
                       </Link>
                       <div
                         className="p-2 text-failure font-medium hover:bg-black hover:bg-opacity-10 cursor-pointer"
+                        onClick={() => handleDeleteStory(story.id)}
                         aria-hidden
                       >
                         Delete story

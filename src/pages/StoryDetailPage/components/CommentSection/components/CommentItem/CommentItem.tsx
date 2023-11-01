@@ -18,6 +18,7 @@ type TCommentItemProps = {
 
 const CommentItem = ({ comment, authorId }: TCommentItemProps) => {
   const { userProfile, isAuthenticated } = useContext(AuthContext);
+  const [reportContent, setReportContent] = useState<string>("");
   const [isResponseHidden, setIsResponseHidden] = useState<boolean>(false);
   const deleteMutation = useMutation(commentApi.deleteComment);
   const reportMutation = useMutation(commentApi.reportComment);
@@ -38,24 +39,26 @@ const CommentItem = ({ comment, authorId }: TCommentItemProps) => {
       },
     });
   };
-  const handleReportcomment = () => {
+  const handleReportComment = (commentId: string) => {
     Swal.fire({
-      title: "Submit your Github username",
+      title: "Why did you report this comment?",
       input: "text",
       inputAttributes: {
         autocapitalize: "off",
       },
       showCancelButton: true,
-      confirmButtonText: "Look up",
+      confirmButtonText: "Confirm",
       showLoaderOnConfirm: true,
-      preConfirm: (login) => {
+      preConfirm: (reportContent) => {
         return reportMutation
-          .mutateAsync(login)
+          .mutateAsync({
+            commentId: commentId,
+            reason: reportContent,
+          })
           .then((response) => {
             if (response.status !== 200) {
               throw new Error(response.statusText);
             }
-            return response.data;
           })
           .catch((error) => {
             Swal.showValidationMessage(`Request failed: ${error}`);
@@ -64,21 +67,13 @@ const CommentItem = ({ comment, authorId }: TCommentItemProps) => {
       allowOutsideClick: () => !Swal.isLoading(),
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({});
+        Swal.fire({
+          title: "Reported!",
+          text: "This comment has been reported",
+          icon: "success",
+        });
       }
     });
-    reportMutation.mutate(
-      {
-        commentId: comment.id,
-        reason: "",
-      },
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ["comments"] });
-          queryClient.invalidateQueries({ queryKey: ["commentsCount"] });
-        },
-      },
-    );
   };
   return (
     <div>
@@ -126,7 +121,11 @@ const CommentItem = ({ comment, authorId }: TCommentItemProps) => {
                 </>
               )}
               {isAuthenticated && comment.profileDto.id !== userProfile?.id && (
-                <div className="p-2 text-normalGrey font-medium hover:bg-black hover:bg-opacity-10 cursor-pointer">
+                <div
+                  className="p-2 text-normalGrey font-medium hover:bg-black hover:bg-opacity-10 cursor-pointer"
+                  onClick={() => handleReportComment(comment.id)}
+                  aria-hidden
+                >
                   Report response
                 </div>
               )}

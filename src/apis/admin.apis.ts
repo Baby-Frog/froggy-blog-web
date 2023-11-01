@@ -19,4 +19,8 @@ export const adminApi = {
   searchReports: () => http.get<TQueryResponse<TReport[]>>(ADMIN_ENDPOINTS.GET_REPORTS),
   addRoleToUser: (body: { email: string; roleId: string }) =>
     http.post<TSuccessApiResponse<null>>(ADMIN_ENDPOINTS.ADD_ROLE_TO_USER, body),
+  createNewTopic: (body: { topicName: string }) =>
+    http.post<TSuccessApiResponse<null>>(TOPIC_ENDPOINTS.ADD_NEW_TOPIC, body),
+  deleteTopic: (topicId: string) =>
+    http.delete<TSuccessApiResponse<null>>(`${TOPIC_ENDPOINTS.DELETE_TOPIC}/${topicId}`),
 };

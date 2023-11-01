@@ -1,5 +1,6 @@
 export const TOPIC_ENDPOINTS = {
   GET_TOPICS: "/api/topic/search",
+  GET_TOPIC_BY_ID: "/api/topic/findById",
   ADD_NEW_TOPIC: "/api/topic/save",
   DELETE_TOPIC: "/api/topic/delete",
 } as const;
@@ -25,6 +26,7 @@ export const ADMIN_ENDPOINTS = {
   SEARCH_USER_ADMIN: "/api/user/searchAdmin",
   GET_REPORTS: "/api/report/search",
   ADD_ROLE_TO_USER: "/api/role/addRole",
+  DELETE_TOPIC_BY_ID: "/api/topic/delete",
 };
 
 export const IMAGE_ENPOINTS = {
@@ -39,6 +41,7 @@ export const STORY_ENDPOINTS = {
   GET_STORIES_BY_TOPIC_ID: "/api/post/findByTopicId",
   CREATE_NEW_STORY: "/api/post/save",
   UPDATE_STORY: "/api/post/save",
+  DELETE_STORY: "/api/post/delete",
   GET_STORY_BY_ID: "/api/post/findById",
   GET_STORIES_BY_USER_ID: "/api/post/findPostByUserId",
   SEARCH_STORIES: "/api/post/search",

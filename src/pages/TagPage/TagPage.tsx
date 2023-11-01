@@ -12,6 +12,7 @@ import CommentIcon from "src/components/Icon/CommentIcon";
 import ExploreIcon from "src/components/Icon/ExploreIcon";
 import SaveToFavoritesIcon from "src/components/Icon/SaveToFavoritesIcon";
 import Popover from "src/components/Popover";
+import { path } from "src/constants/path";
 import { AuthContext } from "src/contexts/auth.contexts";
 import { getCustomDate } from "src/utils/formatDate";
 import http from "src/utils/http";
@@ -317,7 +318,7 @@ const TagPage = () => {
         </TagMeta>
         <Link
           className="mt-4 flex w-max justify-center items-center bg-darkGrey font-medium shrink-0 text-white border border-darkGrey px-3 py-2 rounded-3xl transition-all hover:!text-white hover:!bg-darkGrey"
-          to={"/"}
+          to={`/explore-stories/${idFromSlug}`}
         >
           See more {topicName} stories
         </Link>
@@ -415,7 +416,7 @@ const TagPage = () => {
         </TagMainStoryGrid>
         <Link
           className="mt-16 flex w-max justify-center items-center bg-white font-medium shrink-0 text-darkGrey border border-darkGrey px-3 py-2 rounded-3xl transition-all hover:!text-white hover:!bg-darkGrey"
-          to={"/"}
+          to={`/explore-stories/${idFromSlug}`}
         >
           See more {topicName} stories
         </Link>

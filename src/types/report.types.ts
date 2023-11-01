@@ -1,3 +1,4 @@
+import { TComment } from "./comment.types";
 import { TUserProfile } from "./user.types";
 
 export type TReport = {
@@ -5,5 +6,6 @@ export type TReport = {
   reason: string;
   idComment: string;
   createDate: string;
+  comment: TComment;
   userDto: TUserProfile;
 };
