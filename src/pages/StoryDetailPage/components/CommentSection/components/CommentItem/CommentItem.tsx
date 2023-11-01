@@ -72,6 +72,7 @@ const CommentItem = ({ comment, authorId }: TCommentItemProps) => {
           text: "This comment has been reported",
           icon: "success",
         });
+        queryClient.invalidateQueries({ queryKey: ["dashboardReports"] });
       }
     });
   };

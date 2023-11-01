@@ -17,6 +17,10 @@ export const adminApi = {
   searchStoriesAdmin: (params: TAdminQueryConfig) =>
     http.get<TQueryResponse<TStory[]>>(STORY_ENDPOINTS.GET_RECENT_STORIES, { params }),
   searchReports: () => http.get<TQueryResponse<TReport[]>>(ADMIN_ENDPOINTS.GET_REPORTS),
+  acceptReport: (reportId: string) =>
+    http.delete<TSuccessApiResponse<null>>(`${ADMIN_ENDPOINTS.ACCEPT_REPORT}/${reportId}`),
+  denyReport: (reportId: string) =>
+    http.delete<TSuccessApiResponse<null>>(`${ADMIN_ENDPOINTS.REJECT_REPORT}/${reportId}`),
   addRoleToUser: (body: { email: string; roleId: string }) =>
     http.post<TSuccessApiResponse<null>>(ADMIN_ENDPOINTS.ADD_ROLE_TO_USER, body),
   createNewTopic: (body: { topicName: string }) =>

@@ -25,6 +25,8 @@ export const ADMIN_ENDPOINTS = {
   GET_OVERVIEW: "/api/dashboard/total",
   SEARCH_USER_ADMIN: "/api/user/searchAdmin",
   GET_REPORTS: "/api/report/search",
+  ACCEPT_REPORT: "/api/report/accept",
+  REJECT_REPORT: "/api/report/abort",
   ADD_ROLE_TO_USER: "/api/role/addRole",
   DELETE_TOPIC_BY_ID: "/api/topic/delete",
 };
