@@ -264,7 +264,7 @@ const ExplorePage = () => {
         </ExploreInputIcon>
       </ExploreInputWrapper>
       <div className="flex justify-center gap-3 mt-4">
-        <div className="text-[14px] font-medium">Recommended:</div>
+        <div className="text-[17px] font-medium">Recommended:</div>
         <div className="flex items-center gap-4">
           <span
             className="underline cursor-pointer"

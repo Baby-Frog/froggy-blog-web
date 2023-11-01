@@ -278,7 +278,7 @@ const Homepage = () => {
                   <Link
                     key={topic.id}
                     className="px-2 py-3 bg-[#f2f2f2] text-sm rounded-2xl"
-                    to={path.HOMEPAGE}
+                    to={`tag/${topic.topicName}-${topic.id}`}
                   >
                     {topic.topicName}
                   </Link>

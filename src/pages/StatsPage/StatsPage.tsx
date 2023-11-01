@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from "react-query";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { authApi } from "src/apis/auth.apis";
 import ArrowLeftIcon from "src/components/Icon/ArrowLeftIcon";
@@ -30,6 +30,7 @@ import Footer from "src/components/Footer";
 import LongArrowDownIcon from "src/components/Icon/LongArrowDownIcon";
 import { chartApi } from "src/apis/chart.api";
 import SkeletonLoading from "src/components/SkeletonLoading";
+import { generateSlug } from "src/utils/slugify";
 
 type TChartValue = {
   date: string;
@@ -98,6 +99,7 @@ const StatsActivities = styled.div`
 
 const StatsPage = () => {
   const { userProfile } = useContext(AuthContext);
+
   const [period, setPeriod] = useState<string>("30");
   const [currentOrder, setCurrentOrder] = useState<"desc" | "asc">("desc");
   const queryClient = useQueryClient();
@@ -172,14 +174,17 @@ const StatsPage = () => {
             <div className="mt-4 grid grid-cols-5 items-end">
               {userStories?.map((story) => (
                 <>
-                  <div className="col-span-3 cursor-pointer flex flex-col">
+                  <Link
+                    to={`${window.location.origin}/${generateSlug({ name: story.title, id: story.id })}`}
+                    className="col-span-3 cursor-pointer flex flex-col"
+                  >
                     <span className="text-[18px] font-medium">{story.title}</span>
                     <div className="flex items-center gap-1">
                       <span className="text-sm text-lightGrey">{story.timeRead} read</span>
                       <span>•</span>
                       <span className="text-sm text-lightGrey">{getCustomDate(new Date(story.publishDate))}</span>
                     </div>
-                  </div>
+                  </Link>
                   <div className="col-span-1 text-center text-[18px] font-semibold">{story.likes}</div>
                   <div className="col-span-1 text-center text-[18px] font-semibold">{story.comments}</div>
                 </>

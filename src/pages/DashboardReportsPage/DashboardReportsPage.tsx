@@ -1,5 +1,5 @@
 import { Pagination } from "antd";
-import { debounce } from "lodash";
+import { toast } from "react-toastify";
 import { useQuery, useQueryClient } from "react-query";
 import { Link, createSearchParams, useNavigate } from "react-router-dom";
 import useKeyboardJs from "react-use/lib/useKeyboardJs";
@@ -45,6 +45,7 @@ const DashboardReportsPage = () => {
       if (result.isConfirmed) {
         adminApi.acceptReport(reportId).then(() => {
           queryClient.invalidateQueries({ queryKey: ["dashboardReports"] });
+          toast.success("Report accepted successfully");
         });
       }
     });
@@ -59,6 +60,7 @@ const DashboardReportsPage = () => {
       if (result.isConfirmed) {
         adminApi.denyReport(reportId).then(() => {
           queryClient.invalidateQueries({ queryKey: ["dashboardReports"] });
+          toast.success("Report denied successfully");
         });
       }
     });

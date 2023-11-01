@@ -1,23 +1,17 @@
 import { Pagination } from "antd";
-import { debounce } from "lodash";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { Link, createSearchParams, useNavigate } from "react-router-dom";
+import { useQuery, useQueryClient } from "react-query";
+import { createSearchParams, useNavigate } from "react-router-dom";
+import useKeyboardJs from "react-use/lib/useKeyboardJs";
+import { toast } from "react-toastify";
 import { adminApi } from "src/apis/admin.apis";
-import { storyApi } from "src/apis/story.apis";
 import ArrowLeftIcon from "src/components/Icon/ArrowLeftIcon";
 import ArrowRightIcon from "src/components/Icon/ArrowRightIcon";
-import useKeyboardJs from "react-use/lib/useKeyboardJs";
 import EllipsisIcon from "src/components/Icon/EllipsisIcon";
-import LongArrowDownIcon from "src/components/Icon/LongArrowDownIcon";
-import LongArrowUpIcon from "src/components/Icon/LongArrowUpIcon";
-import ShowPasswordIcon from "src/components/Icon/ShowPasswordIcon";
-import TrashIcon from "src/components/Icon/TrashIcon";
-import Popover from "src/components/Popover";
 import SkeletonLoading from "src/components/SkeletonLoading";
 import { path } from "src/constants/path";
 import useStoriesQueryConfig from "src/hooks/useStoriesQueryConfig";
-import Swal from "sweetalert2";
 import { getDateTime, getTime } from "src/utils/formatDate";
+import Swal from "sweetalert2";
 
 const DashboardPendingStoriesPage = () => {
   const [isPressed] = useKeyboardJs("c + f");
@@ -49,6 +43,7 @@ const DashboardPendingStoriesPage = () => {
       if (result.isConfirmed) {
         adminApi.changeStoryStatus({ postId, status: "PUBLISHED" }).then(() => {
           queryClient.invalidateQueries({ queryKey: ["dashboardPendingStories", queryConfig] });
+          toast.success("Story approved successfully");
         });
       }
     });
@@ -63,6 +58,7 @@ const DashboardPendingStoriesPage = () => {
       if (result.isConfirmed) {
         adminApi.changeStoryStatus({ postId, status: "BANNED" }).then(() => {
           queryClient.invalidateQueries({ queryKey: ["dashboardPendingStories", queryConfig] });
+          toast.success("Story rejected successfully");
         });
       }
     });
