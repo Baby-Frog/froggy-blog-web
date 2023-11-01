@@ -3,4 +3,5 @@ export type TTopics = {
   topicName: string;
   topicCode: string;
   updateDate: string;
+  createDate: string;
 };

@@ -2,7 +2,7 @@ import { Pagination, PaginationProps } from "antd";
 import { debounce } from "lodash";
 import React from "react";
 import { useQuery, useQueryClient } from "react-query";
-import { createSearchParams, useNavigate } from "react-router-dom";
+import { Link, createSearchParams, useNavigate } from "react-router-dom";
 import { adminApi } from "src/apis/admin.apis";
 import ArrowLeftIcon from "src/components/Icon/ArrowLeftIcon";
 import ArrowRightIcon from "src/components/Icon/ArrowRightIcon";
@@ -73,9 +73,6 @@ const DashboardUsersPage = () => {
       return <LongArrowDownIcon opacity={0.2} />;
     }
   };
-  const handleChangePageSize: PaginationProps["onShowSizeChange"] = (current, pageSize) => {
-    navigate(path.NEWSTORY);
-  };
   return (
     <>
       <div className="flex items-center justify-between">
@@ -130,9 +127,6 @@ const DashboardUsersPage = () => {
         <div
           key={user.id}
           className="grid grid-cols-7 gap-4 mt-4 py-2 items-center px-4 rounded-md cursor-pointer bg-white shadow-boxShadow1"
-          onClick={() => {
-            navigate(`${path.DASHBOARD_USERS}/${user.id}`);
-          }}
           aria-hidden
         >
           <div className="col-span-1 font-medium cursor-pointer">
@@ -145,20 +139,25 @@ const DashboardUsersPage = () => {
               alt={user.fullName}
             />
           </div>
-          <div className="col-span-1 font-medium cursor-pointer">{user.email}</div>
-          <div className="col-span-1 font-medium cursor-pointer">{user.fullName}</div>
-          <div className="col-span-1 font-medium cursor-pointer">
+          <div className="col-span-1 font-medium cursor-pointer line-clamp-1">{user.email}</div>
+          <div className="col-span-1 font-medium cursor-pointer line-clamp-1">{user.fullName}</div>
+          <div className="col-span-1 font-medium cursor-pointer line-clamp-1">
             {new Date(user?.updateDate as string).toLocaleDateString("en-GB")}
           </div>
-          <div className="col-span-1 font-medium cursor-pointer">{user.roles}</div>
+          <div className="col-span-1 font-medium cursor-pointer line-clamp-1 uppercase">
+            {user?.role[1]?.name || user.role[0].name}
+          </div>
           <div className="col-span-1 font-medium cursor-pointer flex items-center gap-2">
-            <button className="flex items-center justify-center w-7 h-7 border border-gray-200 rounded cursor-pointe">
+            <Link
+              to={`/user/profile/${user.id}`}
+              className="flex items-center justify-center w-7 h-7 border border-gray-200 rounded cursor-pointe"
+            >
               <ShowPasswordIcon
                 width={20}
                 height={20}
                 color="#6b6b6b"
               ></ShowPasswordIcon>
-            </button>
+            </Link>
             <button className="flex items-center justify-center w-7 h-7 border border-gray-200 rounded cursor-pointe">
               <EditIcon
                 width={20}
@@ -179,13 +178,13 @@ const DashboardUsersPage = () => {
       <Pagination
         total={userListTotal}
         defaultPageSize={Number(queryConfig.pageSize)}
-        pageSizeOptions={["7", "10", "20", "50", "100"]}
         jumpNextIcon={<EllipsisIcon></EllipsisIcon>}
         jumpPrevIcon={<EllipsisIcon></EllipsisIcon>}
         prevIcon={<ArrowLeftIcon></ArrowLeftIcon>}
         nextIcon={<ArrowRightIcon></ArrowRightIcon>}
         current={Number(queryConfig.pageNumber)}
         showQuickJumper
+        showSizeChanger={false}
         onChange={(page) => handleChangeCurrentPage(page)}
         pageSize={Number(queryConfig.pageSize)}
         locale={{ jump_to: "Jump to page", page: "" }}

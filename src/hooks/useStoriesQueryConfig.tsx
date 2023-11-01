@@ -3,15 +3,14 @@ import omitBy from "lodash/omitBy";
 import useQueryParams from "./useQueryParams";
 import { TAdminQueryConfig } from "src/types/query.types";
 import { useLocation } from "react-router-dom";
-import { path } from "src/constants/path";
 
-export default function useAdminQueryConfig() {
+export default function useStoriesQueryConfig() {
   const queryParams = useQueryParams();
   const queryConfig: TAdminQueryConfig = omitBy(
     {
       keyword: queryParams.keyword || "", // add a default value for the q property
       orderBy: queryParams.orderBy || "desc",
-      column: queryParams.column || "updateDate",
+      column: queryParams.column || "publishDate",
       pageSize: queryParams.pageSize || "7",
       pageNumber: queryParams.pageNumber || "1",
     },

@@ -1,6 +1,10 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import HandledImage from "src/components/HandledImage";
+import ClapIcon from "src/components/Icon/ClapIcon";
+import CommentIcon from "src/components/Icon/CommentIcon";
+import SaveToFavoritesIcon from "src/components/Icon/SaveToFavoritesIcon";
+import Popover from "src/components/Popover";
 
 import { AuthContext } from "src/contexts/auth.contexts";
 import { TStory } from "src/types/story.types";
@@ -57,6 +61,59 @@ const MoreFromAuthorSection = ({ storiesLength, story, currentAuthorStories }: T
                   <span>{story.timeRead} read</span>
                 </span>
               </div>
+              <div className="flex items-center justify-between mt-2">
+                <div className="flex items-center gap-2">
+                  <button className="flex items-center gap-1 cursor-pointer hover:text-softBlack">
+                    <ClapIcon
+                      color="#6b6b6b"
+                      width={28}
+                      height={28}
+                      className="hover:text-softBlack"
+                    ></ClapIcon>
+                    <span className="translate-y-[1px]">{story.likes || "0"}</span>
+                  </button>
+                  <button className="flex items-center gap-1 cursor-pointer hover:text-softBlack">
+                    <CommentIcon
+                      color="#6b6b6b"
+                      width={24}
+                      height={24}
+                      className="hover:text-softBlack"
+                    ></CommentIcon>
+                    <span className="translate-y-[1px]">{story.comments || "0"}</span>
+                  </button>
+                </div>
+                {isAuthenticated ? (
+                  <Popover
+                    backgroundColor="#000000a8"
+                    sameWidthWithChildren={false}
+                    placement="top"
+                    offsetPx={5}
+                    renderPopover={<div className="text-white p-1">Add to Saved List</div>}
+                  >
+                    <SaveToFavoritesIcon
+                      color="#6b6b6b"
+                      width={24}
+                      height={24}
+                      className="cursor-pointer hover:text-softBlack"
+                    ></SaveToFavoritesIcon>
+                  </Popover>
+                ) : (
+                  <Popover
+                    backgroundColor="#000000a8"
+                    sameWidthWithChildren={false}
+                    placement="top"
+                    offsetPx={5}
+                    renderPopover={<div className="text-white p-1">You must login to save this story</div>}
+                  >
+                    <SaveToFavoritesIcon
+                      color="#bdbdbd"
+                      width={24}
+                      height={24}
+                      className="cursor-default"
+                    ></SaveToFavoritesIcon>
+                  </Popover>
+                )}
+              </div>
             </>
           )}
         </>
@@ -100,6 +157,59 @@ const MoreFromAuthorSection = ({ storiesLength, story, currentAuthorStories }: T
                       <span>•</span>
                       <span>{story.timeRead} read</span>
                     </span>
+                  </div>
+                  <div className="flex items-center justify-between mt-2">
+                    <div className="flex items-center gap-2">
+                      <button className="flex items-center gap-1 cursor-pointer hover:text-softBlack">
+                        <ClapIcon
+                          color="#6b6b6b"
+                          width={28}
+                          height={28}
+                          className="hover:text-softBlack"
+                        ></ClapIcon>
+                        <span className="translate-y-[1px]">{story.likes || "0"}</span>
+                      </button>
+                      <button className="flex items-center gap-1 cursor-pointer hover:text-softBlack">
+                        <CommentIcon
+                          color="#6b6b6b"
+                          width={24}
+                          height={24}
+                          className="hover:text-softBlack"
+                        ></CommentIcon>
+                        <span className="translate-y-[1px]">{story.comments || "0"}</span>
+                      </button>
+                    </div>
+                    {isAuthenticated ? (
+                      <Popover
+                        backgroundColor="#000000a8"
+                        sameWidthWithChildren={false}
+                        placement="top"
+                        offsetPx={5}
+                        renderPopover={<div className="text-white p-1">Add to Saved List</div>}
+                      >
+                        <SaveToFavoritesIcon
+                          color="#6b6b6b"
+                          width={24}
+                          height={24}
+                          className="cursor-pointer hover:text-softBlack"
+                        ></SaveToFavoritesIcon>
+                      </Popover>
+                    ) : (
+                      <Popover
+                        backgroundColor="#000000a8"
+                        sameWidthWithChildren={false}
+                        placement="top"
+                        offsetPx={5}
+                        renderPopover={<div className="text-white p-1">You must login to save this story</div>}
+                      >
+                        <SaveToFavoritesIcon
+                          color="#bdbdbd"
+                          width={24}
+                          height={24}
+                          className="cursor-default"
+                        ></SaveToFavoritesIcon>
+                      </Popover>
+                    )}
                   </div>
                 </Link>
               ))}
@@ -232,6 +342,59 @@ const MoreFromAuthorSection = ({ storiesLength, story, currentAuthorStories }: T
                 <span>•</span>
                 <span>{story.timeRead} read</span>
               </span>
+            </div>
+            <div className="flex items-center justify-between mt-2">
+              <div className="flex items-center gap-2">
+                <button className="flex items-center gap-1 cursor-pointer hover:text-softBlack">
+                  <ClapIcon
+                    color="#6b6b6b"
+                    width={28}
+                    height={28}
+                    className="hover:text-softBlack"
+                  ></ClapIcon>
+                  <span className="translate-y-[1px]">{story.likes || "0"}</span>
+                </button>
+                <button className="flex items-center gap-1 cursor-pointer hover:text-softBlack">
+                  <CommentIcon
+                    color="#6b6b6b"
+                    width={24}
+                    height={24}
+                    className="hover:text-softBlack"
+                  ></CommentIcon>
+                  <span className="translate-y-[1px]">{story.comments || "0"}</span>
+                </button>
+              </div>
+              {isAuthenticated ? (
+                <Popover
+                  backgroundColor="#000000a8"
+                  sameWidthWithChildren={false}
+                  placement="top"
+                  offsetPx={5}
+                  renderPopover={<div className="text-white p-1">Add to Saved List</div>}
+                >
+                  <SaveToFavoritesIcon
+                    color="#6b6b6b"
+                    width={24}
+                    height={24}
+                    className="cursor-pointer hover:text-softBlack"
+                  ></SaveToFavoritesIcon>
+                </Popover>
+              ) : (
+                <Popover
+                  backgroundColor="#000000a8"
+                  sameWidthWithChildren={false}
+                  placement="top"
+                  offsetPx={5}
+                  renderPopover={<div className="text-white p-1">You must login to save this story</div>}
+                >
+                  <SaveToFavoritesIcon
+                    color="#bdbdbd"
+                    width={24}
+                    height={24}
+                    className="cursor-default"
+                  ></SaveToFavoritesIcon>
+                </Popover>
+              )}
             </div>
           </Link>
         ))}

@@ -1,6 +1,9 @@
-import { ADMIN_ENDPOINTS } from "src/constants/endpoints";
+import { ADMIN_ENDPOINTS, STORY_ENDPOINTS, TOPIC_ENDPOINTS } from "src/constants/endpoints";
 import { TAdminQueryConfig, TApiQueryParams } from "src/types/query.types";
+import { TReport } from "src/types/report.types";
 import { TQueryResponse, TSuccessApiResponse } from "src/types/response.types";
+import { TStory } from "src/types/story.types";
+import { TTopics } from "src/types/topic.types";
 import { TUserProfile } from "src/types/user.types";
 import http from "src/utils/http";
 
@@ -9,4 +12,11 @@ export const adminApi = {
     http.get<TSuccessApiResponse<{ accounts: number; posts: number }>>(ADMIN_ENDPOINTS.GET_OVERVIEW),
   searchUserAdmin: (params: TAdminQueryConfig) =>
     http.get<TQueryResponse<TUserProfile[]>>(ADMIN_ENDPOINTS.SEARCH_USER_ADMIN, { params }),
+  searchTopicsAdmin: (params: TAdminQueryConfig) =>
+    http.get<TQueryResponse<TTopics[]>>(TOPIC_ENDPOINTS.GET_TOPICS, { params }),
+  searchStoriesAdmin: (params: TAdminQueryConfig) =>
+    http.get<TQueryResponse<TStory[]>>(STORY_ENDPOINTS.GET_RECENT_STORIES, { params }),
+  searchReports: () => http.get<TQueryResponse<TReport[]>>(ADMIN_ENDPOINTS.GET_REPORTS),
+  addRoleToUser: (body: { email: string; roleId: string }) =>
+    http.post<TSuccessApiResponse<null>>(ADMIN_ENDPOINTS.ADD_ROLE_TO_USER, body),
 };

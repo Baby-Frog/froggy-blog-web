@@ -263,6 +263,38 @@ const ExplorePage = () => {
           ></SearchIcon>
         </ExploreInputIcon>
       </ExploreInputWrapper>
+      <div className="flex justify-center gap-3 mt-4">
+        <div className="text-[14px] font-medium">Recommended:</div>
+        <div className="flex items-center gap-4">
+          <span
+            className="underline cursor-pointer"
+            onClick={() => {
+              navigate("/tag/Funny-760660d2-c6d8-434f-9772-f681b81c639f");
+            }}
+            aria-hidden
+          >
+            Funny
+          </span>
+          <span
+            className="underline cursor-pointer"
+            onClick={() => {
+              navigate("/tag/Jokes-091e6d72-ba73-496e-be25-ab69ae021bfd");
+            }}
+            aria-hidden
+          >
+            Jokes
+          </span>
+          <span
+            className="underline cursor-pointer"
+            onClick={() => {
+              navigate("/tag/War-2fd321d4-f036-4bde-ad46-d217e64b4100");
+            }}
+            aria-hidden
+          >
+            War
+          </span>
+        </div>
+      </div>
     </>
   );
 };

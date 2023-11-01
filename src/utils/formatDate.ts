@@ -40,3 +40,7 @@ export const getCustomDateByString = (date: string) => {
 export const getDateTime = (date: string) => {
   return new Date(date).toLocaleDateString("en-GB");
 };
+
+export const getTime = (date: string) => {
+  return new Date(date).toLocaleTimeString("en-GB");
+};

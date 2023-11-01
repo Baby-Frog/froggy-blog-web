@@ -24,6 +24,8 @@ import DashboardLayout from "src/layouts/DashboardLayout";
 import DashboardPage from "src/pages/DashboardPage";
 import DashboardTopicsPage from "src/pages/DashboardTopicsPage";
 import DashboardUsersPage from "src/pages/DashboardUsersPage";
+import DashboardStoriesPage from "src/pages/DashboardStoriesPage";
+import DashboardReportsPage from "src/pages/DashboardReportsPage";
 
 export default function useRouteElement() {
   const routeElements = useRoutes([
@@ -155,7 +157,7 @@ export default function useRouteElement() {
           path: path.DASHBOARD_STORIES,
           element: (
             <DashboardLayout>
-              <DashboardPage></DashboardPage>
+              <DashboardStoriesPage></DashboardStoriesPage>
             </DashboardLayout>
           ),
         },
@@ -171,7 +173,7 @@ export default function useRouteElement() {
           path: path.DASHBOARD_REPORTS,
           element: (
             <DashboardLayout>
-              <DashboardPage></DashboardPage>
+              <DashboardReportsPage></DashboardReportsPage>
             </DashboardLayout>
           ),
         },

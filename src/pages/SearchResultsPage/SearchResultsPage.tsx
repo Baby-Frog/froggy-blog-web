@@ -82,13 +82,13 @@ const SearchResultsPage = () => {
   const queryConfig = useQueryConfig();
   const location = useLocation();
   const [currentActiveKey, setCurrentActiveKey] = useState<string>("");
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (location?.state?.from && location.state.from === path.EXPORE_TOPICS) {
       setCurrentActiveKey("3");
     } else {
       setCurrentActiveKey("1");
     }
-  }, [location?.state?.from]);
+  }, []);
   const {
     data: topicsData,
     isLoading: isTopicsLoading,
@@ -96,7 +96,7 @@ const SearchResultsPage = () => {
     hasNextPage: topicsHasNextPage,
     isFetchingNextPage: topicsIsFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ["topics", { q: queryConfig.q }],
+    queryKey: ["topicsResult", { q: queryConfig.q }],
     queryFn: ({ pageParam = 1 }) =>
       topicApi.getTopicsByKeyword({
         pageSize: 40,
@@ -144,32 +144,31 @@ const SearchResultsPage = () => {
       if (lastPage.data.data.data.length === 0) return undefined;
       return lastPage.data.data.pageNumber + 1;
     },
-    refetchOnMount: true,
   });
   const storiesLoadMoreRef = useRef<HTMLDivElement>(null);
-  const handleLoadMoreStories = useCallback(
-    (entries: IntersectionObserverEntry[]) => {
-      const target = entries[0];
-      if (target.isIntersecting && storiesHasNextPage && !storiesIsFetchingNextPage) {
-        storiesFetchNextPage();
-      }
-    },
-    [storiesHasNextPage, storiesIsFetchingNextPage, storiesFetchNextPage],
-  );
+  // const handleLoadMoreStories = useCallback(
+  //   (entries: IntersectionObserverEntry[]) => {
+  //     const target = entries[0];
+  //     if (target.isIntersecting && storiesHasNextPage && !storiesIsFetchingNextPage) {
+  //       storiesFetchNextPage();
+  //     }
+  //   },
+  //   [storiesHasNextPage, storiesIsFetchingNextPage, storiesFetchNextPage],
+  // );
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(handleLoadMoreStories, {
-      rootMargin: "0px 0px 0px 0px",
-    });
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(handleLoadMoreStories, {
+  //     rootMargin: "0px 0px 0px 0px",
+  //   });
 
-    if (storiesLoadMoreRef.current) {
-      observer.observe(storiesLoadMoreRef.current);
-    }
+  //   if (storiesLoadMoreRef.current) {
+  //     observer.observe(storiesLoadMoreRef.current);
+  //   }
 
-    return () => {
-      observer.disconnect();
-    };
-  }, [handleLoadMoreStories]);
+  //   return () => {
+  //     observer.disconnect();
+  //   };
+  // }, [handleLoadMoreStories]);
   const { data: sideStuffsStoriesData } = useQuery({
     queryKey: ["sideStuffsStories", { q: queryConfig.q }],
     queryFn: () =>
@@ -234,8 +233,13 @@ const SearchResultsPage = () => {
               </Fragment>
             ))}
           </div>
-          {storiesHasNextPage && <div ref={storiesLoadMoreRef}>Loading more stories...</div>}
-          {!storiesData?.pages && <div className="text-base">No stories matching {queryConfig.q}</div>}
+          <button
+            onClick={() => storiesFetchNextPage()}
+            className="text-normalGreen my-4 cursor-pointer"
+            disabled={!storiesHasNextPage || storiesIsFetchingNextPage}
+          >
+            {storiesIsFetchingNextPage ? "Loading more..." : storiesHasNextPage ? "Load More" : ""}
+          </button>
         </div>
       ),
     },
