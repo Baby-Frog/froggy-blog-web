@@ -105,12 +105,12 @@ const StatsPage = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { data: chartData } = useQuery({
-    queryKey: ["chart", { period }],
+    queryKey: ["chart", { userId: userProfile?.id, period }],
     queryFn: () => chartApi.getChartData({ period }),
   });
   const chart = chartData?.data.data;
   const { data: userStoriesData, isLoading: userStoriesIsLoading } = useQuery({
-    queryKey: ["userStories", { orderBy: currentOrder }],
+    queryKey: ["userStories", { userId: userProfile?.id, orderBy: currentOrder }],
     queryFn: () =>
       storyApi.getStoriesByUserId(userProfile?.id as string, {
         pageSize: 99,

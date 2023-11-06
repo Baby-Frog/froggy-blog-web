@@ -131,11 +131,11 @@ const DashboardUsersPage = () => {
         </div>
         <div
           className="col-span-1 font-medium cursor-pointer flex items-center gap-1"
-          onClick={() => handleSort("updateDate")}
+          onClick={() => handleSort("publishDate")}
           aria-hidden
         >
           <span>Published at</span>
-          {renderSortArrow("updateDate")}
+          {renderSortArrow("publishDate")}
         </div>
         <div className="col-span-1 font-medium cursor-pointer">Topics</div>
         <div className="col-span-1 font-medium cursor-pointer">Actions</div>
