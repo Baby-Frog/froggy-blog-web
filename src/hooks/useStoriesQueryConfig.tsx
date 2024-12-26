@@ -1,8 +1,7 @@
 import isUndefined from "lodash/isUndefined";
 import omitBy from "lodash/omitBy";
-import useQueryParams from "./useQueryParams";
 import { TAdminQueryConfig } from "src/types/query.types";
-import { useLocation } from "react-router-dom";
+import useQueryParams from "./useQueryParams";
 
 export default function useStoriesQueryConfig() {
   const queryParams = useQueryParams();

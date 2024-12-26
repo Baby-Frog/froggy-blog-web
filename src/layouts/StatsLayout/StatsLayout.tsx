@@ -1,12 +1,8 @@
 import { useIsPresent } from "framer-motion";
-import React, { useContext } from "react";
-import AuthenticatedNavbar from "src/components/AuthenticatedNavbar";
-import ExploreNavbar from "src/components/ExploreNavbar";
+import React from "react";
 import Footer from "src/components/Footer";
-import MainNavbar from "src/components/MainNavbar/MainNavbar";
 import PageTransition from "src/components/PageTransition";
 import StatsNavbar from "src/components/StatsNavbar";
-import { AuthContext } from "src/contexts/auth.contexts";
 import { styled } from "styled-components";
 
 type TExploreLayoutProps = {

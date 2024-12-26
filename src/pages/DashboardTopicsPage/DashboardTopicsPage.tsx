@@ -1,6 +1,5 @@
-import { Pagination, PaginationProps } from "antd";
-import { debounce } from "lodash";
-import React from "react";
+import { Pagination } from "antd";
+import debounce from "lodash/debounce";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link, createSearchParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -12,18 +11,12 @@ import EditIcon from "src/components/Icon/EditIcon";
 import EllipsisIcon from "src/components/Icon/EllipsisIcon";
 import LongArrowDownIcon from "src/components/Icon/LongArrowDownIcon";
 import LongArrowUpIcon from "src/components/Icon/LongArrowUpIcon";
-import SearchIcon from "src/components/Icon/SearchIcon";
-import ShowPasswordIcon from "src/components/Icon/ShowPasswordIcon";
 import TrashIcon from "src/components/Icon/TrashIcon";
 import Popover from "src/components/Popover";
 import SkeletonLoading from "src/components/SkeletonLoading";
 import { path } from "src/constants/path";
 import useAdminQueryConfig from "src/hooks/useAdminQueryConfig";
 import Swal from "sweetalert2";
-
-type TDashboardUsersPageProps = {
-  something: string;
-};
 
 const DashboardTopicsPage = () => {
   const navigate = useNavigate();

@@ -1,5 +1,5 @@
 import { Pagination } from "antd";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link, createSearchParams, useNavigate } from "react-router-dom";
 import { adminApi } from "src/apis/admin.apis";

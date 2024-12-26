@@ -1,6 +1,5 @@
 import { useIsPresent } from "framer-motion";
 import { useContext, useEffect, useState } from "react";
-import { useScroll } from "react-use";
 import AuthenticatedNavbar from "src/components/AuthenticatedNavbar";
 import ExploreNavbar from "src/components/ExploreNavbar";
 import Footer from "src/components/Footer";

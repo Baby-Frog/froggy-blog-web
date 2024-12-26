@@ -1,27 +1,19 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { Link, createSearchParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useMedia from "react-use/lib/useMedia";
 import { authApi } from "src/apis/auth.apis";
 import Logo from "src/assets/logo-4.png";
+import UnauthenticatedAvatar from "src/assets/unauthen-avatar.png";
 import { path } from "src/constants/path";
-import { AuthContext } from "src/contexts/auth.contexts";
+import HomepageAuthenModal from "src/pages/Homepage/components/HomepageAuthenModal/HomepageAuthenModal";
 import { getRefreshTokenFromLS } from "src/utils/auth";
-import { hideEmail } from "src/utils/hideEmail";
 import { styled } from "styled-components";
-import Divider from "../Divider";
-import BellIcon from "../Icon/BellIcon";
-import ChevronIcon from "../Icon/ChevronIcon";
-import EditIcon from "../Icon/EditIcon";
-import ProfileIcon from "../Icon/ProfileIcon";
 import SearchIcon from "../Icon/SearchIcon";
-import SettingIcon from "../Icon/SettingIcon";
 import SuccessToastIcon from "../Icon/ToastIcon/SuccessToastIcon";
 import PopoverDismiss from "../PopoverDismiss";
-import UnauthenticatedAvatar from "src/assets/unauthen-avatar.png";
-import HomepageAuthenModal from "src/pages/Homepage/components/HomepageAuthenModal/HomepageAuthenModal";
 
 type TAuthenticatedNavbarProps = {
   title?: string;

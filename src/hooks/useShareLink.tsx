@@ -1,5 +1,5 @@
-import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
 import { toast } from "react-toastify";
+import SuccessToastIcon from "src/components/Icon/ToastIcon/SuccessToastIcon";
 export default function useShareLink({
   author,
   currentStoryUrl,

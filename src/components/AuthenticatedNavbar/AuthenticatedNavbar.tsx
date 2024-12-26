@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link, createSearchParams, useNavigate } from "react-router-dom";
@@ -14,14 +14,13 @@ import { styled } from "styled-components";
 import Divider from "../Divider";
 import BellIcon from "../Icon/BellIcon";
 import ChevronIcon from "../Icon/ChevronIcon";
+import DashboardIcon from "../Icon/DashboardIcon";
 import EditIcon from "../Icon/EditIcon";
 import ProfileIcon from "../Icon/ProfileIcon";
 import SearchIcon from "../Icon/SearchIcon";
-import SettingIcon from "../Icon/SettingIcon";
+import StatsIcon from "../Icon/StatsIcon";
 import SuccessToastIcon from "../Icon/ToastIcon/SuccessToastIcon";
 import PopoverDismiss from "../PopoverDismiss";
-import StatsIcon from "../Icon/StatsIcon";
-import DashboardIcon from "../Icon/DashboardIcon";
 
 type TAuthenticatedNavbarProps = {
   title?: string;

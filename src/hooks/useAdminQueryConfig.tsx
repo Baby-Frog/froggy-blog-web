@@ -1,9 +1,7 @@
 import isUndefined from "lodash/isUndefined";
 import omitBy from "lodash/omitBy";
-import useQueryParams from "./useQueryParams";
 import { TAdminQueryConfig } from "src/types/query.types";
-import { useLocation } from "react-router-dom";
-import { path } from "src/constants/path";
+import useQueryParams from "./useQueryParams";
 
 export default function useAdminQueryConfig() {
   const queryParams = useQueryParams();

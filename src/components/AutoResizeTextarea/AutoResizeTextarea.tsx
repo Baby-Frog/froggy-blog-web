@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, useEffect, useState } from "react";
+import React, { InputHTMLAttributes } from "react";
 import { RegisterOptions, UseFormRegister } from "react-hook-form";
 import { styled } from "styled-components";
 import FailureIcon from "../Icon/FailureIcon";

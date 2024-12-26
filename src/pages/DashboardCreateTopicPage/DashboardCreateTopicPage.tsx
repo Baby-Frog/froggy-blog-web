@@ -16,11 +16,7 @@ type TDashboardCreateTopicPageProps = {
 
 const DashboardCreateTopicPage = () => {
   const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { register, handleSubmit } = useForm({
     reValidateMode: "onBlur",
     mode: "onSubmit",
     resolver: yupResolver(topicSchema),
