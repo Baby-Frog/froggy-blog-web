@@ -1,19 +1,19 @@
 import { TabsProps } from "antd";
-import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { useInfiniteQuery, useQuery } from "react-query";
 import { Link, useLocation } from "react-router-dom";
 import { authApi } from "src/apis/auth.apis";
 import { storyApi } from "src/apis/story.apis";
 import { topicApi } from "src/apis/topic.apis";
 import CustomTabs from "src/components/CustomTabs";
+import HandledImage from "src/components/HandledImage";
 import { path } from "src/constants/path";
 import useQueryConfig from "src/hooks/useQueryConfig";
-import { styled } from "styled-components";
-import PeopleItem from "./components/PeopleItem";
-import HomepageRecentPost from "../Homepage/components/HomepageRecentPost";
 import { getCustomDate } from "src/utils/formatDate";
 import { generateSlug } from "src/utils/slugify";
-import HandledImage from "src/components/HandledImage";
+import { styled } from "styled-components";
+import HomepageRecentPost from "../Homepage/components/HomepageRecentPost";
+import PeopleItem from "./components/PeopleItem";
 
 type TSearchResultsPageProps = {
   something: string;

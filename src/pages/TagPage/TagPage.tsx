@@ -1,9 +1,8 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { useInfiniteQuery, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { storyApi } from "src/apis/story.apis";
 import { topicApi } from "src/apis/topic.apis";
-import Footer from "src/components/Footer";
 import HandledImage from "src/components/HandledImage";
 import ArrowLeftIcon from "src/components/Icon/ArrowLeftIcon";
 import ArrowRightIcon from "src/components/Icon/ArrowRightIcon";
@@ -12,10 +11,8 @@ import CommentIcon from "src/components/Icon/CommentIcon";
 import ExploreIcon from "src/components/Icon/ExploreIcon";
 import SaveToFavoritesIcon from "src/components/Icon/SaveToFavoritesIcon";
 import Popover from "src/components/Popover";
-import { path } from "src/constants/path";
 import { AuthContext } from "src/contexts/auth.contexts";
 import { getCustomDate } from "src/utils/formatDate";
-import http from "src/utils/http";
 import { generateSlug, getFirstSegmentFromSlug, getIdFromSlug } from "src/utils/slugify";
 import { styled } from "styled-components";
 

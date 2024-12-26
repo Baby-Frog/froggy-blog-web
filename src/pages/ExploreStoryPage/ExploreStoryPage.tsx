@@ -1,10 +1,10 @@
-import React, { Fragment, useCallback, useEffect, useRef } from "react";
+import { Fragment, useCallback, useEffect, useRef } from "react";
 import { useInfiniteQuery, useQuery } from "react-query";
 import { useParams } from "react-router-dom";
+import { storyApi } from "src/apis/story.apis";
 import { topicApi } from "src/apis/topic.apis";
 import { styled } from "styled-components";
 import HomepageRecentPost from "../Homepage/components/HomepageRecentPost";
-import { storyApi } from "src/apis/story.apis";
 
 type TExploreStoryPageProps = {
   something: string;

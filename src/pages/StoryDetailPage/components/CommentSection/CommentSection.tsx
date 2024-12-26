@@ -1,17 +1,17 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect, useContext, useRef } from "react";
+import { useContext, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "react-query";
+import { commentApi } from "src/apis/comments.api";
 import AutoResizeTextarea from "src/components/AutoResizeTextarea";
+import HandledImage from "src/components/HandledImage";
 import CloseButtonIcon from "src/components/Icon/CloseButtonIcon";
 import { AuthContext } from "src/contexts/auth.contexts";
 import { commentSchema } from "src/schemas/comment.schemas";
 import { TComment } from "src/types/comment.types";
 import { styled } from "styled-components";
 import CommentItem from "./components/CommentItem";
-import { useMutation, useQueryClient } from "react-query";
-import { commentApi } from "src/apis/comments.api";
-import HandledImage from "src/components/HandledImage";
 
 type TCommentSectionProps = {
   comments?: TComment[];
