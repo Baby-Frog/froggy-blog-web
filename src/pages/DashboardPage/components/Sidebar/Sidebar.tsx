@@ -22,8 +22,8 @@ const Sidebar = () => {
                 isPending
                   ? "text-gray-600 font-medium block p-4"
                   : isActive
-                  ? "text-normalGreen bg-normalGreen bg-opacity-20 hover:!text-normalGreenHover"
-                  : ""
+                    ? "text-normalGreen bg-normalGreen bg-opacity-20 hover:!text-normalGreenHover"
+                    : ""
               }`
             }
           >
@@ -42,8 +42,8 @@ const Sidebar = () => {
                 isPending
                   ? "text-gray-600 font-medium block p-4"
                   : isActive
-                  ? "text-normalGreen bg-normalGreen bg-opacity-20 hover:!text-normalGreenHover"
-                  : ""
+                    ? "text-normalGreen bg-normalGreen bg-opacity-20 hover:!text-normalGreenHover"
+                    : ""
               }`
             }
           >
@@ -62,8 +62,8 @@ const Sidebar = () => {
                 isPending
                   ? "text-gray-600 font-medium block p-4"
                   : isActive
-                  ? "text-normalGreen bg-normalGreen bg-opacity-20 hover:!text-normalGreenHover"
-                  : ""
+                    ? "text-normalGreen bg-normalGreen bg-opacity-20 hover:!text-normalGreenHover"
+                    : ""
               }`
             }
           >
@@ -82,8 +82,8 @@ const Sidebar = () => {
                 isPending
                   ? "text-gray-600 font-medium block p-4"
                   : isActive
-                  ? "text-normalGreen bg-normalGreen bg-opacity-20 hover:!text-normalGreenHover"
-                  : ""
+                    ? "text-normalGreen bg-normalGreen bg-opacity-20 hover:!text-normalGreenHover"
+                    : ""
               }`
             }
           >
@@ -99,8 +99,8 @@ const Sidebar = () => {
                 isPending
                   ? "text-gray-600 font-medium block p-4"
                   : isActive
-                  ? "text-normalGreen bg-normalGreen bg-opacity-20 hover:!text-normalGreenHover"
-                  : ""
+                    ? "text-normalGreen bg-normalGreen bg-opacity-20 hover:!text-normalGreenHover"
+                    : ""
               }`
             }
           >

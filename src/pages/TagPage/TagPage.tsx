@@ -72,22 +72,6 @@ const ExploreSelectionItem = styled.button`
   cursor: pointer;
 `;
 
-const ExploreHeading = styled.h1`
-  font-size: 42px;
-  font-weight: 600;
-  text-align: center;
-  margin-top: 48px;
-`;
-
-const ExploreInputWrapper = styled.form`
-  background-color: #f9f9f9;
-  position: relative;
-  padding: 12px 16px;
-  border-radius: 36px;
-  margin: 32px auto 0;
-  width: 624px;
-`;
-
 const ExploreScrollRight = styled.div`
   position: absolute;
   top: 50%;
@@ -218,7 +202,7 @@ const TagMainStoryItem = styled(Link)`
 
 const TagPage = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, userProfile } = useContext(AuthContext);
+  const { isAuthenticated } = useContext(AuthContext);
   const [showLeftArrow, setShowLeftArrow] = useState<boolean>(false);
   const [showRightArrow, setShowRightArrow] = useState<boolean>(true);
   const exploreTopicsSectionRef = useRef<HTMLDivElement>(null);

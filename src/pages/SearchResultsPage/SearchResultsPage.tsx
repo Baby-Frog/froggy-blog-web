@@ -15,10 +15,6 @@ import { styled } from "styled-components";
 import HomepageRecentPost from "../Homepage/components/HomepageRecentPost";
 import PeopleItem from "./components/PeopleItem";
 
-type TSearchResultsPageProps = {
-  something: string;
-};
-
 const MainContentWrapper = styled.div`
   margin-top: 48px;
   display: flex;

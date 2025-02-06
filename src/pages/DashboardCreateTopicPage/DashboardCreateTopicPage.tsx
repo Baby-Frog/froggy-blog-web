@@ -10,10 +10,6 @@ import { adminApi } from "src/apis/admin.apis";
 import { useNavigate } from "react-router-dom";
 import { path } from "src/constants/path";
 
-type TDashboardCreateTopicPageProps = {
-  something: string;
-};
-
 const DashboardCreateTopicPage = () => {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm({

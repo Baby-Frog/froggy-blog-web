@@ -10,7 +10,7 @@ import {
   useInteractions,
 } from "@floating-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 type PopoverDismissProps = {
   children?: React.ReactNode;

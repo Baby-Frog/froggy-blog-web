@@ -1,7 +1,4 @@
 import Logo from "src/assets/logo-4.png";
-type TSettingPageProps = {
-  something: string;
-};
 
 const SettingPage = () => {
   return (

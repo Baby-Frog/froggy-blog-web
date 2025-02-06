@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { useForm } from "react-hook-form";
 import { commentApi } from "src/apis/comments.api";
 import CommentIcon from "src/components/Icon/CommentIcon";
 import EllipsisIcon from "src/components/Icon/EllipsisIcon";
@@ -18,18 +17,10 @@ type TCommentItemProps = {
 
 const CommentItem = ({ comment, authorId }: TCommentItemProps) => {
   const { userProfile, isAuthenticated } = useContext(AuthContext);
-  const [reportContent, setReportContent] = useState<string>("");
   const [isResponseHidden, setIsResponseHidden] = useState<boolean>(false);
   const deleteMutation = useMutation(commentApi.deleteComment);
   const reportMutation = useMutation(commentApi.reportComment);
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm({
-    reValidateMode: "onChange",
-    mode: "onSubmit",
-  });
+
   const queryClient = useQueryClient();
   const handleDeleteComment = () => {
     deleteMutation.mutate(comment.id, {

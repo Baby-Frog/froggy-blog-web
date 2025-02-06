@@ -12,7 +12,7 @@ import { AUTH_ENDPOINTS } from "src/constants/endpoints";
 import { toast } from "react-toastify";
 import { isExpiredTokenError, isUnauthorizedError } from "./isAxiosError";
 import { TErrorApiResponse } from "src/types/response.types";
-import { useLocation, useNavigate } from "react-router-dom";
+
 class Http {
   instance: AxiosInstance;
   private accessToken: string;

@@ -72,7 +72,7 @@ const StoryDetailPage = () => {
   const comments = commentsData?.data.data.data;
   const likeStoryMutation = useMutation({
     mutationFn: likeApi.toggleLike,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["likesCount", storyId] });
     },
   });
@@ -83,7 +83,7 @@ const StoryDetailPage = () => {
     },
   });
   const storyIsAlreadyInSavedList = Boolean(savedStoriesData?.data.data.data.find((story) => story.id === idFromSlug));
-  const { data: storyDetailData, isLoading: storyDetailIsLoading } = useQuery({
+  const { data: storyDetailData } = useQuery({
     queryKey: ["story", storyId],
     queryFn: () => storyApi.getStoryById(idFromSlug as string),
   });

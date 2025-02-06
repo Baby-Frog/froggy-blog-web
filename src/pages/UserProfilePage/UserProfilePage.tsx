@@ -65,7 +65,6 @@ const UserProfilePage = () => {
   const me = meData?.data.data;
   const {
     data: userStoriesData,
-    isLoading: isUserStoriesLoading,
     fetchNextPage: userStoriesFetchNextPage,
     hasNextPage: userStoriesHasNextPage,
     isFetchingNextPage: userStoriesIsFetchingNextPage,

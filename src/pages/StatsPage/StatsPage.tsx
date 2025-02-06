@@ -1,7 +1,6 @@
 import { useQuery, useQueryClient } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
-import { authApi } from "src/apis/auth.apis";
 import ArrowLeftIcon from "src/components/Icon/ArrowLeftIcon";
 import { styled } from "styled-components";
 import { options } from "./statsConfig";
@@ -9,7 +8,6 @@ import { useContext, useMemo, useState } from "react";
 import CountUp from "react-countup";
 import {
   Bar,
-  BarChart,
   CartesianGrid,
   ComposedChart,
   Legend,

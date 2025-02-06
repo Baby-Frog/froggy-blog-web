@@ -15,8 +15,6 @@ import { loginSchema } from "src/schemas/authentication.schemas";
 import { TErrorApiResponse } from "src/types/response.types";
 import { isUnauthorizedError } from "src/utils/isAxiosError";
 import "./HomepageAuthenModal.scss";
-import { useNavigate } from "react-router-dom";
-import { path } from "src/constants/path";
 
 type THomepageAuthenModalProps = {
   isOpen?: boolean;

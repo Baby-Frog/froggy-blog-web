@@ -1,5 +1,5 @@
 import { ADMIN_ENDPOINTS, STORY_ENDPOINTS, TOPIC_ENDPOINTS } from "src/constants/endpoints";
-import { TAdminQueryConfig, TApiQueryParams } from "src/types/query.types";
+import { TAdminQueryConfig } from "src/types/query.types";
 import { TReport } from "src/types/report.types";
 import { TQueryResponse, TSuccessApiResponse } from "src/types/response.types";
 import { TStory } from "src/types/story.types";
